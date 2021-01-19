@@ -1,13 +1,17 @@
-import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-
+import React, { useContext } from 'react';
+import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { AuthContext } from '../../context/AuthContext';
 
 const ProfileScreen = () => {
-    return (
-        <SafeAreaView>
-            <Text>Nesto: ProfileScreen</Text>
-        </SafeAreaView>
-    );
+  const { logOutUser } = useContext(AuthContext);
+  return (
+    <SafeAreaView>
+      <Text>Pick: ProfileScreen</Text>
+      <TouchableOpacity onPress={logOutUser}>
+        <Text>LOGOUT</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 };
 
 export default ProfileScreen;
