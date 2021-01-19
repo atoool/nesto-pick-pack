@@ -65,6 +65,7 @@ export const AuthContextProvider = ({ children }) => {
       access_token,
       access_token_timestamp,
       userType,
+      authStateLoading: false,
     });
   };
   const checkAuthState = async () => {
