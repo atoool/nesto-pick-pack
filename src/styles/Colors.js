@@ -1,3 +1,16 @@
 export default {
-  primary: '#010202',
+  primary1: '#010202',
+  primary2: '#494b4b',
+  primary3: '#7e7f80',
+  primary4: '#b2b2b2',
+  primary5: '#e5e5e5',
+  primary6: '#f2f2f2',
+  secondaryRed: '#c71712',
+  secondaryGreen: '#249140',
+  secondaryGray: '#909294',
+  tertiary1: '#dd1a3',
+  tertiary2: '#fof3bd',
+  tertiary3: '#a38909',
+  tertiary4: '#835cbe',
+  tertiary5: 'a1c349',
 };

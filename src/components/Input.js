@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Platform, View } from 'react-native';
+import { TextInput, Platform, View, StyleSheet } from 'react-native';
 
 const Input = ({
   placeholder,
@@ -12,7 +12,7 @@ const Input = ({
   multiline,
 }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         placeholder={placeholder}
         value={value}
@@ -26,3 +26,15 @@ const Input = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    // backgroundColor: 'red',
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+});
+
+export default Input;

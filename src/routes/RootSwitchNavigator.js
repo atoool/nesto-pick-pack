@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/common/SplashScreen';
 import LoginScreen from '../screens/common/LoginScreen';
-
+import PickTabsNavigator from '../routes/PickTabsNavigator';
+import PackTabsNavigator from '../routes/PackTabsNavigator';
+import { AuthContext } from '../context/AuthContext';
 const Stack = createStackNavigator();
 
 const RootSwitchNavigator = () => {
-  const authStateLoading = false;
+  const { authStateLoading, userType } = useContext(AuthContext);
 
   if (authStateLoading) {
     return (
@@ -18,6 +20,10 @@ const RootSwitchNavigator = () => {
         />
       </Stack.Navigator>
     );
+  } else if (userType === 'picker') {
+    return <PickTabsNavigator />;
+  } else if (userType === 'packer') {
+    return <PackTabsNavigator />;
   } else {
     return (
       <Stack.Navigator initialRouteName="LoginScreen">
