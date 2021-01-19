@@ -4,19 +4,19 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, StatusBar } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import RootSwitchNavigator from "./routes/RootSwitchNavigator";
+import SplashScreen from './screens/common/SplashScreen'
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Text style={styles.footer}>Nesto: Pick and Pack</Text>
-      </SafeAreaView>
-    </>
+    <NavigationContainer>
+      <RootSwitchNavigator />
+      {/* <SplashScreen /> */}
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({});
+
 
 export default App;
