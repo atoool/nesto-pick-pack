@@ -1,4 +1,4 @@
-package com.nesto;
+package com.nesto.pickandpack;
 
 import android.app.Application;
 import android.content.Context;

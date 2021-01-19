@@ -1,4 +1,4 @@
-package com.nesto;
+package com.nesto.pickandpack;
 
 import com.facebook.react.ReactActivity;
 
