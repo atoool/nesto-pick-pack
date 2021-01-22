@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const Checkbox = ({ val, onChange }) => {
   const styles = StyleSheet.create({
-    toucable: {
+    touchable: {
       borderColor: val ? Colors.primary : Colors.lightGray,
       borderWidth: 2,
       borderRadius: 4,
@@ -20,7 +20,7 @@ const Checkbox = ({ val, onChange }) => {
   });
   return (
     <TouchableOpacity
-      style={styles.toucable}
+      style={styles.touchable}
       onPress={() => {
         // Haptics.stepperTap();
         onChange();

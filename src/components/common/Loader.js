@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
-import { Colors } from '../styles';
+import { View, ActivityIndicator, StyleSheet, Dimensions } from 'react-native';
+import { Colors } from '../../styles';
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
-const Loader = ({small, fullScreen, green, disabled}) => {
+const Loader = ({ small, fullScreen, green, disabled }) => {
   if (small) {
     if (green) {
       return <ActivityIndicator size={'small'} color={Colors.primary1} />;
