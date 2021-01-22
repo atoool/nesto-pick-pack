@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-// import Colors from './Colors';
+import { Colors } from '.';
 
 export default StyleSheet.create({
   h1: {
@@ -23,4 +23,10 @@ export default StyleSheet.create({
   body: {
     fontSize: 16,
   },
+  buttonTitleText:{
+    fontFamily: 'roboto',
+    fontSize: 16,
+    color: Colors.WHITE,
+
+  }
 });

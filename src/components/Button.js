@@ -1,23 +1,26 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { Colors,Typography } from '../styles';
+import Loader from './Loader';
 
-const Button = ({ onPress, text }) => {
-  return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text>{text}</Text>
-    </TouchableOpacity>
-  );
-};
+const Button = ({title, onPress, customStyle, loading}) => (
+  <TouchableOpacity
+    style={{...styles.btnStyle, ...customStyle}}
+    onPress={onPress}
+    hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+    {loading && <Loader small={true} />}
+    {!loading && <Text style={styles.testStyle}>{title}</Text>}
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
-  container: {
-    // width: '100%',
-    height: 70,
-    // flexDirection: 'row',
+  btnStyle: {
+    backgroundColor: Colors.primary1,
+    padding: 15,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'yellow',
+    borderRadius: 30,
   },
+  testStyle: Typography.buttonTitleText,
 });
 
 export default Button;

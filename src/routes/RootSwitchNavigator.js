@@ -3,8 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/common/SplashScreen';
 import LoginScreen from '../screens/common/LoginScreen';
 import PickTabsNavigator from '../routes/PickTabsNavigator';
-import PackTabsNavigator from '../routes/PackTabsNavigator';
 import { AuthContext } from '../context/AuthContext';
+import PackStackNavigators from './PackStackNavigators';
 const Stack = createStackNavigator();
 
 const RootSwitchNavigator = () => {
@@ -23,7 +23,7 @@ const RootSwitchNavigator = () => {
   } else if (userType === 'picker') {
     return <PickTabsNavigator />;
   } else if (userType === 'packer') {
-    return <PackTabsNavigator />;
+    return <PackStackNavigators />;
   } else {
     return (
       <Stack.Navigator initialRouteName="LoginScreen">

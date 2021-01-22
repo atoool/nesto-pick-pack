@@ -5,6 +5,7 @@ const NotificationsScreen = () => {
   return (
     <SafeAreaView>
       <Text>Pack: NotificationsScreen</Text>
+      
     </SafeAreaView>
   );
 };
