@@ -1,0 +1,11 @@
+{
+  "appName": "Nesto Pick and Pack",
+  "version": "Version",
+  "navigation": {
+    "history": "History",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "pick": "Pick",
+    "pack": "Pack"
+  }
+}
