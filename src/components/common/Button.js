@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import { Colors,Typography } from '../styles';
-import Loader from './Loader';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Colors, Typography } from '../../styles';
+import Loader from '../Loader';
 
-const Button = ({title, onPress, customStyle, loading}) => (
+const Button = ({ title, onPress, customStyle, loading }) => (
   <TouchableOpacity
-    style={{...styles.btnStyle, ...customStyle}}
+    style={{ ...styles.btnStyle, ...customStyle }}
     onPress={onPress}
-    hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+    hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     {loading && <Loader small={true} />}
     {!loading && <Text style={styles.testStyle}>{title}</Text>}
   </TouchableOpacity>
