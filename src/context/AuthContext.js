@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 //TODO: API
 import Storage from '../utils/Storage';
-import { mockEmailLogin } from '../utils/mockLogin';
+import { mockEmailLogin } from '../mock/Login';
 
 const initialAuthState = {
   authStateLoading: true,
