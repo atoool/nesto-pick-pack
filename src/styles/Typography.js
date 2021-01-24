@@ -13,6 +13,13 @@ export default StyleSheet.create({
   normal21: {
     fontSize: 21,
   },
+  bold21: {
+    fontWeight: 'bold',
+    fontSize: 21,
+  },
+  normal18: {
+    fontSize: 18,
+  },
   h4: {
     fontSize: 20,
   },
