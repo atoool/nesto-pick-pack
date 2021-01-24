@@ -5,11 +5,13 @@ export default StyleSheet.create({
   h1: {
     fontSize: 48,
   },
-  h2: {
-    fontSize: 32,
+  bold30: {
+    // fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
-  h3: {
-    fontSize: 24,
+  normal21: {
+    fontSize: 21,
   },
   h4: {
     fontSize: 20,
@@ -23,10 +25,9 @@ export default StyleSheet.create({
   body: {
     fontSize: 16,
   },
-  buttonTitleText:{
+  buttonTitleText: {
     fontFamily: 'roboto',
     fontSize: 16,
     color: Colors.WHITE,
-
-  }
+  },
 });

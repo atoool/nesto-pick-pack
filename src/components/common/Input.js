@@ -10,9 +10,10 @@ const Input = ({
   value,
   numberOfLines,
   multiline,
+  style,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TextInput
         placeholder={placeholder}
         value={value}
