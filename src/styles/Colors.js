@@ -23,6 +23,7 @@ export default {
   lightRed: '#F67280',
   errorRed: '#F44336',
   historyBox: '#FCF2F2',
+  offWhite: '#f5f5f5',
   WHITE: '#ffffff',
   BLACK: '#000000',
 };

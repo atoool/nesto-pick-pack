@@ -25,6 +25,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
+  normal12: {
+    fontSize: 15,
+  },
   normal15: {
     fontSize: 15,
   },
