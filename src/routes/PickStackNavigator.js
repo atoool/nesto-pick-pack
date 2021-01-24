@@ -16,7 +16,7 @@ const PickStackNavigator = () => {
       <Stack.Screen
         name="ItemScreen"
         component={ItemScreen}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

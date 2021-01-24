@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import pickerOrders from '../../mock/pickerOrders.json';
 import { Typography, Colors } from '../../styles';
+import { useNavigation } from '@react-navigation/native';
 
 const PickScreen = () => {
   return (
@@ -23,6 +24,7 @@ const PickScreen = () => {
 };
 
 const AccordionItem = ({ order: { orderId, items } }) => {
+  const navigation = useNavigation();
   return (
     <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -70,7 +72,9 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.orderItem}>
+          <TouchableOpacity
+            style={styles.orderItem}
+            onPress={() => navigation.navigate('ItemScreen')}>
             <View
               style={{
                 backgroundColor: '#A1C349',
