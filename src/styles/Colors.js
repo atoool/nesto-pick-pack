@@ -24,6 +24,7 @@ export default {
   errorRed: '#F44336',
   historyBox: '#FCF2F2',
   offWhite: '#f5f5f5',
+  tabBarInactive: '#D6D3D3',
   WHITE: '#ffffff',
   BLACK: '#000000',
 };

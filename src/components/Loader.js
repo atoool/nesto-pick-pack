@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet, Dimensions } from 'react-native';
-import { Colors } from '../../styles';
+import { Colors } from '../styles';
 
 const { height } = Dimensions.get('screen');
 

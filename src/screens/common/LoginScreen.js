@@ -7,8 +7,8 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 import { AuthContext } from '../../context/AuthContext';
 import { Typography } from '../../styles';
 import Images from '../../assets/images';

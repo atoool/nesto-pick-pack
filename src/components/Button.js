@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Colors, Typography } from '../../styles';
+import { Colors, Typography } from '../styles';
 import Loader from './Loader';
 
 const Button = ({ title, onPress, customStyle, loading, style }) => (

@@ -67,6 +67,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
       <FlatList
         data={items}
         style={styles.orderItemsList}
+        showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.orderItem}>

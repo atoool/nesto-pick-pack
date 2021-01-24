@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors } from '../../styles';
+import { Colors } from '../styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // import {Haptics} from '../utils';

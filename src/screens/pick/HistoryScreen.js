@@ -22,7 +22,7 @@ const HistoryScreen = () => {
 
 const HistoryItem = () => {
   return (
-    <View style={{ marginHorizontal: 32, marginVertical: 10 }}>
+    <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
           <Text style={Typography.bold17}>#-1234</Text>
