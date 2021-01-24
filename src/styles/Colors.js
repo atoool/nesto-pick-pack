@@ -22,6 +22,7 @@ export default {
   toggleOff: '#DDDDE6',
   lightRed: '#F67280',
   errorRed: '#F44336',
+  historyBox: '#FCF2F2',
   WHITE: '#ffffff',
   BLACK: '#000000',
 };
