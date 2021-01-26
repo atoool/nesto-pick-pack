@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondaryRed,
     padding: 15,
     alignItems: 'center',
+    borderRadius: 7,
   },
   testStyle: Typography.buttonTitleText,
 });

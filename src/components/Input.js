@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput, Platform, View, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Input = ({
   placeholder,
@@ -11,9 +12,13 @@ const Input = ({
   numberOfLines,
   multiline,
   style,
+  iconName,
 }) => {
   return (
     <View style={[styles.container, style]}>
+      {iconName !== '' && (
+        <Icon name={iconName} size={24} color="#18191F" style={styles.icon} />
+      )}
       <TextInput
         placeholder={placeholder}
         value={value}
@@ -23,6 +28,7 @@ const Input = ({
         multiline={multiline}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
+        style={styles.textInput}
       />
     </View>
   );
@@ -31,11 +37,16 @@ const Input = ({
 const styles = StyleSheet.create({
   container: {
     // backgroundColor: 'red',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginVertical: 10,
     marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 2,
+    borderColor: '#C5C5C5',
+    borderRadius: 7,
   },
+  icon: { marginHorizontal: 10 },
+  textInput: { flex: 1 },
 });
 
 export default Input;

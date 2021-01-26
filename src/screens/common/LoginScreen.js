@@ -34,12 +34,14 @@ const LoginScreen = () => {
         <Text style={Typography.bold30}>Login</Text>
         <Text style={Typography.normal21}>Login to Access your profile</Text>
         <Input
+          iconName="user"
           placeholder="Email Address"
           value={email}
           style={{ width: screenWidth - 32 }}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
+          iconName="lock"
           placeholder="Password"
           secureTextEntry={true}
           value={password}
