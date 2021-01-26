@@ -7,6 +7,7 @@ import RepickSuccessScreen from '../screens/pack/RepickSuccessScreen';
 import ScanScreen from '../screens/pack/ScanScreen';
 import StatisticsScreen from '../screens/pack/StatisticsScreen';
 import PackTabsNavigator from './PackTabsNavigator';
+import BinAssignScreen from '../screens/pack/BinAssignScreen';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,11 @@ const PackStackNavigators = () => {
         component={StatisticsScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+      name="BinAssignScreen"
+      component={BinAssignScreen}
+      options={{ headerShown: false }}
+    />
     </Stack.Navigator>
   );
 };
