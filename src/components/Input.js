@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { Colors } from '../styles';
 
 const Input = ({
   placeholder,
@@ -21,6 +22,7 @@ const Input = ({
       )}
       <TextInput
         placeholder={placeholder}
+        placeholderTextColor={Colors.darkText}
         value={value}
         onChangeText={onChangeText}
         maxLength={maxLength}
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    marginVertical: 10,
+    marginBottom: 20,
     borderWidth: 2,
     borderColor: '#C5C5C5',
     borderRadius: 7,

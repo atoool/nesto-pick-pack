@@ -32,7 +32,9 @@ const LoginScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Image style={styles.logoImage} source={Images.logo} />
         <Text style={Typography.bold30}>Login</Text>
-        <Text style={Typography.normal21}>Login to Access your profile</Text>
+        <Text style={[Typography.normal21, { marginBottom: 20 }]}>
+          Login to Access your profile
+        </Text>
         <Input
           iconName="user"
           placeholder="Email Address"

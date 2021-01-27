@@ -10,12 +10,19 @@ import {
 import pickerOrders from '../../mock/pickerOrders.json';
 import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
+import Title from '../../components/Title';
+import StatusPill from '../../components/StatusPill';
+import Arrow from '../../components/Arrow';
+import RightCaretSVG from '../../assets/svg/RightCaretSVG';
+import TickSVG from '../../assets/svg/TickSVG';
 
 const PickScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
+      <Title text="Pick now" />
       <FlatList
         data={pickerOrders}
+        contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <AccordionItem order={item} />}
       />
@@ -32,9 +39,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           <Text style={Typography.bold17}>{orderId}</Text>
           <Text style={Typography.normal15}>Picking Completed</Text>
         </View>
-        <View style={styles.statusView}>
-          <Text style={Typography.normal12White}>2/{items.length} Picked</Text>
-        </View>
+        <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={styles.historyBox}>
@@ -42,15 +47,18 @@ const AccordionItem = ({ order: { orderId, items } }) => {
             <View style={styles.deliveryStatusCircle} />
             <Text style={Typography.bold15}>Express delivery</Text>
           </View>
-          <View style={styles.flexDirectionRow}>
+          <View style={styles.deliveryBox}>
             <Text>9:00 AM</Text>
-            <Text> ------------> </Text>
+            <Arrow />
             <Text>10:00 AM</Text>
           </View>
         </View>
         <View style={styles.counter}>
           <Text>Time Left</Text>
-          <Text>01:00 hrs</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={Typography.timeLeft}>01:00</Text>
+            <Text> Hrs</Text>
+          </View>
         </View>
       </View>
       <View
@@ -71,25 +79,25 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         style={styles.orderItemsList}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
             style={styles.orderItem}
-            onPress={() => navigation.navigate('ItemScreen')}>
+            onPress={() => navigation.navigate('ItemScreen', { orderId })}>
             <View
               style={{
-                backgroundColor: '#A1C349',
-                width: 24,
-                height: 24,
-                borderRadius: 4,
-                marginHorizontal: 20,
-              }}
-            />
-            <View>
-              <Text style={Typography.bold15}>
-                {item.qty}x {item.name}
-              </Text>
-              <Text style={Typography.normal12}>Health Department</Text>
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <TickComponent enabled={index === 0} />
+              <View>
+                <Text style={Typography.bold15}>
+                  {item.qty}x {item.name}
+                </Text>
+                <Text style={Typography.normal12}>Health Department</Text>
+              </View>
             </View>
+            <RightCaretSVG style={{ marginRight: 20 }} />
           </TouchableOpacity>
         )}
       />
@@ -97,19 +105,33 @@ const AccordionItem = ({ order: { orderId, items } }) => {
   );
 };
 
+const TickComponent = ({ enabled }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: enabled
+          ? Colors.primaryGreen
+          : Colors.lineDividerColor,
+        width: 24,
+        height: 24,
+        borderRadius: 4,
+        marginHorizontal: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      {enabled && <TickSVG />}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
-  statusView: {
-    backgroundColor: '#889BFF',
-    borderRadius: 10,
-    height: 25,
-    padding: 10,
-    justifyContent: 'center',
-  },
   borderLine: {
     height: 1,
     backgroundColor: '#DFDEDE',
   },
-  flexDirectionRow: { flexDirection: 'row' },
+  deliveryBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   deliveryStatusCircle: {
     width: 14,
     height: 14,
@@ -139,6 +161,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   orderItemsList: {
     backgroundColor: Colors.offWhite,
