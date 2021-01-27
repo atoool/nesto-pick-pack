@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const PickStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="PickScreen">
+    <Stack.Navigator initialRouteName="PickScreen" header>
       <Stack.Screen
         name="PackTabsNavigator"
         component={PickScreen}
@@ -16,10 +16,24 @@ const PickStackNavigator = () => {
       <Stack.Screen
         name="ItemScreen"
         component={ItemScreen}
-        // options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
     </Stack.Navigator>
   );
+};
+
+const headerOptions = {
+  headerTitleAlign: 'center',
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 };
 
 export default PickStackNavigator;

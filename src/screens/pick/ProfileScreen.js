@@ -20,7 +20,7 @@ const ProfileScreen = () => {
         phone="+91 8891356128"
       />
       <LinkButton title="Mark availability" topBorder={true} />
-      <LinkButton title="My statistics" />
+      {/* <LinkButton title="My statistics" /> */}
       <LinkButton title="Sign out" onPress={logOutUser} />
     </SafeAreaView>
   );

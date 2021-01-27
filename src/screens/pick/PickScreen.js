@@ -10,10 +10,12 @@ import {
 import pickerOrders from '../../mock/pickerOrders.json';
 import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
+import Title from '../../components/Title';
 
 const PickScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
+      <Title text="Pick now" />
       <FlatList
         data={pickerOrders}
         showsVerticalScrollIndicator={false}
@@ -74,7 +76,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.orderItem}
-            onPress={() => navigation.navigate('ItemScreen')}>
+            onPress={() => navigation.navigate('ItemScreen', { orderId })}>
             <View
               style={{
                 backgroundColor: '#A1C349',

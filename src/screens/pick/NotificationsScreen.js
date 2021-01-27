@@ -1,10 +1,12 @@
 import React from 'react';
 import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
+import Title from '../../components/Title';
 
 const NotificationsScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
+      <Title text="Notifications" />
       <FlatList
         data={[1, 2, 3, 4, 5, 6]}
         showsVerticalScrollIndicator={false}
@@ -29,8 +31,8 @@ const Notification = ({ title, body }) => {
     <View style={styles.notificationContainer}>
       <View style={styles.notificationIconStyle} />
       <View style={styles.notificationBodyContainer}>
-        <Text style={Typography.bold21}>{title}</Text>
-        <Text style={Typography.normal18}>{body}</Text>
+        <Text style={Typography.bold17}>{title}</Text>
+        <Text style={Typography.normal12}>{body}</Text>
       </View>
     </View>
   );
