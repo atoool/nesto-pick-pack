@@ -29,28 +29,30 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <Image style={styles.logoImage} source={Images.logo} />
         <Text style={Typography.bold30}>Login</Text>
         <Text style={Typography.normal21}>Login to Access your profile</Text>
         <Input
+          iconName="user"
           placeholder="Email Address"
           value={email}
-          style={{ width: screenWidth - 32 }}
+          style={styles.screenMargin}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
+          iconName="lock"
           placeholder="Password"
           secureTextEntry={true}
           value={password}
-          style={{ width: screenWidth - 32 }}
+          style={styles.screenMargin}
           onChangeText={(text) => setPassword(text)}
         />
         <Button
           title="Sign in"
           onPress={signInHandler}
           loading={false}
-          style={{ width: screenWidth - 32 }}
+          style={styles.screenMargin}
         />
       </ScrollView>
     </SafeAreaView>
@@ -59,17 +61,17 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: '#ffffff',
     flex: 1,
   },
   logoImage: {
-    // borderWidth: 1,
-    // borderColor: 'red',
     width: 250,
     height: 250,
   },
+  screenMargin: {
+    width: screenWidth - 64,
+  },
+  scrollView: { alignItems: 'center' },
 });
 
 export default LoginScreen;
