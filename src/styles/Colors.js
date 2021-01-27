@@ -27,4 +27,5 @@ export default {
   tabBarInactive: '#D6D3D3',
   WHITE: '#ffffff',
   BLACK: '#000000',
+  primaryGreen: '#A1C349',
 };

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DFDEDE',
   },
   historyBox: {
-    backgroundColor: Colors.historyBox,
+    backgroundColor: Colors.offWhite,
     padding: 10,
     marginTop: 10,
     borderRadius: 7,

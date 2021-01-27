@@ -2,9 +2,6 @@ import { StyleSheet } from 'react-native';
 import Colors from './Colors';
 
 export default StyleSheet.create({
-  h1: {
-    fontSize: 48,
-  },
   bold30: {
     // fontFamily: 'Roboto',
     fontWeight: 'bold',
@@ -72,5 +69,10 @@ export default StyleSheet.create({
   buttonTitleText: {
     fontSize: 16,
     color: Colors.WHITE,
+  },
+  timeLeft: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.secondaryRed,
   },
 });
