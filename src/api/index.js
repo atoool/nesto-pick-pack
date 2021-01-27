@@ -17,7 +17,7 @@ export const getHistoryList = async () => {
 };
 
 export const getStatistics = async () => {
-  const URL = '/notifications';
+  const URL = '/statistics';
   return get(URL, true);
 };
 

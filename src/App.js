@@ -8,12 +8,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import { AuthContextProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
+import Linking from './utils/Linking';
 
 const App = () => {
   return (
     <AppContextProvider>
       <AuthContextProvider>
-        <NavigationContainer>
+        <NavigationContainer linking={Linking}>
           <RootSwitchNavigator />
         </NavigationContainer>
       </AuthContextProvider>

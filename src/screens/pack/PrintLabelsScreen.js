@@ -21,8 +21,8 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30 }}>
                 <PrintLabelComponent orderId={orderId} bins={bins} onChangeOrderId={onChangeOrderId} onChangeBins={onChangeBins} />
-                <Button title="Print your label" style={{ marginTop: 20, borderRadius: 7 }} />
-                <Button title="Assign bin" onPress={onAssignBinPress} style={{ marginTop: 20, borderRadius: 7 }} />
+                <Button title="Print your label" style={{ marginVertical: 20, borderRadius: 7, width: width - 60, }} />
+                <Button title="Assign bin" onPress={onAssignBinPress} style={{ marginVertical: 0, borderRadius: 7, width: width - 60, }} />
             </ScrollView>
         </SafeAreaView>
     );
@@ -38,19 +38,19 @@ const PrintLabelComponent = ({ onChangeOrderId, onChangeBins, orderId, bins, hid
                 <Text style={{ color: Colors.WHITE, fontSize: 16, flex: 1, textAlign: 'center', textAlignVertical: 'bottom', marginTop: 20, fontWeight: 'bold' }}>Print labels for this order</Text>
             </View>
 
-            <InputWithLabel label={'How many bins are needed ?'} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
+            <InputWithLabel iconName="shopping-cart" label={'How many bins are needed ?'} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
 
             {!hide &&
-                <InputWithLabel label={'Order number to print'} top={10} value={orderId} onChangeText={onChangeOrderId} />}
+                <InputWithLabel iconName="edit" label={'Order number to print'} top={10} value={orderId} onChangeText={onChangeOrderId} />}
         </>
     )
 }
 
-const InputWithLabel = ({ label, top, onChangeText, value, keyboard }) => {
+const InputWithLabel = ({ label, top, onChangeText, value, keyboard, iconName }) => {
     return (
         <View style={{ flex: 1, marginTop: top }}>
             <Text style={{ color: Colors.darkText, fontSize: 16, fontWeight: 'bold' }}>{label}</Text>
-            <Input style={{ width: width - 60, marginLeft: 0, borderRadius: 7, borderColor: Colors.primary4, paddingHorizontal: 10 }} value={value} onChangeText={onChangeText} keyboardType={keyboard} />
+            <Input iconName={iconName} value={value} onChangeText={onChangeText} keyboardType={keyboard} />
         </View>
     )
 }

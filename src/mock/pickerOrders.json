@@ -1,82 +1,109 @@
-[
-  {
-    "orderId": "#12345",
-    "items": [
-      {
-        "_id": 1,
-        "name": "Colgate Toothpaste",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Pepsodant Toothpaste",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Chandrika",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Santoor",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Lux",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      }
-    ]
-  },
-  {
-    "orderId": "#890321",
-    "items": [
-      {
-        "_id": 1,
-        "name": "Maruthi Sx4",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Lamborgini Toothpaste",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Benz",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Audi",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Bolero",
-        "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      }
-    ]
-  }
-]
+{
+  "success": true,
+  "message": "Orders list of picker/packer",
+  "data": [
+    {
+      "_id": "123",
+      "order_id": "#3456WS",
+      "item_id": "",
+      "originally_assigned_item": "",
+      "originally_substituted_item": "",
+      "total_qty": 5,
+      "repick_qty": "",
+      "Pickerid": "PICKR123",
+      "Packerid": "PACKR32",
+      "Picker_checked": false,
+      "Review_comment": "",
+      "Packer_checked": false,
+      "out_of_stock": false,
+      "Substituition_initiated": false,
+      "Substituition_initiated_timestamp": "",
+      "Substituition_customer_responded": false,
+      "Substituted": false,
+      "Review_status": "pass",
+      "Repick_completed": false,
+      "items": [
+        {
+          "_id": 123,
+          "name": "Colgate 100g",
+          "department": "test1",
+          "qty": 5,
+          "price": 10
+        },
+        {
+          "_id": 124,
+          "name": "item_B",
+          "department": "test2",
+          "qty": 2,
+          "price": 20
+        },
+        {
+          "_id": 125,
+          "name": "item_C",
+          "department": "test1",
+          "qty": 1,
+          "price": 25
+        },
+        {
+          "_id": 126,
+          "name": "item_D",
+          "department": "test1",
+          "qty": 3,
+          "price": 25.4
+        }
+      ]
+    },
+    {
+      "_id": "123",
+      "order_id": "#213XYG",
+      "item_id": "",
+      "originally_assigned_item": "",
+      "originally_substituted_item": "",
+      "total_qty": "",
+      "repick_qty": "",
+      "Pickerid": "PICKR33",
+      "Packerid": "PACKR22",
+      "Picker_checked": false,
+      "Review_comment": "",
+      "Packer_checked": false,
+      "out_of_stock": false,
+      "Substituition_initiated": false,
+      "Substituition_initiated_timestamp": "",
+      "Substituition_customer_responded": false,
+      "Substituted": false,
+      "Review_status": "pass",
+      "Repick_completed": "false",
+      "items": [
+        {
+          "_id": 321,
+          "name": "item_M",
+          "department": "test11",
+          "qty": 2,
+          "price": 20
+        },
+        {
+          "_id": 322,
+          "name": "item_N",
+          "department": "test12",
+          "qty": 1,
+          "price": 35
+        },
+        {
+          "_id": 323,
+          "name": "item_O",
+          "department": "test13",
+          "qty": 2,
+          "price": 26
+        },
+        {
+          "_id": 324,
+          "name": "item_P",
+          "department": "test14",
+          "qty": 4,
+          "price": 30
+        }
+      ]
+    }
+  ],
+  "success_code": 200
+}

@@ -15,7 +15,7 @@ const PackScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
       <FlatList
-        data={packerOrders}
+        data={packerOrders.data}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <AccordionItem order={item} />}
@@ -71,6 +71,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         data={items}
         style={styles.orderItemsList}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => { index.toString() }}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -89,7 +90,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
               <Text style={Typography.bold15}>
                 {item.qty}x {item.name}
               </Text>
-              <Text style={Typography.normal12}>Health Department</Text>
+              <Text style={Typography.normal12}>{item.department}</Text>
             </View>
           </TouchableOpacity>
         )}
