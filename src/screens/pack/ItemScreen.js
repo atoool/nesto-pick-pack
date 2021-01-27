@@ -157,7 +157,7 @@ const ItemScreen = ({ route: { params: { item } }, navigation }) => {
                             </View>
                         ))}
                     </View>
-                    {passItem.indexOf(false) ? <Button title="Scan QR code" style={{ margin: 40, }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
+                    {passItem.indexOf(false) ? <Button title="Scan QR code" style={{ margin: 40, borderRadius: 7 }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
                         : <View style={{ paddingVertical: 10, paddingHorizontal: 32 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
                             <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-

@@ -7,14 +7,17 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import { AuthContextProvider } from './context/AuthContext';
+import { AppContextProvider } from './context/AppContext';
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <NavigationContainer>
-        <RootSwitchNavigator />
-      </NavigationContainer>
-    </AuthContextProvider>
+    <AppContextProvider>
+      <AuthContextProvider>
+        <NavigationContainer>
+          <RootSwitchNavigator />
+        </NavigationContainer>
+      </AuthContextProvider>
+    </AppContextProvider>
   );
 };
 
