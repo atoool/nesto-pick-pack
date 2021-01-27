@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Platform, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Input = ({
@@ -36,11 +36,10 @@ const Input = ({
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'red',
     flexDirection: 'row',
     alignItems: 'center',
+    height: 50,
     marginVertical: 10,
-    marginHorizontal: 10,
     borderWidth: 2,
     borderColor: '#C5C5C5',
     borderRadius: 7,
