@@ -1,11 +1,14 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList } from 'react-native';
 import { Typography, Colors } from '../../styles';
+import Title from '../../components/Title';
+import Arrow from '../../components/Arrow';
+import StatusPill from '../../components/StatusPill';
 
 const HistoryScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      {/* <Text>Pick: HistoryScreen</Text> */}
+      <Title text="History" />
       <FlatList
         data={[1, 2, 3, 4, 5, 6]}
         showsVerticalScrollIndicator={false}
@@ -28,18 +31,16 @@ const HistoryItem = () => {
           <Text style={Typography.bold17}>#-1234</Text>
           <Text style={Typography.normal15}>Picking Completed</Text>
         </View>
-        <View style={styles.statusView}>
-          <Text style={Typography.normal12White}>Awaiting packing</Text>
-        </View>
+        <StatusPill backgroundColor="#889BFF" text="Awaiting Packing" />
       </View>
       <View style={styles.historyBox}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={styles.deliveryStatusCircle} />
           <Text style={Typography.bold15}>Express delivery</Text>
         </View>
-        <View style={styles.flexDirectionRow}>
+        <View style={styles.deliveryBox}>
           <Text>9:00 AM</Text>
-          <Text> ------------> </Text>
+          <Arrow width={100} />
           <Text>10:00 AM</Text>
         </View>
       </View>
@@ -48,13 +49,10 @@ const HistoryItem = () => {
 };
 
 const styles = StyleSheet.create({
-  flexDirectionRow: { flexDirection: 'row' },
-  statusView: {
-    backgroundColor: '#889BFF',
-    borderRadius: 10,
-    height: 25,
-    padding: 10,
-    justifyContent: 'center',
+  deliveryBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   deliveryStatusCircle: {
     width: 14,

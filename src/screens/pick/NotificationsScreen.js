@@ -9,6 +9,7 @@ const NotificationsScreen = () => {
       <Title text="Notifications" />
       <FlatList
         data={[1, 2, 3, 4, 5, 6]}
+        contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         // onRefresh={() => {

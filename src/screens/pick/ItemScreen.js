@@ -8,10 +8,14 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Image,
 } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import useTimer from '../../hooks/useTimer';
 import Button from '../../components/Button';
+import StatusPill from '../../components/StatusPill';
+import Arrow from '../../components/Arrow';
+import Images from '../../assets/images';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -58,32 +62,23 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
   return (
     <>
       <View style={styles.itemImageContainer}>
-        <View style={styles.itemImage} />
+        <View style={styles.itemImage}>
+          <Image
+            source={Images.colgate}
+            resizeMode={'contain'}
+            style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
+          />
+        </View>
       </View>
       <View style={{ flexDirection: 'row', marginHorizontal: 32 }}>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row' }}>
-            <View
-              style={{
-                backgroundColor: '#A1C349',
-                borderRadius: 3,
-                height: 25,
-                padding: 10,
-                justifyContent: 'center',
-              }}>
-              <Text style={Typography.normal12White}>{position}</Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: '#C5B171',
-                borderRadius: 3,
-                height: 25,
-                padding: 10,
-                marginHorizontal: 10,
-                justifyContent: 'center',
-              }}>
-              <Text style={Typography.normal12White}>{department}</Text>
-            </View>
+            <StatusPill
+              backgroundColor="#A1C349"
+              text={position}
+              marginRight={10}
+            />
+            <StatusPill backgroundColor="#C5B171" text={department} />
           </View>
           <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ flex: 1 }}>
@@ -107,7 +102,8 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
               </View>
               <View style={styles.deliverBoxRow2}>
                 <Text>9:00 AM</Text>
-                <Text> ------------> </Text>
+                <Arrow />
+                {/* <Text> ------------> </Text> */}
                 <Text>10:00 AM</Text>
               </View>
             </View>
@@ -126,6 +122,7 @@ const VerifyItemSection = ({}) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1;
   const substituteItems = status === 1 || status === 0;
+  const [itemsQty, setItemQty] = useState(0);
   return (
     <>
       <Divider />
@@ -153,6 +150,11 @@ const VerifyItemSection = ({}) => {
         {someOutofStock && (
           <TextInput
             placeholder="Enter count of out of stock items"
+            keyboardType={'number-pad'}
+            onChangeText={(t) =>
+              setItemQty(t.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ''))
+            }
+            value={itemsQty}
             style={{
               borderWidth: 1,
               borderRadius: 7,
@@ -266,6 +268,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemImage: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.offWhite,
     height: (1 * w) / 2,
     width: screenWidth - 64,
@@ -298,6 +302,7 @@ const styles = StyleSheet.create({
   deliverBoxRow2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

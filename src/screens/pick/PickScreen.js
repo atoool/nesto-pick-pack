@@ -11,6 +11,8 @@ import pickerOrders from '../../mock/pickerOrders.json';
 import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
 import Title from '../../components/Title';
+import StatusPill from '../../components/StatusPill';
+import Arrow from '../../components/Arrow';
 
 const PickScreen = () => {
   return (
@@ -18,6 +20,7 @@ const PickScreen = () => {
       <Title text="Pick now" />
       <FlatList
         data={pickerOrders}
+        contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <AccordionItem order={item} />}
       />
@@ -34,9 +37,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           <Text style={Typography.bold17}>{orderId}</Text>
           <Text style={Typography.normal15}>Picking Completed</Text>
         </View>
-        <View style={styles.statusView}>
-          <Text style={Typography.normal12White}>2/{items.length} Picked</Text>
-        </View>
+        <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={styles.historyBox}>
@@ -44,9 +45,9 @@ const AccordionItem = ({ order: { orderId, items } }) => {
             <View style={styles.deliveryStatusCircle} />
             <Text style={Typography.bold15}>Express delivery</Text>
           </View>
-          <View style={styles.flexDirectionRow}>
+          <View style={styles.deliveryBox}>
             <Text>9:00 AM</Text>
-            <Text> ------------> </Text>
+            <Arrow />
             <Text>10:00 AM</Text>
           </View>
         </View>
@@ -100,18 +101,14 @@ const AccordionItem = ({ order: { orderId, items } }) => {
 };
 
 const styles = StyleSheet.create({
-  statusView: {
-    backgroundColor: '#889BFF',
-    borderRadius: 10,
-    height: 25,
-    padding: 10,
-    justifyContent: 'center',
-  },
   borderLine: {
     height: 1,
     backgroundColor: '#DFDEDE',
   },
-  flexDirectionRow: { flexDirection: 'row' },
+  deliveryBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   deliveryStatusCircle: {
     width: 14,
     height: 14,
