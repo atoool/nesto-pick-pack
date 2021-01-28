@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import React, { createRef, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, TouchableWithoutFeedback } from 'react-native';
 import DropDown from 'react-native-paper-dropdown';
-import { Divider, Provider, TextInput } from 'react-native-paper'
+import { Divider, Provider, Menu } from 'react-native-paper'
 import Button from '../../components/Button';
 import { Typography, Colors, width } from '../../styles';
 import useTimer from '../../hooks/useTimer';
 import images from '../../assets/images';
 import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
+
 const screenWidth = width
 const w = width - 32
 const ItemScreen = ({ route: { params: { item } }, navigation }) => {
+    const containerRef = createRef(null)
     const ss = 3600;
     return (
-        <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+        <SafeAreaView ref={r => containerRef.current = r?.props} style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <TimerComponent ss={ss} />
                 <ItemSection
@@ -24,6 +26,7 @@ const ItemScreen = ({ route: { params: { item } }, navigation }) => {
                     department={item.department}
                 />
                 <VerifyItemSection
+                    containerRef={containerRef.current}
                     item={item}
                     navigation={navigation} />
             </ScrollView>
@@ -111,11 +114,11 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
     );
 };
 
-const VerifyItemSection = ({ item, navigation }) => {
+const VerifyItemSection = ({ item, navigation, containerRef }) => {
     const [passItem, setPassItem] = useState(Array.apply(null, Array(item.qty)).map(itm => true))
     const [issue, setIssue] = useState(Array.apply(null, Array(item.qty)).map(itm => 'Physical damage'));
     const [showDropDown, setShowDropDown] = useState(Array.apply(null, Array(item.qty)).map(itm => false));
-
+    const [currentDropDown, setCurrentDropDown] = useState(0)
     const issueList = [
         { label: 'Physical damage', value: 'Physical damage' },
         { label: 'Package broken', value: 'Package broken' },
@@ -128,13 +131,15 @@ const VerifyItemSection = ({ item, navigation }) => {
     const onShowDropDown = (val, index) => {
         showDropDown[index] = val
         setShowDropDown([...showDropDown])
+        setCurrentDropDown(index)
     }
     const onSetIssue = (val, index) => {
         issue[index] = val
         setIssue([...issue])
     }
+    containerRef?.onTouchEnd(e => e.nativeEvent.touches && showDropDown[currentDropDown] && onShowDropDown(false, currentDropDown))
     return (
-        <Provider>
+        < >
             <Divider />
             <View style={{ paddingVertical: 20, paddingHorizontal: 32 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
@@ -144,9 +149,9 @@ const VerifyItemSection = ({ item, navigation }) => {
 </Text>
                 {passItem.map((item, index) => (
                     <View key={index}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Item {index + 1}</Text>
-                            <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', marginLeft: 40, height: 40, width: 200, overflow: 'hidden' }}>
+                            <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', alignSelf: 'flex-end', height: 40, width: 200, overflow: 'hidden' }}>
                                 <TouchableOpacity onPress={() => onCheckPass(true, index)}>
                                     <View style={{ borderRadius: 8, backgroundColor: item ? 'lightgreen' : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
                                         <Text style={{ textAlign: 'center' }}>Pass</Text>
@@ -160,19 +165,23 @@ const VerifyItemSection = ({ item, navigation }) => {
                             </View>
                         </View>
                         { !passItem[index] && <View style={{ marginBottom: 20 }}>
-                            <DropDown
-                                label={'Issue'}
-                                mode={'outlined'}
-                                value={issue[index]}
-                                setValue={(value) => { onSetIssue(value, index) }}
-                                list={issueList}
-                                visible={showDropDown[index]}
-                                showDropDown={() => onShowDropDown(true, index)}
-                                onDismiss={() => { onShowDropDown(false, index) }}
-                                inputProps={{
-                                    right: <TextInput.Icon name={'menu-down'} />,
-                                }}
-                            />
+                            <View style={{ alignSelf: 'flex-end' }}>
+                                <TouchableWithoutFeedback onPress={() => { onShowDropDown(!showDropDown[index], index) }}>
+                                    <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, height: 40, width: 200 }}>
+                                        <Text style={[{ textAlignVertical: 'center', height: '100%', marginLeft: 35 }, Typography.bold15]}>{issue[index]}</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                {showDropDown[index] &&
+                                    <View style={{ position: 'absolute', elevation: 10, backgroundColor: '#fff', width: 190, height: 'auto', alignSelf: 'center', marginTop: 40, borderBottomRightRadius: 7, borderBottomLeftRadius: 7 }}>
+                                        {issueList.map((item, key) => (
+                                            <TouchableOpacity key={key} onPress={() => { onSetIssue(item.value, index) }} style={{ height: 50, width: '100%' }}>
+                                                <View style={{ justifyContent: 'center', alignItems: 'center', height: 50, }}>
+                                                    <Text style={[{ paddingLeft: 30, width: '100%', }, item.value == issue[index] && Typography.bold15]}>{item.label}</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </View>}
+                            </View>
                         </View>}
                     </View>
                 ))}
@@ -205,9 +214,10 @@ const VerifyItemSection = ({ item, navigation }) => {
                     <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} />
                 </View>}
 
-        </Provider>
+        </>
     )
 }
+
 
 
 const styles = StyleSheet.create({
