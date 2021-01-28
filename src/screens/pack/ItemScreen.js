@@ -1,7 +1,5 @@
 import React, { createRef, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, TouchableWithoutFeedback } from 'react-native';
-import DropDown from 'react-native-paper-dropdown';
-import { Divider, Provider, Menu } from 'react-native-paper'
 import Button from '../../components/Button';
 import { Typography, Colors, width } from '../../styles';
 import useTimer from '../../hooks/useTimer';
@@ -218,7 +216,15 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
     )
 }
 
-
+const Divider = () => (
+    <View
+        style={{
+            height: 1,
+            backgroundColor: Colors.offWhite,
+            marginVertical: 20,
+        }}
+    />
+);
 
 const styles = StyleSheet.create({
     timerDivider: {
