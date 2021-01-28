@@ -11,17 +11,19 @@ import pickerOrders from '../../mock/pickerOrders.json';
 import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
 import Title from '../../components/Title';
+import NoOrders from '../../components/NoOrders';
 import StatusPill from '../../components/StatusPill';
+import TickComponent from '../../components/TickComponent';
 import Arrow from '../../components/Arrow';
 import RightCaretSVG from '../../assets/svg/RightCaretSVG';
-import TickSVG from '../../assets/svg/TickSVG';
 
 const PickScreen = () => {
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
+    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text="Pick now" />
       <FlatList
         data={pickerOrders}
+        ListEmptyComponent={() => <NoOrders />}
         contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <AccordionItem order={item} />}
@@ -109,24 +111,6 @@ const AccordionItem = ({ order: { orderId, items } }) => {
   );
 };
 
-const TickComponent = ({ enabled }) => {
-  return (
-    <View
-      style={{
-        backgroundColor: enabled
-          ? Colors.primaryGreen
-          : Colors.lineDividerColor,
-        width: 24,
-        height: 24,
-        borderRadius: 4,
-        marginHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      {enabled && <TickSVG />}
-    </View>
-  );
-};
 const styles = StyleSheet.create({
   borderLine: {
     height: 1,
