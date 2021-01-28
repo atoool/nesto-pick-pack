@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -7,25 +7,52 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import pickerOrders from '../../mock/pickerOrders.json';
-import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
+import { Typography, Colors } from '../../styles';
+//Components
 import Title from '../../components/Title';
 import NoOrders from '../../components/NoOrders';
 import StatusPill from '../../components/StatusPill';
 import TickComponent from '../../components/TickComponent';
 import Arrow from '../../components/Arrow';
+//SVGs
 import RightCaretSVG from '../../assets/svg/RightCaretSVG';
+//Mock Imports
+import pickerOrders from '../../mock/pickerOrders.json';
+
+import { getOrdersList } from '../../api';
 
 const PickScreen = () => {
+  const _getOrdersList = async () => {
+    setRefreshing(true);
+    try {
+      const res = await getOrdersList();
+      setRefreshing(false);
+    } catch (e) {
+      console.log(e);
+      setOrders(pickerOrders);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    // _getOrdersList();
+  }, []);
+
+  const [orders, setOrders] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text="Pick now" />
       <FlatList
-        data={pickerOrders}
+        data={orders}
         ListEmptyComponent={() => <NoOrders />}
         contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.orderId}
+        onRefresh={() => _getOrdersList()}
+        refreshing={refreshing}
         renderItem={({ item }) => <AccordionItem order={item} />}
       />
     </SafeAreaView>
@@ -83,6 +110,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
       <FlatList
         data={items}
         style={styles.orderItemsList}
+        keyExtractor={(item) => `${item._id}`}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         renderItem={({ item, index }) => (
