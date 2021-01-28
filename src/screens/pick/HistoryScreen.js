@@ -28,7 +28,7 @@ const HistoryItem = () => {
     <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
-          <Text style={Typography.bold17}>#-1234</Text>
+          <Text style={Typography.bold17}>#1234</Text>
           <Text style={Typography.normal15}>Picking Completed</Text>
         </View>
         <StatusPill backgroundColor="#889BFF" text="Awaiting Packing" />

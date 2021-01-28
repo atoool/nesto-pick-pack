@@ -98,7 +98,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}
                 </Text>
-                <Text style={Typography.normal12}>Health Department</Text>
+                <Text style={Typography.normal12}>{item.dept}</Text>
               </View>
             </View>
             <RightCaretSVG style={{ marginRight: 20 }} />

@@ -6,35 +6,28 @@
         "_id": 1,
         "name": "Colgate Toothpaste",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Personal Care",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
         "name": "Pepsodant Toothpaste",
-        "qty": 1,
-        "dept": "Health Department",
+        "qty": 2,
+        "dept": "Personal Care",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Chandrika",
+        "name": "Dove",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Personal Care",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Santoor",
+        "name": "Pears",
         "qty": 1,
-        "dept": "Health Department",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 1,
-        "name": "Lux",
-        "qty": 1,
-        "dept": "Health Department",
+        "dept": "Personal Care",
         "position": "Aisle 1 Bin 1"
       }
     ]
@@ -44,37 +37,37 @@
     "items": [
       {
         "_id": 1,
-        "name": "Maruthi Sx4",
+        "name": "Maggie Noodles",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Food and Snacks",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Lamborgini Toothpaste",
+        "name": "Yippie Noodles",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Food and Snacks",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Benz",
+        "name": "Knor Soup",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Food and Snacks",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Audi",
+        "name": "Chocos",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Food and Snacks",
         "position": "Aisle 1 Bin 1"
       },
       {
         "_id": 1,
-        "name": "Bolero",
+        "name": "Corn Flakes",
         "qty": 1,
-        "dept": "Health Department",
+        "dept": "Food and Snacks",
         "position": "Aisle 1 Bin 1"
       }
     ]
