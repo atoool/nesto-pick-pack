@@ -23,6 +23,7 @@ const PackScreen = () => {
       <FlatList
         data={pickerOrders}
         contentContainerStyle={{ paddingBottom: 60 }}
+        keyExtractor={(item) => item.orderId}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <AccordionItem order={item} />}
       />

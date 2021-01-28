@@ -134,6 +134,7 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
     const onSetIssue = (val, index) => {
         issue[index] = val
         setIssue([...issue])
+        onShowDropDown(false, index)
     }
     containerRef?.onTouchEnd(e => e.nativeEvent.touches && showDropDown[currentDropDown] && onShowDropDown(false, currentDropDown))
     return (
@@ -148,33 +149,34 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
                 {passItem.map((item, index) => (
                     <View key={index}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Item {index + 1}</Text>
+                            <Text style={{ ...Typography.bold13 }}>Item {index + 1}</Text>
                             <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', alignSelf: 'flex-end', height: 40, width: 200, overflow: 'hidden' }}>
                                 <TouchableOpacity onPress={() => onCheckPass(true, index)}>
-                                    <View style={{ borderRadius: 8, backgroundColor: item ? 'lightgreen' : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
-                                        <Text style={{ textAlign: 'center' }}>Pass</Text>
+                                    <View style={{ borderRadius: 7, backgroundColor: item ? Colors.primaryGreen : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
+                                        <Text style={[{ textAlign: 'center' }, item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>Pass</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => onCheckPass(false, index)}>
-                                    <View style={{ borderRadius: 8, backgroundColor: item ? 'rgba(0,0,0,0)' : Colors.secondaryRed, height: '100%', width: 100, justifyContent: 'center' }}>
-                                        <Text style={{ textAlign: 'center' }}>Fail</Text>
+                                    <View style={{ borderRadius: 7, backgroundColor: item ? 'rgba(0,0,0,0)' : Colors.secondaryRed, height: '100%', width: 100, justifyContent: 'center' }}>
+                                        <Text style={[{ textAlign: 'center', }, !item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>Fail</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        { !passItem[index] && <View style={{ marginBottom: 20 }}>
+                        { !passItem[index] && <View style={{ marginBottom: 20, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                            <Text style={{ ...Typography.normal12 }}>Review item</Text>
                             <View style={{ alignSelf: 'flex-end' }}>
                                 <TouchableWithoutFeedback onPress={() => { onShowDropDown(!showDropDown[index], index) }}>
                                     <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, height: 40, width: 200 }}>
-                                        <Text style={[{ textAlignVertical: 'center', height: '100%', marginLeft: 35 }, Typography.bold15]}>{issue[index]}</Text>
+                                        <Text style={[{ textAlignVertical: 'center', height: '100%', marginLeft: 35 }, Typography.bold13]}>{issue[index]}</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 {showDropDown[index] &&
                                     <View style={{ position: 'absolute', elevation: 10, backgroundColor: '#fff', width: 190, height: 'auto', alignSelf: 'center', marginTop: 40, borderBottomRightRadius: 7, borderBottomLeftRadius: 7 }}>
                                         {issueList.map((item, key) => (
                                             <TouchableOpacity key={key} onPress={() => { onSetIssue(item.value, index) }} style={{ height: 50, width: '100%' }}>
-                                                <View style={{ justifyContent: 'center', alignItems: 'center', height: 50, }}>
-                                                    <Text style={[{ paddingLeft: 30, width: '100%', }, item.value == issue[index] && Typography.bold15]}>{item.label}</Text>
+                                                <View style={[{ justifyContent: 'center', alignItems: 'center', height: 50, }, item.value == issue[index] && { backgroundColor: Colors.offWhite }]}>
+                                                    <Text style={[{ paddingLeft: 30, width: '100%', fontSize: 13 }]}>{item.label}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         ))}
@@ -188,7 +190,6 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
             <Divider />
             {passItem.indexOf(false) ?
                 <>
-                    <Divider />
                     <Button title="Scan bar code" style={{ margin: 32, borderRadius: 7, width: width - 60 }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
                     <View style={{ alignItems: 'center', paddingVertical: 20 }}>
                         <Text>Scan Failed? Then use</Text>

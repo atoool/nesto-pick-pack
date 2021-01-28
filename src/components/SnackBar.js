@@ -21,7 +21,6 @@ const SnackBar = ({ style, title, titleStyle, showSnack }) => {
             duration: 200,
             useNativeDriver: true
         }).start();
-        console.warn('sss');
     };
     showSnack ? show() : hide()
     return (

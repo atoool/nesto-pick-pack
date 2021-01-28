@@ -58,6 +58,7 @@ const ItemListScreen = ({ route: { params: { orderId, items } } }) => {
                     data={items}
                     style={styles.orderItemsList}
                     showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={() => <View style={styles.borderLine} />}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity

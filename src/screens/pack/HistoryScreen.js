@@ -12,6 +12,7 @@ const HistoryScreen = () => {
       <FlatList
         data={[1, 2, 3, 4, 5, 6]}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         // onRefresh={() => {
         //   console.log('hi');
