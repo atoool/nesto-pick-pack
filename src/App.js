@@ -3,15 +3,24 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
+import NetInfo from '@react-native-community/netinfo';
 import { AuthContextProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
+import SnackBar from './components/SnackBar';
 
 const App = () => {
+  const [showSnack, setShowSnack] = useState(false)
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setShowSnack(!state?.isConnected);
+    });
+    return () => { unsubscribe() }
+  }, [])
   return (
     <AppContextProvider>
       <AuthContextProvider>
@@ -19,6 +28,7 @@ const App = () => {
         <NavigationContainer linking={Linking}>
           <RootSwitchNavigator />
         </NavigationContainer>
+        <SnackBar title="network connectivity down" showSnack={showSnack} />
       </AuthContextProvider>
     </AppContextProvider>
   );
