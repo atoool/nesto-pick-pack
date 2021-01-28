@@ -42,7 +42,7 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   normal12: {
-    fontSize: 15,
+    fontSize: 12,
   },
   normal15: {
     fontSize: 15,

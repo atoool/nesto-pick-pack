@@ -14,7 +14,7 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
         setOrderId(text)
     }
     const onAssignBinPress = () => {
-        navigation.navigate('BinAssignScreen')
+        navigation.navigate('BinAssignScreen', { orderId })
     }
 
     return (

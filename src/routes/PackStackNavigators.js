@@ -8,6 +8,7 @@ import ScanScreen from '../screens/pack/ScanScreen';
 import StatisticsScreen from '../screens/pack/StatisticsScreen';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import PackScreen from '../screens/pack/PackScreen';
+import ItemListScreen from '../screens/pack/ItemListScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,9 +21,20 @@ const PackStackNavigators = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="ItemListScreen"
+        component={ItemListScreen}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
+      />
+      <Stack.Screen
         name="ItemScreen"
         component={ItemScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="PackSuccessScreen"
@@ -56,6 +68,17 @@ const PackStackNavigators = () => {
       />
     </Stack.Navigator>
   );
+};
+
+const headerOptions = {
+  headerTitleAlign: 'center',
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 };
 
 export default PackStackNavigators;
