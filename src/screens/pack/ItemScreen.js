@@ -1,12 +1,117 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import DropDown from 'react-native-paper-dropdown';
-import { Provider, TextInput } from 'react-native-paper'
-
+import { Divider, Provider, TextInput } from 'react-native-paper'
 import Button from '../../components/Button';
-import { Typography, Colors } from '../../styles';
-
+import { Typography, Colors, width } from '../../styles';
+import useTimer from '../../hooks/useTimer';
+import images from '../../assets/images';
+import StatusPill from '../../components/StatusPill';
+import Arrow from '../../components/Arrow';
+const screenWidth = width
+const w = width - 32
 const ItemScreen = ({ route: { params: { item } }, navigation }) => {
+    const ss = 3600;
+    return (
+        <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <TimerComponent ss={ss} />
+                <ItemSection
+                    title={item.name}
+                    price={item.price}
+                    quantity={item.qty}
+                    position="Aisle 1 Rack A12"
+                    department={item.department}
+                />
+                <VerifyItemSection
+                    item={item}
+                    navigation={navigation} />
+            </ScrollView>
+        </SafeAreaView>
+    );
+};
+
+const TimerComponent = ({ ss }) => {
+    const now = useTimer(ss);
+    const HoursString = Math.floor(now / 3600)
+        .toString()
+        .padStart(2, 0);
+    const minutesString = Math.floor(now / 60)
+        .toString()
+        .padStart(2, 0);
+
+    return (
+        <View style={styles.timerContainer}>
+            <Text style={Typography.bold17White}>Time remaining</Text>
+            <View style={styles.timerDivider} />
+            <Text style={Typography.bold17White}>
+                {HoursString}:{minutesString} Hrs
+        </Text>
+        </View>
+    );
+};
+
+const ItemSection = ({ title, price, quantity, position, department }) => {
+    return (
+        <>
+            <View style={styles.itemImageContainer}>
+                <View style={styles.itemImage}>
+                    <Image
+                        source={images.colgate}
+                        resizeMode={'contain'}
+                        style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
+                    />
+                </View>
+            </View>
+            <View style={{ flexDirection: 'row', marginHorizontal: 32 }}>
+                <View style={{ flex: 1 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <StatusPill
+                            backgroundColor="#A1C349"
+                            text={position}
+                            marginRight={10}
+                        />
+                        <StatusPill backgroundColor="#C5B171" text={department} />
+                    </View>
+                    <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={Typography.bold21}>{title}</Text>
+                            <Text style={Typography.normal15}>Picking now</Text>
+                        </View>
+                        <View
+                            style={{
+                                justifyContent: 'flex-start',
+                                alignItems: 'flex-end',
+                            }}>
+                            <Text style={Typography.bold21}>${price}</Text>
+                            <Text> per quantity</Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+                        <View style={styles.historyBox}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={styles.deliveryStatusCircle} />
+                                <Text style={Typography.bold15}>Express delivery</Text>
+                            </View>
+                            <View style={styles.deliverBoxRow2}>
+                                <Text>9:00 AM</Text>
+                                <Arrow />
+                                {/* <Text> ------------> </Text> */}
+                                <Text>10:00 AM</Text>
+                            </View>
+                        </View>
+                        <View style={styles.quantityPill}>
+                            <Text style={Typography.bold13White}>x</Text>
+                            <Text style={Typography.bold20White}>{quantity}</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </>
+    );
+};
+
+const VerifyItemSection = ({ item, navigation }) => {
     const [passItem, setPassItem] = useState(Array.apply(null, Array(item.qty)).map(itm => true))
     const [issue, setIssue] = useState(Array.apply(null, Array(item.qty)).map(itm => 'Physical damage'));
     const [showDropDown, setShowDropDown] = useState(Array.apply(null, Array(item.qty)).map(itm => false));
@@ -30,146 +135,139 @@ const ItemScreen = ({ route: { params: { item } }, navigation }) => {
     }
     return (
         <Provider>
-            <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1, }}>
-                <ScrollView>
-                    <View
-                        style={{
-                            backgroundColor: Colors.secondaryRed,
-                            padding: 20,
-                            marginHorizontal: 32,
-                            marginVertical: 32,
-                            borderRadius: 7,
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                        }}>
-                        <Text style={Typography.bold17White}>Time remaining</Text>
-                        <View
-                            style={{
-                                height: '100%',
-                                width: 1,
-                                backgroundColor: Colors.WHITE,
-                                opacity: 0.25,
-                            }}
-                        />
-                        <Text style={Typography.bold17White}>02:30 Hrs</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 32 }}>
-                        <View style={{ marginRight: 20 }}>
-                            <View
-                                style={{
-                                    backgroundColor: Colors.offWhite,
-                                    height: 166,
-                                    width: 124,
-                                    borderRadius: 7,
+            <Divider />
+            <View style={{ paddingVertical: 20, paddingHorizontal: 32 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
+                <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
+                ption in terms of volume & verify if it is in good
+                quality.
+</Text>
+                {passItem.map((item, index) => (
+                    <View key={index}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Item {index + 1}</Text>
+                            <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', marginLeft: 40, height: 40, width: 200, overflow: 'hidden' }}>
+                                <TouchableOpacity onPress={() => onCheckPass(true, index)}>
+                                    <View style={{ borderRadius: 8, backgroundColor: item ? 'lightgreen' : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
+                                        <Text style={{ textAlign: 'center' }}>Pass</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => onCheckPass(false, index)}>
+                                    <View style={{ borderRadius: 8, backgroundColor: item ? 'rgba(0,0,0,0)' : Colors.secondaryRed, height: '100%', width: 100, justifyContent: 'center' }}>
+                                        <Text style={{ textAlign: 'center' }}>Fail</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        { !passItem[index] && <View style={{ marginBottom: 20 }}>
+                            <DropDown
+                                label={'Issue'}
+                                mode={'outlined'}
+                                value={issue[index]}
+                                setValue={(value) => { onSetIssue(value, index) }}
+                                list={issueList}
+                                visible={showDropDown[index]}
+                                showDropDown={() => onShowDropDown(true, index)}
+                                onDismiss={() => { onShowDropDown(false, index) }}
+                                inputProps={{
+                                    right: <TextInput.Icon name={'menu-down'} />,
                                 }}
                             />
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View
-                                    style={{
-                                        backgroundColor: '#A1C349',
-                                        borderRadius: 3,
-                                        height: 25,
-                                        padding: 10,
-
-                                        justifyContent: 'center',
-                                    }}>
-                                    <Text style={Typography.normal12White}>Aisle</Text>
-                                </View>
-                                <View
-                                    style={{
-                                        backgroundColor: '#C5B171',
-                                        borderRadius: 3,
-                                        height: 25,
-                                        padding: 10,
-                                        marginHorizontal: 10,
-                                        justifyContent: 'center',
-                                    }}>
-                                    <Text style={Typography.normal12White}>Dept</Text>
-                                </View>
-                            </View>
-                            <Text style={Typography.bold21}>Colgate toothpaste</Text>
-                            <Text style={Typography.normal15}>Picking now</Text>
-                            <Text style={[Typography.normal15, { marginVertical: 10 }]}>
-                                For 09:00 - 10:00 Express delivery
-          </Text>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                }}>
-                                <Text style={Typography.bold21}>$10</Text>
-                                <Text> per quantity</Text>
-                                <View
-                                    style={{
-                                        backgroundColor: Colors.secondaryRed,
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        paddingHorizontal: 10,
-                                        borderRadius: 2,
-                                        marginLeft: 10,
-                                    }}>
-                                    <Text style={Typography.bold13White}>x</Text>
-                                    <Text style={Typography.bold20White}>{item.qty}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ paddingVertical: 10, borderBottomWidth: 0.5, borderTopWidth: 0.5, borderColor: Colors.primary5, paddingHorizontal: 32 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
-                        <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
-                        ption in terms of volume & verify if it is in good
-                        quality.
-                </Text>
-                        {passItem.map((item, index) => (
-                            <View key={index}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Item {index + 1}</Text>
-                                    <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', marginLeft: 40, height: 40, width: 200, overflow: 'hidden' }}>
-                                        <TouchableOpacity onPress={() => onCheckPass(true, index)}>
-                                            <View style={{ borderRadius: 8, backgroundColor: item ? 'lightgreen' : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
-                                                <Text style={{ textAlign: 'center' }}>Pass</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => onCheckPass(false, index)}>
-                                            <View style={{ borderRadius: 8, backgroundColor: item ? 'rgba(0,0,0,0)' : Colors.secondaryRed, height: '100%', width: 100, justifyContent: 'center' }}>
-                                                <Text style={{ textAlign: 'center' }}>Fail</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                { !passItem[index] && <View style={{ marginBottom: 20 }}>
-                                    <DropDown
-                                        label={'Issue'}
-                                        mode={'outlined'}
-                                        value={issue[index]}
-                                        setValue={(value) => { onSetIssue(value, index) }}
-                                        list={issueList}
-                                        visible={showDropDown[index]}
-                                        showDropDown={() => onShowDropDown(true, index)}
-                                        onDismiss={() => { onShowDropDown(false, index) }}
-                                        inputProps={{
-                                            right: <TextInput.Icon name={'menu-down'} />,
-                                        }}
-                                    />
-                                </View>}
-                            </View>
-                        ))}
-                    </View>
-                    {passItem.indexOf(false) ? <Button title="Scan QR code" style={{ margin: 40, }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
-                        : <View style={{ paddingVertical: 10, paddingHorizontal: 32 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
-                            <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
-                            ption in terms of volume & verify if it is in good
-                            quality.
-                </Text>
-                            <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} />
                         </View>}
-                </ScrollView>
-            </SafeAreaView>
+                    </View>
+                ))}
+            </View>
+
+            <Divider />
+            {passItem.indexOf(false) ?
+                <>
+                    <Divider />
+                    <Button title="Scan bar code" style={{ margin: 32, borderRadius: 7, width: width - 60 }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
+                    <View style={{ alignItems: 'center', paddingVertical: 20 }}>
+                        <Text>Scan Failed? Then use</Text>
+                        <Text
+                            style={{
+                                textDecorationLine: 'underline',
+                                ...Typography.bold17,
+                                color: Colors.secondaryRed,
+                            }}>
+                            Manual entry
+                        </Text>
+                    </View>
+                </>
+
+                : <View style={{ paddingVertical: 10, paddingHorizontal: 32 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
+                    <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
+                    ption in terms of volume & verify if it is in good
+                    quality.
+</Text>
+                    <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} />
+                </View>}
+
         </Provider>
-    );
-};
+    )
+}
+
+
+const styles = StyleSheet.create({
+    timerDivider: {
+        height: '100%',
+        width: 1,
+        backgroundColor: Colors.WHITE,
+        opacity: 0.25,
+    },
+    timerContainer: {
+        backgroundColor: Colors.secondaryRed,
+        padding: 20,
+        marginHorizontal: 32,
+        marginVertical: 24,
+        borderRadius: 7,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    itemImageContainer: {
+        marginHorizontal: 32,
+        marginBottom: 24,
+        alignItems: 'center',
+    },
+    itemImage: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.offWhite,
+        height: (1 * w) / 2,
+        width: screenWidth - 64,
+        borderRadius: 7,
+    },
+    deliveryStatusCircle: {
+        width: 14,
+        height: 14,
+        backgroundColor: '#889BFF',
+        borderRadius: 14,
+        marginRight: 10,
+    },
+    historyBox: {
+        backgroundColor: Colors.offWhite,
+        padding: 10,
+        borderRadius: 7,
+        height: 60,
+        flex: 1,
+    },
+    quantityPill: {
+        backgroundColor: Colors.secondaryRed,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 20,
+        borderRadius: 7,
+        marginLeft: 10,
+        height: 60,
+    },
+    flexDirectionRow: { flexDirection: 'row' },
+    deliverBoxRow2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+});
 
 export default ItemScreen;

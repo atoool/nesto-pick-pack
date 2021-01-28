@@ -8,15 +8,19 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import { AuthContextProvider } from './context/AuthContext';
+import { AppContextProvider } from './context/AppContext';
+import Linking from './utils/Linking';
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
-      <NavigationContainer>
-        <RootSwitchNavigator />
-      </NavigationContainer>
-    </AuthContextProvider>
+    <AppContextProvider>
+      <AuthContextProvider>
+        <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+        <NavigationContainer linking={Linking}>
+          <RootSwitchNavigator />
+        </NavigationContainer>
+      </AuthContextProvider>
+    </AppContextProvider>
   );
 };
 

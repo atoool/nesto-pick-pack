@@ -22,10 +22,10 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
     )
   }
   const onScan = ({ barcodes }) => {
-    itemScanned < totalItem &&
+    totalItem && itemScanned < totalItem &&
       barcodes?.data?.length != 0 &&
       setItemScanned(itemScanned + 1)
-    itemScanned == totalItem && navigation.navigate("PackSuccessScreen")
+    totalItem && itemScanned == totalItem && navigation.navigate("PackSuccessScreen")
   }
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -55,13 +55,17 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
           <BarCodeMask />
         </View>
         <Text style={{ textAlign: 'center', marginTop: 10, color: Colors.lightGray, fontSize: 12, }}>Scanning code ...</Text>
-        <View style={{ height: 40, width: 200, alignSelf: 'center', justifyContent: 'center' }}>
-          <Progress.Bar progress={itemScanned / totalItem} height={30} width={200} color='#c9d1ff' />
-          <Text style={{ position: 'absolute', height: '99%', width: '100%', textAlignVertical: 'center', textAlign: 'center', fontWeight: 'bold' }}>Scanning {itemScanned} of {totalItem}</Text>
-        </View>
-        <View>
-          <LinkButton title="Scan mismatch?" onPress={onScanMismatch} />
-        </View>
+        {totalItem &&
+          <>
+            <View style={{ height: 40, width: 200, alignSelf: 'center', justifyContent: 'center' }}>
+              <Progress.Bar progress={itemScanned / totalItem} height={30} width={200} color='#c9d1ff' />
+              <Text style={{ position: 'absolute', height: '99%', width: '100%', textAlignVertical: 'center', textAlign: 'center', fontWeight: 'bold' }}>Scanning {itemScanned} of {totalItem}</Text>
+            </View>
+            <View>
+              <LinkButton title="Scan mismatch?" onPress={onScanMismatch} />
+            </View>
+          </>
+        }
       </ScrollView>
     </SafeAreaView>
   );

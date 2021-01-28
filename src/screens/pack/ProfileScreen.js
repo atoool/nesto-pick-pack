@@ -7,12 +7,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
+import Icon from 'react-native-vector-icons/Feather';
 import { Typography, Colors } from '../../styles';
+import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
   const { logOutUser } = useContext(AuthContext);
-  const onLabelPress=()=>{
-navigation.navigate('PrintLabelsScreen',{orderId:null})
+  const onLabelPress = () => {
+    navigation.navigate('PrintLabelsScreen', { orderId: null })
   }
   return (
     <SafeAreaView>
@@ -21,8 +23,7 @@ navigation.navigate('PrintLabelsScreen',{orderId:null})
         email="john@gmail.com"
         phone="+91 8891356128"
       />
-      <LinkButton title="Mark availability" topBorder={true} />
-      <LinkButton title="My statistics" />
+      <MarkAvailability />
       <LinkButton title="Print label" onPress={onLabelPress} />
       <LinkButton title="Sign out" onPress={logOutUser} />
     </SafeAreaView>
@@ -37,7 +38,27 @@ const LinkButton = ({ title, topBorder, onPress }) => {
     <TouchableOpacity
       style={[styles.linkButton, borderStyle]}
       onPress={onPress}>
-      <Text style={Typography.bold21}>{title}</Text>
+      <Text style={[styles.linkButtonText, Typography.bold21]}>{title}</Text>
+      <Icon
+        name={'chevron-right'}
+        size={24}
+        color="#18191F"
+        style={styles.icon}
+      />
+    </TouchableOpacity>
+  );
+};
+
+const MarkAvailability = ({ topBorder }) => {
+  const borderStyle = {
+    borderTopWidth: topBorder ? 1 : 0,
+  };
+  return (
+    <TouchableOpacity style={[styles.linkButton, borderStyle]}>
+      <Text style={[styles.linkButtonText, Typography.bold21]}>
+        Mark availability
+      </Text>
+      <MarkAvailabilitySVG />
     </TouchableOpacity>
   );
 };
@@ -75,6 +96,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderBottomWidth: 1,
     borderColor: '#DFDEDE',
+    flexDirection: 'row',
+  },
+  linkButtonText: {
+    flex: 1,
   },
 });
 

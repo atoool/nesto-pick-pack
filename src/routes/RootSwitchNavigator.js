@@ -4,7 +4,8 @@ import SplashScreen from '../screens/common/SplashScreen';
 import LoginScreen from '../screens/common/LoginScreen';
 import PickTabsNavigator from '../routes/PickTabsNavigator';
 import { AuthContext } from '../context/AuthContext';
-import PackStackNavigators from './PackStackNavigators';
+import PackTabsNavigator from './PackTabsNavigator';
+
 const Stack = createStackNavigator();
 
 const RootSwitchNavigator = () => {
@@ -23,7 +24,7 @@ const RootSwitchNavigator = () => {
   } else if (userType === 'picker') {
     return <PickTabsNavigator />;
   } else if (userType === 'packer') {
-    return <PackStackNavigators />;
+    return <PackTabsNavigator />;
   } else {
     return (
       <Stack.Navigator initialRouteName="LoginScreen">

@@ -6,28 +6,40 @@ import PrintLabelsScreen from '../screens/pack/PrintLabelsScreen';
 import RepickSuccessScreen from '../screens/pack/RepickSuccessScreen';
 import ScanScreen from '../screens/pack/ScanScreen';
 import StatisticsScreen from '../screens/pack/StatisticsScreen';
-import PackTabsNavigator from './PackTabsNavigator';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
+import PackScreen from '../screens/pack/PackScreen';
+import ItemListScreen from '../screens/pack/ItemListScreen';
 
 const Stack = createStackNavigator();
 
 const PackStackNavigators = () => {
   return (
-    <Stack.Navigator initialRouteName="PackTabsNavigator">
+    <Stack.Navigator initialRouteName="PackScreen">
       <Stack.Screen
-        name="PackTabsNavigator"
-        component={PackTabsNavigator}
+        name="PackScreen"
+        component={PackScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ItemListScreen"
+        component={ItemListScreen}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="ItemScreen"
         component={ItemScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="PackSuccessScreen"
         component={PackSuccessScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, }}
       />
       <Stack.Screen
         name="PrintLabelsScreen"
@@ -50,12 +62,23 @@ const PackStackNavigators = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-      name="BinAssignScreen"
-      component={BinAssignScreen}
-      options={{ headerShown: false }}
-    />
+        name="BinAssignScreen"
+        component={BinAssignScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
+};
+
+const headerOptions = {
+  headerTitleAlign: 'center',
+  headerStyle: {
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 };
 
 export default PackStackNavigators;
