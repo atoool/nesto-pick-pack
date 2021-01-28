@@ -67,6 +67,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   buttonTitleText: {
+    fontWeight: 'bold',
     fontSize: 16,
     color: Colors.WHITE,
   },
