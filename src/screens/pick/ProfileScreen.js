@@ -9,6 +9,7 @@ import {
 import { AuthContext } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/Feather';
 import { Typography, Colors } from '../../styles';
+import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 
 const ProfileScreen = () => {
   const { logOutUser } = useContext(AuthContext);
@@ -19,7 +20,8 @@ const ProfileScreen = () => {
         email="john@gmail.com"
         phone="+91 8891356128"
       />
-      <LinkButton title="Mark availability" topBorder={true} />
+      <MarkAvailability />
+      {/* <LinkButton title="Mark availability" topBorder={true} /> */}
       {/* <LinkButton title="My statistics" /> */}
       <LinkButton title="Sign out" onPress={logOutUser} />
     </SafeAreaView>
@@ -41,6 +43,20 @@ const LinkButton = ({ title, topBorder, onPress }) => {
         color="#18191F"
         style={styles.icon}
       />
+    </TouchableOpacity>
+  );
+};
+
+const MarkAvailability = ({ topBorder }) => {
+  const borderStyle = {
+    borderTopWidth: topBorder ? 1 : 0,
+  };
+  return (
+    <TouchableOpacity style={[styles.linkButton, borderStyle]}>
+      <Text style={[styles.linkButtonText, Typography.bold21]}>
+        Mark availability
+      </Text>
+      <MarkAvailabilitySVG />
     </TouchableOpacity>
   );
 };
