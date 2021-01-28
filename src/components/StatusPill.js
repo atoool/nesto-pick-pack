@@ -7,10 +7,14 @@ const StatusPill = ({
   backgroundColor,
   marginRight = 0,
   marginLeft = 0,
+  borderRadius = 3,
 }) => {
   return (
     <View
-      style={[styles.container, { backgroundColor, marginRight, marginLeft }]}>
+      style={[
+        styles.container,
+        { backgroundColor, marginRight, marginLeft, borderRadius },
+      ]}>
       <Text style={Typography.normal12White}>{text}</Text>
     </View>
   );
@@ -18,7 +22,6 @@ const StatusPill = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 3,
     height: 25,
     paddingHorizontal: 10,
     marginRight: 10,

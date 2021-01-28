@@ -39,7 +39,11 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           <Text style={Typography.bold17}>{orderId}</Text>
           <Text style={Typography.normal15}>Picking Completed</Text>
         </View>
-        <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
+        <StatusPill
+          backgroundColor="#A1C349"
+          text={'2/20 Picked'}
+          borderRadius={100}
+        />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={styles.historyBox}>
