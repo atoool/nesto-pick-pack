@@ -10,6 +10,7 @@ import { AuthContext } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/Feather';
 import { Typography, Colors } from '../../styles';
 import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
+import Title from '../../components/Title';
 
 const ProfileScreen = ({ navigation }) => {
   const { logOutUser } = useContext(AuthContext);
@@ -17,7 +18,8 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('PrintLabelsScreen', { orderId: null })
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+      <Title text="Profile" />
       <ProfileSection
         name="John Doe"
         email="john@gmail.com"

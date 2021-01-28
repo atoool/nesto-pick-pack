@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Title from '../../components/Title';
 import RepickSVG from '../../assets/svg/RepickSVG';
+import { getNotifications } from '../../api';
+import notifications from '../../mock/notification.json'
 
 const NotificationsScreen = () => {
+  const [notificationList, setNotificationList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const _getNotifications = async () => {
+    setRefreshing(true);
+    try {
+      const res = await getNotifications();
+      setRefreshing(false);
+    } catch (e) {
+      console.log(e);
+      setNotificationList(notifications.data);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    setNotificationList([{
+      title: "Repicking Requested",
+      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
+    },
+    {
+      title: "Repicking Requested",
+      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
+    },
+    {
+      title: "Repicking Requested",
+      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
+    }])
+  }, [])
+
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE }}>
+    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text="Notifications" />
       <FlatList
-        data={[1, 2, 3, 4, 5, 6]}
+        data={notificationList}
         contentContainerStyle={{ paddingBottom: 60 }}
+        keyExtractor={(item, index) => { index.toString() }}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
-        // onRefresh={() => {
-        //   console.log('hi');
-        // }}
-        // refreshing={TODO}
-        renderItem={(i) => (
+        onRefresh={() => { _getNotifications() }}
+        refreshing={refreshing}
+        renderItem={({ item }) => (
           <Notification
-            title="Repicking Requested"
-            body="The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
+            title={item.title}
+            body={item.body}
           />
         )}
       />

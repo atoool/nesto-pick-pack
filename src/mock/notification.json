@@ -1,0 +1,61 @@
+{
+    "success": true,
+    "message": "New notifications",
+    "data": [
+        {
+            "title": "Repicking Requested",
+            "body": "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        },
+        {
+            "title": "Assign bin for order #3224",
+            "body": "The order #123ABC have to be assign a bin ASAP.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        },
+        {
+            "title": "Repicking Requested",
+            "body": "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        },
+        {
+            "title": "Assign bin for order #3224",
+            "body": "The order #123ABC have to be assign a bin ASAP.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        },
+        {
+            "title": "Repicking Requested",
+            "body": "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        },
+        {
+            "title": "Assign bin for order #3224",
+            "body": "The order #123ABC have to be assign a bin ASAP.",
+            "image": "",
+            "seen": "",
+            "data": "(metric_data)",
+            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
+            "Role": ""
+        }
+    ],
+    "success_code": 200
+}

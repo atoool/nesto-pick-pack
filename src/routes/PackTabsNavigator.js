@@ -63,6 +63,7 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
           if (index == 2)
             return (
               <TouchableOpacity
+                activeOpacity={0.7}
                 onPress={onPress}
                 style={styles.tabContainer}
                 key={index.toString()}>
@@ -73,7 +74,7 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
                     borderRadius: 50,
                     backgroundColor: Colors.secondaryRed, marginBottom: 5,
                     justifyContent: 'center',
-                    alignItems: 'center', elevation: 10
+                    alignItems: 'center', elevation: 1
                   }}>
                   <PackScanSVG color={color} width={25} />
                 </View>

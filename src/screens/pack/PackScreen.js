@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -15,16 +15,37 @@ import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 import TickSVG from '../../assets/svg/TickSVG';
+import NoOrders from '../../components/NoOrders';
+import { getOrdersList } from '../../api';
 
 const PackScreen = () => {
+
+  const [orders, setOrders] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const _getOrdersList = async () => {
+    setRefreshing(true);
+    try {
+      const res = await getOrdersList();
+      setRefreshing(false);
+    } catch (e) {
+      console.log(e);
+      setOrders(pickerOrders);
+      setRefreshing(false);
+    }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text="Pack now" />
       <FlatList
-        data={pickerOrders}
+        data={orders}
+        ListEmptyComponent={() => <NoOrders />}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item) => item.orderId}
         showsVerticalScrollIndicator={false}
+        onRefresh={() => _getOrdersList()}
+        refreshing={refreshing}
         renderItem={({ item }) => <AccordionItem order={item} />}
       />
     </SafeAreaView>
