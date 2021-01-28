@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Title from '../../components/Title';
+import RepickSVG from '../../assets/svg/RepickSVG';
 
 const NotificationsScreen = () => {
   return (
@@ -30,7 +31,9 @@ const NotificationsScreen = () => {
 const Notification = ({ title, body }) => {
   return (
     <View style={styles.notificationContainer}>
-      <View style={styles.notificationIconStyle} />
+      <View style={styles.notificationIconStyle}>
+        <RepickSVG />
+      </View>
       <View style={styles.notificationBodyContainer}>
         <Text style={Typography.bold17}>{title}</Text>
         <Text style={Typography.normal12}>{body}</Text>
@@ -48,6 +51,8 @@ const styles = StyleSheet.create({
   },
   notificationBodyContainer: { marginLeft: 20, flex: 1 },
   notificationIconStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#FAF3BD',
     width: 50,
     height: 50,

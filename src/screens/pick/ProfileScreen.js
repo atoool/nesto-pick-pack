@@ -10,11 +10,13 @@ import { AuthContext } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/Feather';
 import { Typography, Colors } from '../../styles';
 import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
+import Title from '../../components/Title';
 
 const ProfileScreen = () => {
   const { logOutUser } = useContext(AuthContext);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+      <Title text="Profile" />
       <ProfileSection
         name="John Doe"
         email="john@gmail.com"
