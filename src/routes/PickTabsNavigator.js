@@ -13,10 +13,12 @@ import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
 
+import useFirebase from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const Tabs = createBottomTabNavigator();
 
 const PickTabsNavigator = () => {
+  useFirebase();
   return (
     <Tabs.Navigator
       initialRouteName="Pick now"
