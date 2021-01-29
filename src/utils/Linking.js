@@ -9,7 +9,7 @@ const config = {
         Profile: "Profile",
         PackScreen: "PackScreen",
         ItemScreen: "ItemScreen",
-        PackSuccessScreen: "PackSuccessScreen",
+        ItemSuccessScreen: "ItemSuccessScreen",
         PrintLabelsScreen: "PrintLabelsScreen",
         RepickSuccessScreen: "RepickSuccessScreen",
         ScanScreen: "ScanScreen",

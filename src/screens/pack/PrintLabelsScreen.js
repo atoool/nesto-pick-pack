@@ -9,7 +9,7 @@ import { Colors, width } from '../../styles';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
     const [orderId, setOrderId] = useState(params.orderId)
-    const { bins, onChangeBins } = useContext(AppContext)
+    const { bins, binPos, onChangeBins } = useContext(AppContext)
     const onChangeOrderId = (text) => {
         setOrderId(text)
     }
@@ -21,7 +21,7 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30 }}>
                 <PrintLabelComponent orderId={orderId} bins={bins} onChangeOrderId={onChangeOrderId} onChangeBins={onChangeBins} />
-                <Button title="Print your label" style={{ marginVertical: 20, borderRadius: 7, width: width - 60, }} />
+                <Button disabled={binPos.length == 0 || orderId == ""} title="Print your label" style={{ marginVertical: 20, borderRadius: 7, width: width - 60, }} />
                 <Button title="Assign bin" onPress={onAssignBinPress} style={{ marginVertical: 0, borderRadius: 7, width: width - 60, }} />
             </ScrollView>
         </SafeAreaView>

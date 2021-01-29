@@ -190,7 +190,11 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
             <Divider />
             {passItem.indexOf(false) ?
                 <>
-                    <Button title="Scan bar code" style={{ margin: 32, borderRadius: 7, width: width - 60 }} onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
+                    <Button scanButton
+                        title="Scan bar code" subtitle="To verify items & proceed"
+                        titleStyle={Typography.bold17White}
+                        style={{ padding: 30, margin: 32, }}
+                        onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
                     <View style={{ alignItems: 'center', paddingVertical: 20 }}>
                         <Text>Scan Failed? Then use</Text>
                         <Text

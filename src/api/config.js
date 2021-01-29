@@ -1,4 +1,4 @@
-const API_URL = 'http://www.nesto.store';
+const API_URL = 'https://dev-api.nesto.shop/picker-packer';
 const IMAGES_API_URL = 'https://api.ketomined.ie/';
 const TERMS_URL =
     'https://photoapps.s3.amazonaws.com/ketomined/ketomined_termsandconditions.html';

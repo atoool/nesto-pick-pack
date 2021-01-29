@@ -17,6 +17,7 @@ import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 import TickSVG from '../../assets/svg/TickSVG';
 import NoOrders from '../../components/NoOrders';
 import { getOrdersList } from '../../api';
+import Button from '../../components/Button';
 
 const PackScreen = () => {
 
@@ -27,6 +28,7 @@ const PackScreen = () => {
     setRefreshing(true);
     try {
       const res = await getOrdersList();
+      setOrders(pickerOrders);
       setRefreshing(false);
     } catch (e) {
       console.log(e);

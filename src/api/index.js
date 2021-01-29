@@ -7,8 +7,8 @@ export const login = async (PAYLOAD) => {
 };
 
 export const getOrdersList = async () => {
-  const URL = '/orders';
-  return get(URL, true);
+  const URL = '/order-list';
+  return get(URL, false, true);
 };
 
 export const getHistoryList = async () => {

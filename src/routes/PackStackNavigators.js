@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ItemScreen from '../screens/pack/ItemScreen';
-import PackSuccessScreen from '../screens/pack/PackSuccessScreen';
+import ItemSuccessScreen from '../screens/pack/ItemSuccessScreen';
 import PrintLabelsScreen from '../screens/pack/PrintLabelsScreen';
 import RepickSuccessScreen from '../screens/pack/RepickSuccessScreen';
 import ScanScreen from '../screens/pack/ScanScreen';
@@ -9,6 +9,7 @@ import StatisticsScreen from '../screens/pack/StatisticsScreen';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import PackScreen from '../screens/pack/PackScreen';
 import ItemListScreen from '../screens/pack/ItemListScreen';
+import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
 
 const Stack = createStackNavigator();
 
@@ -37,8 +38,13 @@ const PackStackNavigators = () => {
         })}
       />
       <Stack.Screen
-        name="PackSuccessScreen"
-        component={PackSuccessScreen}
+        name="ItemSuccessScreen"
+        component={ItemSuccessScreen}
+        options={{ headerShown: false, }}
+      />
+      <Stack.Screen
+        name="PackCompletedScreen"
+        component={PackCompletedScreen}
         options={{ headerShown: false, }}
       />
       <Stack.Screen

@@ -28,4 +28,6 @@ export default {
   WHITE: '#ffffff',
   BLACK: '#000000',
   primaryGreen: '#A1C349',
+  primaryRed: '#FFF5F5',
+  lightViolet: '#889BFF'
 };

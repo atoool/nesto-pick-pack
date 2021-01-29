@@ -27,6 +27,7 @@ const PickScreen = () => {
     setRefreshing(true);
     try {
       const res = await getOrdersList();
+      setOrders(pickerOrders);
       setRefreshing(false);
     } catch (e) {
       console.log(e);

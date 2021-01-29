@@ -43,7 +43,7 @@ const NotificationsScreen = () => {
       <FlatList
         data={notificationList}
         contentContainerStyle={{ paddingBottom: 60 }}
-        keyExtractor={(item, index) => { index.toString() }}
+        keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         onRefresh={() => { _getNotifications() }}

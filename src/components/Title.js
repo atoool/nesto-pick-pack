@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../styles';
 
-const Title = ({ text }) => (
-  <View style={styles.container}>
+const Title = ({ text, style }) => (
+  <View style={[styles.container, style]}>
     <Text style={Typography.bold30}>{text}</Text>
   </View>
 );

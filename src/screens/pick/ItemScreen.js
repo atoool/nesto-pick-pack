@@ -20,7 +20,7 @@ import Images from '../../assets/images';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
-const ItemScreen = () => {
+const ItemScreen = ({ navigation }) => {
   const ss = 3600;
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -33,7 +33,7 @@ const ItemScreen = () => {
           position="Aisle 1 Rack A12"
           department="Consumer Dept."
         />
-        <VerifyItemSection />
+        <VerifyItemSection navigation={navigation} item={{ qty: 2 }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -118,7 +118,7 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
   );
 };
 
-const VerifyItemSection = ({}) => {
+const VerifyItemSection = ({ navigation, item }) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1;
   const substituteItems = status === 1 || status === 0;
@@ -174,14 +174,19 @@ const VerifyItemSection = ({}) => {
             </Text>
             <Button
               title="Suggest substitutes"
-              style={{ flex: 0, width: 200 }}
+              style={{ flex: 0, width: 200, marginBottom: 20 }}
+              onPress={() => { navigation.navigate('SubstituteRequestedScreen') }}
             />
           </>
         )}
         {!substituteItems && (
           <>
             <Divider />
-            <Button title="Scan QR code" />
+            <Button scanButton
+              title="Scan bar code" subtitle="To verify items & proceed"
+              titleStyle={Typography.bold17White}
+              style={{ padding: 30, }}
+              onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
               <Text>Scan Failed? Then use</Text>
               <Text
