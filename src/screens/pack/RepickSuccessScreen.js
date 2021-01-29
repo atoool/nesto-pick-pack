@@ -27,7 +27,7 @@ const RepickSuccessScreen = ({ navigation }) => {
                     <Text style={Typography.bold17}>What next?</Text>
                     <Text style={[Typography.normal15, { textAlign: 'center', marginTop: 7 }]}>While you are waiting, you can pack another item. This order will be moved to suspended.</Text>
                 </View>
-                <Button title="Pack another item" style={{ marginVertical: 30, marginHorizontal: 60 }} onPress={() => { navigation.pop(1) }} />
+                <Button title="Pack another item" style={{ marginVertical: 30, marginHorizontal: 60 }} onPress={() => { navigation.pop(2) }} />
             </ScrollView>
         </SafeAreaView>
     );

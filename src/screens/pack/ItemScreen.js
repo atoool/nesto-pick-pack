@@ -214,7 +214,7 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
                     ption in terms of volume & verify if it is in good
                     quality.
 </Text>
-                    <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} />
+                    <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} onPress={() => { navigation.navigate('RepickSuccessScreen') }} />
                 </View>}
 
         </>

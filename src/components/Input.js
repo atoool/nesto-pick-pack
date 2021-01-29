@@ -18,7 +18,7 @@ const Input = ({
   return (
     <View style={[styles.container, style]}>
       {iconName !== '' && (
-        <Icon name={iconName} size={24} color="#18191F" style={styles.icon} />
+        <Icon name={iconName} solid={false} size={20} color="#18191F" style={styles.icon} />
       )}
       <TextInput
         placeholder={placeholder}
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderColor: '#C5C5C5',
     borderRadius: 7,
   },
-  icon: { marginHorizontal: 10 },
+  icon: { paddingHorizontal: 10, marginRight: 5, borderRightWidth: 1, borderColor: Colors.primary6 },
   textInput: { flex: 1 },
 });
 
