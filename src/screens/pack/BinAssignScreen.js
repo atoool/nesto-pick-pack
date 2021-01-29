@@ -14,7 +14,7 @@ const BinAssignScreen = ({ route: { params: { orderId } }, navigation }) => {
     const { bins, binPos, onBinAssign, onChangeBins } = useContext(AppContext)
     return (
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30, paddingBottom: 60 }}>
                 <PrintLabelComponent orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide />
                 {Array.apply('', Array(parseInt(bins == "" ? 0 : bins))).map((val, indx) => (
                     <InputWithLabel key={indx} iconName="edit" label={'Position of Bin ' + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />

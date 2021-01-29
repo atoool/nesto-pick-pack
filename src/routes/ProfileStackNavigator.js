@@ -17,12 +17,18 @@ const ProfileStackNavigator = () => {
             <Stack.Screen
                 name="PrintLabelsScreen"
                 component={PrintLabelsScreen}
-                options={{ headerShown: false }}
+                options={({ route }) => ({
+                    title: "Print Labels",
+                    ...headerOptions,
+                })}
             />
             <Stack.Screen
                 name="BinAssignScreen"
                 component={BinAssignScreen}
-                options={{ headerShown: false }}
+                options={({ route }) => ({
+                    title: "Print Labels",
+                    ...headerOptions,
+                })}
             />
         </Stack.Navigator>
     );

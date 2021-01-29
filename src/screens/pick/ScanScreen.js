@@ -25,7 +25,10 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
     totalItem && itemScanned < totalItem &&
       barcodes?.data?.length != 0 &&
       setItemScanned(itemScanned + 1)
-    totalItem && itemScanned == totalItem && navigation.navigate("ItemSuccessScreen")
+    if (totalItem && itemScanned == totalItem) {
+      navigation.pop()
+      navigation.navigate("ItemSuccessScreen")
+    }
   }
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>

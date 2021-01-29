@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //Screens/Navigators
 import NotificationsScreen from '../screens/pack/NotificationsScreen';
 import HistoryScreen from '../screens/pack/HistoryScreen';
-import ProfileScreen from '../screens/pack/ProfileScreen';
 import PackStackNavigator from '../routes/PackStackNavigators';
 import ScanScreen from '../screens/pack/ScanScreen';
 //SVG for Tab Icons
@@ -16,6 +15,8 @@ import ProfileSVG from '../assets/svg/ProfileSVG.svg';
 import PackScanSVG from '../assets/svg/PackScanSVG.svg';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ProfileStackNavigator from './ProfileStackNavigator';
+
 const Tabs = createBottomTabNavigator();
 
 const PackTabsNavigator = () => {
@@ -27,7 +28,7 @@ const PackTabsNavigator = () => {
       <Tabs.Screen name="Notifications" component={NotificationsScreen} />
       <Tabs.Screen name="Scan" component={ScanScreen} initialParams={{ totalItems: null }} />
       <Tabs.Screen name="History" component={HistoryScreen} />
-      <Tabs.Screen name="Profile" component={ProfileScreen} />
+      <Tabs.Screen name="Profile" component={ProfileStackNavigator} />
     </Tabs.Navigator>
   );
 };

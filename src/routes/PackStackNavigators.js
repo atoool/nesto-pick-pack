@@ -50,7 +50,10 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="PrintLabelsScreen"
         component={PrintLabelsScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="RepickSuccessScreen"
@@ -70,7 +73,10 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="BinAssignScreen"
         component={BinAssignScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
     </Stack.Navigator>
   );
