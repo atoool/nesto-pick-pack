@@ -17,6 +17,7 @@ import useFirebase from './hooks/useFirebase';
 const App = () => {
   const [showSnack, setShowSnack] = useState(false)
   useFirebase()
+  
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       setShowSnack(!state?.isConnected);
