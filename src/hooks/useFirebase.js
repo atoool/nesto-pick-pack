@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import messaging from '@react-native-firebase/messaging';
+import { Linking } from 'react-native';
 // import { updateFCMToken } from '../api';
 // import * as RootNavigation from '../RootNavigation';
 // import { NotificationsContext } from '../context/NotificationsContext';
@@ -42,9 +43,10 @@ export default function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Linking.openURL(remoteMessage.data.key_1)
       console.warn(
         'FCM NOTIFCATION WHILE APP IN FG',
-        JSON.stringify(remoteMessage.notification.title),
+        JSON.stringify(remoteMessage.notification),
       );
     });
 
@@ -72,19 +74,22 @@ export default function useFirebase() {
           'Notification caused app to open from background state:',
           remoteMessage.notification,
         );
+        Linking.openURL(remoteMessage.data.key_1)
       }
     });
     // Check whether an initial notification is available
-    messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {
-        if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage.notification,
-          );
-        }
-      });
+    // messaging()
+    //   .getInitialNotification()
+    //   .then(async (remoteMessage) => {
+    //     if (remoteMessage) {
+          
+    //       console.log(
+    //         'Notification caused app to open from quit state:',
+    //         remoteMessage.data,
+    //       );
+    //       // Linking.openURL(remoteMessage.data.key_1)
+    //     }
+    //   });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -12,9 +12,11 @@ import { AuthContextProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
+import useFirebase from './hooks/useFirebase';
 
 const App = () => {
   const [showSnack, setShowSnack] = useState(false)
+  useFirebase()
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       setShowSnack(!state?.isConnected);
