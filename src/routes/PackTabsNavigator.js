@@ -24,9 +24,9 @@ const {locale:{locale}}=useContext(AppContext)
   useFirebase()
   return (
     <Tabs.Navigator
-      initialRouteName="Pack now"
+      initialRouteName="PackNow"
       tabBar={(props) => <PackTabBar {...props} />}>
-      <Tabs.Screen name="Pack now"
+      <Tabs.Screen name="PackNow"
       options={{title:locale?.headings?.pack}}
       component={PackStackNavigator} />
       <Tabs.Screen name="Notifications"
@@ -108,7 +108,7 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
 };
 
 const getIconBasedOnRouteName = (routeName, color) => {
-  if (routeName === 'Pack now') {
+  if (routeName === 'PackNow') {
     return <PickSVG color={color} width={20} />;
   } else if (routeName === 'Notifications') {
     return <NotificationSVG color={color} width={20} />;

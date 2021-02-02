@@ -1,4 +1,4 @@
-import React, { createContext, useState, } from 'react';
+import React, { createContext, useState,useEffect } from 'react';
 import {I18nManager} from 'react-native'
 import RNRestart from 'react-native-restart';
 import en from '../locale/en.json';

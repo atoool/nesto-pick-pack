@@ -10,6 +10,7 @@ import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import PackScreen from '../screens/pack/PackScreen';
 import ItemListScreen from '../screens/pack/ItemListScreen';
 import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
+import Browser from '../screens/common/Browser';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,12 @@ const PackStackNavigators = () => {
           title: route.params.orderId,
           ...headerOptions,
         })}
+      />
+      <Stack.Screen
+        name="Browser"
+        component={Browser}
+        options={{ headerShown: false }}
+        initialParams={{src:'https://nesto.store'}}
       />
     </Stack.Navigator>
   );

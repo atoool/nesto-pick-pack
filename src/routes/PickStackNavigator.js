@@ -8,6 +8,7 @@ import SubstituteRequestedScreen from '../screens/pick/SubstituteRequestedScreen
 import PickCompletedScreen from '../screens/pick/PickCompletedScreen'
 import SubstitutesScreen from '../screens/pick/SubstitutesScreen';
 import SubstitutionDetailsScreen from '../screens/pick/SubstitutionDetailsScreen';
+import Browser from '../screens/common/Browser';
 
 const Stack = createStackNavigator();
 
@@ -56,6 +57,12 @@ const PickStackNavigator = () => {
         name="SubstitutionDetailsScreen"
         component={SubstitutionDetailsScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Browser"
+        component={Browser}
+        options={{ headerShown: false }}
+        initialParams={{src:'https://nesto.store'}}
       />
     </Stack.Navigator>
   );
