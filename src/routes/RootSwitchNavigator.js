@@ -5,6 +5,7 @@ import LoginScreen from '../screens/common/LoginScreen';
 import PickTabsNavigator from '../routes/PickTabsNavigator';
 import { AuthContext } from '../context/AuthContext';
 import PackTabsNavigator from './PackTabsNavigator';
+import { useSubscribeTopic } from '../hooks/useFirebase';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,9 @@ const RootSwitchNavigator = () => {
   } else if (userType === 'packer') {
     return <PackTabsNavigator />;
   } else {
+    useSubscribeTopic('picker')
+
+    useSubscribeTopic('packer')
     return (
       <Stack.Navigator initialRouteName="LoginScreen">
         <Stack.Screen

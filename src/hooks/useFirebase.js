@@ -39,7 +39,23 @@ async function getTok() {
   }
 }
 
-export default function useFirebase() {
+export function useSubscribeTopic(topic){
+//  useEffect(()=>{ 
+   messaging()
+  .subscribeToTopic(topic)
+  .then(() => console.log('Subscribed to topic!'));
+// },[])
+}
+
+export function useUnSubscribeTopic(topic){
+  // useEffect(()=>{ 
+    messaging()
+   .unsubscribeFromTopic(topic)
+   .then(() => console.log('Unsubscribed from topic!'));
+//  },[])
+ }
+
+export function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {

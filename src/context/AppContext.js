@@ -1,6 +1,7 @@
 import React, { createContext, useState,useEffect } from 'react';
 import {I18nManager} from 'react-native'
 import RNRestart from 'react-native-restart';
+import { useSubscribeTopic, useUnSubscribeTopic } from '../hooks/useFirebase';
 import en from '../locale/en.json';
 import {Storage} from '../utils';
 
@@ -28,7 +29,8 @@ export const AppContextProvider = ({ children }) => {
       let _locale = LOCALES.find(
         (item) => item?.lan === localeFromStorage?.lan,
       );
-      setLocale(_locale ?? LOCALES[0]);
+      useSubscribeTopic(_locale.lan)
+      setLocale(_locale ?? _locale);
     } catch (e) {
       setLocale(LOCALES[0]);
     }
@@ -64,9 +66,11 @@ export const AppContextProvider = ({ children }) => {
     loadLocale();
   }, []);
 
-  const changeLocale = async (lan) => {
+  const changeLocale = async (lan,prevLan) => {
     let _locale = LOCALES.find((item) => item?.lan === lan);
     await Storage.setLocale({ lan: _locale?.lan, rtl: _locale?.rtl });
+    useUnSubscribeTopic(prevLan)
+    useSubscribeTopic(lan)
     setLocale(_locale);
     languageRestart(_locale?.rtl ?? LOCALES[0].rtl);
   };

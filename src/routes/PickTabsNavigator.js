@@ -12,7 +12,7 @@ import HistorySVG from '../assets/svg/HistorySVG.svg';
 import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
-import useFirebase from '../hooks/useFirebase';
+import {useFirebase, useSubscribeTopic} from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
 
@@ -21,6 +21,7 @@ const Tabs = createBottomTabNavigator();
 const PickTabsNavigator = () => {
   const {locale:{locale}}=useContext(AppContext)
   useFirebase();
+  useSubscribeTopic('picker');
   return (
     <Tabs.Navigator
       initialRouteName="Pick now"
