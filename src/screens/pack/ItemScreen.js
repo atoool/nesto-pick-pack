@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useContext, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, TouchableWithoutFeedback } from 'react-native';
 import Button from '../../components/Button';
 import { Typography, Colors, width } from '../../styles';
@@ -6,12 +6,14 @@ import useTimer from '../../hooks/useTimer';
 import images from '../../assets/images';
 import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
+import { AppContext } from '../../context/AppContext';
 
 const screenWidth = width
 const w = width - 32
 const ItemScreen = ({ route: { params: { item } }, navigation }) => {
     const containerRef = createRef(null)
     const ss = 3600;
+    const {locale:{locale}}=useContext(AppContext)
     return (
         <SafeAreaView ref={r => containerRef.current = r?.props} style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -22,6 +24,8 @@ const ItemScreen = ({ route: { params: { item } }, navigation }) => {
                     quantity={item.qty}
                     position="Aisle 1 Rack A12"
                     department={item.department}
+                    status={"packing now"}
+                    type={locale?.status.ED}
                 />
                 <VerifyItemSection
                     containerRef={containerRef.current}
@@ -40,10 +44,10 @@ const TimerComponent = ({ ss }) => {
     const minutesString = Math.floor(now / 60)
         .toString()
         .padStart(2, 0);
-
+        const {locale:{locale}}=useContext(AppContext)
     return (
         <View style={styles.timerContainer}>
-            <Text style={Typography.bold17White}>Time remaining</Text>
+            <Text style={Typography.bold17White}>{locale?.timeLeft}</Text>
             <View style={styles.timerDivider} />
             <Text style={Typography.bold17White}>
                 {HoursString}:{minutesString} Hrs
@@ -52,7 +56,9 @@ const TimerComponent = ({ ss }) => {
     );
 };
 
-const ItemSection = ({ title, price, quantity, position, department }) => {
+const ItemSection = ({ title, price, quantity, position, department,status,type }) => {
+
+    const {locale:{locale}}=useContext(AppContext)
     return (
         <>
             <View style={styles.itemImageContainer}>
@@ -77,7 +83,7 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
                     <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                         <View style={{ flex: 1 }}>
                             <Text style={Typography.bold21}>{title}</Text>
-                            <Text style={Typography.normal15}>Picking now</Text>
+                            <Text style={Typography.normal15}>{status}</Text>
                         </View>
                         <View
                             style={{
@@ -85,14 +91,14 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
                                 alignItems: 'flex-end',
                             }}>
                             <Text style={Typography.bold21}>${price}</Text>
-                            <Text> per quantity</Text>
+                            <Text>{locale?.IS_perQuantity}</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                         <View style={styles.historyBox}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={styles.deliveryStatusCircle} />
-                                <Text style={Typography.bold15}>Express delivery</Text>
+                                <Text style={Typography.bold15}>{type}</Text>
                             </View>
                             <View style={styles.deliverBoxRow2}>
                                 <Text>9:00 AM</Text>
@@ -117,10 +123,13 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
     const [issue, setIssue] = useState(Array.apply(null, Array(item.qty)).map(itm => 'Physical damage'));
     const [showDropDown, setShowDropDown] = useState(Array.apply(null, Array(item.qty)).map(itm => false));
     const [currentDropDown, setCurrentDropDown] = useState(0)
+
+    const {locale:{locale}}=useContext(AppContext)
+
     const issueList = [
-        { label: 'Physical damage', value: 'Physical damage' },
-        { label: 'Package broken', value: 'Package broken' },
-        { label: 'Expired product', value: 'Expired product' },
+        { label: locale?.reviews.opt1, value: 'Physical damage' },
+        { label: locale?.reviews.opt2, value: 'Package broken' },
+        { label: locale?.reviews.opt3, value: 'Expired product' },
     ];
     const onCheckPass = (val, index) => {
         passItem[index] = val
@@ -141,30 +150,28 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
         < >
             <Divider />
             <View style={{ paddingVertical: 20, paddingHorizontal: 32 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
-                <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
-                ption in terms of volume & verify if it is in good
-                quality.
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{locale?.IS_reviewit}</Text>
+                <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>{locale?.IS_reviewText}
 </Text>
                 {passItem.map((item, index) => (
                     <View key={index}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}>
-                            <Text style={{ ...Typography.bold13 }}>Item {index + 1}</Text>
+                            <Text style={{ ...Typography.bold13 }}>{locale?.item} {index + 1}</Text>
                             <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, flexDirection: 'row', alignSelf: 'flex-end', height: 40, width: 200, overflow: 'hidden' }}>
                                 <TouchableOpacity onPress={() => onCheckPass(true, index)}>
                                     <View style={{ borderRadius: 7, backgroundColor: item ? Colors.primaryGreen : 'rgba(0,0,0,0)', height: '100%', width: 100, justifyContent: 'center' }}>
-                                        <Text style={[{ textAlign: 'center' }, item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>Pass</Text>
+                                        <Text style={[{ textAlign: 'center' }, item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>{locale?.pass}</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => onCheckPass(false, index)}>
                                     <View style={{ borderRadius: 7, backgroundColor: item ? 'rgba(0,0,0,0)' : Colors.secondaryRed, height: '100%', width: 100, justifyContent: 'center' }}>
-                                        <Text style={[{ textAlign: 'center', }, !item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>Fail</Text>
+                                        <Text style={[{ textAlign: 'center', }, !item ? { ...Typography.bold13White } : { ...Typography.bold13 }]}>{locale?.fail}</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
                         </View>
                         { !passItem[index] && <View style={{ marginBottom: 20, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Text style={{ ...Typography.normal12 }}>Review item</Text>
+                            <Text style={{ ...Typography.normal12 }}>{locale?.IS_reviewit}</Text>
                             <View style={{ alignSelf: 'flex-end' }}>
                                 <TouchableWithoutFeedback onPress={() => { onShowDropDown(!showDropDown[index], index) }}>
                                     <View style={{ borderColor: Colors.primary4, borderWidth: 0.5, borderRadius: 10, height: 40, width: 200 }}>
@@ -191,29 +198,26 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
             {passItem.indexOf(false) ?
                 <>
                     <Button scanButton
-                        title="Scan bar code" subtitle="To verify items & proceed"
+                        title={locale?.IS_scanBar} subtitle={locale?.IS_toVerify}
                         titleStyle={Typography.bold17White}
                         style={{ padding: 30, margin: 32, }}
                         onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
                     <View style={{ alignItems: 'center', paddingVertical: 20 }}>
-                        <Text>Scan Failed? Then use</Text>
+                        <Text>{locale?.IS_scanFailed}</Text>
                         <Text
                             style={{
                                 textDecorationLine: 'underline',
                                 ...Typography.bold17,
                                 color: Colors.secondaryRed,
                             }}>
-                            Manual entry
+                            {locale?.IS_scanManual}
                         </Text>
                     </View>
                 </>
 
                 : <View style={{ paddingVertical: 10, paddingHorizontal: 32 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review Item</Text>
-                    <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>Check if the item matches the order descri-
-                    ption in terms of volume & verify if it is in good
-                    quality.
-</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{locale?.IS_reviewit}</Text>
+                    <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>{locale?.IS_reviewText}</Text>
                     <Button title="Ask to repick" style={{ width: 180, marginVertical: 20 }} onPress={() => { navigation.navigate('RepickSuccessScreen') }} />
                 </View>}
 

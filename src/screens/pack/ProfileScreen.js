@@ -11,23 +11,27 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Typography, Colors } from '../../styles';
 import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 import Title from '../../components/Title';
+import { AppContext } from '../../context/AppContext';
 
 const ProfileScreen = ({ navigation }) => {
   const { logOutUser } = useContext(AuthContext);
+  
+  const {locale:{locale}}=useContext(AppContext)
+
   const onLabelPress = () => {
     navigation.navigate('PrintLabelsScreen', { orderId: null })
   }
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text="Profile" />
+      <Title text={locale?.headings?.profile} />
       <ProfileSection
         name="John Doe"
         email="john@gmail.com"
         phone="+91 8891356128"
       />
-      <MarkAvailability />
-      <LinkButton title="Print label" onPress={onLabelPress} />
-      <LinkButton title="Sign out" onPress={logOutUser} />
+      <MarkAvailability title={locale?.P_markAvail}/>
+      <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
+      <LinkButton title={locale?.signout} onPress={logOutUser} />
     </SafeAreaView>
   );
 };
@@ -51,14 +55,14 @@ const LinkButton = ({ title, topBorder, onPress }) => {
   );
 };
 
-const MarkAvailability = ({ topBorder }) => {
+const MarkAvailability = ({ topBorder,title }) => {
   const borderStyle = {
     borderTopWidth: topBorder ? 1 : 0,
   };
   return (
     <TouchableOpacity style={[styles.linkButton, borderStyle]}>
       <Text style={[styles.linkButtonText, Typography.bold21]}>
-        Mark availability
+       {title}
       </Text>
       <MarkAvailabilitySVG />
     </TouchableOpacity>

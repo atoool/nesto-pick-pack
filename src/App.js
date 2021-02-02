@@ -3,7 +3,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, { createRef, useContext, useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
@@ -12,12 +12,14 @@ import { AuthContextProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
-import useFirebase from './hooks/useFirebase';
+import {AppContext} from './context/AppContext'
+
 
 const App = () => {
   const [showSnack, setShowSnack] = useState(false)
-  useFirebase()
   
+  const {locale:{locale}}=useContext(AppContext)
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       setShowSnack(!state?.isConnected);
@@ -31,7 +33,7 @@ const App = () => {
         <NavigationContainer linking={Linking}>
           <RootSwitchNavigator />
         </NavigationContainer>
-        <SnackBar title="network connectivity down" showSnack={showSnack} />
+        <SnackBar title={locale?.networkError} showSnack={showSnack} />
       </AuthContextProvider>
     </AppContextProvider>
   );

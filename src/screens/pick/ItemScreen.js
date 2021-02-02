@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -16,6 +16,7 @@ import Button from '../../components/Button';
 import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import Images from '../../assets/images';
+import { AppContext } from '../../context/AppContext';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -32,6 +33,8 @@ const ItemScreen = ({ navigation }) => {
           quantity="2"
           position="Aisle 1 Rack A12"
           department="Consumer Dept."
+          type="Express Delivery"
+          status="Picking completed"
         />
         <VerifyItemSection navigation={navigation} item={{ qty: 2 }} />
       </ScrollView>
@@ -48,9 +51,11 @@ const TimerComponent = ({ ss }) => {
     .toString()
     .padStart(2, 0);
 
+    const {locale:{locale}}=useContext(AppContext)
+
   return (
     <View style={styles.timerContainer}>
-      <Text style={Typography.bold17White}>Time remaining</Text>
+      <Text style={Typography.bold17White}>{locale?.timeLeft}</Text>
       <View style={styles.timerDivider} />
       <Text style={Typography.bold17White}>
         {HoursString}:{minutesString} Hrs
@@ -58,7 +63,10 @@ const TimerComponent = ({ ss }) => {
     </View>
   );
 };
-const ItemSection = ({ title, price, quantity, position, department }) => {
+const ItemSection = ({ title, price, quantity, position, department,type,status }) => {
+
+  const {locale:{locale}}=useContext(AppContext)
+
   return (
     <>
       <View style={styles.itemImageContainer}>
@@ -83,7 +91,7 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
           <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ flex: 1 }}>
               <Text style={Typography.bold21}>{title}</Text>
-              <Text style={Typography.normal15}>Picking now</Text>
+              <Text style={Typography.normal15}>{status}</Text>
             </View>
             <View
               style={{
@@ -91,14 +99,14 @@ const ItemSection = ({ title, price, quantity, position, department }) => {
                 alignItems: 'flex-end',
               }}>
               <Text style={Typography.bold21}>${price}</Text>
-              <Text> per quantity</Text>
+              <Text> { locale?.IS_perQuantity}</Text>
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={styles.historyBox}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>Express delivery</Text>
+                <Text style={Typography.bold15}>{type}</Text>
               </View>
               <View style={styles.deliverBoxRow2}>
                 <Text>9:00 AM</Text>
@@ -123,33 +131,33 @@ const VerifyItemSection = ({ navigation, item }) => {
   const someOutofStock = status === 1;
   const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
+  
+  const {locale:{locale}}=useContext(AppContext)
+
   return (
     <>
       <Divider />
       <View style={{ marginHorizontal: 32 }}>
-        <Text style={Typography.bold21}>Verify Item</Text>
-        <Text style={{ marginVertical: 10 }}>
-          Check if the item matches the order description in terms of volume &
-          verify if it is in stock
-        </Text>
+        <Text style={Typography.bold21}>{locale?.IS_verifyit}</Text>
+        <Text style={{ marginVertical: 10 }}>{locale?.IS_verifyText}</Text>
         <RadioItem
           onPress={() => setStatus(2)}
           toggle={status === 2}
-          title="All items in stock"
+          title={locale?.IS_verifyOpt1}
         />
         <RadioItem
           onPress={() => setStatus(0)}
           toggle={status === 0}
-          title="All Items out of stock"
+          title={locale?.IS_verifyOpt2}
         />
         <RadioItem
           onPress={() => setStatus(1)}
           toggle={status === 1}
-          title="Some quantities out of stock"
+          title={locale?.IS_verifyOpt3}
         />
         {someOutofStock && (
           <TextInput
-            placeholder="Enter count of out of stock items"
+            placeholder={locale?.placeholder.countOfOutStock}
             keyboardType={'number-pad'}
             onChangeText={(t) =>
               setItemQty(t.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ''))
@@ -167,13 +175,10 @@ const VerifyItemSection = ({ navigation, item }) => {
         {substituteItems && (
           <>
             <Divider />
-            <Text style={Typography.bold21}>Substitute Items</Text>
-            <Text style={{ marginVertical: 10 }}>
-              Suggest alternatives for this item. The FCM and the customer will
-              be alerted. Please wait 10 mins to receive a reply.
-            </Text>
+            <Text style={Typography.bold21}>{locale?.IS_substiTitle}</Text>
+            <Text style={{ marginVertical: 10 }}>{locale?.IS_substiText}</Text>
             <Button
-              title="Suggest substitutes"
+              title={locale?.IS_substiButton}
               style={{ flex: 0, width: 200, marginBottom: 20 }}
               onPress={() => { navigation.navigate('SubstituteRequestedScreen') }}
             />
@@ -183,19 +188,19 @@ const VerifyItemSection = ({ navigation, item }) => {
           <>
             <Divider />
             <Button scanButton
-              title="Scan bar code" subtitle="To verify items & proceed"
+              title={locale?.IS_scanBar} subtitle={locale?.IS_toVerify}
               titleStyle={Typography.bold17White}
               style={{ padding: 30, }}
               onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
-              <Text>Scan Failed? Then use</Text>
+              <Text>{locale?.IS_scanFailed}</Text>
               <Text
                 style={{
                   textDecorationLine: 'underline',
                   ...Typography.bold17,
                   color: Colors.secondaryRed,
                 }}>
-                Manual entry
+               {locale?.IS_scanManual}
               </Text>
             </View>
           </>

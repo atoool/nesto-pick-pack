@@ -11,34 +11,36 @@ const BinAssignScreen = ({ route: { params: { orderId } }, navigation }) => {
     const onSave = () => {
         navigation.goBack()
     }
-    const { bins, binPos, onBinAssign, onChangeBins } = useContext(AppContext)
+
+    const { bins, binPos, onBinAssign, onChangeBins,locale:{locale} } = useContext(AppContext)
+
     return (
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30, paddingBottom: 60 }}>
-                <PrintLabelComponent orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide />
+                <PrintLabelComponent orderIdLabel={locale?.BAS_order} printLabelText={locale?.BAS_printLabel} binCountLabel={locale?.BAS_howMany} orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide />
                 {Array.apply('', Array(parseInt(bins == "" ? 0 : bins))).map((val, indx) => (
-                    <InputWithLabel key={indx} iconName="edit" label={'Position of Bin ' + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />
+                    <InputWithLabel key={indx} iconName="edit" label={locale?.BAS_Position + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />
                 ))}
-                <Button title="Save" onPress={onSave} style={{ width: width - 60 }} />
+                <Button title={locale?.save} onPress={onSave} style={{ width: width - 60 }} />
             </ScrollView>
         </SafeAreaView>
     );
 };
 
 
-const PrintLabelComponent = ({ onChangeOrderId, onChangeBins, orderId, bins, hide }) => {
+const PrintLabelComponent = ({ onChangeOrderId, onChangeBins, orderId, bins, hide ,binCountLabel,orderIdLabel,printLabelText}) => {
     return (
         <>
             <View style={{ backgroundColor: Colors.secondaryRed, borderRadius: 12, alignItems: 'center', padding: 40 }}>
                 <View style={{ flex: 1 }}>
                     {orderId ? <Barcode value={orderId} height={50} width={1} /> : <Loader small green />}
                 </View>
-                <Text style={{ color: Colors.WHITE, fontSize: 16, flex: 1, textAlign: 'center', textAlignVertical: 'bottom', marginTop: 20, fontWeight: 'bold' }}>Print labels for this order</Text>
+                <Text style={{ color: Colors.WHITE, fontSize: 16, flex: 1, textAlign: 'center', textAlignVertical: 'bottom', marginTop: 20, fontWeight: 'bold' }}>{printLabelText}</Text>
             </View>
 
-            <InputWithLabel iconName="shopping-cart" label={'How many bins are needed ?'} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
+            <InputWithLabel iconName="shopping-cart" label={binCountLabel} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
             {!hide &&
-                <InputWithLabel iconName="edit" label={'Order number to print'} top={10} value={orderId} onChangeText={onChangeOrderId} />
+                <InputWithLabel iconName="edit" label={orderIdLabel} top={10} value={orderId} onChangeText={onChangeOrderId} />
             }
         </>
     )

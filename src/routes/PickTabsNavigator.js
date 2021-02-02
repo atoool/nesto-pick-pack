@@ -12,21 +12,31 @@ import HistorySVG from '../assets/svg/HistorySVG.svg';
 import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
-
 import useFirebase from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AppContext } from '../context/AppContext';
+
 const Tabs = createBottomTabNavigator();
 
 const PickTabsNavigator = () => {
+  const {locale:{locale}}=useContext(AppContext)
   useFirebase();
   return (
     <Tabs.Navigator
       initialRouteName="Pick now"
       tabBar={(props) => <PickTabBar {...props} />}>
-      <Tabs.Screen name="Pick now" component={PickStackNavigator} />
-      <Tabs.Screen name="Notifications" component={NotificationsScreen} />
-      <Tabs.Screen name="History" component={HistoryScreen} />
-      <Tabs.Screen name="Profile" component={ProfileScreen} />
+      <Tabs.Screen name="Pick now"
+      options={{title:locale?.headings?.pick}}
+      component={PickStackNavigator} />
+      <Tabs.Screen name="Notifications"
+      options={{title:locale?.headings?.notifications}}
+      component={NotificationsScreen} />
+      <Tabs.Screen name="History"
+      options={{title:locale?.headings?.history}} 
+      component={HistoryScreen} />
+      <Tabs.Screen name="Profile"
+      options={{title:locale?.headings?.profile}}
+       component={ProfileScreen} />
     </Tabs.Navigator>
   );
 };

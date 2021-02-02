@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
 import Button from '../../components/Button';
+import { AppContext } from '../../context/AppContext';
 
 const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
+
   const [itemScanned, setItemScanned] = useState(0)
+
+    const {locale:{locale}}=useContext(AppContext)
+
   const onScanMismatch = () => {
-    Alert.alert('Scan mismatch', 'There seems to be a mismatch in the bar code. Do you want to continue packing of item regardless ?',
+    Alert.alert(locale?.SS_alertTitle, locale?.SS_alertText,
       [
         {
-          text: "No, Don't pick",
+          text: locale?.SS_alertopt1,
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "Yes pack this", onPress: () => console.log("OK Pressed") }
+        { text: locale?.SS_alertopt2, onPress: () => console.log("OK Pressed") }
       ],
       { cancelable: false }
     )
@@ -35,8 +40,8 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30, flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
         <View>
-          <Text style={{ textAlign: 'center', marginTop: 60, fontWeight: 'bold', fontSize: 20 }}>Scan Bar Code</Text>
-          <Text style={{ textAlign: 'center', marginTop: 10, borderWidth: 0.5, color: Colors.lightGray, borderColor: Colors.lightGray, fontSize: 12, padding: 10 }}>Place the bar code inside the frame to scan and please avoid shaketo get result quickly</Text>
+          <Text style={{ textAlign: 'center', marginTop: 60, fontWeight: 'bold', fontSize: 20 }}>{locale?.SS_scanbar}</Text>
+          <Text style={{ textAlign: 'center', marginTop: 10, borderWidth: 0.5, color: Colors.lightGray, borderColor: Colors.lightGray, fontSize: 12, padding: 10 }}>{locale?.SS_scanbarText}</Text>
         </View>
         <View style={{ height: 'auto', width: '80%', alignItems: 'center', justifyContent: 'center' }}>
           <RNCamera
@@ -47,10 +52,10 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{
-              title: 'Permission to use camera',
-              message: 'We need your permission to use your camera',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
+              title: locale?.SS_permitTitle,
+              message: locale?.SS_permitText,
+              buttonPositive: locale?.ok,
+              buttonNegative: locale?.cancel,
             }}
             captureAudio={false}
             onBarCodeRead={onScan}
@@ -58,15 +63,15 @@ const ScanScreen = ({ navigation, route: { params: { totalItem } } }) => {
           />
           <BarCodeMask />
         </View>
-        <Text style={{ textAlign: 'center', marginTop: 10, color: Colors.lightGray, fontSize: 12, }}>Scanning code ...</Text>
+        <Text style={{ textAlign: 'center', marginTop: 10, color: Colors.lightGray, fontSize: 12, }}>{locale?.SS_scanningCode} ...</Text>
         {totalItem &&
           <>
             <View style={{ height: 40, width: 200, alignSelf: 'center', justifyContent: 'center' }}>
               <Progress.Bar progress={itemScanned / totalItem} height={30} width={200} color='#c9d1ff' />
-              <Text style={{ position: 'absolute', height: '99%', width: '100%', textAlignVertical: 'center', textAlign: 'center', fontWeight: 'bold' }}>Scanning {itemScanned} of {totalItem}</Text>
+              <Text style={{ position: 'absolute', height: '99%', width: '100%', textAlignVertical: 'center', textAlign: 'center', fontWeight: 'bold' }}>{locale?.SS_scanning} {itemScanned} of {totalItem}</Text>
             </View>
             <View>
-              <LinkButton title="Scan mismatch?" onPress={onScanMismatch} />
+              <LinkButton title={locale?.SS_scanmis} onPress={onScanMismatch} />
             </View>
           </>
         }

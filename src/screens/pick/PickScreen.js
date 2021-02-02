@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -21,8 +21,12 @@ import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 import pickerOrders from '../../mock/pickerOrders.json';
 
 import { getOrdersList } from '../../api';
+import { AppContext } from '../../context/AppContext';
 
 const PickScreen = () => {
+
+  const {locale:{locale}}=useContext(AppContext)
+
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
@@ -45,7 +49,7 @@ const PickScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text="Pick now" />
+      <Title text={locale?.headings.pick} />
       <FlatList
         data={orders}
         ListEmptyComponent={() => <NoOrders />}
@@ -62,16 +66,19 @@ const PickScreen = () => {
 
 const AccordionItem = ({ order: { orderId, items } }) => {
   const navigation = useNavigation();
+
+  const {locale:{locale}}=useContext(AppContext)
+
   return (
     <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
           <Text style={Typography.bold17}>{orderId}</Text>
-          <Text style={Typography.normal15}>Picking Completed</Text>
+          <Text style={Typography.normal15}>{locale?.status.PiC}</Text>
         </View>
         <StatusPill
           backgroundColor="#A1C349"
-          text={'2/20 Picked'}
+          text={'2/20'+ locale?.picked}
           borderRadius={100}
         />
       </View>
@@ -79,7 +86,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         <View style={styles.historyBox}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={styles.deliveryStatusCircle} />
-            <Text style={Typography.bold15}>Express delivery</Text>
+            <Text style={Typography.bold15}>{locale?.status.ED}</Text>
           </View>
           <View style={styles.deliveryBox}>
             <Text>9:00 AM</Text>
@@ -105,7 +112,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           marginBottom: 10,
         }}>
         <Text style={[Typography.bold17, { color: '#A1C349' }]}>
-          Printing labels
+          {locale?.PS_printingLabel}
         </Text>
       </View>
       <FlatList

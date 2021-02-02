@@ -12,12 +12,16 @@ import Input from '../../components/Input';
 import { AuthContext } from '../../context/AuthContext';
 import { Typography } from '../../styles';
 import Images from '../../assets/images';
+import {AppContext} from '../../context/AppContext'
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const LoginScreen = () => {
   const { emailLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {locale:{locale}}=useContext(AppContext)
 
   const signInHandler = async () => {
     try {
@@ -31,27 +35,27 @@ const LoginScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Image style={styles.logoImage} source={Images.logo} />
-        <Text style={Typography.bold30}>Login</Text>
+        <Text style={Typography.bold30}>{locale?.Login}</Text>
         <Text style={[Typography.normal21, { marginBottom: 20 }]}>
-          Login to Access your profile
+         {locale?.LoginText}
         </Text>
         <Input
           iconName="user"
-          placeholder="Email Address"
+          placeholder={locale?.placeholder.email}
           value={email}
           style={styles.screenMargin}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
           iconName="lock"
-          placeholder="Password"
+          placeholder={locale?.placeholder.password}
           secureTextEntry={true}
           value={password}
           style={styles.screenMargin}
           onChangeText={(text) => setPassword(text)}
         />
         <Button
-          title="Sign in"
+          title={locale?.signin}
           onPress={signInHandler}
           loading={false}
           style={styles.screenMargin}

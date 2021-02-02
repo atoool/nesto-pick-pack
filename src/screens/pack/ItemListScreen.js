@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -16,16 +16,18 @@ import Arrow from '../../components/Arrow';
 import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 import TickSVG from '../../assets/svg/TickSVG';
 import Button from '../../components/Button';
+import { AppContext } from '../../context/AppContext';
 
 const ItemListScreen = ({ route: { params: { orderId, items } } }) => {
     const navigation = useNavigation();
+    const {locale:{locale}}=useContext(AppContext)
     return (
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View>
                         <Text style={Typography.bold17}>{orderId}</Text>
-                        <Text style={Typography.normal15}>Picking Completed</Text>
+                        <Text style={Typography.normal15}>{locale?.status?.PaC}</Text>
                     </View>
                     <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
                 </View>
@@ -33,7 +35,7 @@ const ItemListScreen = ({ route: { params: { orderId, items } } }) => {
                     <View style={styles.historyBox}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={styles.deliveryStatusCircle} />
-                            <Text style={Typography.bold15}>Express delivery</Text>
+                            <Text style={Typography.bold15}>{locale?.status?.ED}</Text>
                         </View>
                         <View style={styles.deliveryBox}>
                             <Text>9:00 AM</Text>
@@ -52,7 +54,7 @@ const ItemListScreen = ({ route: { params: { orderId, items } } }) => {
 
                 <Button
                     onPress={() => { navigation.navigate('PrintLabelsScreen', { orderId }) }}
-                    title="Change the bins & Print labels" style={{ width: width - 60, marginVertical: 10 }} />
+                    title={locale?.ILS_changeBins} style={{ width: width - 60, marginVertical: 10 }} />
 
                 <FlatList
                     data={items}
@@ -75,7 +77,7 @@ const ItemListScreen = ({ route: { params: { orderId, items } } }) => {
                                     <Text style={Typography.bold15}>
                                         {item.qty}x {item.name}
                                     </Text>
-                                    <Text style={Typography.normal12}>Health Department</Text>
+                                    <Text style={Typography.normal12}>{locale?.departments.h}</Text>
                                 </View>
                             </View>
                             <RightCaretSVG style={{ marginRight: 20 }} />

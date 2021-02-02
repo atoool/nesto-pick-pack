@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -18,11 +18,15 @@ import TickSVG from '../../assets/svg/TickSVG';
 import NoOrders from '../../components/NoOrders';
 import { getOrdersList } from '../../api';
 import Button from '../../components/Button';
+import { AppContext } from '../../context/AppContext';
 
 const PackScreen = () => {
 
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
+
+  const {locale:{locale}}=useContext(AppContext)
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -39,7 +43,7 @@ const PackScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text="Pack now" />
+      <Title text={locale?.headings.pack} />
       <FlatList
         data={orders}
         ListEmptyComponent={() => <NoOrders />}
@@ -56,13 +60,16 @@ const PackScreen = () => {
 
 const AccordionItem = ({ order: { orderId, items } }) => {
   const navigation = useNavigation();
+
+  const {locale:{locale}}=useContext(AppContext)
+
   return (
     <TouchableOpacity onPress={() => { navigation.navigate('ItemListScreen', { orderId, items }) }}>
       <View style={{ paddingHorizontal: 32, marginTop: 20, borderBottomWidth: 1, borderColor: Colors.offWhite }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
             <Text style={Typography.bold17}>{orderId}</Text>
-            <Text style={Typography.normal15}>Picking Completed</Text>
+            <Text style={Typography.normal15}>{locale?.status.PaC}</Text>
           </View>
           <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
         </View>
@@ -70,7 +77,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           <View style={styles.historyBox}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={styles.deliveryStatusCircle} />
-              <Text style={Typography.bold15}>Express delivery</Text>
+              <Text style={Typography.bold15}>{locale?.status.ED}</Text>
             </View>
             <View style={styles.deliveryBox}>
               <Text>9:00 AM</Text>

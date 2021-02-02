@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Title from '../../components/Title';
 import RepickSVG from '../../assets/svg/RepickSVG';
 import { getNotifications } from '../../api';
 import notifications from '../../mock/notification.json'
+import { AppContext } from '../../context/AppContext';
 
 const NotificationsScreen = () => {
   const [notificationList, setNotificationList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
+  const {locale:{locale}}=useContext(AppContext)
 
   const _getNotifications = async () => {
     setRefreshing(true);
@@ -39,7 +42,7 @@ const NotificationsScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text="Notifications" />
+      <Title text={locale?.headings.notifications} />
       <FlatList
         data={notificationList}
         contentContainerStyle={{ paddingBottom: 60 }}

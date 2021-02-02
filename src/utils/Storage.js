@@ -50,6 +50,16 @@ const logOutUser = async () => {
   await removeItem('userType');
 };
 
+const getLocale = async () => {
+  let jsonValue = await getItem('locale');
+  return jsonValue != null ? JSON.parse(jsonValue) : null;
+};
+const setLocale = async (locale) => {
+  const jsonValue = JSON.stringify(locale);
+  await setItem('locale', jsonValue);
+};
+
+
 export default {
   setItem,
   getItem,
@@ -61,4 +71,5 @@ export default {
   getUserType,
   setUserType,
   logOutUser,
+  getLocale,setLocale
 };

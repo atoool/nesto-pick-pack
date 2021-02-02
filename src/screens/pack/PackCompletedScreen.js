@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Success from '../../components/Success';
+import { AppContext } from '../../context/AppContext';
 import { Colors } from '../../styles';
 
 const PackCompletedScreen = ({ navigation }) => {
+
+    const {locale:{locale}}=useContext(AppContext)
+
     return (
         <Success
-            title="Completed"
+            title={locale?.Completed}
             color={Colors.lightViolet}
-            statusTitle="All items packed"
-            statusText="You have completed packing this order!"
-            infoTitle="What next?"
-            infoText="Take a rest. Wait till you receive a new packing order"
-            buttonText="Check notification"
+            statusTitle={locale?.PCS_statusTitle}
+            statusText={locale?.PCS_statusText}
+            infoTitle={locale?.PCS_infoTitle}
+            infoText={locale?.PCS_infoText}
+            buttonText={locale?.PCS_button}
             onPress={() => { navigation.popToTop(); }} />
     );
 };

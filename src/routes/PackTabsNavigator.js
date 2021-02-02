@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Typography, Colors } from '../styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,22 +13,33 @@ import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
 import PackScanSVG from '../assets/svg/PackScanSVG.svg';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProfileStackNavigator from './ProfileStackNavigator';
+import {AppContext} from '../context/AppContext'
+import useFirebase from '../hooks/useFirebase';
 
 const Tabs = createBottomTabNavigator();
-
 const PackTabsNavigator = () => {
+const {locale:{locale}}=useContext(AppContext)
+  useFirebase()
   return (
     <Tabs.Navigator
       initialRouteName="Pack now"
       tabBar={(props) => <PackTabBar {...props} />}>
-      <Tabs.Screen name="Pack now" component={PackStackNavigator} />
-      <Tabs.Screen name="Notifications" component={NotificationsScreen} />
-      <Tabs.Screen name="Scan" component={ScanScreen} initialParams={{ totalItems: null }} />
-      <Tabs.Screen name="History" component={HistoryScreen} />
-      <Tabs.Screen name="Profile" component={ProfileStackNavigator} />
+      <Tabs.Screen name="Pack now"
+      options={{title:locale?.headings?.pack}}
+      component={PackStackNavigator} />
+      <Tabs.Screen name="Notifications"
+      options={{title:locale?.headings?.notifications}}
+      component={NotificationsScreen} />
+      <Tabs.Screen name="Scan"
+      component={ScanScreen} initialParams={{ totalItems: null }} />
+      <Tabs.Screen name="History"
+      options={{title:locale?.headings?.history}} 
+      component={HistoryScreen} />
+      <Tabs.Screen name="Profile"
+      options={{title:locale?.headings?.profile}}
+       component={ProfileStackNavigator} />
     </Tabs.Navigator>
   );
 };
