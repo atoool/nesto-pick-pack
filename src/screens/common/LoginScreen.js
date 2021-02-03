@@ -40,14 +40,14 @@ const LoginScreen = () => {
          {locale?.LoginText}
         </Text>
         <Input
-          iconName="user"
+          iconName="UserSVG"
           placeholder={locale?.placeholder.email}
           value={email}
           style={styles.screenMargin}
           onChangeText={(text) => setEmail(text)}
         />
         <Input
-          iconName="lock"
+          iconName="LockSVG"
           placeholder={locale?.placeholder.password}
           secureTextEntry={true}
           value={password}

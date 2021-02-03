@@ -38,9 +38,9 @@ const PrintLabelComponent = ({ onChangeOrderId, onChangeBins, orderId, bins, hid
                 <Text style={{ color: Colors.WHITE, fontSize: 16, flex: 1, textAlign: 'center', textAlignVertical: 'bottom', marginTop: 20, fontWeight: 'bold' }}>{printLabelText}</Text>
             </View>
 
-            <InputWithLabel iconName="shopping-cart" label={binCountLabel} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
+            <InputWithLabel iconName="CartSVG" label={binCountLabel} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
             {!hide &&
-                <InputWithLabel iconName="edit" label={orderIdLabel} top={10} value={orderId} onChangeText={onChangeOrderId} />
+                <InputWithLabel iconName="EditSVG" label={orderIdLabel} top={10} value={orderId} onChangeText={onChangeOrderId} />
             }
         </>
     )

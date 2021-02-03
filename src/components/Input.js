@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import GetIcon from './GetIcon';
 import { Colors } from '../styles';
 
 const Input = ({
@@ -18,7 +18,9 @@ const Input = ({
   return (
     <View style={[styles.container, style]}>
       {iconName !== '' && (
-        <Icon name={iconName} solid={false} size={20} color="#18191F" style={styles.icon} />
+        <View style={styles.icon}>
+        <GetIcon name={iconName} width={20}/>
+        </View>
       )}
       <TextInput
         placeholder={placeholder}

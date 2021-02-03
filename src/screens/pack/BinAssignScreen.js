@@ -19,7 +19,7 @@ const BinAssignScreen = ({ route: { params: { orderId } }, navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30, paddingBottom: 60 }}>
                 <PrintLabelComponent orderIdLabel={locale?.BAS_order} printLabelText={locale?.BAS_printLabel} binCountLabel={locale?.BAS_howMany} orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide />
                 {Array.apply('', Array(parseInt(bins == "" ? 0 : bins))).map((val, indx) => (
-                    <InputWithLabel key={indx} iconName="edit" label={locale?.BAS_Position + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />
+                    <InputWithLabel key={indx} iconName="EditSVG" label={locale?.BAS_Position + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />
                 ))}
                 <Button title={locale?.save} onPress={onSave} style={{ width: width - 60 }} />
             </ScrollView>
@@ -38,9 +38,9 @@ const PrintLabelComponent = ({ onChangeOrderId, onChangeBins, orderId, bins, hid
                 <Text style={{ color: Colors.WHITE, fontSize: 16, flex: 1, textAlign: 'center', textAlignVertical: 'bottom', marginTop: 20, fontWeight: 'bold' }}>{printLabelText}</Text>
             </View>
 
-            <InputWithLabel iconName="shopping-cart" label={binCountLabel} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
+            <InputWithLabel iconName="CartSVG" label={binCountLabel} top={30} keyboard={"numeric"} value={bins} onChangeText={onChangeBins} />
             {!hide &&
-                <InputWithLabel iconName="edit" label={orderIdLabel} top={10} value={orderId} onChangeText={onChangeOrderId} />
+                <InputWithLabel iconName="EditSVG" label={orderIdLabel} top={10} value={orderId} onChangeText={onChangeOrderId} />
             }
         </>
     )
