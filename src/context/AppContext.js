@@ -9,19 +9,12 @@ const LOCALES = [{ lan: 'English', locale: en, isRTL: false }];
 
 export const AppContext = createContext({
   locale: LOCALES[0],
-  bins: '1',
-  binPos: [],
-  onChangeBins: () => { },
-  onBinAssign: () => { }
 });
 
 export const AppContextProvider = ({ children }) => {
   //locale
   const [languages, setLanguages] = useState();
   const [locale, setLocale] = useState(LOCALES[0]);
-//bin assign
-  const [bins, setBins] = useState('1')
-  const [binPos, setBinPos] = useState([]);
 
   const loadLocale = async () => {
     try {
@@ -49,14 +42,6 @@ export const AppContextProvider = ({ children }) => {
     RNRestart.Restart();
   };
 
-  const onChangeBins = (num) => {
-    setBins(num)
-  }
-  const onBinAssign = (txt, indx) => {
-    binPos[indx] = txt
-    setBinPos([...binPos])
-  }
-
   useEffect(() => {
     let _languages = LOCALES.map((item) => {
       let { lan, rtl } = item;
@@ -79,10 +64,6 @@ export const AppContextProvider = ({ children }) => {
     locale,
     languages,
     changeLocale,
-    bins,
-    binPos,
-    onChangeBins,
-    onBinAssign
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

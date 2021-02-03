@@ -9,19 +9,27 @@ import { Colors, width } from '../../styles';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
     const [orderId, setOrderId] = useState(params.orderId)
-    const { bins, binPos, onChangeBins,locale:{locale} } = useContext(AppContext)
+    const [bins, setBins] = useState('1')
+
+    const { locale:{locale} } = useContext(AppContext)
+
     const onChangeOrderId = (text) => {
         setOrderId(text)
     }
+    
+    const onChangeBins = (num) => {
+        setBins(num)
+      }
+
     const onAssignBinPress = () => {
-        navigation.navigate('BinAssignScreen', { orderId })
+        navigation.navigate('BinAssignScreen', { orderId ,bins})
     }
 
     return (
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30 }}>
                 <PrintLabelComponent orderIdLabel={locale?.BAS_order} printLabelText={locale?.BAS_printLabel} binCountLabel={locale?.BAS_howMany} orderId={orderId} bins={bins} onChangeOrderId={onChangeOrderId} onChangeBins={onChangeBins} />
-                <Button disabled={binPos.length == 0 || orderId == ""} title="Print your label" style={{ marginVertical: 20, borderRadius: 7, width: width - 60, }} />
+                <Button disabled={orderId == ""} title="Print your label" style={{ marginVertical: 20, borderRadius: 7, width: width - 60, }} />
                 <Button title="Assign bin" onPress={onAssignBinPress} style={{ marginVertical: 0, borderRadius: 7, width: width - 60, }} />
             </ScrollView>
         </SafeAreaView>

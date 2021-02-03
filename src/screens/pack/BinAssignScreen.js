@@ -7,17 +7,26 @@ import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { Colors, width, height } from '../../styles';
 
-const BinAssignScreen = ({ route: { params: { orderId } }, navigation }) => {
+const BinAssignScreen = ({ route: { params: { orderId,bins } }, navigation }) => {
+    const [binPos,setBinPos]=useState([])
+
+    const onBinAssign = (txt, indx) => {
+        binPos[indx] = txt
+        setBinPos([...binPos])
+      }
+
     const onSave = () => {
-        navigation.goBack()
+        navigation.pop(1)
     }
 
-    const { bins, binPos, onBinAssign, onChangeBins,locale:{locale} } = useContext(AppContext)
+    const {locale:{locale} } = useContext(AppContext)
+    
+  
 
     return (
         <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ margin: 30, paddingBottom: 60 }}>
-                <PrintLabelComponent orderIdLabel={locale?.BAS_order} printLabelText={locale?.BAS_printLabel} binCountLabel={locale?.BAS_howMany} orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide />
+                {/* <PrintLabelComponent orderIdLabel={locale?.BAS_order} printLabelText={locale?.BAS_printLabel} binCountLabel={locale?.BAS_howMany} orderId={orderId} bins={bins} onChangeOrderId={() => { }} onChangeBins={onChangeBins} hide /> */}
                 {Array.apply('', Array(parseInt(bins == "" ? 0 : bins))).map((val, indx) => (
                     <InputWithLabel key={indx} iconName="EditSVG" label={locale?.BAS_Position + (indx + 1)} top={10} value={binPos[indx]} onChangeText={text => onBinAssign(text, indx)} />
                 ))}
