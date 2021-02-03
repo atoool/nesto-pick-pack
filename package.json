@@ -1,6 +1,7 @@
 {
   "name": "NestoPickAndPackApp",
   "version": "0.0.1",
+  "buildNumber": "1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -50,7 +51,8 @@
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-svg-transformer": "^0.14.3",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "replace-in-file": "^6.2.0"
   },
   "jest": {
     "preset": "react-native"
