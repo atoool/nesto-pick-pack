@@ -38,6 +38,13 @@ const config = {
         Notifications: "Notifications",
         Scan: "Scan",
         History: "History",
+        Drop:"Drop",
+        AssignBin: {
+          screens:{
+            PrintLabelsScreen:"AssignBin/PrintLabelsScreen",
+            BinAssignScreen:"AssignBin/BinAssignScreen",
+          }
+        },
         Profile: {
           screens:{
             PrintLabelsScreen:"Profile/PrintLabelsScreen",

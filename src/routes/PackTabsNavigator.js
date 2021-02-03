@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import {AppContext} from '../context/AppContext'
 import {useFirebase, useSubscribeTopic} from '../hooks/useFirebase';
+import AssignStackNavigator from './AssignStackNavigator';
 
 const Tabs = createBottomTabNavigator();
 const PackTabsNavigator = () => {
@@ -30,14 +31,14 @@ const {locale:{locale}}=useContext(AppContext)
       <Tabs.Screen name="PackNow"
       options={{title:locale?.headings?.pack}}
       component={PackStackNavigator} />
-      <Tabs.Screen name="Notifications"
-      options={{title:locale?.headings?.notifications}}
-      component={NotificationsScreen} />
+       <Tabs.Screen name="AssignBin"
+      options={{title:locale?.headings?.assign}}
+      component={AssignStackNavigator} />
       <Tabs.Screen name="Scan"
       component={ScanScreen} initialParams={{ totalItems: null }} />
-      <Tabs.Screen name="History"
-      options={{title:locale?.headings?.history}} 
-      component={HistoryScreen} />
+            <Tabs.Screen name="Notifications"
+      options={{title:locale?.headings?.notifications}}
+      component={NotificationsScreen} />
       <Tabs.Screen name="Profile"
       options={{title:locale?.headings?.profile}}
        component={ProfileStackNavigator} />
@@ -113,7 +114,7 @@ const getIconBasedOnRouteName = (routeName, color) => {
     return <PickSVG color={color} width={20} />;
   } else if (routeName === 'Notifications') {
     return <NotificationSVG color={color} width={20} />;
-  } else if (routeName === 'History') {
+  } else if (routeName === 'AssignBin') {
     return <HistorySVG color={color} width={20} />;
   } else if (routeName === 'Profile') {
     return <ProfileSVG color={color} width={20} />;

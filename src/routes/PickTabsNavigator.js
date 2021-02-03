@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Typography, Colors } from '../styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +15,7 @@ import ProfileSVG from '../assets/svg/ProfileSVG.svg';
 import {useFirebase, useSubscribeTopic} from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
+import DropScreen from '../screens/pick/DropScreen';
 
 const Tabs = createBottomTabNavigator();
 
@@ -29,12 +30,12 @@ const PickTabsNavigator = () => {
       <Tabs.Screen name="Pick now"
       options={{title:locale?.headings?.pick}}
       component={PickStackNavigator} />
+      <Tabs.Screen name="Drop"
+      options={{title:locale?.headings?.drop}} 
+      component={DropScreen} />
       <Tabs.Screen name="Notifications"
       options={{title:locale?.headings?.notifications}}
       component={NotificationsScreen} />
-      <Tabs.Screen name="History"
-      options={{title:locale?.headings?.history}} 
-      component={HistoryScreen} />
       <Tabs.Screen name="Profile"
       options={{title:locale?.headings?.profile}}
        component={ProfileScreen} />
@@ -91,7 +92,7 @@ const getIconBasedOnRouteName = (routeName, color) => {
     return <PickSVG color={color} width={20} />;
   } else if (routeName === 'Notifications') {
     return <NotificationSVG color={color} width={20} />;
-  } else if (routeName === 'History') {
+  } else if (routeName === 'Drop') {
     return <HistorySVG color={color} width={20} />;
   } else if (routeName === 'Profile') {
     return <ProfileSVG color={color} width={20} />;

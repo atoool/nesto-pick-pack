@@ -7,7 +7,9 @@
     "notifications": "Notifications",
     "pick": "Pick Now",
     "pack": "Pack Now",
-    "Substituted":"Substituted"
+    "Substituted":"Substituted",
+    "assign":"Assign Bin",
+    "drop":"Drop Now"
   },
   "placeholder":{
     "email":"Email Address",
