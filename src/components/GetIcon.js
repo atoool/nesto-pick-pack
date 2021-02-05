@@ -15,6 +15,7 @@ import {DoneSVG,
     CartSVG,
     EditSVG,
     LockSVG,
+    NoNotificationSVG,
     UserSVG} from '../assets/svg';
 
 const GetIcon = ({name, color,width}) => {
@@ -54,6 +55,8 @@ const GetIcon = ({name, color,width}) => {
             return <TickSVG color={color} width={width} />;
           } else if (name === 'Success1SVG') {
             return <Success1SVG color={color} width={width} />;
+          }else if (name === 'NoNotificationSVG') {
+            return <NoNotificationSVG color={color} width={width} />;
           }
   };
 

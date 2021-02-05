@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Typography, Colors } from '../../styles';
 //Components
 import Title from '../../components/Title';
-import NoOrders from '../../components/NoOrders';
+import NoContent from '../../components/NoContent';
 import StatusPill from '../../components/StatusPill';
 import TickComponent from '../../components/TickComponent';
 import Arrow from '../../components/Arrow';
@@ -52,7 +52,7 @@ const DropScreen = () => {
       <Title text={locale?.headings.drop} />
       <FlatList
         data={orders}
-        ListEmptyComponent={() => <NoOrders />}
+        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={{ paddingBottom: 60 }}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.orderId}

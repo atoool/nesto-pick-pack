@@ -15,10 +15,10 @@ import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 import TickSVG from '../../assets/svg/TickSVG';
-import NoOrders from '../../components/NoOrders';
 import { getOrdersList } from '../../api';
 import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
+import NoContent from '../../components/NoContent';
 
 const PackScreen = () => {
 
@@ -46,7 +46,7 @@ const PackScreen = () => {
       <Title text={locale?.headings.pack} />
       <FlatList
         data={orders}
-        ListEmptyComponent={() => <NoOrders />}
+        ListEmptyComponent={() => <NoContent name="NoOrdersSVG"/>}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item) => item.orderId}
         showsVerticalScrollIndicator={false}

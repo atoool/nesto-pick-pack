@@ -15,4 +15,5 @@ import CartSVG from './CartSVG.svg';
 import EditSVG from './EditSVG.svg';
 import UserSVG from './UserSVG.svg';
 import LockSVG from './LockSVG.svg';
-export {DoneSVG,TickSVG,Success1SVG,Success2SVG,RightArrowSVG,RightCaretSVG,RepickSVG,PickSVG,PackScanSVG,NotificationSVG,NoOrdersSVG,MarkAvailabilitySVG,HistorySVG,CartSVG,UserSVG,EditSVG,LockSVG}
+import NoNotificationSVG from './NoNotificationSVG.svg'
+export {DoneSVG,TickSVG,Success1SVG,Success2SVG,RightArrowSVG,RightCaretSVG,RepickSVG,PickSVG,PackScanSVG,NotificationSVG,NoOrdersSVG,MarkAvailabilitySVG,HistorySVG,CartSVG,UserSVG,EditSVG,LockSVG,NoNotificationSVG}

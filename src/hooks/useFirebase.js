@@ -39,27 +39,27 @@ async function getTok() {
   }
 }
 
-export function useSubscribeTopic(topic){
-//  useEffect(()=>{ 
-   messaging()
-  .subscribeToTopic(topic)
-  .then(() => console.log('Subscribed to topic!'));
-// },[])
+export function useSubscribeTopic(topic) {
+  //  useEffect(()=>{
+  messaging()
+    .subscribeToTopic(topic)
+    .then(() => console.log('Subscribed to topic!'));
+  // },[])
 }
 
-export function useUnSubscribeTopic(topic){
-  // useEffect(()=>{ 
-    messaging()
-   .unsubscribeFromTopic(topic)
-   .then(() => console.log('Unsubscribed from topic!'));
-//  },[])
- }
+export function useUnSubscribeTopic(topic) {
+  // useEffect(()=>{
+  messaging()
+    .unsubscribeFromTopic(topic)
+    .then(() => console.log('Unsubscribed from topic!'));
+  //  },[])
+}
 
 export function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Linking.openURL(remoteMessage.data.key_1)
+      Linking.openURL(remoteMessage.data.key_1);
       console.warn(
         'FCM NOTIFCATION WHILE APP IN FG',
         JSON.stringify(remoteMessage.notification),
@@ -90,7 +90,7 @@ export function useFirebase() {
           'Notification caused app to open from background state:',
           remoteMessage.notification,
         );
-        Linking.openURL(remoteMessage.data.key_1)
+        Linking.openURL(remoteMessage.data.key_1);
       }
     });
     // Check whether an initial notification is available
@@ -98,7 +98,7 @@ export function useFirebase() {
     //   .getInitialNotification()
     //   .then(async (remoteMessage) => {
     //     if (remoteMessage) {
-          
+
     //       console.log(
     //         'Notification caused app to open from quit state:',
     //         remoteMessage.data,

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import NoOrdersSVG from '../assets/svg/NoOrdersSVG';
+// import NoOrdersSVG from '../assets/svg/NoOrdersSVG';
+import GetIcon from './GetIcon';
 
-const NoOrders = () => (
+const NoContent = ({name}) => (
   <View style={styles.containerStyle}>
-    <NoOrdersSVG width="100%" />
+    <GetIcon name={name} width="100%" />
   </View>
 );
 
@@ -18,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoOrders;
+export default NoContent;

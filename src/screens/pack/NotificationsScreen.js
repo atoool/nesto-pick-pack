@@ -6,6 +6,7 @@ import RepickSVG from '../../assets/svg/RepickSVG';
 import { getNotifications } from '../../api';
 import notifications from '../../mock/notification.json'
 import {AppContext} from '../../context/AppContext'
+import NoContent from '../../components/NoContent';
 
 const NotificationsScreen = () => {
   const [notificationList, setNotificationList] = useState([]);
@@ -17,6 +18,7 @@ const NotificationsScreen = () => {
     setRefreshing(true);
     try {
       const res = await getNotifications();
+      setNotificationList(notifications.data);
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -26,24 +28,14 @@ const NotificationsScreen = () => {
   };
 
   useEffect(() => {
-    setNotificationList([{
-      title: "Repicking Requested",
-      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
-    },
-    {
-      title: "Repicking Requested",
-      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
-    },
-    {
-      title: "Repicking Requested",
-      body: "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this."
-    }])
+
   }, [])
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.notifications} />
       <FlatList
+       ListEmptyComponent={() => <NoContent name={'NoNotificationSVG'} />}
         data={notificationList}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item, index) => index.toString()}
