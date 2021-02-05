@@ -39,7 +39,9 @@ const ScanScreen = ({
         },
         {
           text: locale?.SS_alertopt2,
-          onPress: () => console.log('OK Pressed'),
+          onPress: () => {
+            setItemScanned(itemScanned + 1);
+          },
         },
       ],
       { cancelable: false },

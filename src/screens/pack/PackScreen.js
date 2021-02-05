@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import pickerOrders from '../../mock/pickerOrders.json';
+import packerOrders from '../../mock/packerOrders.json';
 import { Typography, Colors } from '../../styles';
 import { useNavigation } from '@react-navigation/native';
 import Title from '../../components/Title';
@@ -21,22 +21,22 @@ import { AppContext } from '../../context/AppContext';
 import NoContent from '../../components/NoContent';
 
 const PackScreen = () => {
-
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
       const res = await getOrdersList();
-      setOrders(pickerOrders);
+      setOrders(packerOrders.data);
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setOrders(pickerOrders);
+      setOrders(packerOrders.data);
       setRefreshing(false);
     }
   };
@@ -46,9 +46,9 @@ const PackScreen = () => {
       <Title text={locale?.headings.pack} />
       <FlatList
         data={orders}
-        ListEmptyComponent={() => <NoContent name="NoOrdersSVG"/>}
+        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={{ paddingBottom: 60 }}
-        keyExtractor={(item) => item.orderId}
+        keyExtractor={(item) => item.order_id}
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
@@ -58,20 +58,34 @@ const PackScreen = () => {
   );
 };
 
-const AccordionItem = ({ order: { orderId, items } }) => {
+const AccordionItem = ({ order: { order_id, items } }) => {
   const navigation = useNavigation();
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
-    <TouchableOpacity onPress={() => { navigation.navigate('ItemListScreen', { orderId, items }) }}>
-      <View style={{ paddingHorizontal: 32, marginTop: 20, borderBottomWidth: 1, borderColor: Colors.offWhite }}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('ItemListScreen', { order_id, items });
+      }}>
+      <View
+        style={{
+          paddingHorizontal: 32,
+          marginTop: 20,
+          borderBottomWidth: 1,
+          borderColor: Colors.offWhite,
+        }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
-            <Text style={Typography.bold17}>{orderId}</Text>
-            <Text style={Typography.normal15}>{locale?.status.PaC}</Text>
+            <Text style={Typography.bold17}>{order_id}</Text>
+            <Text style={Typography.normal15}>{locale?.status.Pa}</Text>
           </View>
-          <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
+          <StatusPill
+            backgroundColor="#A1C349"
+            text={'1/20 ' + locale.packed}
+          />
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={styles.historyBox}>
@@ -93,7 +107,6 @@ const AccordionItem = ({ order: { orderId, items } }) => {
             </View>
           </View>
         </View>
-
       </View>
     </TouchableOpacity>
   );

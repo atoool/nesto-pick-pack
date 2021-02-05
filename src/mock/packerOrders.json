@@ -26,7 +26,7 @@
         {
           "_id": 123,
           "name": "Colgate 100g",
-          "department": "test1",
+          "department": "Health",
           "qty": 5,
           "price": 10
         },

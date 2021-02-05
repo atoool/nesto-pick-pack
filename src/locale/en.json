@@ -22,11 +22,13 @@
     "h":"Health Department"
   },
   "status":{
+    "Pa":"Packing",
     "PaC":"Packing completed",
   "PiC":"Picking completed",
   "AD":"Awaiting delivery",
   "ED":"Express delivery",
-  "SD":"Scheduled delivery"
+  "SD":"Scheduled delivery",
+  "BA":"Bin not assigned"
 },
 "reviews":{
   "opt1":"Physical damage",
@@ -41,6 +43,7 @@
   "BAS_Position":"Position of Bin",
   "save":"Save",
   "picked":"Picked",
+  "packed":"Packed",
   "pass":"pass",
   "fail":"fail",
   "item":"Item",

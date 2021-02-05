@@ -80,9 +80,12 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
             <Text style={Typography.bold17}>{orderId}</Text>
-            <Text style={Typography.normal15}>{locale?.status.PaC}</Text>
+            <Text style={Typography.normal15}>{locale?.status.BA}</Text>
           </View>
-          <StatusPill backgroundColor="#A1C349" text={'2/20 Picked'} />
+          <StatusPill
+            backgroundColor="#A1C349"
+            text={'2/20 ' + locale.picked}
+          />
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={styles.historyBox}>
