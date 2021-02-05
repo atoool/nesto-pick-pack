@@ -45,10 +45,10 @@ const ScanScreen = ({
       { cancelable: false },
     );
   };
-  const onScan = ({ barcodes }) => {
+  const onScan = (barcodes) => {
     if (totalItem && itemScanned < totalItem && barcodes?.data?.length != 0) {
-      const temp = barcodeArray.filter((b) => barcodes?.data == b);
-      if (temp && temp?.length == 0) {
+      const temp = barcodeArray.indexOf(barcodes?.data) > -1;
+      if (!temp) {
         setItemScanned(itemScanned + 1);
         setBarcodeArray([...barcodeArray, barcodes?.data]);
       }
