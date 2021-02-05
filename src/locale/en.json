@@ -8,8 +8,10 @@
     "pick": "Pick Now",
     "pack": "Pack Now",
     "Substituted":"Substituted",
-    "assign":"Assign Bin",
-    "drop":"Drop Now"
+    "drop":"Drop Now",
+    "Print_Labels":"Print Labels",
+    "Assign_Bin":"Assign Bin",
+    "Assign_Now":"Assign Now"
   },
   "placeholder":{
     "email":"Email Address",
@@ -44,6 +46,7 @@
   "item":"Item",
   "PS_printingLabel":"Printing labels",
   "BAS_printLabel":"Print labels for this order",
+  "BAS_printLabel2":"Assign positions for each bin for the order ",
   "BAS_howMany":"How many bins are needed ?",
   "BAS_order":"Order number to print",
   "ILS_changeBins":"Change the bins & Print labels",

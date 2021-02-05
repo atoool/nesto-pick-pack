@@ -21,12 +21,12 @@ import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
 
 const AssignBinTabScreen = () => {
-
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -43,7 +43,7 @@ const AssignBinTabScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text={locale?.headings.assign} />
+      <Title text={locale?.headings.Assign_Now} />
       <FlatList
         data={orders}
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
@@ -61,11 +61,22 @@ const AssignBinTabScreen = () => {
 const AccordionItem = ({ order: { orderId, items } }) => {
   const navigation = useNavigation();
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
-    <TouchableOpacity onPress={() => { navigation.navigate('PrintLabelsScreen', { orderId, items }) }}>
-      <View style={{ paddingHorizontal: 32, marginTop: 20, borderBottomWidth: 1, borderColor: Colors.offWhite }}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('PrintLabelsScreen', { orderId, items });
+      }}>
+      <View
+        style={{
+          paddingHorizontal: 32,
+          marginTop: 20,
+          borderBottomWidth: 1,
+          borderColor: Colors.offWhite,
+        }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
             <Text style={Typography.bold17}>{orderId}</Text>
@@ -93,7 +104,6 @@ const AccordionItem = ({ order: { orderId, items } }) => {
             </View>
           </View>
         </View>
-
       </View>
     </TouchableOpacity>
   );

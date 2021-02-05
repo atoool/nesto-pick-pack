@@ -15,33 +15,46 @@ import ProfileSVG from '../assets/svg/ProfileSVG.svg';
 import PackScanSVG from '../assets/svg/PackScanSVG.svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProfileStackNavigator from './ProfileStackNavigator';
-import {AppContext} from '../context/AppContext'
-import {useFirebase, useSubscribeTopic} from '../hooks/useFirebase';
+import { AppContext } from '../context/AppContext';
+import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
 import AssignStackNavigator from './AssignStackNavigator';
 
 const Tabs = createBottomTabNavigator();
 const PackTabsNavigator = () => {
-const {locale:{locale}}=useContext(AppContext)
-  useFirebase()
-  useSubscribeTopic('packer')
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
+  useFirebase();
+  useSubscribeTopic('packer');
   return (
     <Tabs.Navigator
       initialRouteName="PackNow"
       tabBar={(props) => <PackTabBar {...props} />}>
-      <Tabs.Screen name="PackNow"
-      options={{title:locale?.headings?.pack}}
-      component={PackStackNavigator} />
-       <Tabs.Screen name="AssignBin"
-      options={{title:locale?.headings?.assign}}
-      component={AssignStackNavigator} />
-      <Tabs.Screen name="Scan"
-      component={ScanScreen} initialParams={{ totalItems: null }} />
-            <Tabs.Screen name="Notifications"
-      options={{title:locale?.headings?.notifications}}
-      component={NotificationsScreen} />
-      <Tabs.Screen name="Profile"
-      options={{title:locale?.headings?.profile}}
-       component={ProfileStackNavigator} />
+      <Tabs.Screen
+        name="PackNow"
+        options={{ title: locale?.headings?.pack }}
+        component={PackStackNavigator}
+      />
+      <Tabs.Screen
+        name="AssignBin"
+        options={{ title: locale?.headings?.Assign_Now }}
+        component={AssignStackNavigator}
+      />
+      <Tabs.Screen
+        name="Scan"
+        component={ScanScreen}
+        initialParams={{ totalItems: null }}
+      />
+      <Tabs.Screen
+        name="Notifications"
+        options={{ title: locale?.headings?.notifications }}
+        component={NotificationsScreen}
+      />
+      <Tabs.Screen
+        name="Profile"
+        options={{ title: locale?.headings?.profile }}
+        component={ProfileStackNavigator}
+      />
     </Tabs.Navigator>
   );
 };
@@ -57,8 +70,8 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
               : options.title !== undefined
-                ? options.title
-                : route.name;
+              ? options.title
+              : route.name;
 
           const isFocused = state.index === index;
           const color = isFocused ? Colors.secondaryRed : Colors.tabBarInactive;
@@ -86,9 +99,11 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
                     width: 50,
                     height: 50,
                     borderRadius: 50,
-                    backgroundColor: Colors.secondaryRed, marginBottom: 5,
+                    backgroundColor: Colors.secondaryRed,
+                    marginBottom: 5,
                     justifyContent: 'center',
-                    alignItems: 'center', elevation: 1
+                    alignItems: 'center',
+                    elevation: 1,
                   }}>
                   <PackScanSVG color={color} width={25} />
                 </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ItemScreen from '../screens/pack/ItemScreen';
 import ItemSuccessScreen from '../screens/pack/ItemSuccessScreen';
@@ -11,10 +11,14 @@ import PackScreen from '../screens/pack/PackScreen';
 import ItemListScreen from '../screens/pack/ItemListScreen';
 import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
 import Browser from '../screens/common/Browser';
+import { AppContext } from '../context/AppContext';
 
 const Stack = createStackNavigator();
 
 const PackStackNavigators = () => {
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   return (
     <Stack.Navigator initialRouteName="PackScreen">
       <Stack.Screen
@@ -41,20 +45,20 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="ItemSuccessScreen"
         component={ItemSuccessScreen}
-        options={{ headerShown: false, }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PackCompletedScreen"
         component={PackCompletedScreen}
-        options={{ headerShown: false, }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PrintLabelsScreen"
         component={PrintLabelsScreen}
         options={({ route }) => ({
-          title: "Print Labels",
+          title: locale.headings.Print_Labels,
           ...headerOptions,
-      })}
+        })}
       />
       <Stack.Screen
         name="RepickSuccessScreen"
@@ -75,15 +79,15 @@ const PackStackNavigators = () => {
         name="BinAssignScreen"
         component={BinAssignScreen}
         options={({ route }) => ({
-          title: "Print Labels",
+          title: locale.headings.Assign_Bin,
           ...headerOptions,
-      })}
+        })}
       />
       <Stack.Screen
         name="Browser"
         component={Browser}
         options={{ headerShown: false }}
-        initialParams={{src:'https://nesto.store'}}
+        initialParams={{ src: 'https://nesto.store' }}
       />
     </Stack.Navigator>
   );
