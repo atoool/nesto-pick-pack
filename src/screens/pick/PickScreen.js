@@ -24,8 +24,9 @@ import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 
 const PickScreen = () => {
-
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -67,18 +68,20 @@ const PickScreen = () => {
 const AccordionItem = ({ order: { orderId, items } }) => {
   const navigation = useNavigation();
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
     <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View>
           <Text style={Typography.bold17}>{orderId}</Text>
-          <Text style={Typography.normal15}>{locale?.status.PiC}</Text>
+          <Text style={Typography.normal15}>{locale?.status.Pi}</Text>
         </View>
         <StatusPill
           backgroundColor="#A1C349"
-          text={'2/20'+ locale?.picked}
+          text={'1/20 ' + locale?.picked}
           borderRadius={100}
         />
       </View>
@@ -95,7 +98,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           </View>
         </View>
         <View style={styles.counter}>
-          <Text>Time Left</Text>
+          <Text>{locale.timeLeft}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={Typography.timeLeft}>01:00</Text>
             <Text> Hrs</Text>

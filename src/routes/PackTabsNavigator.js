@@ -28,18 +28,19 @@ const PackTabsNavigator = () => {
   useSubscribeTopic('packer');
   return (
     <Tabs.Navigator
-      initialRouteName="PackNow"
+      initialRouteName="AssignBin"
       tabBar={(props) => <PackTabBar {...props} />}>
-      <Tabs.Screen
-        name="PackNow"
-        options={{ title: locale?.headings?.pack }}
-        component={PackStackNavigator}
-      />
       <Tabs.Screen
         name="AssignBin"
         options={{ title: locale?.headings?.Assign_Now }}
         component={AssignStackNavigator}
       />
+      <Tabs.Screen
+        name="PackNow"
+        options={{ title: locale?.headings?.pack }}
+        component={PackStackNavigator}
+      />
+
       <Tabs.Screen
         name="Scan"
         component={ScanScreen}
@@ -139,6 +140,7 @@ const getIconBasedOnRouteName = (routeName, color) => {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    paddingHorizontal: 5,
   },
   tabContainer: {
     flex: 1,

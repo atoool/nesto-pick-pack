@@ -53,7 +53,7 @@ const ItemListScreen = ({
             </View>
           </View>
           <View style={styles.counter}>
-            <Text>Time Left</Text>
+            <Text>{locale.timeLeft}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={Typography.timeLeft}>01:00</Text>
               <Text> Hrs</Text>
@@ -63,7 +63,7 @@ const ItemListScreen = ({
 
         <Button
           onPress={() => {
-            navigation.navigate('PrintLabelsScreen', { order_id });
+            navigation.navigate('PrintLabelsScreen', { orderId: order_id });
           }}
           title={locale?.ILS_changeBins}
           style={{ width: width - 60, marginVertical: 10 }}

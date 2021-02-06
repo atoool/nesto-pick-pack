@@ -32,21 +32,21 @@
         },
         {
           "_id": 124,
-          "name": "item_B",
+          "name": "Sensodyne true white",
           "department": "test2",
           "qty": 2,
           "price": 20
         },
         {
           "_id": 125,
-          "name": "item_C",
+          "name": "Pepsodent",
           "department": "test1",
           "qty": 1,
           "price": 25
         },
         {
           "_id": 126,
-          "name": "item_D",
+          "name": "Dabur",
           "department": "test1",
           "qty": 3,
           "price": 25.4
@@ -75,32 +75,32 @@
       "Repick_completed": "false",
       "items": [
         {
-          "_id": 321,
-          "name": "item_M",
-          "department": "test11",
+          "_id": 123,
+          "name": "Colgate 100g",
+          "department": "Health",
+          "qty": 5,
+          "price": 10
+        },
+        {
+          "_id": 124,
+          "name": "Sensodyne true white",
+          "department": "test2",
           "qty": 2,
           "price": 20
         },
         {
-          "_id": 322,
-          "name": "item_N",
-          "department": "test12",
+          "_id": 125,
+          "name": "Pepsodent",
+          "department": "test1",
           "qty": 1,
-          "price": 35
+          "price": 25
         },
         {
-          "_id": 323,
-          "name": "item_O",
-          "department": "test13",
-          "qty": 2,
-          "price": 26
-        },
-        {
-          "_id": 324,
-          "name": "item_P",
-          "department": "test14",
-          "qty": 4,
-          "price": 30
+          "_id": 126,
+          "name": "Dabur",
+          "department": "test1",
+          "qty": 3,
+          "price": 25.4
         }
       ]
     }

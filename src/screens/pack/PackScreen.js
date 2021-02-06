@@ -100,7 +100,7 @@ const AccordionItem = ({ order: { order_id, items } }) => {
             </View>
           </View>
           <View style={styles.counter}>
-            <Text>Time Left</Text>
+            <Text>{locale.timeLeft}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={Typography.timeLeft}>01:00</Text>
               <Text> Hrs</Text>
