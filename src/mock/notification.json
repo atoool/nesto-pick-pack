@@ -3,7 +3,7 @@
     "message": "New notifications",
     "data": [
         {
-            "title": "Repicking Requested",
+            "title": "Repicking requested",
             "body": "The quality check for Apples in order #23ABG5 has failed. The packer has asked to repick this.",
             "image": "",
             "seen": "",
@@ -12,16 +12,7 @@
             "Role": ""
         },
         {
-            "title": "Assign bin for order #224BC",
-            "body": "The order #224BC have to be assign a bin ASAP.",
-            "image": "",
-            "seen": "",
-            "data": "(metric_data)",
-            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
-            "Role": ""
-        },
-        {
-            "title": "Repicking Requested",
+            "title": "Substitution requested",
             "body": "The quality check for Apples in order #BC456 has failed. The packer has asked to repick this.",
             "image": "",
             "seen": "",
@@ -30,26 +21,8 @@
             "Role": ""
         },
         {
-            "title": "Assign bin for order #4421VF",
-            "body": "The order #4421VF have to be assign a bin ASAP.",
-            "image": "",
-            "seen": "",
-            "data": "(metric_data)",
-            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
-            "Role": ""
-        },
-        {
-            "title": "Repicking Requested",
+            "title": "Repicking requested",
             "body": "The quality check for Apples in order #123ABC has failed. The packer has asked to repick this.",
-            "image": "",
-            "seen": "",
-            "data": "(metric_data)",
-            "owner_id": "( can be one of [ customer_id, picker_id etc.. ] )",
-            "Role": ""
-        },
-        {
-            "title": "Assign bin for order #3224GH",
-            "body": "The order #3224GH have to be assign a bin ASAP.",
             "image": "",
             "seen": "",
             "data": "(metric_data)",

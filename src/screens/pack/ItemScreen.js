@@ -33,7 +33,7 @@ const ItemScreen = ({
   return (
     <SafeAreaView
       ref={(r) => (containerRef.current = r?.props)}
-      style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+      style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent ss={ss} />
         <ItemSection
@@ -42,7 +42,7 @@ const ItemScreen = ({
           quantity={item.qty}
           position="Aisle 1 Rack A12"
           department={item.department}
-          status={'packing now'}
+          status={'Packing now'}
           type={locale?.status.ED}
         />
         <VerifyItemSection
@@ -68,7 +68,7 @@ const TimerComponent = ({ ss }) => {
   } = useContext(AppContext);
   return (
     <View style={styles.timerContainer}>
-      <Text style={Typography.bold17White}>{locale?.timeLeft}</Text>
+      <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
       <View style={styles.timerDivider} />
       <Text style={Typography.bold17White}>
         {HoursString}:{minutesString} Hrs
@@ -322,6 +322,7 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
                         marginTop: 40,
                         borderBottomRightRadius: 7,
                         borderBottomLeftRadius: 7,
+                        zIndex: 20,
                       }}>
                       {issueList.map((item, key) => (
                         <TouchableOpacity
@@ -329,15 +330,16 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
                           onPress={() => {
                             onSetIssue(item.value, index);
                           }}
-                          style={{ height: 50, width: '100%' }}>
+                          style={{ height: 50, width: '100%', zIndex: 20 }}>
                           <View
                             style={[
                               {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 height: 50,
+                                zIndex: 20,
                               },
-                              item.value == issue[index] && {
+                              item.value === issue[index] && {
                                 backgroundColor: Colors.offWhite,
                               },
                             ]}>
@@ -364,7 +366,7 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
       </View>
 
       <Divider />
-      {passItem.indexOf(false) ? (
+      {passItem.indexOf(false) <= -1 ? (
         <>
           <Button
             scanButton
@@ -420,6 +422,7 @@ const Divider = () => (
 );
 
 const styles = StyleSheet.create({
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
   timerDivider: {
     height: '100%',
     width: 1,

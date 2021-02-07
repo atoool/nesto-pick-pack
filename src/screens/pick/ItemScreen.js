@@ -51,11 +51,13 @@ const TimerComponent = ({ ss }) => {
     .toString()
     .padStart(2, 0);
 
-    const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
     <View style={styles.timerContainer}>
-      <Text style={Typography.bold17White}>{locale?.timeLeft}</Text>
+      <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
       <View style={styles.timerDivider} />
       <Text style={Typography.bold17White}>
         {HoursString}:{minutesString} Hrs
@@ -63,9 +65,18 @@ const TimerComponent = ({ ss }) => {
     </View>
   );
 };
-const ItemSection = ({ title, price, quantity, position, department,type,status }) => {
-
-  const {locale:{locale}}=useContext(AppContext)
+const ItemSection = ({
+  title,
+  price,
+  quantity,
+  position,
+  department,
+  type,
+  status,
+}) => {
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
     <>
@@ -99,7 +110,7 @@ const ItemSection = ({ title, price, quantity, position, department,type,status 
                 alignItems: 'flex-end',
               }}>
               <Text style={Typography.bold21}>${price}</Text>
-              <Text> { locale?.IS_perQuantity}</Text>
+              <Text> {locale?.IS_perQuantity}</Text>
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -131,8 +142,10 @@ const VerifyItemSection = ({ navigation, item }) => {
   const someOutofStock = status === 1;
   const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
-  
-  const {locale:{locale}}=useContext(AppContext)
+
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
     <>
@@ -180,18 +193,25 @@ const VerifyItemSection = ({ navigation, item }) => {
             <Button
               title={locale?.IS_substiButton}
               style={{ flex: 0, width: 200, marginBottom: 20 }}
-              onPress={() => { navigation.navigate('SubstituteRequestedScreen') }}
+              onPress={() => {
+                navigation.navigate('SubstituteRequestedScreen');
+              }}
             />
           </>
         )}
         {!substituteItems && (
           <>
             <Divider />
-            <Button scanButton
-              title={locale?.IS_scanBar} subtitle={locale?.IS_toVerify}
+            <Button
+              scanButton
+              title={locale?.IS_scanBar}
+              subtitle={locale?.IS_toVerify}
               titleStyle={Typography.bold17White}
-              style={{ padding: 30, }}
-              onPress={() => { navigation.navigate('ScanScreen', { totalItem: item.qty }) }} />
+              style={{ padding: 30 }}
+              onPress={() => {
+                navigation.navigate('ScanScreen', { totalItem: item.qty });
+              }}
+            />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
               <Text>{locale?.IS_scanFailed}</Text>
               <Text
@@ -200,7 +220,7 @@ const VerifyItemSection = ({ navigation, item }) => {
                   ...Typography.bold17,
                   color: Colors.secondaryRed,
                 }}>
-               {locale?.IS_scanManual}
+                {locale?.IS_scanManual}
               </Text>
             </View>
           </>

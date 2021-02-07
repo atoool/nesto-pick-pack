@@ -24,8 +24,9 @@ import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 
 const DropScreen = () => {
-
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -67,7 +68,9 @@ const DropScreen = () => {
 const AccordionItem = ({ order: { orderId, items } }) => {
   const navigation = useNavigation();
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   return (
     <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
@@ -78,7 +81,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         </View>
         <StatusPill
           backgroundColor="#A1C349"
-          text={'2/20'+ locale?.picked}
+          text={'20 ' + locale?.items}
           borderRadius={100}
         />
       </View>
@@ -95,7 +98,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
           </View>
         </View>
         <View style={styles.counter}>
-          <Text>Time Left</Text>
+          <Text>{locale.timeLeft}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={Typography.timeLeft}>01:00</Text>
             <Text> Hrs</Text>
@@ -122,17 +125,17 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
         renderItem={({ item, index }) => (
-        //   <TouchableOpacity
-        //     style={styles.orderItem}
-        //     onPress={() => navigation.navigate('ItemScreen', { orderId })}>
-        <View style={styles.orderItem}>
+          //   <TouchableOpacity
+          //     style={styles.orderItem}
+          //     onPress={() => navigation.navigate('ItemScreen', { orderId })}>
+          <View style={styles.orderItem}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <TickComponent enabled={index === 0} />
+              <TickComponent enabled={true} />
               <View>
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}
@@ -141,7 +144,7 @@ const AccordionItem = ({ order: { orderId, items } }) => {
               </View>
             </View>
             <RightCaretSVG style={{ marginRight: 20 }} />
-          {/* </TouchableOpacity> */}
+            {/* </TouchableOpacity> */}
           </View>
         )}
       />

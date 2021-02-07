@@ -19,11 +19,12 @@ const Input = ({
     <View style={[styles.container, style]}>
       {iconName !== '' && (
         <View style={styles.icon}>
-        <GetIcon name={iconName} width={20}/>
+          <GetIcon name={iconName} width={20} />
         </View>
       )}
       <TextInput
         placeholder={placeholder}
+        autoCompleteType="off"
         placeholderTextColor={Colors.darkText}
         value={value}
         onChangeText={onChangeText}
@@ -48,7 +49,12 @@ const styles = StyleSheet.create({
     borderColor: '#C5C5C5',
     borderRadius: 7,
   },
-  icon: { paddingHorizontal: 10, marginRight: 5, borderRightWidth: 1, borderColor: Colors.primary6 },
+  icon: {
+    paddingHorizontal: 10,
+    marginRight: 5,
+    borderRightWidth: 1,
+    borderColor: Colors.primary6,
+  },
   textInput: { flex: 1 },
 });
 
