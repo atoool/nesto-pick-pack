@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 // import NoOrdersSVG from '../assets/svg/NoOrdersSVG';
 import GetIcon from './GetIcon';
 
-const NoContent = ({name}) => (
+const NoContent = ({ name }) => (
   <View style={styles.containerStyle}>
     <GetIcon name={name} width="100%" />
   </View>

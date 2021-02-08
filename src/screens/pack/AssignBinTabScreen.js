@@ -1,28 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  FlatList,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { SafeAreaView, Text, FlatList, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Typography, Colors, width } from '../../styles';
 //Components
 import Title from '../../components/Title';
 import NoContent from '../../components/NoContent';
-import StatusPill from '../../components/StatusPill';
-import TickComponent from '../../components/TickComponent';
-import Arrow from '../../components/Arrow';
-//SVGs
-import RightCaretSVG from '../../assets/svg/RightCaretSVG';
 //Mock Imports
 import pickerOrders from '../../mock/pickerOrders.json';
 
-import { getOrdersList } from '../../api';
+// import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 import Button from '../../components/Button';
+import OrderComponent from '../../components/OrderComponent';
+import Divider from '../../components/Divider';
 
 const AssignBinTabScreen = () => {
   const {
@@ -32,7 +22,7 @@ const AssignBinTabScreen = () => {
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      const res = await getOrdersList();
+      // const res = await getOrdersList();
       setOrders(pickerOrders);
       setRefreshing(false);
     } catch (e) {
@@ -50,23 +40,25 @@ const AssignBinTabScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Now} />
       <FlatList
         data={orders}
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
-        contentContainerStyle={{ paddingBottom: 60 }}
+        contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.orderId}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
-        renderItem={({ item }) => <AccordionItem order={item} />}
+        renderItem={({ item, index }) => (
+          <AccordionItem order={item} index={index} />
+        )}
       />
     </SafeAreaView>
   );
 };
 
-const AccordionItem = ({ order: { orderId, items } }) => {
+const AccordionItem = ({ order: { orderId, items }, index }) => {
   const navigation = useNavigation();
 
   const {
@@ -74,45 +66,21 @@ const AccordionItem = ({ order: { orderId, items } }) => {
   } = useContext(AppContext);
 
   return (
-    <View style={{ marginHorizontal: 32, marginVertical: 20 }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View>
-          <Text style={Typography.bold17}>{orderId}</Text>
-          <Text style={Typography.normal15}>{locale?.status.BA}</Text>
-        </View>
-        <StatusPill
-          backgroundColor="#A1C349"
-          text={'20 ' + locale?.items}
-          borderRadius={100}
-        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={styles.historyBox}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={styles.deliveryStatusCircle} />
-            <Text style={Typography.bold15}>{locale?.status.ED}</Text>
-          </View>
-          <View style={styles.deliveryBox}>
-            <Text>9:00 AM</Text>
-            <Arrow />
-            <Text>10:00 AM</Text>
-          </View>
-        </View>
-        <View style={styles.counter}>
-          <Text>{locale.timeLeft}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={Typography.timeLeft}>01:00</Text>
-            <Text> Hrs</Text>
-          </View>
-        </View>
-      </View>
+    <View style={styles.accordion}>
+      <OrderComponent
+        orderId={orderId}
+        items={'20 ' + locale?.items}
+        status={locale?.status.BA}
+        orderType={locale?.status.ED}
+        index={index}
+      />
 
       <Button
         onPress={() => {
           navigation.navigate('PrintLabelsScreen', { orderId: orderId });
         }}
         title={locale?.printBinButton}
-        style={{ width: width - 60, marginVertical: 10 }}
+        style={styles.buttonBox}
       />
 
       <FlatList
@@ -120,32 +88,16 @@ const AccordionItem = ({ order: { orderId, items } }) => {
         style={styles.orderItemsList}
         keyExtractor={(item) => `${item._id}`}
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={styles.borderLine} />}
-        renderItem={({ item, index }) => (
+        ItemSeparatorComponent={() => <Divider />}
+        renderItem={({ item }) => (
           <View style={styles.orderItem}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View
-                style={[
-                  styles.deliveryStatusCircle,
-                  {
-                    marginHorizontal: 10,
-                    backgroundColor: Colors.secondaryRed,
-                  },
-                ]}
-              />
-              <View>
-                <Text style={Typography.bold15}>
-                  {item.qty}x {item.name}
-                </Text>
-                <Text style={Typography.normal12}>{item.dept}</Text>
-              </View>
+            <View style={styles.orderNameBox}>
+              <View style={[styles.deliveryStatusCircle]} />
+              <Text style={Typography.bold15}>
+                {item.qty}x {item.name}
+              </Text>
             </View>
-            {/* <RightCaretSVG style={{ marginRight: 20 }} /> */}
+            <Text style={styles.departmentBox}>{item.dept}</Text>
           </View>
         )}
       />
@@ -154,20 +106,21 @@ const AccordionItem = ({ order: { orderId, items } }) => {
 };
 
 const styles = StyleSheet.create({
-  borderLine: {
-    height: 1,
-    backgroundColor: '#DFDEDE',
-  },
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
+  contentContainer: { paddingBottom: 60 },
+  accordion: { marginHorizontal: 32, marginVertical: 20 },
+  buttonBox: { width: width - 60, marginBottom: 10 },
   deliveryBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   deliveryStatusCircle: {
-    width: 14,
-    height: 14,
-    backgroundColor: '#889BFF',
+    width: 12,
+    height: 12,
+    backgroundColor: Colors.secondaryRed,
     borderRadius: 14,
     marginRight: 10,
+    marginTop: 1,
   },
   historyBox: {
     height: 70,
@@ -189,14 +142,18 @@ const styles = StyleSheet.create({
   },
   orderItem: {
     marginVertical: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    marginLeft: 20,
   },
   orderItemsList: {
     backgroundColor: Colors.offWhite,
     borderRadius: 7,
     paddingVertical: 10,
+  },
+  departmentBox: { ...Typography.normal12, marginLeft: 22 },
+  orderNameBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
