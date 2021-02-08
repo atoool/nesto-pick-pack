@@ -11,7 +11,8 @@
     "drop":"Drop Now",
     "Print_Labels":"Print Labels",
     "Assign_Bin":"Assign Bin",
-    "Assign_Now":"Assign Now"
+    "Assign_Now":"Assign Now",
+    "statistics":"My statistics"
   },
   "placeholder":{
     "email":"Email Address",
@@ -100,6 +101,7 @@
 "PLS_assignBin":"Assign bin",
 "signout":"Sign out",
 "P_printlabel":"Print label",
+"P_statistics":"My statistics",
 "P_markAvail":"Mark availability",
 "RSS_statusTitle":"Repick requested",
 "RSS_statusText":"You have requested the picker to repick this item. The FCM has been alerted on this as well.",

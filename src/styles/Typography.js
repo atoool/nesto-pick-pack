@@ -18,6 +18,11 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
   },
+  bold30White: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: Colors.WHITE,
+  },
   bold13White: {
     fontWeight: 'bold',
     fontSize: 13,
@@ -42,7 +47,9 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   bold13: {
-    fontWeight: 'bold', color: Colors.BLACK, fontSize: 13
+    fontWeight: 'bold',
+    color: Colors.BLACK,
+    fontSize: 13,
   },
   normal12: {
     fontSize: 12,

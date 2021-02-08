@@ -5,7 +5,6 @@ import ItemSuccessScreen from '../screens/pack/ItemSuccessScreen';
 import PrintLabelsScreen from '../screens/pack/PrintLabelsScreen';
 import RepickSuccessScreen from '../screens/pack/RepickSuccessScreen';
 import ScanScreen from '../screens/pack/ScanScreen';
-import StatisticsScreen from '../screens/pack/StatisticsScreen';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import PackScreen from '../screens/pack/PackScreen';
 import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
@@ -59,11 +58,6 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="ScanScreen"
         component={ScanScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="StatisticsScreen"
-        component={StatisticsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
