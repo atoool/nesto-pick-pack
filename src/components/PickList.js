@@ -14,7 +14,7 @@ import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 
 const PickList = ({
-  order: { items },
+  items,
   index,
   itemCount,
   orderType,
@@ -45,28 +45,38 @@ const PickList = ({
             style={styles.orderItem}
             onPress={() =>
               navigation.navigate('ItemScreen', {
-                orderId: item.order_id,
+                orderId: item.orderId,
                 item,
               })
             }>
             <View>
               <View style={styles.itemTitleBox}>
-                <View style={styles.deliveryStatusCircle} />
+                <View
+                  style={[
+                    styles.deliveryStatusCircle,
+                    {
+                      backgroundColor:
+                        item.dfc === 'chilled'
+                          ? Colors.chilled
+                          : Colors.secondaryRed,
+                    },
+                  ]}
+                />
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}
                 </Text>
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  {item.order_id} | {item.department} {item.position}
+                  {item.orderId} | {item.department} {item.position}
                 </Text>
               </View>
-              {item.assigned_bins.length !== 0 && (
+              {item.assigned_bins && item.assigned_bins?.length !== 0 && (
                 <View style={styles.positionBox}>
                   {item.assigned_bins.map((itm, i) => (
                     <StatusPill
                       key={i}
-                      backgroundColor="#C5B171"
+                      backgroundColor={'#C5B171'}
                       marginRight={5}
                       text={itm}
                       paddingVertical={0}

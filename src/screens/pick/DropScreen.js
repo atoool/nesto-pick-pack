@@ -53,12 +53,11 @@ const DropScreen = () => {
             <AccordionItem
               order={item}
               index={index}
-              orderType={locale?.status.ED}
+              orderType={item.order_type}
               status={
                 item.picking_completed ? locale?.status.PiC : locale.status.Pi
               }
               itemCount={'20 ' + locale?.items}
-              ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
             />
           ) : (
             <NoContent name="NoOrdersSVG" />

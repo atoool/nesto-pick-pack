@@ -14,8 +14,7 @@ import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
 
 const AccordionItem = ({
-  order,
-  order: { order_id, items },
+  order: { orderId, items, time_slot },
   index,
   itemCount,
   status,
@@ -25,11 +24,13 @@ const AccordionItem = ({
   return (
     <View style={styles.container}>
       <OrderComponent
-        orderId={order_id}
+        orderId={items[0].orderId}
         items={itemCount}
         status={status}
         orderType={orderType}
         index={index}
+        startTime={time_slot.start_time}
+        endTime={time_slot.end_time}
       />
       <View style={styles.positionBox}>
         {['D12', 'D13', 'D14'].map((itm, i) => (
@@ -46,7 +47,7 @@ const AccordionItem = ({
       <FlatList
         data={items}
         style={styles.orderItemsList}
-        keyExtractor={(item) => `${item._id}`}
+        keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item }) => (
@@ -61,11 +62,11 @@ const AccordionItem = ({
                     {item.qty}x {item.name}
                   </Text>
                   <Text style={Typography.normal12}>
-                    {item.department} {item.position}
+                    {item.department} | {item.position}
                   </Text>
                 </View>
               </View>
-              <RightCaretSVG style={styles.rightIcon} />
+              {/* <RightCaretSVG style={styles.rightIcon} /> */}
             </View>
           </TouchableOpacity>
         )}

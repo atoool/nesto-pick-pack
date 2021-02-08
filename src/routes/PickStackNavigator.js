@@ -3,9 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ItemScreen from '../screens/pick/ItemScreen';
 import PickScreen from '../screens/pick/PickScreen';
 import ScanScreen from '../screens/pick/ScanScreen';
-import ItemSuccessScreen from '../screens/pick/ItemSuccessScreen'
-import SubstituteRequestedScreen from '../screens/pick/SubstituteRequestedScreen'
-import PickCompletedScreen from '../screens/pick/PickCompletedScreen'
+import ItemSuccessScreen from '../screens/pick/ItemSuccessScreen';
+import SubstituteRequestedScreen from '../screens/pick/SubstituteRequestedScreen';
+import PickCompletedScreen from '../screens/pick/PickCompletedScreen';
 import SubstitutesScreen from '../screens/pick/SubstitutesScreen';
 import SubstitutionDetailsScreen from '../screens/pick/SubstitutionDetailsScreen';
 import Browser from '../screens/common/Browser';
@@ -38,22 +38,25 @@ const PickStackNavigator = () => {
         component={ItemSuccessScreen}
         options={{ headerShown: false }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="PickCompletedScreen"
         component={PickCompletedScreen}
-        options={{ headerShown: false, }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SubstituteRequestedScreen"
         component={SubstituteRequestedScreen}
         options={{ headerShown: false }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="SubstitutesScreen"
         component={SubstitutesScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: route.params.orderId,
+          ...headerOptions,
+        })}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="SubstitutionDetailsScreen"
         component={SubstitutionDetailsScreen}
         options={{ headerShown: false }}
@@ -62,7 +65,7 @@ const PickStackNavigator = () => {
         name="Browser"
         component={Browser}
         options={{ headerShown: false }}
-        initialParams={{src:'https://nesto.store'}}
+        initialParams={{ src: 'https://nesto.store' }}
       />
     </Stack.Navigator>
   );

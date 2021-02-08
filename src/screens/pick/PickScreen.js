@@ -41,13 +41,13 @@ const PickScreen = () => {
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.order_id}
+        keyExtractor={(item, index) => `${index}`}
         ItemSeparatorComponent={() => <Divider />}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item, index }) => (
           <PickList
-            order={item}
+            items={item}
             index={index}
             orderType={locale?.status.ED}
             itemCount={'20 ' + locale?.items}

@@ -8,19 +8,50 @@ export const login = async (PAYLOAD) => {
 
 //packer
 export const getOrdersListPack = async () => {
-  const URL = 'packer/order-list-pack';
+  const URL = '/packer/order-list-pack';
   return get(URL, false, true);
 };
 
 //picker
 export const getOrdersListPick = async () => {
-  const URL = 'picker/order-list-pick';
+  const URL = '/picker/order-list-pick';
   return get(URL, false, true);
 };
-
 export const getOrdersDropList = async () => {
-  const URL = 'picker/order-list-drop';
+  const URL = '/picker/order-list-drop';
   return get(URL, false, true);
+};
+export const setItemPicked = async (id) => {
+  const URL = `/picker/item/pick/:${id}`;
+  return get(URL, true);
+};
+export const getItemSubstitute = async (id) => {
+  const URL = `picker/item/substitute/:${id}`;
+  return get(URL, true);
+};
+export const setItemDrop = async (id) => {
+  const URL = `/picker/order/drop/:${id}`;
+  return get(URL, true);
+};
+export const getSimilarItems = async (id) => {
+  const URL = `/picker/item/similar-items/:${id}`;
+  return get(URL, true);
+};
+export const getPickerSuggestions = async (id) => {
+  const URL = `/picker/item/suggests/:${id}`;
+  return get(URL, true);
+};
+export const getSubstitutedList = async (id) => {
+  const URL = `/picker/item/substitute/:${id}`;
+  return get(URL, true);
+};
+export const postSubstitutes = async (PAYLOAD) => {
+  const URL = '/picker/item/perform-substitution';
+  return post(URL, PAYLOAD, true);
+};
+export const postSuggestedSubstitutes = async (PAYLOAD) => {
+  const URL = '/picker/item/substitutes';
+  return post(URL, PAYLOAD, true);
 };
 
 export const getStatistics = async () => {
@@ -72,11 +103,6 @@ export const getOrderReady = async (orderId) => {
 //picker
 export const pickerDropToBin = async (orderId) => {
   const URL = `/picker/order/drop/:${orderId}`;
-  return get(URL, true);
-};
-
-export const getSimiliarItems = async (orderId) => {
-  const URL = `/picker/item/similar-items/:${orderId}`;
   return get(URL, true);
 };
 
