@@ -5,27 +5,24 @@ import { Colors } from '../../styles';
 import Title from '../../components/Title';
 import NoContent from '../../components/NoContent';
 //Mock Imports
-import pickerOrders from '../../mock/pickerOrders.json';
-
-// import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 import PickList from '../../components/PickList';
 import Divider from '../../components/Divider';
+import { PickerContext } from '../../context/PickerContext';
 
 const PickScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { orders, getOrdersList } = useContext(PickerContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      // const res = await getOrdersList();
-      setOrders(pickerOrders);
+      getOrdersList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setOrders(pickerOrders);
       setRefreshing(false);
     }
   };
@@ -34,7 +31,6 @@ const PickScreen = () => {
     // _getOrdersList();
   }, []);
 
-  const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   return (
@@ -45,7 +41,7 @@ const PickScreen = () => {
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.orderId}
+        keyExtractor={(item) => item.order_id}
         ItemSeparatorComponent={() => <Divider />}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
@@ -55,6 +51,8 @@ const PickScreen = () => {
             index={index}
             orderType={locale?.status.ED}
             itemCount={'20 ' + locale?.items}
+            startTime={item.start_time}
+            endTime={item.end_time}
           />
         )}
       />

@@ -4853,7 +4853,7 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
-lodash@^4.17.10, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.3.0:
+lodash@^4.14.2, lodash@^4.17.10, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.3.0:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
@@ -6085,6 +6085,13 @@ react-native-barcode-builder@^2.0.0:
   dependencies:
     "@react-native-community/art" "^1.2.0"
     jsbarcode "^3.8.0"
+
+react-native-camera-kit@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera-kit/-/react-native-camera-kit-10.0.0.tgz#bac51f1955c77557e9e98020660904087f50ff3c"
+  integrity sha512-9Bhiin5KFwTT1XBk6n8FGcOV6MickTxZr7dI+2pxlThDiVDl9oLhAwVn6FmQABo/UpYMmYrA5siym4q7Feih7g==
+  dependencies:
+    lodash "^4.14.2"
 
 "react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
   version "3.42.0"

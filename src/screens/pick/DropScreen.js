@@ -11,21 +11,23 @@ import { AppContext } from '../../context/AppContext';
 import AccordionItem from '../../components/AccordionItem';
 import { Colors } from '../../styles';
 import Divider from '../../components/Divider';
+import { PickerContext } from '../../context/PickerContext';
 
 const DropScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { dropList, getDropList } = useContext(PickerContext);
 
-  const _getOrdersList = async () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
     setRefreshing(true);
     try {
-      // const res = await getOrdersList();
-      setOrders(pickerOrders);
+      getDropList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setOrders(pickerOrders);
       setRefreshing(false);
     }
   };
@@ -34,30 +36,34 @@ const DropScreen = () => {
     // _getOrdersList();
   }, []);
 
-  const [orders, setOrders] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.drop} />
       <FlatList
-        data={orders}
+        data={dropList}
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.orderId}
+        keyExtractor={(item, index) => `${index}`}
         ItemSeparatorComponent={() => <Divider />}
-        onRefresh={() => _getOrdersList()}
+        onRefresh={onRefresh}
         refreshing={refreshing}
-        renderItem={({ item, index }) => (
-          <AccordionItem
-            order={item}
-            index={index}
-            orderType={locale?.status.ED}
-            status={locale?.status.PiC}
-            itemCount={'20 ' + locale?.items}
-          />
-        )}
+        renderItem={({ item, index }) =>
+          item?.items.length !== 0 ? (
+            <AccordionItem
+              order={item}
+              index={index}
+              orderType={locale?.status.ED}
+              status={
+                item.picking_completed ? locale?.status.PiC : locale.status.Pi
+              }
+              itemCount={'20 ' + locale?.items}
+              ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+            />
+          ) : (
+            <NoContent name="NoOrdersSVG" />
+          )
+        }
       />
     </SafeAreaView>
   );

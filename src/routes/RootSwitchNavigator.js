@@ -6,6 +6,7 @@ import PickTabsNavigator from '../routes/PickTabsNavigator';
 import { AuthContext } from '../context/AuthContext';
 import PackTabsNavigator from './PackTabsNavigator';
 import { useSubscribeTopic } from '../hooks/useFirebase';
+import { PickerContextProvider } from '../context/PickerContext';
 
 const Stack = createStackNavigator();
 
@@ -23,13 +24,17 @@ const RootSwitchNavigator = () => {
       </Stack.Navigator>
     );
   } else if (userType === 'picker') {
-    return <PickTabsNavigator />;
+    return (
+      <PickerContextProvider>
+        <PickTabsNavigator />
+      </PickerContextProvider>
+    );
   } else if (userType === 'packer') {
     return <PackTabsNavigator />;
   } else {
-    useSubscribeTopic('picker')
+    useSubscribeTopic('picker');
 
-    useSubscribeTopic('packer')
+    useSubscribeTopic('packer');
     return (
       <Stack.Navigator initialRouteName="LoginScreen">
         <Stack.Screen

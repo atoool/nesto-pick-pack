@@ -21,18 +21,23 @@ import { AppContext } from '../../context/AppContext';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
-const ItemScreen = ({ navigation }) => {
+const ItemScreen = ({
+  navigation,
+  route: {
+    params: { orderId, item },
+  },
+}) => {
   const ss = 3600;
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent ss={ss} />
         <ItemSection
-          title="Colgate toothpaste"
-          price="10"
-          quantity="2"
+          title={item.name}
+          price={item.price}
+          quantity={item.qty}
           position="Aisle 1 Rack A12"
-          department="Consumer Dept."
+          department={item.department}
           type="Express Delivery"
           status="Picking completed"
         />

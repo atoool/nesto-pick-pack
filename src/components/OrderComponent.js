@@ -1,14 +1,40 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { AppContext } from '../context/AppContext';
+import useTimer from '../hooks/useTimer';
 import { Colors, Typography } from '../styles';
 import Arrow from './Arrow';
 import StatusPill from './StatusPill';
 
-const OrderComponent = ({ orderId, status, items, orderType, index, pick }) => {
+function formatAmPm(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var AmPm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + AmPm;
+  return strTime;
+}
+
+const OrderComponent = ({
+  orderId,
+  status,
+  items,
+  orderType,
+  index,
+  pick,
+  startTime,
+  endTime,
+}) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const sTime = formatAmPm(new Date(startTime));
+  const eTime = formatAmPm(new Date(endTime));
+  const timer = useTimer(
+    new Date(endTime).valueOf() - new Date(startTime).valueOf(),
+  );
   return (
     <>
       {!pick && (
@@ -31,19 +57,19 @@ const OrderComponent = ({ orderId, status, items, orderType, index, pick }) => {
         <View style={styles.historyBox}>
           <View style={styles.statusBox}>
             <View style={styles.deliveryStatusCircle} />
-            <Text style={Typography.bold15}>{locale?.status.ED}</Text>
+            <Text style={Typography.bold15}>{orderType}</Text>
           </View>
           <View style={styles.deliveryBox}>
-            <Text style={Typography.normal15}>9:00 AM</Text>
+            <Text style={Typography.normal15}>{sTime}</Text>
             <Arrow />
-            <Text style={Typography.normal15}>10:00 AM</Text>
+            <Text style={Typography.normal15}>{eTime}</Text>
           </View>
         </View>
         {(!pick || index === 0) && (
           <View style={styles.counter}>
             <Text style={Typography.normal12}>{locale.timeLeft}</Text>
             <View style={styles.timeLeftBox}>
-              <Text style={Typography.timeLeft}>01:00</Text>
+              <TimerComponent ss={timer} />
               <Text style={Typography.normal12}> Hrs</Text>
             </View>
           </View>
@@ -52,6 +78,23 @@ const OrderComponent = ({ orderId, status, items, orderType, index, pick }) => {
     </>
   );
 };
+
+const TimerComponent = ({ ss }) => {
+  const now = useTimer(ss);
+  const HoursString = Math.floor(now / 3600)
+    .toString()
+    .padStart(2, 0);
+  const minutesString = Math.floor(now / 60)
+    .toString()
+    .padStart(2, 0);
+
+  return (
+    <Text style={Typography.timeLeft}>
+      {HoursString}:{minutesString}
+    </Text>
+  );
+};
+
 const styles = StyleSheet.create({
   container: { flexDirection: 'row', justifyContent: 'space-between' },
   timeBox: { flexDirection: 'row', alignItems: 'center' },
@@ -88,6 +131,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timeLeftBox: { flexDirection: 'row', alignItems: 'center' },
+  timerDivider: {
+    height: '100%',
+    width: 1,
+    backgroundColor: Colors.WHITE,
+    opacity: 0.25,
+  },
+  timerContainer: {
+    backgroundColor: Colors.secondaryRed,
+    padding: 20,
+    marginHorizontal: 32,
+    marginVertical: 24,
+    borderRadius: 7,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
 });
 
 export default OrderComponent;

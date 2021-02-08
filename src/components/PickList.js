@@ -14,33 +14,41 @@ import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 
 const PickList = ({
-  order: { orderId, items },
+  order: { items },
   index,
   itemCount,
   orderType,
+  startTime,
+  endTime,
 }) => {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <OrderComponent
-        orderId={orderId}
+        orderId={''}
         items={itemCount}
         status={''}
         orderType={orderType}
         index={index}
+        startTime={startTime}
+        endTime={endTime}
         pick
       />
       <FlatList
         data={items}
         style={styles.orderItemsList}
-        keyExtractor={(item) => `${item._id}`}
+        keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item, indx }) => (
           <TouchableOpacity
             style={styles.orderItem}
-            onPress={() => navigation.navigate('ItemScreen', { orderId })}>
+            onPress={() =>
+              navigation.navigate('ItemScreen', {
+                orderId: item.order_id,
+                item,
+              })
+            }>
             <View>
               <View style={styles.itemTitleBox}>
                 <View style={styles.deliveryStatusCircle} />
@@ -50,20 +58,22 @@ const PickList = ({
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  {orderId} | {item.dept} {item.position}
+                  {item.order_id} | {item.department} {item.position}
                 </Text>
               </View>
-              <View style={styles.positionBox}>
-                {['D12', 'D13', 'D14'].map((itm, i) => (
-                  <StatusPill
-                    key={i}
-                    backgroundColor="#C5B171"
-                    marginRight={5}
-                    text={itm}
-                    paddingVertical={0}
-                  />
-                ))}
-              </View>
+              {item.assigned_bins.length !== 0 && (
+                <View style={styles.positionBox}>
+                  {item.assigned_bins.map((itm, i) => (
+                    <StatusPill
+                      key={i}
+                      backgroundColor="#C5B171"
+                      marginRight={5}
+                      text={itm}
+                      paddingVertical={0}
+                    />
+                  ))}
+                </View>
+              )}
             </View>
             <RightCaretSVG style={styles.rightIcon} />
           </TouchableOpacity>

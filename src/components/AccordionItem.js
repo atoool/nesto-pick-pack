@@ -14,7 +14,8 @@ import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
 
 const AccordionItem = ({
-  order: { orderId, items },
+  order,
+  order: { order_id, items },
   index,
   itemCount,
   status,
@@ -24,7 +25,7 @@ const AccordionItem = ({
   return (
     <View style={styles.container}>
       <OrderComponent
-        orderId={orderId}
+        orderId={order_id}
         items={itemCount}
         status={status}
         orderType={orderType}

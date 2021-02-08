@@ -6,14 +6,21 @@ export const login = async (PAYLOAD) => {
   return post(URL, PAYLOAD, false);
 };
 
-export const getOrdersList = async () => {
-  const URL = '/order-list';
+//packer
+export const getOrdersListPack = async () => {
+  const URL = 'packer/order-list-pack';
   return get(URL, false, true);
 };
 
-export const getHistoryList = async () => {
-  const URL = '/history';
-  return get(URL, true);
+//picker
+export const getOrdersListPick = async () => {
+  const URL = 'picker/order-list-pick';
+  return get(URL, false, true);
+};
+
+export const getOrdersDropList = async () => {
+  const URL = 'picker/order-list-drop';
+  return get(URL, false, true);
 };
 
 export const getStatistics = async () => {
