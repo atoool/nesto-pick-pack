@@ -70,6 +70,7 @@
 "IS_verifyOpt1":"All items in stock",
 "IS_verifyOpt2":"All items out of stock",
 "IS_verifyOpt3":"Some quantities out of stock",
+"IS_critical":"Critical stock",
 "IS_substiTitle":"Substitute Items",
 "IS_substiText":"Suggest alternatives for this item. The FCM and the customer will be alerted. Please wait 10 mins to receive a reply.",
 "IS_askTo":"Ask to repick",

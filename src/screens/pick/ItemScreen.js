@@ -144,7 +144,7 @@ const ItemSection = ({
 
 const VerifyItemSection = ({ navigation, item }) => {
   const [status, setStatus] = useState(0);
-  const someOutofStock = status === 1;
+  const someOutofStock = status === 1 || status === 3;
   const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
 
@@ -172,6 +172,11 @@ const VerifyItemSection = ({ navigation, item }) => {
           onPress={() => setStatus(1)}
           toggle={status === 1}
           title={locale?.IS_verifyOpt3}
+        />
+        <RadioItem
+          onPress={() => setStatus(3)}
+          toggle={status === 3}
+          title={locale?.IS_critical}
         />
         {someOutofStock && (
           <TextInput
