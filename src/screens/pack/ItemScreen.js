@@ -51,6 +51,7 @@ const ItemScreen = ({
           containerRef={containerRef.current}
           item={item}
           navigation={navigation}
+          postRePick={postRePick}
         />
       </ScrollView>
     </SafeAreaView>
@@ -155,7 +156,7 @@ const ItemSection = ({
   );
 };
 
-const VerifyItemSection = ({ item, navigation, containerRef }) => {
+const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
   const [passItem, setPassItem] = useState(
     Array.apply(null, Array(item.qty)).map((itm) => true),
   );
@@ -403,7 +404,13 @@ const VerifyItemSection = ({ item, navigation, containerRef }) => {
           <Button
             title="Ask to repick"
             style={{ width: 180, marginVertical: 20 }}
-            onPress={() => {
+            onPress={async () => {
+              const payload = {
+                bad_reviews: ['Physical damage'],
+                good_qty: 1,
+                bad_qty: 1,
+              };
+              await postRePick(payload, item._id);
               navigation.navigate('RepickSuccessScreen');
             }}
           />
