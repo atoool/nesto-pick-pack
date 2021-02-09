@@ -21,22 +21,27 @@ import { AppContext } from '../../context/AppContext';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
-const ItemScreen = ({ navigation }) => {
+const ItemScreen = ({
+  navigation,
+  route: {
+    params: { orderId, item },
+  },
+}) => {
   const ss = 3600;
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent ss={ss} />
         <ItemSection
-          title="Colgate toothpaste"
-          price="10"
-          quantity="2"
-          position="Aisle 1 Rack A12"
-          department="Consumer Dept."
+          title={item.name}
+          price={item.price}
+          quantity={item.qty}
+          position={item.position}
+          department={item.department}
           type="Express Delivery"
           status="Picking completed"
         />
-        <VerifyItemSection navigation={navigation} item={{ qty: 2 }} />
+        <VerifyItemSection navigation={navigation} item={item} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -121,7 +126,7 @@ const ItemSection = ({
               </View>
               <View style={styles.deliverBoxRow2}>
                 <Text>9:00 AM</Text>
-                <Arrow />
+                <Arrow width={30} />
                 {/* <Text> ------------> </Text> */}
                 <Text>10:00 AM</Text>
               </View>
@@ -139,7 +144,7 @@ const ItemSection = ({
 
 const VerifyItemSection = ({ navigation, item }) => {
   const [status, setStatus] = useState(0);
-  const someOutofStock = status === 1;
+  const someOutofStock = status === 1 || status === 3;
   const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
 
@@ -168,6 +173,11 @@ const VerifyItemSection = ({ navigation, item }) => {
           toggle={status === 1}
           title={locale?.IS_verifyOpt3}
         />
+        <RadioItem
+          onPress={() => setStatus(3)}
+          toggle={status === 3}
+          title={locale?.IS_critical}
+        />
         {someOutofStock && (
           <TextInput
             placeholder={locale?.placeholder.countOfOutStock}
@@ -194,7 +204,10 @@ const VerifyItemSection = ({ navigation, item }) => {
               title={locale?.IS_substiButton}
               style={{ flex: 0, width: 200, marginBottom: 20 }}
               onPress={() => {
-                navigation.navigate('SubstituteRequestedScreen');
+                navigation.navigate('SubstitutesScreen', {
+                  item,
+                  orderId: item.orderId,
+                });
               }}
             />
           </>
@@ -209,7 +222,10 @@ const VerifyItemSection = ({ navigation, item }) => {
               titleStyle={Typography.bold17White}
               style={{ padding: 30 }}
               onPress={() => {
-                navigation.navigate('ScanScreen', { totalItem: item.qty });
+                navigation.navigate('ScanScreen', {
+                  totalItem: item.qty,
+                  itemId: item._id,
+                });
               }}
             />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>

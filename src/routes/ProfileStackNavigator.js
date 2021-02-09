@@ -4,6 +4,7 @@ import PrintLabelsScreen from '../screens/pack/PrintLabelsScreen';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import ProfileScreen from '../screens/pack/ProfileScreen';
 import { AppContext } from '../context/AppContext';
+import StatisticsScreen from '../screens/pack/StatisticsScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,14 @@ const ProfileStackNavigator = () => {
         component={BinAssignScreen}
         options={({ route }) => ({
           title: locale.headings.Assign_Now,
+          ...headerOptions,
+        })}
+      />
+      <Stack.Screen
+        name="StatisticsScreen"
+        component={StatisticsScreen}
+        options={({ route }) => ({
+          title: locale.headings.statistics,
           ...headerOptions,
         })}
       />

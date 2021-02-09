@@ -15,12 +15,17 @@ import { AppContext } from '../../context/AppContext';
 
 const ProfileScreen = ({ navigation }) => {
   const { logOutUser } = useContext(AuthContext);
-  
-  const {locale:{locale}}=useContext(AppContext)
+
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const onLabelPress = () => {
-    navigation.navigate('PrintLabelsScreen', { orderId: null })
-  }
+    navigation.navigate('PrintLabelsScreen', { orderId: null });
+  };
+  const onStatisticsPress = () => {
+    navigation.navigate('StatisticsScreen');
+  };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings?.profile} />
@@ -29,7 +34,8 @@ const ProfileScreen = ({ navigation }) => {
         email="john@gmail.com"
         phone="+91 8891356128"
       />
-      <MarkAvailability title={locale?.P_markAvail}/>
+      <MarkAvailability title={locale?.P_markAvail} />
+      <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
       <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
       <LinkButton title={locale?.signout} onPress={logOutUser} />
     </SafeAreaView>
@@ -55,15 +61,13 @@ const LinkButton = ({ title, topBorder, onPress }) => {
   );
 };
 
-const MarkAvailability = ({ topBorder,title }) => {
+const MarkAvailability = ({ topBorder, title }) => {
   const borderStyle = {
     borderTopWidth: topBorder ? 1 : 0,
   };
   return (
     <TouchableOpacity style={[styles.linkButton, borderStyle]}>
-      <Text style={[styles.linkButtonText, Typography.bold21]}>
-       {title}
-      </Text>
+      <Text style={[styles.linkButtonText, Typography.bold21]}>{title}</Text>
       <MarkAvailabilitySVG />
     </TouchableOpacity>
   );

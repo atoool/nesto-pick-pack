@@ -13,11 +13,12 @@ import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
 import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
+import { PickerContext } from '../../context/PickerContext';
 
 const ScanScreen = ({
   navigation,
   route: {
-    params: { totalItem },
+    params: { totalItem, itemId },
   },
 }) => {
   const [itemScanned, setItemScanned] = useState(0);
@@ -26,11 +27,12 @@ const ScanScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { setItemPicked } = useContext(PickerContext);
 
   const onScanMismatch = () => {
     Alert.alert(
-      locale?.SS_alertTitlePick,
-      locale?.SS_alertTitlePick,
+      locale?.SS_alertTitle,
+      locale?.SS_alertText,
       [
         {
           text: locale?.SS_alertopt1,
@@ -47,17 +49,19 @@ const ScanScreen = ({
       { cancelable: false },
     );
   };
-  const onScan = ({ barcodes }) => {
-    if (totalItem && itemScanned < totalItem && barcodes?.data?.length != 0) {
-      const temp = barcodeArray.indexOf(barcodes?.data) > -1;
+  const onScan = (barcode) => {
+    if (totalItem && itemScanned < totalItem && barcode?.data?.length != 0) {
+      const temp = barcodeArray.indexOf(barcode?.data) > -1;
       if (!temp) {
         setItemScanned(itemScanned + 1);
-        setBarcodeArray([...barcodeArray, barcodes?.data]);
+        setBarcodeArray([...barcodeArray, barcode?.data]);
       }
     }
+
     if (totalItem && itemScanned == totalItem) {
       navigation.pop();
       navigation.navigate('ItemSuccessScreen');
+      setItemPicked(itemId);
     }
   };
   return (
@@ -78,7 +82,7 @@ const ScanScreen = ({
               fontWeight: 'bold',
               fontSize: 20,
             }}>
-            {locale.SS_scanbar}
+            {locale?.SS_scanbar}
           </Text>
           <Text
             style={{
@@ -90,7 +94,7 @@ const ScanScreen = ({
               fontSize: 12,
               padding: 10,
             }}>
-            {locale.SS_scanbarText}
+            {locale?.SS_scanbarText}
           </Text>
         </View>
         <View

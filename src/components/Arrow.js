@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import RightArrowSVG from '../assets/svg/RightArrowSVG';
 import { Colors } from '../styles';
 
-const Arrow = ({ width = 50 }) => (
+const Arrow = ({ width = 40 }) => (
   <View style={styles.container}>
     <View style={[styles.arrow, { width }]} />
     <RightArrowSVG />
@@ -15,7 +15,11 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: Colors.BLACK,
   },
-  container: { flexDirection: 'row', alignItems: 'center' },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
 });
 
 export default Arrow;

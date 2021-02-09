@@ -5,10 +5,8 @@ import ItemSuccessScreen from '../screens/pack/ItemSuccessScreen';
 import PrintLabelsScreen from '../screens/pack/PrintLabelsScreen';
 import RepickSuccessScreen from '../screens/pack/RepickSuccessScreen';
 import ScanScreen from '../screens/pack/ScanScreen';
-import StatisticsScreen from '../screens/pack/StatisticsScreen';
 import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import PackScreen from '../screens/pack/PackScreen';
-import ItemListScreen from '../screens/pack/ItemListScreen';
 import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
 import Browser from '../screens/common/Browser';
 import { AppContext } from '../context/AppContext';
@@ -25,14 +23,6 @@ const PackStackNavigators = () => {
         name="PackScreen"
         component={PackScreen}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ItemListScreen"
-        component={ItemListScreen}
-        options={({ route }) => ({
-          title: route.params.orderId,
-          ...headerOptions,
-        })}
       />
       <Stack.Screen
         name="ItemScreen"
@@ -68,11 +58,6 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="ScanScreen"
         component={ScanScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="StatisticsScreen"
-        component={StatisticsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

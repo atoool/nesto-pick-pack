@@ -11,7 +11,8 @@
     "drop":"Drop Now",
     "Print_Labels":"Print Labels",
     "Assign_Bin":"Assign Bin",
-    "Assign_Now":"Assign Now"
+    "Assign_Now":"Assign Now",
+    "statistics":"My statistics"
   },
   "placeholder":{
     "email":"Email Address",
@@ -69,6 +70,7 @@
 "IS_verifyOpt1":"All items in stock",
 "IS_verifyOpt2":"All items out of stock",
 "IS_verifyOpt3":"Some quantities out of stock",
+"IS_critical":"Critical stock",
 "IS_substiTitle":"Substitute Items",
 "IS_substiText":"Suggest alternatives for this item. The FCM and the customer will be alerted. Please wait 10 mins to receive a reply.",
 "IS_askTo":"Ask to repick",
@@ -100,6 +102,7 @@
 "PLS_assignBin":"Assign bin",
 "signout":"Sign out",
 "P_printlabel":"Print label",
+"P_statistics":"My statistics",
 "P_markAvail":"Mark availability",
 "RSS_statusTitle":"Repick requested",
 "RSS_statusText":"You have requested the picker to repick this item. The FCM has been alerted on this as well.",
