@@ -14,7 +14,7 @@ import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
 
 const AccordionItem = ({
-  order: { id, items, time_slot },
+  order: { id, items, time_slot, binsAssigned },
   index,
   itemCount,
   status,
@@ -33,12 +33,12 @@ const AccordionItem = ({
         endTime={time_slot.end_time}
       />
       <View style={styles.positionBox}>
-        {['D12', 'D13', 'D14'].map((itm, i) => (
+        {binsAssigned.map((itm, i) => (
           <StatusPill
             key={i}
             backgroundColor="#C5B171"
             marginRight={5}
-            text={itm}
+            text={itm.id}
             paddingVertical={5}
             textStyle={Typography.bold13White}
           />
