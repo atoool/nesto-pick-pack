@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
+import { PackerContext } from '../../context/PackerContext';
 import { Colors, width, height } from '../../styles';
 
 const BinAssignScreen = ({
@@ -19,8 +20,12 @@ const BinAssignScreen = ({
     binPos[indx] = txt;
     setBinPos([...binPos]);
   };
-
-  const onSave = () => {
+  const { postAssignBin } = useContext(PackerContext);
+  const onSave = async () => {
+    const payload = {
+      bins: ['A12', 'B45'],
+    };
+    await postAssignBin(payload, orderId);
     navigation.pop(1);
   };
 
