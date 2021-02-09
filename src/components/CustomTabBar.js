@@ -13,8 +13,8 @@ const CustomTabBar = ({ state, descriptors, navigation, title }) => {
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
               : options.title !== undefined
-                ? options.title
-                : route.name;
+              ? options.title
+              : route.name;
 
           const isFocused = state.index === index;
           const color = isFocused ? Colors.secondaryRed : Colors.tabBarInactive;
@@ -42,9 +42,10 @@ const CustomTabBar = ({ state, descriptors, navigation, title }) => {
                     width: 50,
                     height: 50,
                     borderRadius: 50,
-                    backgroundColor: Colors.secondaryRed, marginBottom: 10,
+                    backgroundColor: Colors.secondaryRed,
+                    marginBottom: 10,
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
                   <Icon name="maximize" color={Colors.WHITE} size={30} />
                 </View>
@@ -60,9 +61,12 @@ const CustomTabBar = ({ state, descriptors, navigation, title }) => {
                 style={{
                   width: 25,
                   height: 25,
-                  backgroundColor: color, marginTop: 7
+                  backgroundColor: color,
+                  marginTop: 7,
                 }}></View>
-              <Text style={[{ color, fontSize: 12, marginTop: 5 }]}>{label}</Text>
+              <Text style={[{ color, fontSize: 12, marginTop: 5 }]}>
+                {label}
+              </Text>
             </TouchableOpacity>
           );
         })}

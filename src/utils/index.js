@@ -1,4 +1,4 @@
 import Storage from './Storage';
 import Linking from './Linking';
 
-export {Storage,Linking}
+export { Storage, Linking };

@@ -4,7 +4,6 @@ import { Typography, Colors } from '../styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //Screens/Navigators
 import NotificationsScreen from '../screens/pack/NotificationsScreen';
-import HistoryScreen from '../screens/pack/HistoryScreen';
 import PackStackNavigator from '../routes/PackStackNavigators';
 import ScanScreen from '../screens/pack/ScanScreen';
 //SVG for Tab Icons

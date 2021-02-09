@@ -1,18 +1,18 @@
 {
-    "success": true,
-    "message": "An array of old item and the new item",
-    "data": [
-        {
-            "_id": 322,
-            "name": "item_N",
-            "department": "test12",
-            "type": "old"
-        },
-        {
-            "_id": 323,
-            "name": "item_O",
-            "department": "test13",
-            "type": "new"
-        }
-    ]
+  "success": true,
+  "message": "An array of old item and the new item",
+  "data": [
+    {
+      "_id": 322,
+      "name": "item_N",
+      "department": "test12",
+      "type": "old"
+    },
+    {
+      "_id": 323,
+      "name": "item_O",
+      "department": "test13",
+      "type": "new"
+    }
+  ]
 }

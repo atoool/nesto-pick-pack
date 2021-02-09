@@ -12,7 +12,7 @@ import Input from '../../components/Input';
 import { AuthContext } from '../../context/AuthContext';
 import { Typography } from '../../styles';
 import Images from '../../assets/images';
-import {AppContext} from '../../context/AppContext'
+import { AppContext } from '../../context/AppContext';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -21,7 +21,9 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const signInHandler = async () => {
     try {
@@ -37,7 +39,7 @@ const LoginScreen = () => {
         <Image style={styles.logoImage} source={Images.logo} />
         <Text style={Typography.bold30}>{locale?.Login}</Text>
         <Text style={[Typography.normal21, { marginBottom: 20 }]}>
-         {locale?.LoginText}
+          {locale?.LoginText}
         </Text>
         <Input
           iconName="UserSVG"
