@@ -13,20 +13,24 @@ import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
 import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
+import { PackerContext } from '../../context/PackerContext';
 
 const ScanScreen = ({
   navigation,
   route: {
-    params: { totalItem },
+    params: {
+      item: { qty, _id },
+    },
   },
 }) => {
+  const totalItem = qty;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
-
+  const { setPackedItemAsMarked } = useContext(PackerContext);
   const onScanMismatch = () => {
     Alert.alert(
       locale?.SS_alertTitle,
@@ -47,7 +51,7 @@ const ScanScreen = ({
       { cancelable: false },
     );
   };
-  const onScan = (barcodes) => {
+  const onScan = async (barcodes) => {
     if (totalItem && itemScanned < totalItem && barcodes?.data?.length != 0) {
       const temp = barcodeArray.indexOf(barcodes?.data) > -1;
       if (!temp) {
@@ -57,6 +61,7 @@ const ScanScreen = ({
     }
 
     if (totalItem && itemScanned == totalItem) {
+      await setPackedItemAsMarked(_id);
       navigation.pop();
       navigation.navigate('ItemSuccessScreen');
     }

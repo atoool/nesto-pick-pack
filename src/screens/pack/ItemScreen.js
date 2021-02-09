@@ -378,7 +378,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
             titleStyle={Typography.bold17White}
             style={{ padding: 30, margin: 32 }}
             onPress={() => {
-              navigation.navigate('ScanScreen', { totalItem: item.qty });
+              navigation.navigate('ScanScreen', { item });
             }}
           />
           <View style={{ alignItems: 'center', paddingVertical: 20 }}>
