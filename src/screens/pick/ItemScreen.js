@@ -34,7 +34,7 @@ const ItemScreen = ({
         <TimerComponent ss={ss} />
         <ItemSection
           title={item.name}
-          price={item.price}
+          price={item?.price && item.price.toFixed(2)}
           quantity={item.qty}
           position={item.position}
           department={item.department}
