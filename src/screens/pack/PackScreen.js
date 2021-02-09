@@ -16,7 +16,9 @@ const PackScreen = ({ navigation }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { assignBinList, getAssignBinList } = useContext(PackerContext);
+  const { assignBinList, getAssignBinList, setOrderReady } = useContext(
+    PackerContext,
+  );
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -31,7 +33,7 @@ const PackScreen = ({ navigation }) => {
 
   const navigateTo = (orderId, item) =>
     navigation.navigate('ItemScreen', { orderId, item });
-
+  const onReadyPress = (id) => setOrderReady(id);
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
@@ -53,6 +55,8 @@ const PackScreen = ({ navigation }) => {
             onPress={(itm) => {
               navigateTo(item.order_id, itm);
             }}
+            buttonTitle={locale.PS_isReady}
+            onReadyPress={onReadyPress}
           />
         )}
       />

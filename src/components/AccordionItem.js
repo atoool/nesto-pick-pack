@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RightCaretSVG } from '../assets/svg';
 import { Colors, Typography } from '../styles';
+import Button from './Button';
 import Divider from './Divider';
 import OrderComponent from './OrderComponent';
 import StatusPill from './StatusPill';
@@ -20,6 +21,8 @@ const AccordionItem = ({
   status,
   orderType,
   onPress,
+  buttonTitle,
+  onReadyPress,
 }) => {
   const now = Date.now();
   time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
@@ -73,6 +76,13 @@ const AccordionItem = ({
             </View>
           </TouchableOpacity>
         )}
+      />
+      <Button
+        title={buttonTitle}
+        style={{ marginTop: 20 }}
+        onPress={() => {
+          onReadyPress && onReadyPress(id);
+        }}
       />
     </View>
   );

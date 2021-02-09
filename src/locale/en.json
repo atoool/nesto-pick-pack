@@ -130,5 +130,7 @@
 "SRS_statusText":"This substitution request has been sent to the FCM and the Customer. Please wait 10 minutes for a reply.",
 "SRS_infoTitle":"What next?",
 "SRS_infoText":"While you are waiting, you can pick another item. This order will be moved to suspended.",
-"SRS_button":"Pick another item"
+"SRS_button":"Pick another item",
+"PS_isReady":"Ready for delivery",
+"DS_dropReady":"Drop to packer bins"
 }
