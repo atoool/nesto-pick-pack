@@ -16,6 +16,7 @@ import images from '../../assets/images';
 import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import { AppContext } from '../../context/AppContext';
+import { PackerContext } from '../../context/PackerContext';
 
 const screenWidth = width;
 const w = width - 32;
@@ -30,6 +31,7 @@ const ItemScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { postRePick } = useContext(PackerContext);
   return (
     <SafeAreaView
       ref={(r) => (containerRef.current = r?.props)}

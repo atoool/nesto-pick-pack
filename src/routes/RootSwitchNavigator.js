@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import PackTabsNavigator from './PackTabsNavigator';
 import { useSubscribeTopic } from '../hooks/useFirebase';
 import { PickerContextProvider } from '../context/PickerContext';
+import { PackerContextProvider } from '../context/PackerContext';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,11 @@ const RootSwitchNavigator = () => {
       </PickerContextProvider>
     );
   } else if (userType === 'packer') {
-    return <PackTabsNavigator />;
+    return (
+      <PackerContextProvider>
+        <PackTabsNavigator />
+      </PackerContextProvider>
+    );
   } else {
     useSubscribeTopic('picker');
 

@@ -8,8 +8,28 @@ export const login = async (PAYLOAD) => {
 
 //packer
 export const getOrdersListPack = async () => {
-  const URL = '/packer/order-list-pack';
+  const URL = '/packer/order-list-packitem';
+  return get(URL, false, false);
+};
+export const getAssignBinListPack = async () => {
+  const URL = '/packer/order-list-binassign';
+  return get(URL, false, false);
+};
+export const setPackedItemAsMarked = async (id) => {
+  const URL = `/packer/item/pack/${id}`;
   return get(URL, false, true);
+};
+export const setOrderReady = async (id) => {
+  const URL = `/packer/order/ready/${id}`;
+  return get(URL, false, true);
+};
+export const postAssignBin = async (PAYLOAD, id) => {
+  const URL = `/packer/order/assign-bin/${id}`;
+  return post(URL, PAYLOAD, true);
+};
+export const postRePick = async (PAYLOAD, id) => {
+  const URL = `/packer/item/repick/${id}`;
+  return post(URL, PAYLOAD, true);
 };
 
 //picker
@@ -76,57 +96,5 @@ export const getUserProfile = async () => {
 
 export const updateProfile = async (PAYLOAD) => {
   const URL = '/profile';
-  return put(URL, PAYLOAD, true);
-};
-
-//packer
-export const itemRepick = async (id, PAYLOAD) => {
-  const URL = `/packer/item/repick/:${id}`;
-  return post(URL, PAYLOAD, true);
-};
-
-export const assignBin = async (id, PAYLOAD) => {
-  const URL = `/packer/order/assign-bin/:${id}`;
-  return post(URL, PAYLOAD, true);
-};
-
-export const getItemPacked = async (id) => {
-  const URL = `/packer/item/pack/:${id}`;
-  return get(URL, true);
-};
-
-export const getOrderReady = async (orderId) => {
-  const URL = `/packer/order/ready/:${orderId}`;
-  return get(URL, true);
-};
-
-//picker
-export const pickerDropToBin = async (orderId) => {
-  const URL = `/picker/order/drop/:${orderId}`;
-  return get(URL, true);
-};
-
-export const getPickerSuggestedList = async (orderId) => {
-  const URL = `/picker/item/suggests/:${orderId}`;
-  return get(URL, true);
-};
-
-export const getItemAndSubstitute = async (orderId) => {
-  const URL = `/picker/item/substitute/:${orderId}`;
-  return get(URL, true);
-};
-
-export const getItemPicked = async (orderId) => {
-  const URL = `/picker/item/pick/:${orderId}`;
-  return get(URL, true);
-};
-
-export const performSubstitute = async (PAYLOAD) => {
-  const URL = '/picker/item/substitutes';
-  return put(URL, PAYLOAD, true);
-};
-
-export const pickerSuggestSubstitute = async (PAYLOAD) => {
-  const URL = '/picker/item/substitutes';
   return put(URL, PAYLOAD, true);
 };

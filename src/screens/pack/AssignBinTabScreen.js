@@ -13,21 +13,21 @@ import { AppContext } from '../../context/AppContext';
 import Button from '../../components/Button';
 import OrderComponent from '../../components/OrderComponent';
 import Divider from '../../components/Divider';
+import { PackerContext } from '../../context/PackerContext';
 
 const AssignBinTabScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { orderList, getPackerOrderList } = useContext(PackerContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      // const res = await getOrdersList();
-      setOrders(pickerOrders);
+      await getPackerOrderList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setOrders(pickerOrders);
       setRefreshing(false);
     }
   };
@@ -36,18 +36,16 @@ const AssignBinTabScreen = () => {
     // _getOrdersList();
   }, []);
 
-  const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Now} />
       <FlatList
-        data={orders}
+        data={orderList}
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.orderId}
+        keyExtractor={(item, indx) => `${indx}`}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item, index }) => (
@@ -58,8 +56,9 @@ const AssignBinTabScreen = () => {
   );
 };
 
-const AccordionItem = ({ order: { orderId, items }, index }) => {
+const AccordionItem = ({ order: { _id, items }, index }) => {
   const navigation = useNavigation();
+  const orderId = _id;
 
   const {
     locale: { locale },
@@ -73,6 +72,8 @@ const AccordionItem = ({ order: { orderId, items }, index }) => {
         status={locale?.status.BA}
         orderType={locale?.status.ED}
         index={index}
+        startTime={Date.now()}
+        endTime={Date.now()}
       />
 
       <Button
@@ -86,7 +87,7 @@ const AccordionItem = ({ order: { orderId, items }, index }) => {
       <FlatList
         data={items}
         style={styles.orderItemsList}
-        keyExtractor={(item) => `${item._id}`}
+        keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item }) => (
@@ -97,7 +98,9 @@ const AccordionItem = ({ order: { orderId, items }, index }) => {
                 {item.qty}x {item.name}
               </Text>
             </View>
-            <Text style={styles.departmentBox}>{item.dept}</Text>
+            <Text style={styles.departmentBox}>
+              {item.department} | {item.position}
+            </Text>
           </View>
         )}
       />

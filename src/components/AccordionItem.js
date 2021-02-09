@@ -21,6 +21,8 @@ const AccordionItem = ({
   orderType,
   onPress,
 }) => {
+  const now = Date.now();
+  time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
   return (
     <View style={styles.container}>
       <OrderComponent
@@ -33,16 +35,17 @@ const AccordionItem = ({
         endTime={time_slot.end_time}
       />
       <View style={styles.positionBox}>
-        {binsAssigned.map((itm, i) => (
-          <StatusPill
-            key={i}
-            backgroundColor="#C5B171"
-            marginRight={5}
-            text={itm.id}
-            paddingVertical={5}
-            textStyle={Typography.bold13White}
-          />
-        ))}
+        {binsAssigned &&
+          binsAssigned.map((itm, i) => (
+            <StatusPill
+              key={i}
+              backgroundColor="#C5B171"
+              marginRight={5}
+              text={itm.id}
+              paddingVertical={5}
+              textStyle={Typography.bold13White}
+            />
+          ))}
       </View>
       <FlatList
         data={items}

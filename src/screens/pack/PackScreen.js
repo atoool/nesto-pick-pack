@@ -8,24 +8,23 @@ import NoContent from '../../components/NoContent';
 import AccordionItem from '../../components/AccordionItem';
 import Divider from '../../components/Divider';
 import { Colors } from '../../styles';
+import { PackerContext } from '../../context/PackerContext';
 
 const PackScreen = ({ navigation }) => {
-  const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { assignBinList, getAssignBinList } = useContext(PackerContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      // const res = await getOrdersList();
-      setOrders(packerOrders.data);
+      await getAssignBinList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setOrders(packerOrders.data);
       setRefreshing(false);
     }
   };
@@ -37,17 +36,17 @@ const PackScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
       <FlatList
-        data={orders}
+        data={assignBinList}
         ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
         contentContainerStyle={styles.contentContainer}
-        keyExtractor={(item) => item.order_id}
+        keyExtractor={(item, indx) => `${indx}`}
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item }) => (
           <AccordionItem
-            order={{ orderId: item.order_id, items: item.items }}
+            order={{ id: item._id, items: item.items }}
             orderType={locale?.status.ED}
             status={locale?.status.Pa}
             itemCount={'1/20 ' + locale.packed}
