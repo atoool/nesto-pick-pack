@@ -3,51 +3,47 @@ import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Title from '../../components/Title';
 import RepickSVG from '../../assets/svg/RepickSVG';
-import { getNotifications } from '../../api';
-import notifications from '../../mock/notification.json'
-import {AppContext} from '../../context/AppContext'
+import { AppContext } from '../../context/AppContext';
 import NoContent from '../../components/NoContent';
+import { PickerContext } from '../../context/PickerContext';
 
 const NotificationsScreen = () => {
-  const [notificationList, setNotificationList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
+  const { notifications, getAllNotifications } = useContext(PickerContext);
 
   const _getNotifications = async () => {
     setRefreshing(true);
     try {
-      const res = await getNotifications();
-      setNotificationList(notifications.data);
+      await getAllNotifications();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setNotificationList(notifications.data);
       setRefreshing(false);
     }
   };
-
-  useEffect(() => {
-
-  }, [])
+  console.warn(notifications);
+  useEffect(() => {}, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.notifications} />
       <FlatList
-       ListEmptyComponent={() => <NoContent name={'NoNotificationSVG'} />}
-        data={notificationList}
+        ListEmptyComponent={() => <NoContent name={'NoNotificationSVG'} />}
+        data={notifications}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.borderLine} />}
-        onRefresh={() => { _getNotifications() }}
+        onRefresh={() => {
+          _getNotifications();
+        }}
         refreshing={refreshing}
         renderItem={({ item }) => (
-          <Notification
-            title={item.title}
-            body={item.body}
-          />
+          <Notification title={item.title} body={item.body} />
         )}
       />
     </SafeAreaView>

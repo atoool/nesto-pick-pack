@@ -6,44 +6,62 @@ import {
   setPackedItemAsMarked,
   postRePick,
   postAssignBin,
+  getNotifications,
 } from '../api';
 // import { Storage } from '../utils';
 
 export const PackerContext = createContext({
   orderList: [],
   assignBinList: [],
+  notifications: [],
   getPackerOrderList: async () => {},
   getAssignBinList: async () => {},
   setOrderReady: async () => {},
   setPackedItemAsMarked: async () => {},
   postAssignBin: async () => {},
   postRePick: async () => {},
+  getAllNotifications: async () => {},
 });
 
 export const PackerContextProvider = ({ children }) => {
   const [orderList, setOrderList] = useState([]);
   const [assignBinList, setAssignBinList] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {}, []);
 
   const getPackerOrderList = async () => {
-    const list = await getOrdersListPack();
-    setOrderList(list);
+    try {
+      const list = await getOrdersListPack();
+      setOrderList(list);
+    } catch (e) {}
   };
 
   const getAssignBinList = async () => {
-    const list = await getAssignBinListPack();
-    setAssignBinList(list);
+    try {
+      const list = await getAssignBinListPack();
+      setAssignBinList(list);
+    } catch (e) {}
+  };
+
+  const getAllNotifications = async () => {
+    try {
+      const list = await getNotifications();
+      const temp = list.filter((item) => item.role === 'packer');
+      setNotifications(temp);
+    } catch (e) {}
   };
 
   const value = {
     orderList,
     assignBinList,
+    notifications,
     getPackerOrderList,
     getAssignBinList,
     setOrderReady,
     setPackedItemAsMarked,
     postRePick,
     postAssignBin,
+    getAllNotifications,
   };
   return (
     <PackerContext.Provider value={value}>{children}</PackerContext.Provider>
