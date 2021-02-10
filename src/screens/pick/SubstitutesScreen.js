@@ -18,6 +18,8 @@ import Images from '../../assets/images';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 import RightCaretSVG from '../../assets/svg/RightCaretSVG.svg';
+import TickComponent from '../../components/TickComponent';
+import Button from '../../components/Button';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -28,7 +30,14 @@ const SubstitutesScreen = ({
   },
   navigation,
 }) => {
-  const { similarItems, getSimilarItemList } = useContext(PickerContext);
+  const {
+    similarItems,
+    getSimilarItemList,
+    postSuggestedSubstitutes,
+  } = useContext(PickerContext);
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   const onNavigateTo = () =>
     navigation.navigate('ItemScreen', {
       orderId: item.orderId,
@@ -36,16 +45,31 @@ const SubstitutesScreen = ({
     });
 
   useEffect(() => {
-    getSimilarItemList(1);
+    onMount();
     return () => {};
   }, []);
-  console.warn(similarItems);
+  const onMount = async () => {
+    await getSimilarItemList(1);
+  };
+
+  const onSuggestSubstitute = async () => {
+    const payload = {
+      item_id: 123,
+      more_quantity_required: 2,
+      existing_quantity: 4,
+      order_id: 323434,
+      suggested_items: ['a', 'b'],
+    };
+    await postSuggestedSubstitutes(payload);
+    navigation.pop();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <ItemSection
           title={item.name}
-          price={item.price}
+          price={item?.price && item.price.toFixed(2)}
           quantity={item.qty}
           position={item.position}
           department={item.department}
@@ -53,8 +77,17 @@ const SubstitutesScreen = ({
           status="Picking completed"
         />
         {similarItems && (
-          <ItemCheckList items={similarItems} onNavigateTo={onNavigateTo} />
+          <ItemCheckList
+            items={similarItems}
+            onNavigateTo={onNavigateTo}
+            stock="In stock"
+          />
         )}
+        <Button
+          title={locale.IS_substiButton}
+          style={{ borderRadius: 0 }}
+          onPress={onSuggestSubstitute}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -132,51 +165,44 @@ const ItemSection = ({
   );
 };
 
-const ItemCheckList = ({ items, onNavigateTo }) => {
+const ItemCheckList = ({ items, onNavigateTo, stock }) => {
   return (
-    <>
-      {items.map((item, index) => (
-        <TouchableOpacity style={styles.orderItem} onPress={onNavigateTo}>
-          <View>
-            <View style={styles.itemTitleBox}>
-              <View
-                style={[
-                  styles.deliveryStatusCircle,
-                  {
-                    backgroundColor:
-                      item.dfc === 'chilled'
-                        ? Colors.chilled
-                        : Colors.secondaryRed,
-                  },
-                ]}
-              />
-              <Text style={Typography.bold15}>
-                {item.qty}x {item.name}
-              </Text>
-            </View>
+    <FlatList
+      data={items}
+      style={styles.orderItemsList}
+      keyExtractor={(item, indx) => `${indx}`}
+      showsVerticalScrollIndicator={false}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item }) => (
+        <TouchableOpacity>
+          <View style={styles.orderItem}>
             <View style={styles.departmentBox}>
-              <Text style={Typography.normal12}>
-                {item.orderId} | {item.department} {item.position}
-              </Text>
-            </View>
-            {item.assigned_bins && item.assigned_bins?.length !== 0 && (
-              <View style={styles.positionBox}>
-                {item.assigned_bins.map((itm, i) => (
-                  <StatusPill
-                    key={i}
-                    backgroundColor={'#C5B171'}
-                    marginRight={5}
-                    text={itm}
-                    paddingVertical={0}
-                  />
-                ))}
+              <TickComponent enabled={true} />
+              <View>
+                <Text style={Typography.bold15}>
+                  {item.qty}x {item.name}
+                </Text>
+                <Text style={Typography.normal12}>
+                  {item.department} | {item.position}
+                </Text>
               </View>
-            )}
+            </View>
+            <Text
+              style={[
+                styles.stockBox,
+                {
+                  color:
+                    stock == 'In stock'
+                      ? Colors.primaryGreen
+                      : Colors.secondaryRed,
+                },
+              ]}>
+              {stock}
+            </Text>
           </View>
-          <RightCaretSVG style={styles.rightIcon} />
         </TouchableOpacity>
-      ))}
-    </>
+      )}
+    />
   );
 };
 const styles = StyleSheet.create({
@@ -237,6 +263,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  orderItem: {
+    marginVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  orderItemsList: {
+    backgroundColor: Colors.offWhite,
+    borderRadius: 7,
+    paddingVertical: 10,
+    marginHorizontal: 32,
+    marginVertical: 20,
+  },
+  departmentBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stockBox: {
+    marginRight: 20,
+    ...Typography.normal12,
   },
 });
 

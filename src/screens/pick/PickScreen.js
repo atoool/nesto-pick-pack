@@ -19,7 +19,8 @@ const PickScreen = () => {
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      getOrdersList();
+      await getOrdersList();
+      console.warn(orders);
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -47,7 +48,7 @@ const PickScreen = () => {
         refreshing={refreshing}
         renderItem={({ item, index }) => (
           <PickList
-            items={item}
+            items={item.items}
             index={index}
             orderType={locale?.status.ED}
             itemCount={'20 ' + locale?.items}

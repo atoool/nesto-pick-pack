@@ -17,14 +17,14 @@ const DropScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { dropList, getDropList } = useContext(PickerContext);
+  const { dropList, getDropList, setItemDrop } = useContext(PickerContext);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      getDropList();
+      await getDropList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -35,6 +35,8 @@ const DropScreen = () => {
   useEffect(() => {
     // _getOrdersList();
   }, []);
+
+  const onDropToBin = async (id) => await setItemDrop(id);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -58,6 +60,8 @@ const DropScreen = () => {
                 item.picking_completed ? locale?.status.PiC : locale.status.Pi
               }
               itemCount={'20 ' + locale?.items}
+              onReadyPress={onDropToBin}
+              buttonTitle={locale.DS_dropReady}
             />
           ) : (
             <NoContent name="NoOrdersSVG" />
