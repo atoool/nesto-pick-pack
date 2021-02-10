@@ -47,7 +47,7 @@ const ItemScreen = ({
   );
 };
 
-const TimerComponent = ({ ss }) => {
+const TimerComponent = ({ ss, inMinute }) => {
   const now = useTimer(ss);
   const HoursString = Math.floor(now / 3600)
     .toString()
@@ -56,16 +56,26 @@ const TimerComponent = ({ ss }) => {
     .toString()
     .padStart(2, 0);
 
+  const secondString = Math.floor(now - Math.floor(now / 60) * 60)
+    .toString()
+    .padStart(2, 0);
+
   const {
     locale: { locale },
   } = useContext(AppContext);
 
   return (
-    <View style={styles.timerContainer}>
-      <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
-      <View style={styles.timerDivider} />
-      <Text style={Typography.bold17White}>
-        {HoursString}:{minutesString} Hrs
+    <View style={[styles.timerContainer, inMinute && styles.timerContainer2]}>
+      {!inMinute && (
+        <>
+          <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
+          <View style={styles.timerDivider} />
+        </>
+      )}
+      <Text style={!inMinute ? Typography.bold17White : Typography.bold13White}>
+        {!inMinute
+          ? `${HoursString}:${minutesString} Hrs`
+          : `${minutesString}:${secondString}`}
       </Text>
     </View>
   );
@@ -145,12 +155,14 @@ const ItemSection = ({
 const VerifyItemSection = ({ navigation, item }) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1 || status === 3;
-  const substituteItems = status === 1 || status === 0;
+  const substituteItems = status === 1 || status === 0 || status === 3;
   const [itemsQty, setItemQty] = useState(0);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
+
+  const timeOut = true;
 
   return (
     <>
@@ -195,24 +207,59 @@ const VerifyItemSection = ({ navigation, item }) => {
             }}
           />
         )}
-        {substituteItems && (
+
+        {substituteItems ? (
           <>
             <Divider />
-            <Text style={Typography.bold21}>{locale?.IS_substiTitle}</Text>
-            <Text style={{ marginVertical: 10 }}>{locale?.IS_substiText}</Text>
-            <Button
-              title={locale?.IS_substiButton}
-              style={{ flex: 0, width: 200, marginBottom: 20 }}
-              onPress={() => {
-                navigation.navigate('SubstitutesScreen', {
-                  item,
-                  orderId: item.orderId,
-                });
-              }}
-            />
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={Typography.bold21}>
+                {!timeOut
+                  ? !item.substituted
+                    ? item.substitution_initiated
+                      ? locale.IS_waitSubstituteTitle
+                      : locale?.IS_substituteTitle
+                    : locale?.IS_substitutedTitle
+                  : locale?.IS_noRespSubstituteTitle}
+              </Text>
+              {!item.substituted && item.substitution_initiated && (
+                <TimerComponent ss={600} inMinute />
+              )}
+            </View>
+            <Text style={{ marginVertical: 10 }}>
+              {!timeOut
+                ? !item.substituted
+                  ? item.substitution_initiated
+                    ? locale?.IS_waitSubstituteText
+                    : locale?.IS_substituteText
+                  : locale?.IS_substitutedText
+                : locale?.IS_noRespSubstituteText}
+            </Text>
+            {(item.substituted || !item.substitution_initiated) && (
+              <Button
+                title={
+                  item.substituted
+                    ? locale?.IS_subDetailButton
+                    : timeOut
+                    ? locale?.IS_contactButton
+                    : locale?.IS_substituteButton
+                }
+                style={{ flex: 0, width: 200, marginBottom: 20 }}
+                onPress={() => {
+                  const routeTo = item.substituted
+                    ? 'SubstitutionDetailsScreen'
+                    : timeOut
+                    ? 'ContactFCMScreen'
+                    : 'SubstitutesScreen';
+                  navigation.navigate(routeTo, {
+                    item,
+                    orderId: item.orderId,
+                  });
+                }}
+              />
+            )}
           </>
-        )}
-        {!substituteItems && (
+        ) : (
           <>
             <Divider />
             <Button
@@ -308,6 +355,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  timerContainer2: { padding: 10, marginHorizontal: 0, marginVertical: 0 },
   itemImageContainer: {
     marginHorizontal: 32,
     marginBottom: 24,

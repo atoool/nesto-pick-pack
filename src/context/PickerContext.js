@@ -16,13 +16,15 @@ export const PickerContext = createContext({
   orders: [],
   dropList: [],
   similarItems: [],
+  substitutedList: [],
+  pickerSuggestions: [],
   getOrdersList: async () => {},
   getDropList: async () => {},
   setItemPicked: async () => {},
   getSimilarItemList: async () => {},
   setItemDrop: async () => {},
-  getPickerSuggestions: async () => {},
-  getSubstitutedList: async () => {},
+  getPickerSuggestedItems: async () => {},
+  getSubstitutedItems: async () => {},
   postSubstitutes: async () => {},
   postSuggestedSubstitutes: async () => {},
 });
@@ -32,7 +34,7 @@ export const PickerContextProvider = ({ children }) => {
   const [dropList, setDropList] = useState([]);
   const [similarItems, setSimilarItems] = useState([]);
   const [pickerSuggestions, setPickerSuggestions] = useState([]);
-  const [substitutedList, setSubstitutedList] = useState([]);
+  const [substitutedList, setSubstitutedList] = useState({});
 
   useEffect(() => {
     // getOrdersList();

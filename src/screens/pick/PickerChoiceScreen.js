@@ -1,72 +1,55 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
+  Dimensions,
+  FlatList,
+  Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  Image,
-  Dimensions,
-  ScrollView,
-  FlatList,
   TouchableOpacity,
+  View,
 } from 'react-native';
+import images from '../../assets/images';
 import Arrow from '../../components/Arrow';
-import StatusPill from '../../components/StatusPill';
-import { AppContext } from '../../context/AppContext';
-import { Colors, Typography } from '../../styles';
-import Images from '../../assets/images';
-import Divider from '../../components/Divider';
-import { PickerContext } from '../../context/PickerContext';
-import RightCaretSVG from '../../assets/svg/RightCaretSVG.svg';
-import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
+import Divider from '../../components/Divider';
+import GetIcon from '../../components/GetIcon';
+import StatusPill from '../../components/StatusPill';
+import TickComponent from '../../components/TickComponent';
+import { AppContext } from '../../context/AppContext';
+import { PickerContext } from '../../context/PickerContext';
+import { Colors, Typography } from '../../styles';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
-const SubstitutesScreen = ({
+const PickerChoiceScreen = ({
   route: {
-    params: { item },
+    params: { item, orderId, pickerSuggestions },
   },
   navigation,
 }) => {
-  const {
-    similarItems,
-    getSimilarItemList,
-    postSuggestedSubstitutes,
-  } = useContext(PickerContext);
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
-  const onNavigateTo = () =>
-    navigation.navigate('ItemScreen', {
-      orderId: item.orderId,
-      item,
-    });
+  const { postSubstitutes } = useContext(PickerContext);
 
-  useEffect(() => {
-    onMount();
-    return () => {};
-  }, []);
-  const onMount = async () => {
-    await getSimilarItemList(1);
-  };
-
-  const onSuggestSubstitute = async () => {
+  const onConfirm = async () => {
     const payload = {
-      item_id: 123,
-      more_quantity_required: 2,
-      existing_quantity: 4,
-      order_id: 323434,
-      suggested_items: ['a', 'b'],
+      original_item_id: 123,
+      new_item_id: 12312,
+      new_item_quantity: 2,
     };
-    await postSuggestedSubstitutes(payload);
-    navigation.navigate('SubstituteRequestedScreen');
+    await postSubstitutes(payload);
+    navigation.popToTop();
   };
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+        <ImageWithLabel
+          iconName={'PickerChoiceSVG'}
+          statusTitle="You can make the
+          substitution"
+          statusText="The customer has agreed for allow substitution in case he is not available when called"
+        />
         <ItemSection
           title={item.name}
           price={item?.price && item.price.toFixed(2)}
@@ -76,20 +59,54 @@ const SubstitutesScreen = ({
           type="Express Delivery"
           status="Picking completed"
         />
-        {similarItems && (
-          <ItemCheckList
-            items={similarItems}
-            onNavigateTo={onNavigateTo}
-            stock="In stock"
-          />
+
+        <Divider />
+        {pickerSuggestions?.length !== 0 && (
+          <ItemCheckList items={pickerSuggestions} title={'Substitutes list'} />
         )}
-        <Button
-          title={locale.IS_substiButton}
-          style={{ borderRadius: 0 }}
-          onPress={onSuggestSubstitute}
-        />
+
+        <View style={{ width: '100%', alignItems: 'center' }}>
+          <Button
+            title="Confirm substitution"
+            style={{ paddingHorizontal: 0, marginBottom: 20 }}
+            onPress={onConfirm}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const ImageWithLabel = ({ iconName, statusTitle, statusText }) => {
+  return (
+    <>
+      <View
+        style={{
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 60,
+          width: 100,
+          height: 100,
+          borderRadius: 100,
+        }}>
+        {iconName && <GetIcon name={iconName} width={140} />}
+      </View>
+      <View
+        style={{
+          alignItems: 'center',
+          marginHorizontal: 40,
+          marginVertical: 60,
+        }}>
+        <Text style={{ ...Typography.bold21, textAlign: 'center' }}>
+          {statusTitle ? statusTitle : ''}
+        </Text>
+        <Text
+          style={[Typography.normal15, { textAlign: 'center', marginTop: 7 }]}>
+          {statusText ? statusText : ''}
+        </Text>
+      </View>
+    </>
   );
 };
 
@@ -107,11 +124,11 @@ const ItemSection = ({
   } = useContext(AppContext);
 
   return (
-    <>
+    <View style={{ paddingBottom: 20 }}>
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
           <Image
-            source={Images.colgate}
+            source={images.colgate}
             resizeMode={'contain'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
@@ -161,50 +178,41 @@ const ItemSection = ({
           </View>
         </View>
       </View>
+    </View>
+  );
+};
+
+const ItemCheckList = ({ items, onNavigateTo, price, title }) => {
+  return (
+    <>
+      <Text
+        style={{ ...Typography.bold17, marginHorizontal: 32, marginTop: 20 }}>
+        {title}
+      </Text>
+      <FlatList
+        data={items}
+        style={styles.orderItemsList}
+        keyExtractor={(item, indx) => `${indx}`}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <Divider />}
+        renderItem={({ item }) => (
+          <TouchableOpacity>
+            <View style={styles.orderItem}>
+              <View style={styles.departmentBox}>
+                <TickComponent enabled={true} />
+                <View>
+                  <Text style={Typography.bold15}>{item.name}</Text>
+                </View>
+              </View>
+              <Text style={[styles.stockBox]}>{price}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </>
   );
 };
 
-const ItemCheckList = ({ items, onNavigateTo, stock }) => {
-  return (
-    <FlatList
-      data={items}
-      style={styles.orderItemsList}
-      keyExtractor={(item, indx) => `${indx}`}
-      showsVerticalScrollIndicator={false}
-      ItemSeparatorComponent={() => <Divider />}
-      renderItem={({ item }) => (
-        <TouchableOpacity>
-          <View style={styles.orderItem}>
-            <View style={styles.departmentBox}>
-              <TickComponent enabled={true} />
-              <View>
-                <Text style={Typography.bold15}>
-                  {item.qty}x {item.name}
-                </Text>
-                <Text style={Typography.normal12}>
-                  {item.department} | {item.position}
-                </Text>
-              </View>
-            </View>
-            <Text
-              style={[
-                styles.stockBox,
-                {
-                  color:
-                    stock == 'In stock'
-                      ? Colors.primaryGreen
-                      : Colors.secondaryRed,
-                },
-              ]}>
-              {stock}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      )}
-    />
-  );
-};
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.WHITE },
   timerDivider: {
@@ -222,9 +230,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  timerContainer2: { padding: 10, marginHorizontal: 0, marginVertical: 0 },
   itemImageContainer: {
     marginHorizontal: 32,
-    marginVertical: 24,
+    marginBottom: 24,
     alignItems: 'center',
   },
   itemImage: {
@@ -265,16 +274,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderItem: {
-    marginVertical: 5,
+    marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 12,
   },
   orderItemsList: {
     backgroundColor: Colors.offWhite,
-    borderRadius: 7,
-    paddingVertical: 10,
-    marginHorizontal: 32,
+    // borderRadius: 7,
+    // paddingVertical: 10,
+    // marginHorizontal: 32,
     marginVertical: 20,
   },
   departmentBox: {
@@ -287,5 +297,4 @@ const styles = StyleSheet.create({
     ...Typography.normal12,
   },
 });
-
-export default SubstitutesScreen;
+export default PickerChoiceScreen;
