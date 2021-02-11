@@ -17,7 +17,11 @@ const Loader = ({ small, fullScreen, green, disabled }) => {
     if (fullScreen) {
       return (
         <View style={styles.fullScreenContainer}>
-          <ActivityIndicator size={'small'} color={Colors.primary1} />
+          <ActivityIndicator
+            color={Colors.BLACK}
+            size={30}
+            style={styles.fullScreenLoader}
+          />
         </View>
       );
     } else {
@@ -32,10 +36,17 @@ const Loader = ({ small, fullScreen, green, disabled }) => {
 
 const styles = StyleSheet.create({
   fullScreenContainer: {
-    backgroundColor: Colors.WHITE,
-    flex: 1,
+    height: height - 200,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fullScreenLoader: {
+    backgroundColor: Colors.WHITE,
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    elevation: 5,
   },
   blockContainer: {
     height: height - 300,

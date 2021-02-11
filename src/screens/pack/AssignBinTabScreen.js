@@ -21,31 +21,40 @@ const AssignBinTabScreen = () => {
   } = useContext(AppContext);
   const { orderList, getPackerOrderList } = useContext(PackerContext);
 
+  const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      await getPackerOrderList();
+      await getOrders();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
       setRefreshing(false);
     }
   };
-
+  const getOrders = async () => {
+    setLoading(true);
+    await getPackerOrderList();
+    setLoading(false);
+  };
   useEffect(() => {
-    // _getOrdersList();
+    getOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [refreshing, setRefreshing] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Now} />
       <FlatList
         data={orderList}
-        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+        ListEmptyComponent={() => (
+          <NoContent name="NoOrdersSVG" isLoading={isLoading} />
+        )}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, indx) => `${indx}`}
+        keyExtractor={(item, indx) => `${indx}${item.id}`}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item, index }) => (
@@ -56,54 +65,57 @@ const AssignBinTabScreen = () => {
   );
 };
 
-const AccordionItem = ({ order: { _id, items }, index }) => {
+const AccordionItem = ({
+  order: { id, items, order_type, time_slot },
+  index,
+}) => {
   const navigation = useNavigation();
-  const orderId = _id;
-
+  const orderId = id;
   const {
     locale: { locale },
   } = useContext(AppContext);
-
   return (
     <View style={styles.accordion}>
       <OrderComponent
         orderId={orderId}
-        items={'20 ' + locale?.items}
+        items={items?.length + ' ' + locale?.items}
         status={locale?.status.BA}
-        orderType={locale?.status.ED}
+        orderType={order_type}
         index={index}
-        startTime={Date.now()}
-        endTime={Date.now()}
+        startTime={time_slot.start_time}
+        endTime={time_slot.end_time}
       />
 
       <Button
         onPress={() => {
-          navigation.navigate('PrintLabelsScreen', { orderId: orderId });
+          navigation.navigate('PrintLabelsScreen', { orderId: `${orderId}` });
         }}
         title={locale?.printBinButton}
         style={styles.buttonBox}
       />
 
-      <FlatList
-        data={items}
-        style={styles.orderItemsList}
-        keyExtractor={(item, indx) => `${indx}`}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item }) => (
-          <View style={styles.orderItem}>
-            <View style={styles.orderNameBox}>
-              <View style={[styles.deliveryStatusCircle]} />
-              <Text style={Typography.bold15}>
-                {item.qty}x {item.name}
+      {items.length !== 0 && (
+        <FlatList
+          data={items}
+          style={styles.orderItemsList}
+          keyExtractor={(item, indx) => `${indx}${item.id}`}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Divider />}
+          renderItem={({ item }) => (
+            <View style={styles.orderItem}>
+              <View style={styles.orderNameBox}>
+                <View style={[styles.deliveryStatusCircle]} />
+                <Text style={Typography.bold15}>
+                  {item.qty ? item.qty : 1}x {item.name}
+                </Text>
+              </View>
+              <Text style={styles.departmentBox}>
+                {item.department} | {item.position}
               </Text>
             </View>
-            <Text style={styles.departmentBox}>
-              {item.department} | {item.position}
-            </Text>
-          </View>
-        )}
-      />
+          )}
+        />
+      )}
     </View>
   );
 };

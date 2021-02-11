@@ -8,10 +8,8 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
-import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 
@@ -19,10 +17,11 @@ const ScanScreen = ({
   navigation,
   route: {
     params: {
-      item: { qty, _id },
+      item: { qty, id },
     },
   },
 }) => {
+  console.warn(id);
   const totalItem = qty;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);
@@ -31,6 +30,7 @@ const ScanScreen = ({
     locale: { locale },
   } = useContext(AppContext);
   const { setPackedItemAsMarked } = useContext(PackerContext);
+
   const onScanMismatch = () => {
     Alert.alert(
       locale?.SS_alertTitle,
@@ -43,29 +43,34 @@ const ScanScreen = ({
         },
         {
           text: locale?.SS_alertopt2,
-          onPress: () => {
-            setItemScanned(itemScanned + 1);
+          onPress: async () => {
+            const temp = itemScanned + 1;
+            setItemScanned(temp);
+            totalItem && temp / totalItem >= 1 && (await onComplete());
           },
         },
       ],
       { cancelable: false },
     );
   };
-  const onScan = async (barcodes) => {
-    if (totalItem && itemScanned < totalItem && barcodes?.data?.length != 0) {
-      const temp = barcodeArray.indexOf(barcodes?.data) > -1;
+
+  const onScan = async (barcode) => {
+    const success = itemScanned + 1;
+    if (totalItem && itemScanned < totalItem && barcode?.data?.length !== 0) {
+      const temp = barcodeArray.indexOf(barcode?.data) > -1;
       if (!temp) {
-        setItemScanned(itemScanned + 1);
-        setBarcodeArray([...barcodeArray, barcodes?.data]);
+        setItemScanned(success);
+        setBarcodeArray([...barcodeArray, barcode?.data]);
       }
     }
-
-    if (totalItem && itemScanned == totalItem) {
-      await setPackedItemAsMarked(_id);
-      navigation.pop();
-      navigation.navigate('ItemSuccessScreen');
-    }
+    totalItem && success / totalItem >= 1 && (await onComplete());
   };
+
+  const onComplete = async () => {
+    await setPackedItemAsMarked(id);
+    navigation.navigate('ItemSuccessScreen');
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView

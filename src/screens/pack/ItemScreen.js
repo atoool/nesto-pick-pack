@@ -18,34 +18,52 @@ import Arrow from '../../components/Arrow';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 
+function formatAmPm(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var AmPm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + AmPm;
+  return strTime;
+}
+
 const screenWidth = width;
 const w = width - 32;
 const ItemScreen = ({
   route: {
-    params: { item },
+    params: { item, orderId, time_slot, order_type },
   },
   navigation,
 }) => {
   const containerRef = createRef(null);
-  const ss = 3600;
+
+  const start = new Date(time_slot?.end_time).valueOf();
+  const end = new Date(time_slot?.end_time).valueOf();
+  const timer = useTimer(start - end);
+
   const {
     locale: { locale },
   } = useContext(AppContext);
   const { postRePick } = useContext(PackerContext);
+
   return (
     <SafeAreaView
       ref={(r) => (containerRef.current = r?.props)}
       style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TimerComponent ss={ss} />
+        <TimerComponent ss={timer} />
         <ItemSection
-          title={item.name}
-          price={item.price}
-          quantity={item.qty}
-          position="Aisle 1 Rack A12"
-          department={item.department}
+          title={item?.name}
+          price={item?.price}
+          quantity={item?.qty}
+          position={item?.position}
+          department={item?.department}
           status={'Packing now'}
-          type={locale?.status.ED}
+          type={order_type}
+          start_time={formatAmPm(new Date(start))}
+          end_time={formatAmPm(new Date(end))}
         />
         <VerifyItemSection
           containerRef={containerRef.current}
@@ -88,6 +106,8 @@ const ItemSection = ({
   department,
   status,
   type,
+  start_time,
+  end_time,
 }) => {
   const {
     locale: { locale },
@@ -123,7 +143,7 @@ const ItemSection = ({
                 justifyContent: 'flex-start',
                 alignItems: 'flex-end',
               }}>
-              <Text style={Typography.bold21}>${price}</Text>
+              <Text style={Typography.bold21}>${price?.toFixed(2)}</Text>
               <Text>{locale?.IS_perQuantity}</Text>
             </View>
           </View>
@@ -139,10 +159,10 @@ const ItemSection = ({
                 <Text style={Typography.bold15}>{type}</Text>
               </View>
               <View style={styles.deliverBoxRow2}>
-                <Text>9:00 AM</Text>
+                <Text>{start_time}</Text>
                 <Arrow />
                 {/* <Text> ------------> </Text> */}
-                <Text>10:00 AM</Text>
+                <Text>{end_time}</Text>
               </View>
             </View>
             <View style={styles.quantityPill}>
@@ -157,15 +177,12 @@ const ItemSection = ({
 };
 
 const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
-  const [passItem, setPassItem] = useState(
-    Array.apply(null, Array(item.qty)).map((itm) => true),
-  );
-  const [issue, setIssue] = useState(
-    Array.apply(null, Array(item.qty)).map((itm) => 'Physical damage'),
-  );
-  const [showDropDown, setShowDropDown] = useState(
-    Array.apply(null, Array(item.qty)).map((itm) => false),
-  );
+  const generateArray = (element) =>
+    Array.apply(null, Array(item.qty)).map((itm) => element);
+
+  const [passItem, setPassItem] = useState(generateArray(true));
+  const [issue, setIssue] = useState(generateArray('Good quality'));
+  const [showDropDown, setShowDropDown] = useState(generateArray(false));
   const [currentDropDown, setCurrentDropDown] = useState(0);
 
   const {
@@ -197,6 +214,19 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
       showDropDown[currentDropDown] &&
       onShowDropDown(false, currentDropDown),
   );
+
+  const onRePick = async () => {
+    const good_qty = issue.filter((i) => i === 'Good quality').length;
+    const bad_qty = issue.length - good_qty;
+    const payload = {
+      bad_reviews: issue,
+      good_qty,
+      bad_qty,
+    };
+    await postRePick(payload, item._id);
+    navigation.navigate('RepickSuccessScreen');
+  };
+
   return (
     <>
       <Divider />
@@ -402,16 +432,10 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
             {locale?.IS_reviewText}
           </Text>
           <Button
-            title="Ask to repick"
+            title={locale?.IS_askTo}
             style={{ width: 180, marginVertical: 20 }}
             onPress={async () => {
-              const payload = {
-                bad_reviews: ['Physical damage'],
-                good_qty: 1,
-                bad_qty: 1,
-              };
-              await postRePick(payload, item._id);
-              navigation.navigate('RepickSuccessScreen');
+              await onRePick();
             }}
           />
         </View>

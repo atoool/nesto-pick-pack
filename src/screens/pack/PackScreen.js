@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import packerOrders from '../../mock/packerOrders.json';
 import Title from '../../components/Title';
@@ -12,6 +12,7 @@ import { PackerContext } from '../../context/PackerContext';
 
 const PackScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const {
     locale: { locale },
@@ -23,7 +24,7 @@ const PackScreen = ({ navigation }) => {
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      await getAssignBinList();
+      await getOrders();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -31,32 +32,68 @@ const PackScreen = ({ navigation }) => {
     }
   };
 
-  const navigateTo = (orderId, item) =>
-    navigation.navigate('ItemScreen', { orderId, item });
+  const getOrders = async () => {
+    setLoading(true);
+    await getAssignBinList();
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const navigateTo = (orderId, item, time_slot, order_type) =>
+    navigation.navigate('ItemScreen', {
+      orderId: orderId,
+      item,
+      time_slot,
+      order_type,
+    });
+
   const onReadyPress = (id) => setOrderReady(id);
+
+  const getPackedItemCount = (list) => {
+    if (list && list.length !== 0) {
+      return list.filter((itm) => itm.packer_checked).length;
+    } else {
+      return 1;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
       <FlatList
         data={assignBinList}
-        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+        ListEmptyComponent={() => (
+          <NoContent name="NoOrdersSVG" isLoading={isLoading} />
+        )}
         contentContainerStyle={styles.contentContainer}
-        keyExtractor={(item, indx) => `${indx}`}
+        keyExtractor={(item, indx) => `${indx}${item.id}`}
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item }) => (
           <AccordionItem
-            order={{ id: item._id, items: item.items }}
-            orderType={locale?.status.ED}
+            order={{ id: item?.id, ...item }}
+            orderType={item?.order_type}
             status={locale?.status.Pa}
-            itemCount={'1/20 ' + locale.packed}
+            itemCount={
+              getPackedItemCount(item?.items) +
+              '/' +
+              item?.items?.length +
+              ' ' +
+              locale?.packed
+            }
             onPress={(itm) => {
-              navigateTo(item.order_id, itm);
+              navigateTo(item?.id, itm, item.time_slot, item.order_type);
             }}
-            buttonTitle={locale.PS_isReady}
+            buttonTitle={locale?.PS_isReady}
             onReadyPress={onReadyPress}
+            showReadyButton={item?.packing_completed}
+            userType={'packer'}
           />
         )}
       />

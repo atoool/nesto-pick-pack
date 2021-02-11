@@ -23,6 +23,8 @@ const AccordionItem = ({
   onPress,
   buttonTitle,
   onReadyPress,
+  showReadyButton,
+  userType,
 }) => {
   const now = Date.now();
   time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
@@ -44,46 +46,56 @@ const AccordionItem = ({
               key={i}
               backgroundColor="#C5B171"
               marginRight={5}
-              text={itm.id}
+              text={itm.bin_number}
               paddingVertical={5}
               textStyle={Typography.bold13White}
             />
           ))}
       </View>
-      <FlatList
-        data={items}
-        style={styles.orderItemsList}
-        keyExtractor={(item, indx) => `${indx}`}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={onPress ? () => onPress(item) : () => {}}
-            disabled={!onPress}>
-            <View style={styles.orderItem}>
-              <View style={styles.departmentBox}>
-                <TickComponent enabled={true} />
-                <View>
-                  <Text style={Typography.bold15}>
-                    {item.qty}x {item.name}
-                  </Text>
-                  <Text style={Typography.normal12}>
-                    {item.department} | {item.position}
-                  </Text>
+      {items?.length !== 0 && (
+        <FlatList
+          data={items}
+          style={styles.orderItemsList}
+          keyExtractor={(item, indx) => `${indx}${item.id}`}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Divider />}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={onPress ? () => onPress(item) : () => {}}
+              disabled={!onPress}>
+              <View style={styles.orderItem}>
+                <View style={styles.departmentBox}>
+                  <TickComponent
+                    enabled={
+                      userType === 'packer'
+                        ? item.packer_checked
+                        : item.picker_checked
+                    }
+                  />
+                  <View>
+                    <Text style={Typography.bold15}>
+                      {item.qty ? item.qty : 1}x {item.name}
+                    </Text>
+                    <Text style={Typography.normal12}>
+                      {item.department} | {item.position}
+                    </Text>
+                  </View>
                 </View>
+                {onPress && <RightCaretSVG style={styles.rightIcon} />}
               </View>
-              {/* <RightCaretSVG style={styles.rightIcon} /> */}
-            </View>
-          </TouchableOpacity>
-        )}
-      />
-      <Button
-        title={buttonTitle}
-        style={{ marginTop: 20 }}
-        onPress={() => {
-          onReadyPress && onReadyPress(id);
-        }}
-      />
+            </TouchableOpacity>
+          )}
+        />
+      )}
+      {showReadyButton && (
+        <Button
+          title={buttonTitle}
+          style={{ marginTop: 20 }}
+          onPress={() => {
+            onReadyPress && onReadyPress(id);
+          }}
+        />
+      )}
     </View>
   );
 };
