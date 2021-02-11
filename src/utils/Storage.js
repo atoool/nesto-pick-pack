@@ -59,7 +59,6 @@ const setLocale = async (locale) => {
   await setItem('locale', jsonValue);
 };
 
-
 export default {
   setItem,
   getItem,
@@ -71,5 +70,6 @@ export default {
   getUserType,
   setUserType,
   logOutUser,
-  getLocale,setLocale
+  getLocale,
+  setLocale,
 };

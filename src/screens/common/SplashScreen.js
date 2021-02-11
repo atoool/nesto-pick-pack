@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { SafeAreaView, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, Image, StyleSheet } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import Images from '../../assets/images';
 

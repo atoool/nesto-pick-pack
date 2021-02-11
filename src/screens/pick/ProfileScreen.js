@@ -16,7 +16,9 @@ import { AppContext } from '../../context/AppContext';
 const ProfileScreen = () => {
   const { logOutUser } = useContext(AuthContext);
 
-  const {locale:{locale}}=useContext(AppContext)
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.profile} />
@@ -25,7 +27,7 @@ const ProfileScreen = () => {
         email="john@gmail.com"
         phone="+91 8891356128"
       />
-      <MarkAvailability title={locale?.P_markAvail}/>
+      <MarkAvailability title={locale?.P_markAvail} />
       {/* <LinkButton title="Mark availability" topBorder={true} /> */}
       {/* <LinkButton title="My statistics" /> */}
       <LinkButton title={locale?.signout} onPress={logOutUser} />
@@ -52,15 +54,13 @@ const LinkButton = ({ title, topBorder, onPress }) => {
   );
 };
 
-const MarkAvailability = ({ topBorder,title }) => {
+const MarkAvailability = ({ topBorder, title }) => {
   const borderStyle = {
     borderTopWidth: topBorder ? 1 : 0,
   };
   return (
     <TouchableOpacity style={[styles.linkButton, borderStyle]}>
-      <Text style={[styles.linkButtonText, Typography.bold21]}>
-        {title}
-      </Text>
+      <Text style={[styles.linkButtonText, Typography.bold21]}>{title}</Text>
       <MarkAvailabilitySVG />
     </TouchableOpacity>
   );
