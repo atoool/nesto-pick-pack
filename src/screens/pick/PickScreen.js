@@ -11,6 +11,9 @@ import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 
 const PickScreen = () => {
+  const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -28,18 +31,25 @@ const PickScreen = () => {
     }
   };
 
-  useEffect(() => {
-    // _getOrdersList();
-  }, []);
+  const getOrders = async () => {
+    setLoading(true);
+    await getOrdersList();
+    setLoading(false);
+  };
 
-  const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+    getOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pick} />
       <FlatList
         data={orders}
-        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+        ListEmptyComponent={() => (
+          <NoContent name="NoOrdersSVG" isLoading={isLoading} />
+        )}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `${index}`}

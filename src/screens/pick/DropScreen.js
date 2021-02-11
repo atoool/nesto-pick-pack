@@ -20,6 +20,7 @@ const DropScreen = () => {
   const { dropList, getDropList, setItemDrop } = useContext(PickerContext);
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -32,8 +33,15 @@ const DropScreen = () => {
     }
   };
 
+  const onMount = async () => {
+    setLoading(true);
+    await getDropList();
+    setLoading(false);
+  };
+
   useEffect(() => {
-    // _getOrdersList();
+    onMount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDropToBin = async (id) => await setItemDrop(id);
@@ -43,7 +51,9 @@ const DropScreen = () => {
       <Title text={locale?.headings.drop} />
       <FlatList
         data={dropList}
-        ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+        ListEmptyComponent={() => (
+          <NoContent name="NoOrdersSVG" isLoading={isLoading} />
+        )}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `${index}`}
