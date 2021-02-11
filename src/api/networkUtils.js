@@ -15,8 +15,9 @@ const reqInterceptor = (x) => {
     },
   );
 
-  const printable = `${new Date()} | Request: ${x.method.toUpperCase()} | ${x.url
-    } | ${JSON.stringify(x.data)} | ${JSON.stringify(headers)}`;
+  const printable = `${new Date()} | Request: ${x.method.toUpperCase()} | ${
+    x.url
+  } | ${JSON.stringify(x.data)} | ${JSON.stringify(headers)}`;
   console.log('============================');
   console.log(printable);
   console.log('============================');

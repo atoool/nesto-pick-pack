@@ -3,32 +3,29 @@ import { SafeAreaView, Text, View, FlatList, StyleSheet } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Title from '../../components/Title';
 import RepickSVG from '../../assets/svg/RepickSVG';
-import { getNotifications } from '../../api';
-import notifications from '../../mock/notification.json';
 import { AppContext } from '../../context/AppContext';
 import NoContent from '../../components/NoContent';
+import { PickerContext } from '../../context/PickerContext';
 
 const NotificationsScreen = () => {
-  const [notificationList, setNotificationList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
+  const { notifications, getAllNotifications } = useContext(PickerContext);
 
   const _getNotifications = async () => {
     setRefreshing(true);
     try {
-      const res = await getNotifications();
-      setNotificationList(notifications.data);
+      await getAllNotifications();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setNotificationList(notifications.data);
       setRefreshing(false);
     }
   };
-
+  console.warn(notifications);
   useEffect(() => {}, []);
 
   return (
@@ -36,7 +33,7 @@ const NotificationsScreen = () => {
       <Title text={locale?.headings.notifications} />
       <FlatList
         ListEmptyComponent={() => <NoContent name={'NoNotificationSVG'} />}
-        data={notificationList}
+        data={notifications}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}

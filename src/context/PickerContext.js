@@ -9,6 +9,7 @@ import {
   getSubstitutedList,
   postSubstitutes,
   postSuggestedSubstitutes,
+  getNotifications,
 } from '../api';
 // import { Storage } from '../utils';
 
@@ -16,15 +17,19 @@ export const PickerContext = createContext({
   orders: [],
   dropList: [],
   similarItems: [],
+  substitutedList: [],
+  pickerSuggestions: [],
+  notifications: [],
   getOrdersList: async () => {},
   getDropList: async () => {},
   setItemPicked: async () => {},
   getSimilarItemList: async () => {},
   setItemDrop: async () => {},
-  getPickerSuggestions: async () => {},
-  getSubstitutedList: async () => {},
+  getPickerSuggestedItems: async () => {},
+  getSubstitutedItems: async () => {},
   postSubstitutes: async () => {},
   postSuggestedSubstitutes: async () => {},
+  getAllNotifications: async () => {},
 });
 
 export const PickerContextProvider = ({ children }) => {
@@ -32,7 +37,8 @@ export const PickerContextProvider = ({ children }) => {
   const [dropList, setDropList] = useState([]);
   const [similarItems, setSimilarItems] = useState([]);
   const [pickerSuggestions, setPickerSuggestions] = useState([]);
-  const [substitutedList, setSubstitutedList] = useState([]);
+  const [substitutedList, setSubstitutedList] = useState({});
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     // getOrdersList();
@@ -83,12 +89,21 @@ export const PickerContextProvider = ({ children }) => {
     }
   };
 
+  const getAllNotifications = async () => {
+    try {
+      const list = await getNotifications();
+      const temp = list.filter((item) => item.role === 'picker');
+      setNotifications(temp);
+    } catch (e) {}
+  };
+
   const value = {
     orders,
     dropList,
     similarItems,
     substitutedList,
     pickerSuggestions,
+    notifications,
     getOrdersList,
     getDropList,
     setItemPicked,
@@ -98,6 +113,7 @@ export const PickerContextProvider = ({ children }) => {
     getPickerSuggestedItems,
     postSubstitutes,
     postSuggestedSubstitutes,
+    getAllNotifications,
   };
   return (
     <PickerContext.Provider value={value}>{children}</PickerContext.Provider>

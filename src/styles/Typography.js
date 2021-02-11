@@ -81,6 +81,11 @@ export default StyleSheet.create({
     fontSize: 16,
     color: Colors.WHITE,
   },
+  bold16: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: Colors.BLACK,
+  },
   timeLeft: {
     fontSize: 16,
     fontWeight: 'bold',

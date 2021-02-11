@@ -2,8 +2,13 @@ import { put, post, get, _del } from './networkUtils';
 
 // Endpoints that Doesn't Require Authentication
 export const login = async (PAYLOAD) => {
-  const URL = '/signin';
+  const URL = '/basic/login';
   return post(URL, PAYLOAD, false);
+};
+
+export const getNotifications = async () => {
+  const URL = '/picker-packer/notifications';
+  return get(URL, false);
 };
 
 //packer
@@ -72,11 +77,6 @@ export const postSuggestedSubstitutes = async (PAYLOAD) => {
 
 export const getStatistics = async () => {
   const URL = '/statistics';
-  return get(URL, true);
-};
-
-export const getNotifications = async () => {
-  const URL = '/notifications';
   return get(URL, true);
 };
 

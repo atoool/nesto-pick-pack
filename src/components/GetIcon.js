@@ -17,7 +17,13 @@ import {
   EditSVG,
   LockSVG,
   NoNotificationSVG,
+  ProfileSVG,
   UserSVG,
+  PickerChoiceSVG,
+  NoResponseSVG,
+  SuccessSubstituteSVG,
+  ItemRemovedSVG,
+  CustAvailableSVG,
 } from '../assets/svg';
 
 const GetIcon = ({ name, color, width }) => {
@@ -59,6 +65,16 @@ const GetIcon = ({ name, color, width }) => {
     return <Success1SVG color={color} width={width} />;
   } else if (name === 'NoNotificationSVG') {
     return <NoNotificationSVG color={color} width={width} />;
+  } else if (name === 'CustAvailableSVG') {
+    return <CustAvailableSVG color={color} width={width} />;
+  } else if (name === 'SuccessSubstituteSVG') {
+    return <SuccessSubstituteSVG color={color} width={width} />;
+  } else if (name === 'PickerChoiceSVG') {
+    return <PickerChoiceSVG color={color} width={width} />;
+  } else if (name === 'NoResponseSVG') {
+    return <NoResponseSVG color={color} width={width} />;
+  } else if (name === 'ItemRemovedSVG') {
+    return <ItemRemovedSVG color={color} width={width} />;
   }
 };
 
