@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 //TODO: API
 import Storage from '../utils/Storage';
-import { mockEmailLogin } from '../mock/Login';
+import { login } from '../api';
 
 const initialAuthState = {
   authStateLoading: true,
@@ -18,12 +18,12 @@ export const AuthContextProvider = ({ children }) => {
     try {
       console.log('email login');
       const {
-        access_token,
-        access_token_timestamp,
-        userType,
-      } = await mockEmailLogin(email, password);
+        accessToken,
+        // access_token_timestamp,
+        userRole,
+      } = await login({ email, password });
 
-      logInUser(access_token, access_token_timestamp, userType);
+      logInUser(accessToken, '', userRole);
     } catch (e) {
       console.log(e);
       throw e;
@@ -32,17 +32,17 @@ export const AuthContextProvider = ({ children }) => {
   const logInUser = (access_token, access_token_timestamp, userType) => {
     console.log(
       'Login with: ' + access_token,
-      access_token_timestamp,
+      // access_token_timestamp,
       userType,
     );
     Storage.setUserAccessToken(access_token);
-    Storage.setUserAccessTokenTimeStamp(access_token_timestamp);
+    // Storage.setUserAccessTokenTimeStamp(access_token_timestamp);
     Storage.setUserType(userType);
     console.log('Login state');
     setVal({
       ...initialAuthState,
       access_token,
-      access_token_timestamp,
+      // access_token_timestamp,
       userType,
       authStateLoading: false,
     });
@@ -55,15 +55,15 @@ export const AuthContextProvider = ({ children }) => {
 
   const updateAuthStateContext = async (
     access_token,
-    access_token_timestamp,
+    // access_token_timestamp,
     userType,
   ) => {
     console.log('update: AuthStateContext');
-    console.log(access_token, access_token_timestamp, userType);
+    console.log(access_token, userType);
     setVal({
       ...initialAuthState,
       access_token,
-      access_token_timestamp,
+      // access_token_timestamp,
       userType,
       authStateLoading: false,
     });
@@ -71,9 +71,9 @@ export const AuthContextProvider = ({ children }) => {
   const checkAuthState = async () => {
     try {
       const access_token = await Storage.getUserAccessToken();
-      const access_token_timestamp = await Storage.getUserAccessTokenTimeStamp();
+      // const access_token_timestamp = await Storage.getUserAccessTokenTimeStamp();
       const userType = await Storage.getUserType();
-      updateAuthStateContext(access_token, access_token_timestamp, userType);
+      updateAuthStateContext(access_token, userType);
     } catch (e) {
       console.log(e);
       console.log('USER NOT AUTHORISED');

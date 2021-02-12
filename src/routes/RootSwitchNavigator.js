@@ -14,6 +14,7 @@ const Stack = createStackNavigator();
 const RootSwitchNavigator = () => {
   const { authStateLoading, userType } = useContext(AuthContext);
 
+  console.warn(userType);
   if (authStateLoading) {
     return (
       <Stack.Navigator initialRouteName="SplashScreen">
@@ -24,13 +25,13 @@ const RootSwitchNavigator = () => {
         />
       </Stack.Navigator>
     );
-  } else if (userType === 'picker') {
+  } else if (userType === 'Picker') {
     return (
       <PickerContextProvider>
         <PickTabsNavigator />
       </PickerContextProvider>
     );
-  } else if (userType === 'packer') {
+  } else if (userType === 'Packer') {
     return (
       <PackerContextProvider>
         <PackTabsNavigator />
