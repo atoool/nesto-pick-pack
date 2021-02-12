@@ -60,23 +60,19 @@ const DropScreen = () => {
         ItemSeparatorComponent={() => <Divider />}
         onRefresh={onRefresh}
         refreshing={refreshing}
-        renderItem={({ item, index }) =>
-          item?.items.length !== 0 ? (
-            <AccordionItem
-              order={item}
-              index={index}
-              orderType={item.order_type}
-              status={
-                item.picking_completed ? locale?.status.PiC : locale.status.Pi
-              }
-              itemCount={'20 ' + locale?.items}
-              onReadyPress={onDropToBin}
-              buttonTitle={locale.DS_dropReady}
-            />
-          ) : (
-            <NoContent name="NoOrdersSVG" />
-          )
-        }
+        renderItem={({ item, index }) => (
+          <AccordionItem
+            order={item}
+            index={index}
+            orderType={item.order_type}
+            status={
+              item.picking_completed ? locale?.status.PiC : locale.status.Pi
+            }
+            itemCount={'20 ' + locale?.items}
+            onReadyPress={onDropToBin}
+            buttonTitle={locale.DS_dropReady}
+          />
+        )}
       />
     </SafeAreaView>
   );

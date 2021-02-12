@@ -31,14 +31,14 @@ const PickScreen = () => {
     }
   };
 
-  const getOrders = async () => {
+  const onMount = async () => {
     setLoading(true);
     await getOrdersList();
     setLoading(false);
   };
 
   useEffect(() => {
-    getOrders();
+    onMount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,8 +60,8 @@ const PickScreen = () => {
           <PickList
             items={item.items}
             index={index}
-            orderType={locale?.status.ED}
-            itemCount={'20 ' + locale?.items}
+            orderType={''}
+            itemCount={''}
             startTime={item.start_time}
             endTime={item.end_time}
           />

@@ -32,9 +32,8 @@ const OrderComponent = ({
   } = useContext(AppContext);
   const sTime = formatAmPm(new Date(startTime));
   const eTime = formatAmPm(new Date(endTime));
-  const timer = useTimer(
-    new Date(endTime).valueOf() - new Date(startTime).valueOf(),
-  );
+  const timer = new Date(endTime) - new Date(startTime);
+
   return (
     <>
       {!pick && (
