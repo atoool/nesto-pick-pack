@@ -40,7 +40,7 @@ export const postRePick = async (PAYLOAD, id) => {
 //picker
 export const getOrdersListPick = async () => {
   const URL = '/picker/order-list-pick';
-  return get(URL, false, true);
+  return get(URL, true, true);
 };
 export const getOrdersDropList = async () => {
   const URL = '/picker/order-list-drop';
