@@ -6,9 +6,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
 import Button from '../../components/Button';
@@ -105,9 +105,6 @@ const ScanScreen = ({
             justifyContent: 'center',
           }}>
           <RNCamera
-            ref={(ref) => {
-              // this.camera = ref;
-            }}
             style={{ height: '35%', width: '80%' }}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
@@ -117,6 +114,19 @@ const ScanScreen = ({
               buttonPositive: locale?.ok,
               buttonNegative: locale?.cancel,
             }}
+            notAuthorizedView={
+              <View
+                style={{
+                  height: '35%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Button
+                  title="Enable camera permission"
+                  onPress={() => Linking.openSettings()}
+                />
+              </View>
+            }
             captureAudio={false}
             onBarCodeRead={onScan}
           />

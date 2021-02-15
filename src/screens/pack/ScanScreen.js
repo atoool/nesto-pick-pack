@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import {
   Alert,
+  Linking,
   SafeAreaView,
   ScrollView,
   Text,
@@ -12,6 +13,7 @@ import { Colors } from '../../styles';
 import * as Progress from 'react-native-progress';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
+import Button from '../../components/Button';
 
 const ScanScreen = ({
   navigation,
@@ -112,9 +114,6 @@ const ScanScreen = ({
             justifyContent: 'center',
           }}>
           <RNCamera
-            ref={(ref) => {
-              // this.camera = ref;
-            }}
             style={{ height: '35%', width: '80%' }}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
@@ -124,6 +123,19 @@ const ScanScreen = ({
               buttonPositive: locale?.ok,
               buttonNegative: locale?.cancel,
             }}
+            notAuthorizedView={
+              <View
+                style={{
+                  height: '35%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Button
+                  title="Enable camera permission"
+                  onPress={() => Linking.openSettings()}
+                />
+              </View>
+            }
             captureAudio={false}
             onBarCodeRead={onScan}
           />

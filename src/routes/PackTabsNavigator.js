@@ -43,7 +43,7 @@ const PackTabsNavigator = () => {
       <Tabs.Screen
         name="Scan"
         component={ScanScreen}
-        initialParams={{ totalItems: null }}
+        initialParams={{ item: { qty: null, id: '' } }}
       />
       <Tabs.Screen
         name="Notifications"
