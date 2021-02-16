@@ -20,6 +20,7 @@ const LoginScreen = () => {
   const { emailLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const {
     locale: { locale },
@@ -27,10 +28,12 @@ const LoginScreen = () => {
 
   const signInHandler = async () => {
     try {
+      setLoading(true);
       await emailLogin(email, password);
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
   };
 
   return (
@@ -43,6 +46,7 @@ const LoginScreen = () => {
           iconName="UserSVG"
           placeholder={locale?.placeholder.email}
           value={email}
+          keyboardType={'email-address'}
           style={styles.screenMargin}
           onChangeText={(text) => setEmail(text)}
         />
@@ -57,7 +61,7 @@ const LoginScreen = () => {
         <Button
           title={locale?.signin}
           onPress={signInHandler}
-          loading={false}
+          loading={loading}
           style={styles.screenMargin}
         />
       </ScrollView>
