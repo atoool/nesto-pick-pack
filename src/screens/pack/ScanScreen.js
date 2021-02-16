@@ -23,7 +23,6 @@ const ScanScreen = ({
     },
   },
 }) => {
-  console.warn(id);
   const totalItem = qty;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);

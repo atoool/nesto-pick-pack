@@ -3,13 +3,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {
-  createRef,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
@@ -20,7 +14,6 @@ import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
 import { AppContext } from './context/AppContext';
 import InAppMessage from './components/InAppMessage';
-import ModalComponent from './components/ModalComponent';
 
 const App = () => {
   const [showSnack, setShowSnack] = useState(false);

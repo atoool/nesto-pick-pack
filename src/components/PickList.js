@@ -20,6 +20,7 @@ const PickList = ({
   orderType,
   startTime,
   endTime,
+  timeLeft,
 }) => {
   const navigation = useNavigation();
   return (
@@ -32,6 +33,7 @@ const PickList = ({
         index={index}
         startTime={startTime}
         endTime={endTime}
+        timeLeft={timeLeft}
         pick
       />
       <FlatList
@@ -71,21 +73,22 @@ const PickList = ({
                   {item.orderId} | {item.department} {item.position}
                 </Text>
               </View>
-              {item.assigned_bins && item.assigned_bins?.length !== 0 && (
+              {item.binsAssigned && item.binsAssigned?.length !== 0 && (
                 <View style={styles.positionBox}>
-                  {item.assigned_bins.map((itm, i) => (
-                    <StatusPill
-                      key={i}
-                      backgroundColor={'#C5B171'}
-                      marginRight={5}
-                      text={itm}
-                      paddingVertical={0}
-                    />
+                  {item.binsAssigned.map((itm, i) => (
+                    <View key={i} style={styles.statusPill}>
+                      <StatusPill
+                        backgroundColor={'#C5B171'}
+                        marginRight={5}
+                        text={itm.bin_number}
+                        paddingVertical={0}
+                      />
+                    </View>
                   ))}
                 </View>
               )}
             </View>
-            <RightCaretSVG style={styles.rightIcon} />
+            <RightCaretSVG />
           </TouchableOpacity>
         )}
       />
@@ -103,7 +106,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 1,
   },
-  rightIcon: { marginRight: 20 },
   orderItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -113,14 +115,21 @@ const styles = StyleSheet.create({
   orderItemsList: {
     backgroundColor: Colors.offWhite,
     borderRadius: 7,
+    paddingRight: 20,
   },
   itemTitleBox: {
     flexDirection: 'row',
     marginBottom: 5,
     alignItems: 'center',
   },
-  positionBox: { flexDirection: 'row', marginTop: 5 },
+  positionBox: {
+    flexDirection: 'row',
+    marginTop: 5,
+    marginRight: 20,
+    flexWrap: 'wrap',
+  },
   departmentBox: { marginBottom: 5 },
+  statusPill: { marginBottom: 5 },
 });
 
 export default PickList;

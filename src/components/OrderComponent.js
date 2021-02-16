@@ -7,8 +7,9 @@ import Arrow from './Arrow';
 import StatusPill from './StatusPill';
 
 function formatAmPm(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
+  let dt = new Date(date);
+  var minutes = dt.getMinutes();
+  var hours = dt.getHours();
   var AmPm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
@@ -26,14 +27,16 @@ const OrderComponent = ({
   pick,
   startTime,
   endTime,
+  timeLeft,
 }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const sTime = formatAmPm(new Date(startTime));
-  const eTime = formatAmPm(new Date(endTime));
-  const timer = new Date(endTime) - new Date(startTime);
-
+  const sTime = formatAmPm(startTime);
+  const eTime = formatAmPm(endTime);
+  const timer = timeLeft
+    ? new Date(timeLeft).getSeconds() - new Date().getSeconds()
+    : 0;
   return (
     <>
       {!pick && (

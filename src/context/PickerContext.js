@@ -47,7 +47,7 @@ export const PickerContextProvider = ({ children }) => {
   const getOrdersList = async () => {
     try {
       const res = await getOrdersListPick();
-      setOrders([res.data]);
+      setOrders(res);
     } catch (e) {
       console.log(e);
     }
@@ -56,7 +56,7 @@ export const PickerContextProvider = ({ children }) => {
   const getDropList = async () => {
     try {
       const res = await getOrdersDropList();
-      setDropList(res.data);
+      setDropList(res);
     } catch (e) {
       console.log(e);
     }

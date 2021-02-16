@@ -54,7 +54,7 @@ const config = {
     },
   },
 };
-export default Linking = {
+const Linking = {
   prefixes: ['http://com.nesto.store'],
   config,
   async getInitialURL() {
@@ -67,3 +67,4 @@ export default Linking = {
     return message?.data.key_1;
   },
 };
+export default Linking;

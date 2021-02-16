@@ -203,7 +203,7 @@ const ItemCheckList = ({ items, onNavigateTo, price, title }) => {
                   <Text style={Typography.bold15}>{item.name}</Text>
                 </View>
               </View>
-              <Text style={[styles.stockBox]}>{price}</Text>
+              <Text style={[styles.stockBox]}>{price.toFixed(2)}</Text>
             </View>
           </TouchableOpacity>
         )}

@@ -22,17 +22,17 @@ const Button = ({
 }) => (
   <TouchableOpacity
     disabled={disabled}
-    style={Platform.OS == 'ios' && [styles.btnStyle, style]}
+    style={Platform.OS === 'ios' && [styles.btnStyle, style]}
     onPress={onPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     <View style={[styles.btnStyle, style]}>
       <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: scanButton ? 'space-between' : 'center',
-          width: '100%',
-        }}>
+        style={
+          ([styles.titleView],
+          {
+            justifyContent: scanButton ? 'space-between' : 'center',
+          })
+        }>
         <View>
           {loading && <Loader small={true} />}
           {!loading && (
@@ -47,15 +47,7 @@ const Button = ({
             name="chevron-right"
             color={Colors.secondaryRed}
             size={15}
-            style={{
-              backgroundColor: Colors.WHITE,
-              width: 40,
-              height: 40,
-              borderRadius: 40,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              right: 20,
-            }}
+            style={styles.iconStyle}
           />
         )}
       </View>
@@ -74,6 +66,20 @@ const styles = StyleSheet.create({
   },
   textStyle: Typography.buttonTitleText,
   subtitleStyle: { ...Typography.normal12White, marginBottom: 5 },
+  titleView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  iconStyle: {
+    backgroundColor: Colors.WHITE,
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    right: 20,
+  },
 });
 
 export default Button;

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { WebView } from 'react-native-webview';
+import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
 import { Colors } from '../../styles';
 
@@ -21,14 +21,17 @@ const Browser = ({
   const openLink = async () => {
     if (src.indexOf('external.') > -1) {
       const url = src.split('external.')[1];
-      const s = await Linking.openURL('https://' + url);
-      console.warn(url, s);
+      await Linking.openURL('https://' + url);
     }
   };
   useEffect(() => {
     openLink();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if (src.indexOf('external.') > -1) return <Loader fullScreen />;
+
+  if (src.indexOf('external.') > -1) {
+    return <Loader fullScreen />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
@@ -53,14 +56,6 @@ const Browser = ({
   );
 };
 
-const Divider = () => (
-  <View
-    style={{
-      height: 1,
-      backgroundColor: Colors.offWhite,
-    }}
-  />
-);
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.WHITE },
   closeView: {

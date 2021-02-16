@@ -3,8 +3,6 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Colors } from '../styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-// import {Haptics} from '../utils';
-
 const Checkbox = ({ val, onChange }) => {
   const styles = StyleSheet.create({
     touchable: {
@@ -22,7 +20,6 @@ const Checkbox = ({ val, onChange }) => {
     <TouchableOpacity
       style={styles.touchable}
       onPress={() => {
-        // Haptics.stepperTap();
         onChange();
       }}>
       {val && <Icon name="ios-checkmark" color={Colors.WHITE} size={26} />}

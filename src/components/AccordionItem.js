@@ -90,7 +90,7 @@ const AccordionItem = ({
       {showReadyButton && (
         <Button
           title={buttonTitle}
-          style={{ marginTop: 20 }}
+          style={styles.button}
           onPress={() => {
             onReadyPress && onReadyPress(id);
           }}
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  button: { marginTop: 20 },
 });
 
 export default AccordionItem;

@@ -38,9 +38,7 @@ const LoginScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Image style={styles.logoImage} source={Images.logo} />
         <Text style={Typography.bold30}>{locale?.Login}</Text>
-        <Text style={[Typography.normal21, { marginBottom: 20 }]}>
-          {locale?.LoginText}
-        </Text>
+        <Text style={styles.loginText}>{locale?.LoginText}</Text>
         <Input
           iconName="UserSVG"
           placeholder={locale?.placeholder.email}
@@ -80,6 +78,7 @@ const styles = StyleSheet.create({
     width: screenWidth - 64,
   },
   scrollView: { alignItems: 'center' },
+  loginText: { ...Typography.normal21, marginBottom: 20 },
 });
 
 export default LoginScreen;

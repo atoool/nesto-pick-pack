@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import Arrow from '../../components/Arrow';
 import StatusPill from '../../components/StatusPill';
@@ -17,9 +18,9 @@ import { Colors, Typography } from '../../styles';
 import Images from '../../assets/images';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
-import RightCaretSVG from '../../assets/svg/RightCaretSVG.svg';
 import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
+import Loader from '../../components/Loader';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -38,57 +39,77 @@ const SubstitutesScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const onNavigateTo = () =>
-    navigation.navigate('ItemScreen', {
-      orderId: item.orderId,
-      item,
-    });
+
+  const [checkedList, setCheckedList] = useState(
+    Array.apply('', Array(similarItems.length)).map((i) => {
+      return '';
+    }),
+  );
+
+  const onCheck = (i) => {
+    const temp = checkedList;
+    temp[i] = checkedList[i] === '' ? similarItems[i] : '';
+    setCheckedList([...temp]);
+  };
 
   useEffect(() => {
     onMount();
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onMount = async () => {
     await getSimilarItemList(1);
   };
 
   const onSuggestSubstitute = async () => {
-    const payload = {
-      item_id: 123,
-      more_quantity_required: 2,
-      existing_quantity: 4,
-      order_id: 323434,
-      suggested_items: ['a', 'b'],
-    };
-    await postSuggestedSubstitutes(payload);
-    navigation.navigate('SubstituteRequestedScreen');
+    const isCheckedListEmpty =
+      checkedList.filter((itm) => itm !== '').length === 0;
+    if (isCheckedListEmpty) {
+      ToastAndroid.show('Empty list', ToastAndroid.SHORT);
+    } else {
+      const payload = {
+        original_item_id: 123,
+        more_quantity_required: 2,
+        existing_quantity: 4,
+        order_id: 323434,
+        suggested_items: checkedList,
+        item_type: item.item_type,
+      };
+      await postSuggestedSubstitutes(payload);
+      navigation.navigate('SubstituteRequestedScreen');
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <ItemSection
-          title={item.name}
-          price={item?.price && item.price.toFixed(2)}
-          quantity={item.qty}
-          position={item.position}
-          department={item.department}
-          type="Express Delivery"
-          status="Picking completed"
-        />
-        {similarItems && (
-          <ItemCheckList
-            items={similarItems}
-            onNavigateTo={onNavigateTo}
-            stock="In stock"
+      {!similarItems || similarItems.length === 0 ? (
+        <Loader fullScreen />
+      ) : (
+        <ScrollView nestedScrollEnabled>
+          <ItemSection
+            title={item.name}
+            price={item?.price && item.price.toFixed(2)}
+            quantity={item.qty}
+            position={item.position}
+            department={item.department}
+            type={item.orderType}
+            status={locale?.status.Pi}
           />
-        )}
-        <Button
-          title={locale.IS_substiButton}
-          style={{ borderRadius: 0 }}
-          onPress={onSuggestSubstitute}
-        />
-      </ScrollView>
+          {similarItems && (
+            <ItemCheckList
+              items={similarItems}
+              onPress={onCheck}
+              stock="In stock"
+              checkedList={checkedList}
+            />
+          )}
+          <Button
+            title={locale.IS_substituteButton}
+            style={{ borderRadius: 0 }}
+            onPress={onSuggestSubstitute}
+          />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -165,19 +186,19 @@ const ItemSection = ({
   );
 };
 
-const ItemCheckList = ({ items, onNavigateTo, stock }) => {
+const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
   return (
     <FlatList
       data={items}
       style={styles.orderItemsList}
-      keyExtractor={(item, indx) => `${indx}`}
+      keyExtractor={(item, indx) => `${indx}${item.id}`}
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={() => <Divider />}
-      renderItem={({ item }) => (
-        <TouchableOpacity>
+      renderItem={({ item, index }) => (
+        <TouchableOpacity onPress={() => onPress(index)}>
           <View style={styles.orderItem}>
             <View style={styles.departmentBox}>
-              <TickComponent enabled={true} />
+              <TickComponent enabled={checkedList[index] !== ''} />
               <View>
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}
@@ -192,7 +213,7 @@ const ItemCheckList = ({ items, onNavigateTo, stock }) => {
                 styles.stockBox,
                 {
                   color:
-                    stock == 'In stock'
+                    stock === 'In stock'
                       ? Colors.primaryGreen
                       : Colors.secondaryRed,
                 },

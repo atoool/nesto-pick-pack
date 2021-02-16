@@ -8,10 +8,10 @@ const mockEmailLogin = async (email, password) => {
     switch (email) {
       case 'basilarackal@riafy.me':
         console.log('user Picker');
-        return { userType: 'picker', access_token, access_token_timestamp };
-      case 'athul@riafy.me':
+        return { userType: 'Picker', access_token, access_token_timestamp };
+      case 'athulmohan@riafy.me':
         console.log('user Packer');
-        return { userType: 'packer', access_token, access_token_timestamp };
+        return { userType: 'Packer', access_token, access_token_timestamp };
       default:
         console.log('user None');
         return { userType: '', access_token: '', access_token_timestamp: '' };

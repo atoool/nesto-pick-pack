@@ -1,12 +1,13 @@
+/* eslint-disable radix */
 import React, { useState, useContext } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Barcode from 'react-native-barcode-builder';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
-import { Colors, width, height } from '../../styles';
+import { Colors, width } from '../../styles';
 
 const BinAssignScreen = ({
   route: {
@@ -34,10 +35,10 @@ const BinAssignScreen = ({
   } = useContext(AppContext);
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ margin: 30, paddingBottom: 60 }}>
+        contentContainerStyle={styles.scrollView}>
         <PrintLabelComponent
           orderIdLabel={locale?.BAS_order}
           printLabelText={`${locale?.BAS_printLabel2}${orderId ? orderId : ''}`}
@@ -48,7 +49,7 @@ const BinAssignScreen = ({
           onChangeBins={() => {}}
           hide
         />
-        {Array.apply('', Array(parseInt(bins == '' ? 0 : bins))).map(
+        {Array.apply('', Array(parseInt(bins === '' ? 0 : bins))).map(
           (val, indx) => (
             <InputWithLabel
               key={indx}
@@ -82,32 +83,15 @@ const PrintLabelComponent = ({
 }) => {
   return (
     <>
-      <View
-        style={{
-          backgroundColor: Colors.secondaryRed,
-          borderRadius: 12,
-          alignItems: 'center',
-          padding: 40,
-        }}>
-        <View style={{ flex: 1 }}>
+      <View style={styles.labelContainer}>
+        <View style={styles.barcode}>
           {orderId ? (
             <Barcode value={orderId} height={50} width={1} />
           ) : (
             <Loader small green />
           )}
         </View>
-        <Text
-          style={{
-            color: Colors.WHITE,
-            fontSize: 16,
-            flex: 1,
-            textAlign: 'center',
-            textAlignVertical: 'bottom',
-            marginTop: 20,
-            fontWeight: 'bold',
-          }}>
-          {printLabelText}
-        </Text>
+        <Text style={styles.printLabelText}>{printLabelText}</Text>
       </View>
       {!hide && (
         <>
@@ -142,14 +126,11 @@ const InputWithLabel = ({
   iconName,
 }) => {
   return (
-    <View style={{ flex: 1, marginTop: top }}>
-      <Text
-        style={{ color: Colors.darkText, fontSize: 16, fontWeight: 'bold' }}>
-        {label}
-      </Text>
+    <View style={[styles.labelTextView, { marginTop: top }]}>
+      <Text style={styles.labelText}>{label}</Text>
       <Input
         iconName={iconName}
-        style={{ marginTop: 5 }}
+        style={styles.inputStyle}
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboard}
@@ -157,5 +138,31 @@ const InputWithLabel = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
+  scrollView: { margin: 30, paddingBottom: 60 },
+  //printLabelComponent
+  labelContainer: {
+    backgroundColor: Colors.secondaryRed,
+    borderRadius: 12,
+    alignItems: 'center',
+    padding: 40,
+  },
+  barcode: { flex: 1 },
+  printLabelText: {
+    color: Colors.WHITE,
+    fontSize: 16,
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+  //inputWithLabel
+  labelTextView: { flex: 1 },
+  labelText: { color: Colors.darkText, fontSize: 16, fontWeight: 'bold' },
+  inputStyle: { marginTop: 5 },
+});
 
 export default BinAssignScreen;

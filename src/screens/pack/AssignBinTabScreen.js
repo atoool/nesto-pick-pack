@@ -5,10 +5,6 @@ import { Typography, Colors, width } from '../../styles';
 //Components
 import Title from '../../components/Title';
 import NoContent from '../../components/NoContent';
-//Mock Imports
-import pickerOrders from '../../mock/pickerOrders.json';
-
-// import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 import Button from '../../components/Button';
 import OrderComponent from '../../components/OrderComponent';

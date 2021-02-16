@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Alert,
   Modal,
@@ -22,9 +22,9 @@ const ModalComponent = ({ visible }) => {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello World!</Text>
 
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.row}>
               <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+                style={{ ...styles.openButton }}
                 onPress={() => {
                   // setModalVisible(!modalVisible);
                 }}>
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: '#000',
     borderRadius: 7,
     paddingHorizontal: 20,
     paddingVertical: 10,
     elevation: 2,
     margin: 5,
+    backgroundColor: '#2196F3',
   },
   textStyle: {
     color: 'white',
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
   },
+  row: { flexDirection: 'row' },
 });
 
 export default ModalComponent;

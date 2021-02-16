@@ -87,28 +87,19 @@ const PackTabBar = ({ state, descriptors, navigation, title }) => {
               navigation.navigate(route.name);
             }
           };
-          if (index == 2)
+          if (index === 2) {
             return (
               <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={onPress}
                 style={styles.tabContainer}
                 key={index.toString()}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
-                    backgroundColor: Colors.secondaryRed,
-                    marginBottom: 5,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    elevation: 1,
-                  }}>
+                <View style={styles.scanIcon}>
                   <PackScanSVG color={color} width={25} />
                 </View>
               </TouchableOpacity>
             );
+          }
           return (
             <TouchableOpacity
               onPress={onPress}
@@ -146,6 +137,16 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scanIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: Colors.secondaryRed,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 1,
   },
 });
 

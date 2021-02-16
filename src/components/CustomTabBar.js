@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { Typography, Colors } from '../styles';
+import { Colors } from '../styles';
 
 const CustomTabBar = ({ state, descriptors, navigation, title }) => {
   return (
@@ -31,42 +31,26 @@ const CustomTabBar = ({ state, descriptors, navigation, title }) => {
               navigation.navigate(route.name);
             }
           };
-          if (index == 2)
+          if (index === 2) {
             return (
               <TouchableOpacity
                 onPress={onPress}
                 style={styles.tabContainer}
                 key={index.toString()}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
-                    backgroundColor: Colors.secondaryRed,
-                    marginBottom: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
+                <View style={styles.scanView}>
                   <Icon name="maximize" color={Colors.WHITE} size={30} />
                 </View>
                 {/* <Text style={[{ color }]}>{label}</Text> */}
               </TouchableOpacity>
             );
+          }
           return (
             <TouchableOpacity
               onPress={onPress}
               style={styles.tabContainer}
               key={index.toString()}>
-              <View
-                style={{
-                  width: 25,
-                  height: 25,
-                  backgroundColor: color,
-                  marginTop: 7,
-                }}></View>
-              <Text style={[{ color, fontSize: 12, marginTop: 5 }]}>
-                {label}
-              </Text>
+              <View style={[{ backgroundColor: color }, styles.touchableBox]} />
+              <Text style={[{ color }, styles.label]}>{label}</Text>
             </TouchableOpacity>
           );
         })}
@@ -85,5 +69,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  scanView: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: Colors.secondaryRed,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchableBox: {
+    width: 25,
+    height: 25,
+    marginTop: 7,
+  },
+  label: { fontSize: 12, marginTop: 5 },
 });
 export default CustomTabBar;

@@ -23,7 +23,6 @@ const PickScreen = () => {
     setRefreshing(true);
     try {
       await getOrdersList();
-      console.warn(orders);
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -62,8 +61,9 @@ const PickScreen = () => {
             index={index}
             orderType={''}
             itemCount={''}
-            startTime={item.start_time}
-            endTime={item.end_time}
+            startTime={item.timeslot.start_time}
+            endTime={item.timeslot.end_time}
+            timeLeft={item.pickingDeadlineTimestamp}
           />
         )}
       />

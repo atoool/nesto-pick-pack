@@ -162,7 +162,7 @@ const VerifyItemSection = ({ navigation, item }) => {
     locale: { locale },
   } = useContext(AppContext);
 
-  const timeOut = true;
+  const timeOut = false;
 
   return (
     <>

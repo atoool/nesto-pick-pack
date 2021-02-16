@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/common/SplashScreen';
@@ -14,7 +15,6 @@ const Stack = createStackNavigator();
 const RootSwitchNavigator = () => {
   const { authStateLoading, userType } = useContext(AuthContext);
 
-  console.warn(userType);
   if (authStateLoading) {
     return (
       <Stack.Navigator initialRouteName="SplashScreen">

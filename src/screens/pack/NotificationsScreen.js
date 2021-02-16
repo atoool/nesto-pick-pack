@@ -26,8 +26,6 @@ const NotificationsScreen = () => {
     }
   };
 
-  console.warn(notifications);
-
   useEffect(() => {}, []);
 
   return (
