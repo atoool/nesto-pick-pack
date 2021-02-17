@@ -3,6 +3,12 @@ import ExtraPayload from '../utils/ExtraPayload';
 import Storage from '../utils/Storage';
 import { API_URL } from './config';
 
+const DEFAULT_CONFIG = {
+  headers: {
+    'content-type': 'application/json',
+  },
+};
+
 const reqInterceptor = (x) => {
   const headers = {
     ...x.headers.common,
@@ -41,11 +47,9 @@ const resInterceptor = (x) => {
 const axiosInstance = axios.create({
   baseURL: API_URL,
 });
-const networkErrorLogger = (e, URL, PAYLOAD, CONFIG) => {
+const networkErrorLogger = (e, URL, PAYLOAD) => {
   console.info(
-    `REQUEST TO: ${URL} with PAYLOAD: ${JSON.stringify(
-      PAYLOAD,
-    )} and CONFIG: ${JSON.stringify(CONFIG)} failed!`,
+    `REQUEST TO: ${URL} with PAYLOAD: ${JSON.stringify(PAYLOAD)} failed!`,
   );
   console.info(JSON.stringify(e));
   if (e.message === 'Network Error') {
@@ -68,23 +72,26 @@ const networkErrorLogger = (e, URL, PAYLOAD, CONFIG) => {
     }
   }
 };
-const setUpConfig = async () => {
-  try {
-    const access_token = await Storage.getUserAccessToken();
-    const CONFIG = {
-      headers: {
-        'content-type': 'application/json',
-        'access-token': access_token,
-      },
-    };
-    return CONFIG;
-  } catch (e) {
-    console.log('Error Setting Config');
+const setUpConfig = async (isAuthenticated) => {
+  if (isAuthenticated) {
+    try {
+      const access_token = await Storage.getUserAccessToken();
+      const CONFIG = {
+        headers: {
+          'content-type': 'application/json',
+          'access-token': access_token,
+        },
+      };
+      return CONFIG;
+    } catch (e) {
+      console.log('Error Setting Config');
+    }
+  } else {
+    return DEFAULT_CONFIG;
   }
 };
 
 const get = async (URL, isAuthenticated = true, getFullResult = false) => {
-  let CONFIG = 'nil';
   try {
     let {
       appname,
@@ -99,17 +106,10 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
       osVersion,
     } = await ExtraPayload();
     let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
+    const CONFIG = await setUpConfig(isAuthenticated);
+    console.log(CONFIG);
+    const result = await axiosInstance.get(URL + PARAMS, CONFIG);
 
-    let result;
-    if (isAuthenticated) {
-      CONFIG = await setUpConfig();
-      console.log(CONFIG);
-      result = await axiosInstance.get(URL + PARAMS, CONFIG);
-    } else {
-      result = await axiosInstance.get(URL + PARAMS);
-    }
-    // console.info(`GET TO: ${URL} and CONFIG: ${JSON.stringify(CONFIG)}`);
-    // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
     if (getFullResult) {
       return result.data;
     } else {
@@ -117,14 +117,12 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
     }
   } catch (e) {
     // console.warn(e);
-    networkErrorLogger(e, URL, 'nil', CONFIG);
+    networkErrorLogger(e, URL, 'nil');
   }
 };
 
 const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
-  let CONFIG = 'nil';
   try {
-    let result;
     let {
       appname,
       version,
@@ -139,12 +137,8 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
     } = await ExtraPayload();
     let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
 
-    if (isAuthenticated) {
-      CONFIG = await setUpConfig();
-      result = await axiosInstance.post(URL + PARAMS, PAYLOAD, CONFIG);
-    } else {
-      result = await axiosInstance.post(URL, PARAMS);
-    }
+    const CONFIG = await setUpConfig(isAuthenticated);
+    const result = await axiosInstance.post(URL + PARAMS, PAYLOAD, CONFIG);
     // console.info(
     //   `POST TO: ${URL} with PAYLOAD: ${JSON.stringify(
     //     PAYLOAD,
@@ -153,48 +147,18 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
     // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
     return result.data.data;
   } catch (e) {
-    networkErrorLogger(e, URL, PAYLOAD, CONFIG);
+    networkErrorLogger(e, URL, PAYLOAD);
   }
 };
 
 const put = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
-  let CONFIG = 'nil';
   try {
-    let result;
-    if (isAuthenticated) {
-      CONFIG = await setUpConfig();
-      result = await axiosInstance.put(URL, PAYLOAD, CONFIG);
-    } else {
-      result = await axiosInstance.put(URL, PAYLOAD);
-    }
-    // console.info(
-    //   `PUT TO: ${URL} with PAYLOAD: ${JSON.stringify(
-    //     PAYLOAD,
-    //   )} and CONFIG: ${JSON.stringify(CONFIG)}`,
-    // );
-    // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
+    const CONFIG = await setUpConfig(isAuthenticated);
+    const result = await axiosInstance.put(URL, PAYLOAD, CONFIG);
     return result.data.data;
   } catch (e) {
-    networkErrorLogger(e, URL, PAYLOAD, CONFIG);
+    networkErrorLogger(e, URL, PAYLOAD);
   }
 };
 
-const _del = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
-  let CONFIG = 'nil';
-  try {
-    let result;
-    if (isAuthenticated) {
-      CONFIG = await setUpConfig();
-      const delConfig = { data: PAYLOAD, headers: CONFIG.headers };
-      result = await axiosInstance.delete(URL, delConfig);
-    } else {
-      const delConfig = { data: PAYLOAD };
-      result = await axiosInstance.delete(URL, delConfig);
-    }
-    return result.data.data;
-  } catch (e) {
-    networkErrorLogger(e, URL, PAYLOAD, CONFIG);
-  }
-};
-
-export { put, post, get, _del };
+export { put, post, get };

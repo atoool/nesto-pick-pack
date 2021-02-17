@@ -1,5 +1,5 @@
 import { ToastAndroid } from 'react-native';
-import { put, post, get, _del } from './networkUtils';
+import { put, post, get } from './networkUtils';
 
 // Endpoints that Doesn't Require Authentication
 export const login = async (PAYLOAD) => {
