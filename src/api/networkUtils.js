@@ -116,8 +116,8 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
       return result.data.data;
     }
   } catch (e) {
-    console.warn(e);
-    // networkErrorLogger(e, URL, 'nil', CONFIG);
+    // console.warn(e);
+    networkErrorLogger(e, URL, 'nil', CONFIG);
   }
 };
 

@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -15,6 +16,20 @@ import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
+
+function validateEmail(emailField, password) {
+  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+  if (
+    reg.test(emailField) === false ||
+    emailField === '' ||
+    password.length < 5
+  ) {
+    return false;
+  }
+
+  return true;
+}
 
 const LoginScreen = () => {
   const { emailLogin } = useContext(AuthContext);
@@ -27,11 +42,15 @@ const LoginScreen = () => {
   } = useContext(AppContext);
 
   const signInHandler = async () => {
-    try {
-      setLoading(true);
-      await emailLogin(email, password);
-    } catch (e) {
-      console.log(e);
+    if (validateEmail(email, password)) {
+      try {
+        setLoading(true);
+        await emailLogin(email, password);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      ToastAndroid.show(locale?.validEmail, ToastAndroid.SHORT);
     }
     setLoading(false);
   };
@@ -49,6 +68,7 @@ const LoginScreen = () => {
           keyboardType={'email-address'}
           style={styles.screenMargin}
           onChangeText={(text) => setEmail(text)}
+          textContentType="emailAddress"
         />
         <Input
           iconName="LockSVG"
@@ -57,6 +77,7 @@ const LoginScreen = () => {
           value={password}
           style={styles.screenMargin}
           onChangeText={(text) => setPassword(text)}
+          textContentType="password"
         />
         <Button
           title={locale?.signin}

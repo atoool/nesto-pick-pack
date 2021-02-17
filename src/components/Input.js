@@ -14,6 +14,7 @@ const Input = ({
   multiline,
   style,
   iconName,
+  textContentType = 'none',
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -34,6 +35,7 @@ const Input = ({
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         style={styles.textInput}
+        textContentType={textContentType}
       />
     </View>
   );

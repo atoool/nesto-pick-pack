@@ -43,6 +43,7 @@
   "Login": "Login",
   "LoginText": "Login to Access your profile",
   "networkError": "Failed to connect any network!",
+  "validEmail":"Enter a valid email address",
   "BAS_Position": "Position of Bin",
   "save": "Save",
   "picked": "Picked",

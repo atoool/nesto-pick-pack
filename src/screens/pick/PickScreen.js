@@ -59,7 +59,7 @@ const PickScreen = () => {
           <PickList
             items={item.items ? item.items : []}
             index={index}
-            orderType={''}
+            orderType={item.order_type ? item.order_type : locale?.status.SD}
             itemCount={''}
             startTime={
               item.timeslot.start_time ? item.timeslot.start_time : new Date()

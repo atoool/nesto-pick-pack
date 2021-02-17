@@ -57,10 +57,11 @@ const PickList = ({
                   style={[
                     styles.deliveryStatusCircle,
                     {
-                      backgroundColor:
-                        item.dfc === 'chilled'
-                          ? Colors.chilled
-                          : Colors.secondaryRed,
+                      backgroundColor: item?.dfc
+                        ? item.dfc !== ''
+                          ? Colors[item.dfc.toLowerCase()]
+                          : Colors.chilled
+                        : Colors.chilled,
                     },
                   ]}
                 />
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
+    paddingRight: 20,
   },
   orderItemsList: {
     backgroundColor: Colors.offWhite,
     borderRadius: 7,
-    paddingRight: 20,
   },
   itemTitleBox: {
     flexDirection: 'row',
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   positionBox: {
     flexDirection: 'row',
     marginTop: 5,
-    marginRight: 20,
+    width: '90%',
     flexWrap: 'wrap',
   },
   departmentBox: { marginBottom: 5 },

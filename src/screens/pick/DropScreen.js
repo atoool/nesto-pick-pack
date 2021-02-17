@@ -46,6 +46,13 @@ const DropScreen = () => {
 
   const onDropToBin = async (id) => await setItemDrop(id);
 
+  const getPackedItemCount = (list) => {
+    if (list && list.length !== 0) {
+      return list.filter((itm) => itm.picker_checked).length;
+    } else {
+      return 0;
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.drop} />
@@ -64,12 +71,16 @@ const DropScreen = () => {
           <AccordionItem
             order={item}
             index={index}
-            orderType={item.order_type ? item.order_type : 'Scheduled'}
+            orderType={item.order_type ? item.order_type : locale?.status.SD}
             status={
               item.picking_completed ? locale?.status.PiC : locale.status.Pi
             }
             itemCount={
-              (item?.items ? item?.items.length : '20') + ' ' + locale?.items
+              getPackedItemCount(item?.items) +
+              '/' +
+              item?.items?.length +
+              ' ' +
+              locale?.packed
             }
             onReadyPress={onDropToBin}
             buttonTitle={locale.DS_dropReady}
