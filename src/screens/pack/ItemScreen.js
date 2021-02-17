@@ -44,9 +44,9 @@ const ItemScreen = ({
   const end = new Date(time_slot?.end_time).valueOf();
   const timer = useTimer(start - end);
 
-  // const {
-  //   locale: { locale },
-  // } = useContext(AppContext);
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   const { postRePick } = useContext(PackerContext);
 
   return (
@@ -56,13 +56,15 @@ const ItemScreen = ({
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent ss={timer} />
         <ItemSection
-          title={item?.name}
-          price={item?.price}
-          quantity={item?.qty}
-          position={item?.position}
-          department={item?.department}
-          status={'Packing now'}
-          type={order_type}
+          title={item?.name ? item?.name : 'item'}
+          price={item?.price ? item?.price : 0}
+          quantity={item?.qty ? item?.qty : 1}
+          position={item?.position ? item?.position : ''}
+          department={item?.department ? item?.department : ''}
+          status={
+            item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
+          }
+          type={order_type ? order_type : locale?.status.SD}
           start_time={formatAmPm(new Date(start))}
           end_time={formatAmPm(new Date(end))}
         />

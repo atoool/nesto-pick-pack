@@ -42,7 +42,7 @@ const OrderComponent = ({
       {!pick && (
         <View style={styles.container}>
           <View>
-            <Text style={Typography.bold17}>{orderId}</Text>
+            <Text style={Typography.bold17}>{'#' + orderId}</Text>
             <Text style={Typography.normal15}>{status}</Text>
           </View>
           <View>

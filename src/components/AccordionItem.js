@@ -27,6 +27,7 @@ const AccordionItem = ({
   showReadyButton,
   userType,
   timeLeft = now,
+  readyButtonLoading = false,
 }) => {
   time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
   return (
@@ -94,6 +95,7 @@ const AccordionItem = ({
         <Button
           title={buttonTitle}
           style={styles.button}
+          loading={readyButtonLoading}
           onPress={() => {
             onReadyPress && onReadyPress(id);
           }}
