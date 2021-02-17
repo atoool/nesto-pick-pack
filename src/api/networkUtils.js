@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useExtraPayload from '../hooks/useExtraPayload';
+import ExtraPayload from '../utils/ExtraPayload';
 import Storage from '../utils/Storage';
 import { API_URL } from './config';
 
@@ -74,8 +74,7 @@ const setUpConfig = async () => {
     const CONFIG = {
       headers: {
         'content-type': 'application/json',
-        'access-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdGF0dXMiOiIyMDAiLCJVc2VyaWQiOiIxNyIsIlRva2VuIjoiM2NlZjA3bms0Mzl2ZWptaDg1cWNiaDRsMGM3ZG8xc2UiLCJVc2VybmFtZSI6ImFqaW1zaGFAcmlhZnkubWUiLCJVc2VyUm9sZSI6IkFkbWluaXN0cmF0b3JzIiwiaWF0IjoxNjEzMDE1MzI1fQ.ebHIw-hE890gt2L95z_C-gIi-3x6MxNmrjq4mrXRhAw',
+        'access-token': access_token,
       },
     };
     return CONFIG;
@@ -87,27 +86,27 @@ const setUpConfig = async () => {
 const get = async (URL, isAuthenticated = true, getFullResult = false) => {
   let CONFIG = 'nil';
   try {
-    // let {
-    //   appname,
-    //   version,
-    //   buildNumber,
-    //   country,
-    //   lang,
-    //   network,
-    //   loadcount,
-    //   devtype,
-    //   os,
-    //   osVersion,
-    // } = useExtraPayload();
-    // let params = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
-    // console.warn(params);
+    let {
+      appname,
+      version,
+      buildNumber,
+      country,
+      lang,
+      network,
+      loadcount,
+      devtype,
+      os,
+      osVersion,
+    } = await ExtraPayload();
+    let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
+
     let result;
     if (isAuthenticated) {
       CONFIG = await setUpConfig();
       console.log(CONFIG);
-      result = await axiosInstance.get(URL, CONFIG);
+      result = await axiosInstance.get(URL + PARAMS, CONFIG);
     } else {
-      result = await axiosInstance.get(URL);
+      result = await axiosInstance.get(URL + PARAMS);
     }
     // console.info(`GET TO: ${URL} and CONFIG: ${JSON.stringify(CONFIG)}`);
     // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
@@ -117,8 +116,8 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
       return result.data.data;
     }
   } catch (e) {
-    // console.warn(e);
-    networkErrorLogger(e, URL, 'nil', CONFIG);
+    console.warn(e);
+    // networkErrorLogger(e, URL, 'nil', CONFIG);
   }
 };
 
@@ -126,25 +125,25 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
   let CONFIG = 'nil';
   try {
     let result;
-    // let {
-    //   appname,
-    //   version,
-    //   buildNumber,
-    //   country,
-    //   lang,
-    //   network,
-    //   loadcount,
-    //   devtype,
-    //   os,
-    //   osVersion,
-    // } = useExtraPayload();
-    // let params = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
-    // console.warn(params);
+    let {
+      appname,
+      version,
+      buildNumber,
+      country,
+      lang,
+      network,
+      loadcount,
+      devtype,
+      os,
+      osVersion,
+    } = await ExtraPayload();
+    let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
+
     if (isAuthenticated) {
       CONFIG = await setUpConfig();
-      result = await axiosInstance.post(URL, PAYLOAD, CONFIG);
+      result = await axiosInstance.post(URL + PARAMS, PAYLOAD, CONFIG);
     } else {
-      result = await axiosInstance.post(URL, PAYLOAD);
+      result = await axiosInstance.post(URL, PARAMS);
     }
     // console.info(
     //   `POST TO: ${URL} with PAYLOAD: ${JSON.stringify(

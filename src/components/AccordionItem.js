@@ -14,6 +14,7 @@ import OrderComponent from './OrderComponent';
 import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
 
+const now = Date.now();
 const AccordionItem = ({
   order: { id, items, time_slot, binsAssigned },
   index,
@@ -25,8 +26,8 @@ const AccordionItem = ({
   onReadyPress,
   showReadyButton,
   userType,
+  timeLeft = now,
 }) => {
-  const now = Date.now();
   time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
   return (
     <View style={styles.container}>
@@ -38,6 +39,7 @@ const AccordionItem = ({
         index={index}
         startTime={time_slot.start_time}
         endTime={time_slot.end_time}
+        timeLeft={timeLeft}
       />
       <View style={styles.positionBox}>
         {binsAssigned &&

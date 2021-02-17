@@ -56,7 +56,7 @@ const DropScreen = () => {
         )}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(item, index) => `${index}${item.id}`}
         ItemSeparatorComponent={() => <Divider />}
         onRefresh={onRefresh}
         refreshing={refreshing}
@@ -64,11 +64,13 @@ const DropScreen = () => {
           <AccordionItem
             order={item}
             index={index}
-            orderType={item.order_type}
+            orderType={item.order_type ? item.order_type : 'Scheduled'}
             status={
               item.picking_completed ? locale?.status.PiC : locale.status.Pi
             }
-            itemCount={'20 ' + locale?.items}
+            itemCount={
+              (item?.items ? item?.items.length : '20') + ' ' + locale?.items
+            }
             onReadyPress={onDropToBin}
             buttonTitle={locale.DS_dropReady}
           />

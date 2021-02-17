@@ -65,12 +65,13 @@ const PickList = ({
                   ]}
                 />
                 <Text style={Typography.bold15}>
-                  {item.qty}x {item.name}
+                  {item.qty ? item.qty : 1}x {item.name}
                 </Text>
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  {item.orderId} | {item.department} {item.position}
+                  {item.orderId ? item.orderId : '#####'} | {item?.department}{' '}
+                  {item?.position}
                 </Text>
               </View>
               {item.binsAssigned && item.binsAssigned?.length !== 0 && (

@@ -54,7 +54,7 @@ const AssignBinTabScreen = () => {
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item, index }) => (
-          <AccordionItem order={item} index={index} />
+          <AccordionItem order={item} index={index} timeLeft={null} />
         )}
       />
     </SafeAreaView>
@@ -62,11 +62,14 @@ const AssignBinTabScreen = () => {
 };
 
 const AccordionItem = ({
-  order: { id, items, order_type, time_slot },
+  order: { id, items, order_type, time_slot, timeLeft },
   index,
 }) => {
+  const now = Date.now();
   const navigation = useNavigation();
-  const orderId = id;
+  const orderId = id ? id : '';
+  time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
+  timeLeft = timeLeft ? timeLeft : now;
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -80,6 +83,7 @@ const AccordionItem = ({
         index={index}
         startTime={time_slot.start_time}
         endTime={time_slot.end_time}
+        timeLeft={timeLeft}
       />
 
       <Button

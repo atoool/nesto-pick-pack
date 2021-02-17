@@ -1,3 +1,6 @@
 {
-    "editor.codeActionsOnSave": true
+    "editor.codeActionsOnSave": true,
+    "cSpell.words": [
+        "appname"
+    ]
 }

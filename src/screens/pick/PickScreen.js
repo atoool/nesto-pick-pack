@@ -57,13 +57,21 @@ const PickScreen = () => {
         refreshing={refreshing}
         renderItem={({ item, index }) => (
           <PickList
-            items={item.items}
+            items={item.items ? item.items : []}
             index={index}
             orderType={''}
             itemCount={''}
-            startTime={item.timeslot.start_time}
-            endTime={item.timeslot.end_time}
-            timeLeft={item.pickingDeadlineTimestamp}
+            startTime={
+              item.timeslot.start_time ? item.timeslot.start_time : new Date()
+            }
+            endTime={
+              item.timeslot.end_time ? item.timeslot.end_time : new Date()
+            }
+            timeLeft={
+              item.pickingDeadlineTimestamp
+                ? item.pickingDeadlineTimestamp
+                : new Date()
+            }
           />
         )}
       />

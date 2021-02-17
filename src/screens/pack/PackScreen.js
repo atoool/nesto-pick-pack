@@ -77,8 +77,8 @@ const PackScreen = ({ navigation }) => {
         refreshing={refreshing}
         renderItem={({ item }) => (
           <AccordionItem
-            order={{ id: item?.id, ...item }}
-            orderType={item?.order_type}
+            order={{ id: item?.id ? item?.id : '####', ...item }}
+            orderType={item?.order_type ? item?.order_type : 'Scheduled'}
             status={locale?.status.Pa}
             itemCount={
               getPackedItemCount(item?.items) +
