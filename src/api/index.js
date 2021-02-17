@@ -31,13 +31,13 @@ export const getAssignBinListPack = async () => {
 };
 export const setPackedItemAsMarked = async (id) => {
   const URL = `/packer/item/pack/${id}`;
-  return get(URL, false, true).catch((e) => {
+  return get(URL, true, true).catch((e) => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const setOrderReady = async (id) => {
   const URL = `/packer/order/ready/${id}`;
-  return get(URL, false, true).catch((e) => {
+  return get(URL, true, true).catch((e) => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };

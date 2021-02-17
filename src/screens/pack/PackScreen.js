@@ -13,6 +13,7 @@ import { PackerContext } from '../../context/PackerContext';
 const PackScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [readyButtonLoading, setReadyButtonLoading] = useState(false);
 
   const {
     locale: { locale },
@@ -51,7 +52,11 @@ const PackScreen = ({ navigation }) => {
       order_type,
     });
 
-  const onReadyPress = (id) => setOrderReady(id);
+  const onReadyPress = async (id) => {
+    setReadyButtonLoading(true);
+    await setOrderReady(id);
+    setReadyButtonLoading(false);
+  };
 
   const getPackedItemCount = (list) => {
     if (list && list.length !== 0) {
@@ -96,6 +101,7 @@ const PackScreen = ({ navigation }) => {
             onReadyPress={onReadyPress}
             showReadyButton={item?.packing_completed}
             userType={'packer'}
+            readyButtonLoading={readyButtonLoading}
           />
         )}
       />
