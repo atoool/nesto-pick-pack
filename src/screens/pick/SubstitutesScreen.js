@@ -27,7 +27,7 @@ const w = screenWidth - 32;
 
 const SubstitutesScreen = ({
   route: {
-    params: { item },
+    params: { item, requiredQty, existingQty },
   },
   navigation,
 }) => {
@@ -41,14 +41,14 @@ const SubstitutesScreen = ({
   } = useContext(AppContext);
 
   const [checkedList, setCheckedList] = useState(
-    Array.apply('', Array(similarItems.length)).map((i) => {
-      return '';
-    }),
+    Array.apply('', Array(similarItems.length)).map((i) => null),
   );
+
+  const [isSuggestLoad, setIsSuggestLoad] = useState();
 
   const onCheck = (i) => {
     const temp = checkedList;
-    temp[i] = checkedList[i] === '' ? similarItems[i] : '';
+    temp[i] = !checkedList[i] ? similarItems[i] : null;
     setCheckedList([...temp]);
   };
 
@@ -62,22 +62,27 @@ const SubstitutesScreen = ({
   };
 
   const onSuggestSubstitute = async () => {
-    const isCheckedListEmpty =
-      checkedList.filter((itm) => itm !== '').length === 0;
-    if (isCheckedListEmpty) {
+    setIsSuggestLoad(true);
+    const isCheckedListEmpty = checkedList.filter((itm) => itm !== null);
+    if (isCheckedListEmpty.length === 0) {
       ToastAndroid.show('Empty list', ToastAndroid.SHORT);
     } else {
       const payload = {
-        original_item_id: 123,
-        more_quantity_required: 2,
-        existing_quantity: 4,
-        order_id: 323434,
-        suggested_items: checkedList,
+        original_item_id: item.item_id,
+        more_quantity_required: requiredQty,
+        existing_quantity: existingQty,
+        order_id: item.orderId,
         item_type: item.item_type,
+        suggested_items: isCheckedListEmpty,
       };
-      await postSuggestedSubstitutes(payload);
-      navigation.navigate('SubstituteRequestedScreen');
+      try {
+        await postSuggestedSubstitutes(payload);
+        navigation.navigate('SubstituteRequestedScreen');
+      } catch (e) {
+        ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+      }
     }
+    setIsSuggestLoad(false);
   };
 
   return (
@@ -106,6 +111,7 @@ const SubstitutesScreen = ({
           <Button
             title={locale.IS_substituteButton}
             style={{ borderRadius: 0 }}
+            loading={isSuggestLoad}
             onPress={onSuggestSubstitute}
           />
         </ScrollView>
@@ -198,7 +204,7 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
         <TouchableOpacity onPress={() => onPress(index)}>
           <View style={styles.orderItem}>
             <View style={styles.departmentBox}>
-              <TickComponent enabled={checkedList[index] !== ''} />
+              <TickComponent enabled={checkedList[index] !== null} />
               <View>
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}

@@ -27,12 +27,13 @@ const Button = ({
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     <View style={[styles.btnStyle, style]}>
       <View
-        style={
-          ([styles.titleView],
+        style={[
+          styles.titleView,
+          // eslint-disable-next-line react-native/no-inline-styles
           {
             justifyContent: scanButton ? 'space-between' : 'center',
-          })
-        }>
+          },
+        ]}>
         <View>
           {loading && <Loader small={true} />}
           {!loading && (

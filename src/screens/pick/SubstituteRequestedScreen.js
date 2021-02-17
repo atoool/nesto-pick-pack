@@ -1,5 +1,11 @@
-import React, { useContext } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import {
+  BackHandler,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import Title from '../../components/Title';
 import { Colors, Typography, width } from '../../styles';
 import Success1SVG from '../../assets/svg/Success1SVG.svg';
@@ -11,7 +17,11 @@ const SubstituteRequestedScreen = ({ navigation }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true);
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       <ScrollView>

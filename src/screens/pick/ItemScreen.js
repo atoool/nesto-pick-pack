@@ -17,6 +17,7 @@ import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
+import { Constants } from '../../utils';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -28,6 +29,8 @@ const ItemScreen = ({
   },
 }) => {
   const ss = 3600;
+  const [timerOn, setTimerOn] = useState(false);
+  const [timeOut, setTimeOut] = useState(false);
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -41,13 +44,25 @@ const ItemScreen = ({
           type="Express Delivery"
           status="Picking completed"
         />
-        <VerifyItemSection navigation={navigation} item={item} />
+        <VerifyItemSection
+          navigation={navigation}
+          item={item}
+          timeOut={timeOut}
+          timerOn={timerOn}
+          setTimerOn={() => {
+            setTimerOn(true);
+          }}
+          setTimerOut={() => {
+            setTimeOut(true);
+            setTimerOn(false);
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const TimerComponent = ({ ss, inMinute }) => {
+const TimerComponent = ({ ss, inMinute, call }) => {
   const now = useTimer(ss);
   const HoursString = Math.floor(now / 3600)
     .toString()
@@ -63,7 +78,7 @@ const TimerComponent = ({ ss, inMinute }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-
+  inMinute && now <= 0 && call();
   return (
     <View style={[styles.timerContainer, inMinute && styles.timerContainer2]}>
       {!inMinute && (
@@ -152,7 +167,14 @@ const ItemSection = ({
   );
 };
 
-const VerifyItemSection = ({ navigation, item }) => {
+const VerifyItemSection = ({
+  navigation,
+  item,
+  setTimerOn,
+  timeOut,
+  timerOn,
+  setTimerOut,
+}) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1 || status === 3;
   const substituteItems = status === 1 || status === 0 || status === 3;
@@ -162,80 +184,85 @@ const VerifyItemSection = ({ navigation, item }) => {
     locale: { locale },
   } = useContext(AppContext);
 
-  const timeOut = false;
-
   return (
     <>
       <Divider />
       <View style={{ marginHorizontal: 32 }}>
-        <Text style={Typography.bold21}>{locale?.IS_verifyit}</Text>
-        <Text style={{ marginVertical: 10 }}>{locale?.IS_verifyText}</Text>
-        <RadioItem
-          onPress={() => setStatus(2)}
-          toggle={status === 2}
-          title={locale?.IS_verifyOpt1}
-        />
-        <RadioItem
-          onPress={() => setStatus(0)}
-          toggle={status === 0}
-          title={locale?.IS_verifyOpt2}
-        />
-        <RadioItem
-          onPress={() => setStatus(1)}
-          toggle={status === 1}
-          title={locale?.IS_verifyOpt3}
-        />
-        <RadioItem
-          onPress={() => setStatus(3)}
-          toggle={status === 3}
-          title={locale?.IS_critical}
-        />
-        {someOutofStock && (
-          <TextInput
-            placeholder={locale?.placeholder.countOfOutStock}
-            keyboardType={'number-pad'}
-            onChangeText={(t) =>
-              setItemQty(t.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ''))
-            }
-            value={itemsQty}
-            style={{
-              borderWidth: 1,
-              borderRadius: 7,
-              height: 50,
-              paddingLeft: 20,
-              borderColor: Colors.offWhite,
-            }}
-          />
+        {!timerOn && !timeOut && (
+          <>
+            <Text style={Typography.bold21}>{locale?.IS_verifyit}</Text>
+            <Text style={{ marginVertical: 10 }}>{locale?.IS_verifyText}</Text>
+            <RadioItem
+              onPress={() => setStatus(2)}
+              toggle={status === 2}
+              title={locale?.IS_verifyOpt1}
+            />
+            <RadioItem
+              onPress={() => setStatus(0)}
+              toggle={status === 0}
+              title={locale?.IS_verifyOpt2}
+            />
+            <RadioItem
+              onPress={() => setStatus(1)}
+              toggle={status === 1}
+              title={locale?.IS_verifyOpt3}
+            />
+            <RadioItem
+              onPress={() => setStatus(3)}
+              toggle={status === 3}
+              title={locale?.IS_critical}
+            />
+            {someOutofStock && (
+              <TextInput
+                placeholder={locale?.placeholder.countOfOutStock}
+                keyboardType={'number-pad'}
+                onChangeText={(t) =>
+                  setItemQty(t.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ''))
+                }
+                value={itemsQty}
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 7,
+                  height: 50,
+                  paddingLeft: 20,
+                  borderColor: Colors.offWhite,
+                }}
+              />
+            )}
+            <Divider />
+          </>
         )}
-
         {substituteItems ? (
           <>
-            <Divider />
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Typography.bold21}>
                 {!timeOut
                   ? !item.substituted
-                    ? item.substitution_initiated
+                    ? timerOn
                       ? locale.IS_waitSubstituteTitle
                       : locale?.IS_substituteTitle
                     : locale?.IS_substitutedTitle
                   : locale?.IS_noRespSubstituteTitle}
               </Text>
-              {!item.substituted && item.substitution_initiated && (
-                <TimerComponent ss={600} inMinute />
+              {!item.substituted && timerOn && (
+                <TimerComponent
+                  ss={Constants.awaitTime}
+                  call={setTimerOut}
+                  inMinute
+                />
               )}
             </View>
             <Text style={{ marginVertical: 10 }}>
               {!timeOut
                 ? !item.substituted
-                  ? item.substitution_initiated
+                  ? timerOn
                     ? locale?.IS_waitSubstituteText
                     : locale?.IS_substituteText
                   : locale?.IS_substitutedText
                 : locale?.IS_noRespSubstituteText}
             </Text>
-            {(item.substituted || !item.substitution_initiated) && (
+            {!timerOn && (
               <Button
                 title={
                   item.substituted
@@ -246,6 +273,13 @@ const VerifyItemSection = ({ navigation, item }) => {
                 }
                 style={{ flex: 0, width: 200, marginBottom: 20 }}
                 onPress={() => {
+                  if (!item.substituted && !timeOut) {
+                    setTimerOn(true);
+                    return;
+                  } else if (!item.substituted && timeOut) {
+                    navigation.pop();
+                    return;
+                  }
                   const routeTo = item.substituted
                     ? 'SubstitutionDetailsScreen'
                     : timeOut
@@ -254,6 +288,8 @@ const VerifyItemSection = ({ navigation, item }) => {
                   navigation.navigate(routeTo, {
                     item,
                     orderId: item.orderId,
+                    existingQty: 4, //add data
+                    requiredQty: 2, //add data
                   });
                 }}
               />

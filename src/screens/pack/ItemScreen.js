@@ -17,6 +17,7 @@ import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
+import Divider from '../../components/Divider';
 
 function formatAmPm(date) {
   var hours = date.getHours();
@@ -43,9 +44,9 @@ const ItemScreen = ({
   const end = new Date(time_slot?.end_time).valueOf();
   const timer = useTimer(start - end);
 
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
+  // const {
+  //   locale: { locale },
+  // } = useContext(AppContext);
   const { postRePick } = useContext(PackerContext);
 
   return (
@@ -123,9 +124,9 @@ const ItemSection = ({
           />
         </View>
       </View>
-      <View style={{ flexDirection: 'row', marginHorizontal: 32 }}>
-        <View style={{ flex: 1 }}>
-          <View style={{ flexDirection: 'row' }}>
+      <View style={styles.itemContentBox}>
+        <View style={styles.itemContentSubBox}>
+          <View style={styles.statusBox}>
             <StatusPill
               backgroundColor="#A1C349"
               text={position}
@@ -133,28 +134,21 @@ const ItemSection = ({
             />
             <StatusPill backgroundColor="#C5B171" text={department} />
           </View>
-          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-            <View style={{ flex: 1 }}>
+          <View style={styles.itemBox}>
+            <View style={styles.itemTitleBox}>
               <Text style={Typography.bold21}>{title}</Text>
               <Text style={Typography.normal15}>{status}</Text>
             </View>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-end',
-              }}>
-              <Text style={Typography.bold21}>${price?.toFixed(2)}</Text>
+            <View style={styles.priceBox}>
+              <Text style={Typography.bold21}>
+                ${price ? price?.toFixed(2) : 0}
+              </Text>
               <Text>{locale?.IS_perQuantity}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 20,
-            }}>
+          <View style={styles.timeBox}>
             <View style={styles.historyBox}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={styles.orderTypeBox}>
                 <View style={styles.deliveryStatusCircle} />
                 <Text style={Typography.bold15}>{type}</Text>
               </View>
@@ -230,50 +224,30 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
   return (
     <>
       <Divider />
-      <View style={{ paddingVertical: 20, paddingHorizontal: 32 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-          {locale?.IS_reviewit}
-        </Text>
-        <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>
-          {locale?.IS_reviewText}
-        </Text>
-        {passItem.map((item, index) => (
+      <View style={styles.reviewBox}>
+        <Text style={styles.reviewTitle}>{locale?.IS_reviewit}</Text>
+        <Text style={styles.reviewText}>{locale?.IS_reviewText}</Text>
+        {passItem.map((itm, index) => (
           <View key={index}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 10,
-                justifyContent: 'space-between',
-              }}>
+            <View style={styles.reviewItemBox}>
               <Text style={{ ...Typography.bold13 }}>
                 {locale?.item} {index + 1}
               </Text>
-              <View
-                style={{
-                  borderColor: Colors.primary4,
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                  flexDirection: 'row',
-                  alignSelf: 'flex-end',
-                  height: 40,
-                  width: 200,
-                  overflow: 'hidden',
-                }}>
+              <View style={styles.reviewTouchBox}>
                 <TouchableOpacity onPress={() => onCheckPass(true, index)}>
                   <View
-                    style={{
-                      borderRadius: 7,
-                      backgroundColor: item
-                        ? Colors.primaryGreen
-                        : 'rgba(0,0,0,0)',
-                      height: '100%',
-                      width: 100,
-                      justifyContent: 'center',
-                    }}>
+                    style={[
+                      styles.passTextBox,
+                      // eslint-disable-next-line react-native/no-inline-styles
+                      {
+                        backgroundColor: item
+                          ? Colors.primaryGreen
+                          : 'rgba(0,0,0,0)',
+                      },
+                    ]}>
                     <Text
                       style={[
-                        { textAlign: 'center' },
+                        styles.textCenter,
                         item
                           ? { ...Typography.bold13White }
                           : { ...Typography.bold13 },
@@ -284,18 +258,18 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onCheckPass(false, index)}>
                   <View
-                    style={{
-                      borderRadius: 7,
-                      backgroundColor: item
-                        ? 'rgba(0,0,0,0)'
-                        : Colors.secondaryRed,
-                      height: '100%',
-                      width: 100,
-                      justifyContent: 'center',
-                    }}>
+                    style={[
+                      styles.failTextBox,
+                      // eslint-disable-next-line react-native/no-inline-styles
+                      {
+                        backgroundColor: item
+                          ? 'rgba(0,0,0,0)'
+                          : Colors.secondaryRed,
+                      },
+                    ]}>
                     <Text
                       style={[
-                        { textAlign: 'center' },
+                        styles.textCenter,
                         !item
                           ? { ...Typography.bold13White }
                           : { ...Typography.bold13 },
@@ -307,84 +281,39 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
               </View>
             </View>
             {!passItem[index] && (
-              <View
-                style={{
-                  marginBottom: 20,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                }}>
+              <View style={styles.dropBox}>
                 <Text style={{ ...Typography.normal12 }}>
                   {locale?.IS_reviewit}
                 </Text>
-                <View style={{ alignSelf: 'flex-end' }}>
+                <View style={styles.dropDefaultBox}>
                   <TouchableWithoutFeedback
                     onPress={() => {
                       onShowDropDown(!showDropDown[index], index);
                     }}>
-                    <View
-                      style={{
-                        borderColor: Colors.primary4,
-                        borderWidth: 0.5,
-                        borderRadius: 10,
-                        height: 40,
-                        width: 200,
-                      }}>
-                      <Text
-                        style={[
-                          {
-                            textAlignVertical: 'center',
-                            height: '100%',
-                            marginLeft: 35,
-                          },
-                          Typography.bold13,
-                        ]}>
+                    <View style={styles.dropDefaultItemBox}>
+                      <Text style={styles.dropDefaultItemText}>
                         {issue[index]}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
                   {showDropDown[index] && (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        elevation: 10,
-                        backgroundColor: '#fff',
-                        width: 190,
-                        height: 'auto',
-                        alignSelf: 'center',
-                        marginTop: 40,
-                        borderBottomRightRadius: 7,
-                        borderBottomLeftRadius: 7,
-                        zIndex: 20,
-                      }}>
-                      {issueList.map((item, key) => (
+                    <View style={styles.dropListBox}>
+                      {issueList.map((elem, key) => (
                         <TouchableOpacity
                           key={key}
                           onPress={() => {
-                            onSetIssue(item.value, index);
+                            onSetIssue(elem.value, index);
                           }}
-                          style={{ height: 50, width: '100%', zIndex: 20 }}>
+                          style={styles.dropTouch}>
                           <View
                             style={[
-                              {
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: 50,
-                                zIndex: 20,
-                              },
+                              styles.dropListItemBox,
                               item.value === issue[index] && {
                                 backgroundColor: Colors.offWhite,
                               },
                             ]}>
-                            <Text
-                              style={[
-                                {
-                                  paddingLeft: 30,
-                                  width: '100%',
-                                  fontSize: 13,
-                                },
-                              ]}>
-                              {item.label}
+                            <Text style={styles.dropLabelText}>
+                              {elem.label}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -406,34 +335,23 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
             title={locale?.IS_scanBar}
             subtitle={locale?.IS_toVerify}
             titleStyle={Typography.bold17White}
-            style={{ padding: 30, margin: 32 }}
+            style={styles.scanButton}
             onPress={() => {
               navigation.navigate('ScanScreen', { item });
             }}
           />
-          <View style={{ alignItems: 'center', paddingVertical: 20 }}>
+          <View style={styles.scanFailedBox}>
             <Text>{locale?.IS_scanFailed}</Text>
-            <Text
-              style={{
-                textDecorationLine: 'underline',
-                ...Typography.bold17,
-                color: Colors.secondaryRed,
-              }}>
-              {locale?.IS_scanManual}
-            </Text>
+            <Text style={styles.scanManualText}>{locale?.IS_scanManual}</Text>
           </View>
         </>
       ) : (
-        <View style={{ paddingVertical: 10, paddingHorizontal: 32 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-            {locale?.IS_reviewit}
-          </Text>
-          <Text style={{ fontSize: 14, marginTop: 5, marginBottom: 10 }}>
-            {locale?.IS_reviewText}
-          </Text>
+        <View style={styles.rePickBox}>
+          <Text style={styles.rePickTitle}>{locale?.IS_reviewit}</Text>
+          <Text style={styles.rePickText}>{locale?.IS_reviewText}</Text>
           <Button
             title={locale?.IS_askTo}
-            style={{ width: 180, marginVertical: 20 }}
+            style={styles.rePickButton}
             onPress={async () => {
               await onRePick();
             }}
@@ -443,16 +361,6 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
     </>
   );
 };
-
-const Divider = () => (
-  <View
-    style={{
-      height: 1,
-      backgroundColor: Colors.offWhite,
-      marginVertical: 20,
-    }}
-  />
-);
 
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
@@ -513,6 +421,111 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  //itemSection
+  itemContentBox: { flexDirection: 'row', marginHorizontal: 32 },
+  itemContentSubBox: { flex: 1 },
+  statusBox: { flexDirection: 'row' },
+  itemBox: { flexDirection: 'row', marginVertical: 10 },
+  itemTitleBox: { flex: 1 },
+  priceBox: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+  },
+  timeBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  orderTypeBox: { flexDirection: 'row', alignItems: 'center' },
+  //verification
+  reviewBox: { paddingVertical: 20, paddingHorizontal: 32 },
+  reviewTitle: { fontWeight: 'bold', fontSize: 20 },
+  reviewText: { fontSize: 14, marginTop: 5, marginBottom: 10 },
+  reviewItemBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    justifyContent: 'space-between',
+  },
+  reviewTouchBox: {
+    borderColor: Colors.primary4,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    height: 40,
+    width: 200,
+    overflow: 'hidden',
+  },
+  passTextBox: {
+    borderRadius: 7,
+
+    height: '100%',
+    width: 100,
+    justifyContent: 'center',
+  },
+  failTextBox: {
+    borderRadius: 7,
+    height: '100%',
+    width: 100,
+    justifyContent: 'center',
+  },
+  textCenter: { textAlign: 'center' },
+  dropBox: {
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  dropDefaultBox: { alignSelf: 'flex-end' },
+  dropDefaultItemBox: {
+    borderColor: Colors.primary4,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    height: 40,
+    width: 200,
+  },
+  dropDefaultItemText: {
+    textAlignVertical: 'center',
+    height: '100%',
+    marginLeft: 35,
+    ...Typography.bold13,
+  },
+  dropListBox: {
+    position: 'absolute',
+    elevation: 10,
+    backgroundColor: '#fff',
+    width: 190,
+    height: 'auto',
+    alignSelf: 'center',
+    marginTop: 40,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    zIndex: 20,
+  },
+  dropTouch: { height: 50, width: '100%', zIndex: 20 },
+  dropListItemBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    zIndex: 20,
+  },
+  dropLabelText: {
+    paddingLeft: 30,
+    width: '100%',
+    fontSize: 13,
+  },
+  scanButton: { padding: 30, margin: 32 },
+  scanFailedBox: { alignItems: 'center', paddingVertical: 20 },
+  scanManualText: {
+    textDecorationLine: 'underline',
+    ...Typography.bold17,
+    color: Colors.secondaryRed,
+  },
+  rePickBox: { paddingVertical: 10, paddingHorizontal: 32 },
+  rePickTitle: { fontWeight: 'bold', fontSize: 20 },
+  rePickText: { fontSize: 14, marginTop: 5, marginBottom: 10 },
+  rePickButton: { width: 180, marginVertical: 20 },
 });
 
 export default ItemScreen;
