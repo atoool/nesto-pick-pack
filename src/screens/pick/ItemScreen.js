@@ -31,18 +31,24 @@ const ItemScreen = ({
   const ss = 3600;
   const [timerOn, setTimerOn] = useState(false);
   const [timeOut, setTimeOut] = useState(false);
+
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent ss={ss} />
         <ItemSection
-          title={item.name}
-          price={item?.price && item.price.toFixed(2)}
-          quantity={item.qty}
-          position={item.position}
-          department={item.department}
-          type="Express Delivery"
-          status="Picking completed"
+          title={item?.name ? item?.name : ''}
+          price={item?.price ? item.price.toFixed(2) : 0}
+          quantity={item?.qty ? item?.qty : 0}
+          position={item?.position ? item.position : ''}
+          department={item?.department ? item?.department : ''}
+          type={item?.order_type ? item?.order_type : locale?.status?.SD}
+          status={
+            item?.picking_completed ? locale?.status?.PiC : locale?.status?.Pi
+          }
         />
         <VerifyItemSection
           navigation={navigation}

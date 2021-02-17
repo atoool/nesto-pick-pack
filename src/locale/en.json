@@ -17,7 +17,8 @@
   "placeholder": {
     "email": "Email Address",
     "password": "Password",
-    "countOfOutStock": "Enter count of out of stock items"
+    "countOfOutStock": "Enter count of out of stock items",
+    "critical":"Enter count of remaining items"
   },
   "departments": {
     "h": "Health Department"

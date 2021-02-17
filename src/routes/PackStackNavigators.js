@@ -28,7 +28,7 @@ const PackStackNavigators = () => {
         name="ItemScreen"
         component={ItemScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />

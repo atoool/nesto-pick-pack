@@ -28,7 +28,7 @@ const PickStackNavigator = () => {
         name="ItemScreen"
         component={ItemScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
@@ -56,7 +56,7 @@ const PickStackNavigator = () => {
         name="SubstitutesScreen"
         component={SubstitutesScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
@@ -64,7 +64,7 @@ const PickStackNavigator = () => {
         name="SubstitutionDetailsScreen"
         component={SubstitutionDetailsScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
@@ -80,7 +80,7 @@ const PickStackNavigator = () => {
         name="CustomerAvailScreen"
         component={CustomerAvailScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
@@ -88,7 +88,7 @@ const PickStackNavigator = () => {
         name="PickerChoiceScreen"
         component={PickerChoiceScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
@@ -96,7 +96,7 @@ const PickStackNavigator = () => {
         name="ItemRemovedScreen"
         component={ItemRemovedScreen}
         options={({ route }) => ({
-          title: route.params.orderId,
+          title: '#' + route.params.orderId,
           ...headerOptions,
         })}
       />
