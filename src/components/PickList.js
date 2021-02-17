@@ -71,8 +71,9 @@ const PickList = ({
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  {item.orderId ? item.orderId : '#####'} | {item?.department}{' '}
-                  {item?.position}
+                  #{item.orderId ? item.orderId : '[order_id missing]'} |{' '}
+                  {item?.department ? item?.department : '[department missing]'}{' '}
+                  {item?.position ? item?.position : '[position missing]'}
                 </Text>
               </View>
               {item.binsAssigned && item.binsAssigned?.length !== 0 && (

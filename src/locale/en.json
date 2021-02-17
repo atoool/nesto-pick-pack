@@ -14,6 +14,10 @@
     "Assign_Now": "Assign Now",
     "statistics": "My statistics"
   },
+  "missing":{
+    "aisle":"Aisle missing",
+    "dept":"Department missing",
+  },
   "placeholder": {
     "email": "Email Address",
     "password": "Password",
