@@ -78,10 +78,8 @@ const ProfileSection = ({ name, email, phone }) => {
     <View style={styles.profileSectionContainer}>
       <View style={styles.profileImageView} />
       <View>
-        <Text>{name}</Text>
-        <Text>
-          {email} | {phone}
-        </Text>
+        <Text style={Typography.bold16}>{name}</Text>
+        <Text>{email}</Text>
       </View>
     </View>
   );
