@@ -2,7 +2,7 @@ import { put, post, get, _del } from './networkUtils';
 
 // Endpoints that Doesn't Require Authentication
 export const login = async (PAYLOAD) => {
-  const URL = '/basic/login';
+  const URL = '/picker-packer/signin';
   return post(URL, PAYLOAD, false);
 };
 
