@@ -44,14 +44,15 @@ const AccordionItem = ({
       <View style={styles.positionBox}>
         {binsAssigned &&
           binsAssigned.map((itm, i) => (
-            <StatusPill
-              key={i}
-              backgroundColor="#C5B171"
-              marginRight={5}
-              text={itm.bin_number}
-              paddingVertical={5}
-              textStyle={Typography.bold13White}
-            />
+            <View key={i} style={styles.statusPill}>
+              <StatusPill
+                backgroundColor="#C5B171"
+                marginRight={5}
+                text={itm.bin_number}
+                paddingVertical={5}
+                textStyle={Typography.bold13White}
+              />
+            </View>
           ))}
       </View>
       {items?.length !== 0 && (
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingVertical: 10,
   },
-  positionBox: { flexDirection: 'row', marginBottom: 10 },
+  positionBox: { flexDirection: 'row', marginBottom: 10, flexWrap: 'wrap' },
   departmentBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: { marginTop: 20 },
+  statusPill: { marginBottom: 5 },
 });
 
 export default AccordionItem;

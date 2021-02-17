@@ -50,6 +50,7 @@ const AssignBinTabScreen = () => {
         )}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <Divider />}
         keyExtractor={(item, indx) => `${indx}${item.id}`}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}

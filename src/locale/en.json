@@ -23,7 +23,7 @@
     "h": "Health Department"
   },
   "status": {
-    "Pa": "Packing",
+    "Pa": "Packing now",
     "Pi": "Picking now",
     "PaC": "Packing completed",
     "PiC": "Picking completed",
@@ -43,7 +43,7 @@
   "Login": "Login",
   "LoginText": "Login to Access your profile",
   "networkError": "Failed to connect any network!",
-  "validEmail":"Enter a valid email address",
+  "validEmail":"Invalid email address or password",
   "BAS_Position": "Position of Bin",
   "save": "Save",
   "picked": "Picked",

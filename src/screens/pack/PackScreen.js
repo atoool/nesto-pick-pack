@@ -57,7 +57,7 @@ const PackScreen = ({ navigation }) => {
     if (list && list.length !== 0) {
       return list.filter((itm) => itm.packer_checked).length;
     } else {
-      return 1;
+      return 0;
     }
   };
 
@@ -78,12 +78,14 @@ const PackScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <AccordionItem
             order={{ id: item?.id ? item?.id : '####', ...item }}
-            orderType={item?.order_type ? item?.order_type : 'Scheduled'}
-            status={locale?.status.Pa}
+            orderType={item?.order_type ? item?.order_type : locale?.status.SD}
+            status={
+              item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
+            }
             itemCount={
               getPackedItemCount(item?.items) +
               '/' +
-              item?.items?.length +
+              (item?.items ? item?.items.length : 0) +
               ' ' +
               locale?.packed
             }

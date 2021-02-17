@@ -19,13 +19,13 @@ export const getNotifications = async () => {
 //packer
 export const getOrdersListPack = async () => {
   const URL = '/packer/order-list-packitem';
-  return get(URL, false, false).catch((e) => {
+  return get(URL, true, false).catch((e) => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const getAssignBinListPack = async () => {
   const URL = '/packer/order-list-binassign';
-  return get(URL, false, false).catch((e) => {
+  return get(URL, true, false).catch((e) => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
