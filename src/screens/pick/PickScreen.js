@@ -67,11 +67,7 @@ const PickScreen = () => {
             endTime={
               item.timeslot.end_time ? item.timeslot.end_time : new Date()
             }
-            timeLeft={
-              item.pickingDeadlineTimestamp
-                ? item.pickingDeadlineTimestamp
-                : Date.now()
-            }
+            timeLeft={Date.now()}
           />
         )}
       />

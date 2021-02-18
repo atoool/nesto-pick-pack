@@ -109,7 +109,7 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
     const CONFIG = await setUpConfig(isAuthenticated);
     console.log(CONFIG);
     const result = await axiosInstance.get(URL + PARAMS, CONFIG);
-
+    console.warn(result);
     if (getFullResult) {
       return result.data;
     } else {
