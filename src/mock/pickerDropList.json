@@ -1,0 +1,80 @@
+{
+  "data": [
+    {
+      "id": "3",
+      "time_slot": {
+        "start_time": "2021-03-10T09:45:01.000Z",
+        "end_time": "2021-03-10T11:45:01.000Z"
+      },
+      "order_type": "scheduled",
+      "binsAssigned": [],
+      "items": [
+        {
+          "id": 183,
+          "item_id": 3,
+          "name": "CocaCola",
+          "department": "Beverages",
+          "position": "Asile 1 Rack 12",
+          "dfc": "Frozen",
+          "price": 20,
+          "qty": 15,
+          "picker_id": 3,
+          "packer_id": 1,
+          "picker_checked": true,
+          "out_of_stock": false,
+          "substitution_initiated": false,
+          "substitution_initiated_timestamp": null,
+          "substitution_customer_responded": false,
+          "substituted": false,
+          "review_status": null,
+          "review_comment": null,
+          "packer_checked": false,
+          "repicked": false,
+          "replaced": false,
+          "cancelled": false,
+          "returned": false,
+          "item_type": "assigned",
+          "createdAt": "2021-02-17T09:15:34.000Z",
+          "updatedAt": "2021-02-17T09:15:35.000Z",
+          "orderId": 3,
+          "pickerAssignId": 107,
+          "packerAssignId": 369
+        },
+        {
+          "id": 184,
+          "item_id": 3,
+          "name": "CocaCola",
+          "department": "Beverages",
+          "position": "Asile 1 Rack 12",
+          "dfc": "Frozen",
+          "price": 20,
+          "qty": 15,
+          "picker_id": 4,
+          "packer_id": 1,
+          "picker_checked": true,
+          "out_of_stock": false,
+          "substitution_initiated": false,
+          "substitution_initiated_timestamp": null,
+          "substitution_customer_responded": false,
+          "substituted": false,
+          "review_status": null,
+          "review_comment": null,
+          "packer_checked": false,
+          "repicked": false,
+          "replaced": false,
+          "cancelled": false,
+          "returned": false,
+          "item_type": "assigned",
+          "createdAt": "2021-02-17T09:15:34.000Z",
+          "updatedAt": "2021-02-17T09:15:35.000Z",
+          "orderId": 3,
+          "pickerAssignId": 108,
+          "packerAssignId": 369
+        }
+      ]
+    }
+  ],
+  "message": "The list of orders with picking completed.",
+  "source": "database",
+  "success": true
+}

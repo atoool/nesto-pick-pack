@@ -31,7 +31,7 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ margin: 30 }}>
+        contentContainerStyle={{ padding: 30, paddingBottom: 60 }}>
         <PrintLabelComponent
           orderIdLabel={locale?.BAS_order}
           printLabelText={locale?.BAS_printLabel}

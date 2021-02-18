@@ -8,7 +8,8 @@ import {
   postAssignBin,
   getNotifications,
 } from '../api';
-// import { Storage } from '../utils';
+import packerOrders from '../mock/packerOrders.json';
+import packerBinAssign from '../mock/packerBinAssign.json';
 
 export const PackerContext = createContext({
   orderList: [],
@@ -31,14 +32,16 @@ export const PackerContextProvider = ({ children }) => {
 
   const getPackerOrderList = async () => {
     try {
-      const list = await getOrdersListPack();
+      const list = packerOrders.data; //mock
+      // const list = await getOrdersListPack();
       setOrderList(list);
     } catch (e) {}
   };
 
   const getAssignBinList = async () => {
     try {
-      const list = await getAssignBinListPack();
+      const list = packerBinAssign.data; //mock
+      // const list = await getAssignBinListPack();
       setAssignBinList(list);
     } catch (e) {}
   };

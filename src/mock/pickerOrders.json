@@ -1,75 +1,127 @@
-[
-  {
-    "orderId": "#12345",
-    "items": [
-      {
-        "_id": 1,
-        "name": "Colgate Toothpaste",
-        "qty": 1,
-        "dept": "Personal Care",
-        "position": "Aisle 1 Bin 1"
+{
+  "data": [
+    {
+      "timeslot": {
+        "start_time": "2021-03-10T09:45:01.000Z",
+        "end_time": "2021-03-10T11:45:01.000Z"
       },
-      {
-        "_id": 2,
-        "name": "Pepsodant Toothpaste",
-        "qty": 2,
-        "dept": "Personal Care",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 3,
-        "name": "Dove",
-        "qty": 1,
-        "dept": "Personal Care",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 4,
-        "name": "Pears",
-        "qty": 1,
-        "dept": "Personal Care",
-        "position": "Aisle 1 Bin 1"
-      }
-    ]
-  },
-  {
-    "orderId": "#890321",
-    "items": [
-      {
-        "_id": 5,
-        "name": "Maggie Noodles",
-        "qty": 1,
-        "dept": "Food and Snacks",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 6,
-        "name": "Yippie Noodles",
-        "qty": 1,
-        "dept": "Food and Snacks",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 7,
-        "name": "Knor Soup",
-        "qty": 1,
-        "dept": "Food and Snacks",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 8,
-        "name": "Chocos",
-        "qty": 1,
-        "dept": "Food and Snacks",
-        "position": "Aisle 1 Bin 1"
-      },
-      {
-        "_id": 9,
-        "name": "Corn Flakes",
-        "qty": 1,
-        "dept": "Food and Snacks",
-        "position": "Aisle 1 Bin 1"
-      }
-    ]
-  }
-]
+      "items": [
+        {
+          "id": 182,
+          "item_id": 3,
+          "name": "CocaCola",
+          "department": "Beverages",
+          "position": "Asile 1 Rack 12",
+          "dfc": "Frozen",
+          "price": 20,
+          "qty": 15,
+          "picker_id": 2,
+          "packer_id": 2,
+          "picker_checked": false,
+          "out_of_stock": false,
+          "substitution_initiated": false,
+          "substitution_initiated_timestamp": null,
+          "substitution_customer_responded": false,
+          "substituted": false,
+          "review_status": null,
+          "review_comment": null,
+          "packer_checked": false,
+          "repicked": false,
+          "replaced": false,
+          "cancelled": false,
+          "returned": false,
+          "item_type": "assigned",
+          "createdAt": "2021-02-17T09:15:33.000Z",
+          "updatedAt": "2021-02-17T09:15:35.000Z",
+          "orderId": 2,
+          "pickerAssignId": 106,
+          "packerAssignId": 370,
+          "order_type": "scheduled",
+          "binsAssigned": [],
+          "order_start_time": "2021-03-10T09:45:01.000Z",
+          "order_end_time": "2021-03-10T11:45:01.000Z",
+          "picking_start_time": null,
+          "expected_pick_and_drop_end_timestamp": "2021-02-17T09:55:33.000Z"
+        },
+        {
+          "id": 182,
+          "item_id": 3,
+          "name": "CocaCola",
+          "department": "Beverages",
+          "position": "Asile 1 Rack 12",
+          "dfc": "Frozen",
+          "price": 20,
+          "qty": 15,
+          "picker_id": 2,
+          "packer_id": 2,
+          "picker_checked": false,
+          "out_of_stock": false,
+          "substitution_initiated": false,
+          "substitution_initiated_timestamp": null,
+          "substitution_customer_responded": false,
+          "substituted": false,
+          "review_status": null,
+          "review_comment": null,
+          "packer_checked": false,
+          "repicked": false,
+          "replaced": false,
+          "cancelled": false,
+          "returned": false,
+          "item_type": "assigned",
+          "createdAt": "2021-02-17T09:15:33.000Z",
+          "updatedAt": "2021-02-17T09:15:35.000Z",
+          "orderId": 2,
+          "pickerAssignId": 106,
+          "packerAssignId": 370,
+          "order_type": "scheduled",
+          "binsAssigned": [],
+          "order_start_time": "2021-03-10T09:45:01.000Z",
+          "order_end_time": "2021-03-10T11:45:01.000Z",
+          "picking_start_time": null,
+          "expected_pick_and_drop_end_timestamp": "2021-02-17T09:55:33.000Z"
+        },
+        {
+          "id": 186,
+          "item_id": 2,
+          "name": "B-Fizz",
+          "department": "Beverages",
+          "position": "Asile 1 Rack 12",
+          "dfc": "Chilled",
+          "price": 20,
+          "qty": 8,
+          "picker_id": 2,
+          "packer_id": 1,
+          "picker_checked": false,
+          "out_of_stock": false,
+          "substitution_initiated": false,
+          "substitution_initiated_timestamp": null,
+          "substitution_customer_responded": false,
+          "substituted": false,
+          "review_status": null,
+          "review_comment": null,
+          "packer_checked": false,
+          "repicked": false,
+          "replaced": false,
+          "cancelled": false,
+          "returned": false,
+          "item_type": "assigned",
+          "createdAt": "2021-02-17T09:15:34.000Z",
+          "updatedAt": "2021-02-17T09:15:35.000Z",
+          "orderId": 3,
+          "pickerAssignId": 106,
+          "packerAssignId": 369,
+          "order_type": "scheduled",
+          "binsAssigned": [],
+          "order_start_time": "2021-03-10T09:45:01.000Z",
+          "order_end_time": "2021-03-10T11:45:01.000Z",
+          "picking_start_time": null,
+          "expected_pick_and_drop_end_timestamp": "2021-02-17T09:55:33.000Z"
+        }
+      ],
+      "pickingDeadlineTimestamp": "2123-05-25T05:46:39.000Z"
+    }
+  ],
+  "message": "The list of orders to be picked.",
+  "source": "database",
+  "success": true
+}
