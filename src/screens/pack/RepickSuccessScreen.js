@@ -18,9 +18,13 @@ const RepickSuccessScreen = ({ navigation }) => {
     locale: { locale },
   } = useContext(AppContext);
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => true);
+    const disableBack = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => {
+      disableBack.remove();
+    };
   }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.WHITE }}>

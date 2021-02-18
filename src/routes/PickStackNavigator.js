@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ItemScreen from '../screens/pick/ItemScreen';
 import PickScreen from '../screens/pick/PickScreen';
@@ -13,10 +13,14 @@ import ContactFCMScreen from '../screens/pick/ContactFCMScreen';
 import CustomerAvailScreen from '../screens/pick/CustomerAvailScreen';
 import PickerChoiceScreen from '../screens/pick/PickerChoiceScreen';
 import ItemRemovedScreen from '../screens/pick/ItemRemovedScreen';
+import { AppContext } from '../context/AppContext';
 
 const Stack = createStackNavigator();
 
 const PickStackNavigator = () => {
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
   return (
     <Stack.Navigator initialRouteName="PickScreen" header>
       <Stack.Screen
@@ -35,7 +39,10 @@ const PickStackNavigator = () => {
       <Stack.Screen
         name="ScanScreen"
         component={ScanScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: locale?.SS_scanbar,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="ItemSuccessScreen"

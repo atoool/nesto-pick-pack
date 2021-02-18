@@ -18,6 +18,7 @@ import Arrow from '../../components/Arrow';
 import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
+import { PickerContext } from '../../context/PickerContext';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -35,6 +36,8 @@ const ItemScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
+
+  const { setItemPicked } = useContext(PickerContext);
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,6 +65,7 @@ const ItemScreen = ({
             setTimeOut(true);
             setTimerOn(false);
           }}
+          setItemPicked={setItemPicked}
         />
       </ScrollView>
     </SafeAreaView>
@@ -186,6 +190,7 @@ const VerifyItemSection = ({
   timeOut,
   timerOn,
   setTimerOut,
+  setItemPicked,
 }) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1 || status === 3;
@@ -322,21 +327,32 @@ const VerifyItemSection = ({
               style={{ padding: 30 }}
               onPress={() => {
                 navigation.navigate('ScanScreen', {
-                  totalItem: item.qty,
-                  itemId: item._id,
+                  totalItem: item?.qty,
+                  itemId: item?.id,
+                  criticalQty: itemsQty,
+                  itemType: item?.item_type,
                 });
               }}
             />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
               <Text>{locale?.IS_scanFailed}</Text>
-              <Text
-                style={{
-                  textDecorationLine: 'underline',
-                  ...Typography.bold17,
-                  color: Colors.secondaryRed,
+              <TouchableOpacity
+                onPress={async () => {
+                  await setItemPicked(item?.id, item?.item_type, itemsQty).then(
+                    () => {
+                      navigation.pop();
+                    },
+                  );
                 }}>
-                {locale?.IS_scanManual}
-              </Text>
+                <Text
+                  style={{
+                    textDecorationLine: 'underline',
+                    ...Typography.bold17,
+                    color: Colors.secondaryRed,
+                  }}>
+                  {locale?.IS_scanManual}
+                </Text>
+              </TouchableOpacity>
             </View>
           </>
         )}

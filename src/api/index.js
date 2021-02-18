@@ -67,9 +67,12 @@ export const getOrdersDropList = async () => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
-export const setItemPicked = async (id) => {
+export const setItemPicked = async (id, item_type, critical_qty) => {
   const URL = `/picker/item/pick/${id}`;
-  return get(URL, true).catch((e) => {
+  const extraParams = `${
+    critical_qty ? '&critical_qty=' + critical_qty : ''
+  }&item_type=${item_type}`;
+  return get(URL, true, false, extraParams).catch((e) => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };

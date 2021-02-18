@@ -91,7 +91,12 @@ const setUpConfig = async (isAuthenticated) => {
   }
 };
 
-const get = async (URL, isAuthenticated = true, getFullResult = false) => {
+const get = async (
+  URL,
+  isAuthenticated = true,
+  getFullResult = false,
+  extraParams = '',
+) => {
   try {
     let {
       appname,
@@ -105,7 +110,7 @@ const get = async (URL, isAuthenticated = true, getFullResult = false) => {
       os,
       osVersion,
     } = await ExtraPayload();
-    let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}`;
+    let PARAMS = `?appname=${appname}&version=${version}&buildNumber=${buildNumber}&country=${country}&lang=${lang}&network=${network}&loadcount=${loadcount}&devtype=${devtype}&os=${os}&osVersion=${osVersion}${extraParams}`;
     const CONFIG = await setUpConfig(isAuthenticated);
     console.log(CONFIG);
     const result = await axiosInstance.get(URL + PARAMS, CONFIG);
