@@ -1,6 +1,13 @@
 /* eslint-disable radix */
 import React, { useState, useContext } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import Barcode from 'react-native-barcode-builder';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -15,7 +22,12 @@ const BinAssignScreen = ({
   },
   navigation,
 }) => {
-  const [binPos, setBinPos] = useState([]);
+  const emptyArray = Array.apply(
+    '',
+    Array(parseInt(bins === '' ? 0 : bins)),
+  ).map((i) => '');
+  const [binPos, setBinPos] = useState(emptyArray);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const onBinAssign = (txt, indx) => {
     binPos[indx] = txt;
@@ -23,11 +35,19 @@ const BinAssignScreen = ({
   };
   const { postAssignBin } = useContext(PackerContext);
   const onSave = async () => {
-    const payload = {
-      bins: ['A12', 'B45'],
-    };
-    await postAssignBin(payload, orderId);
-    navigation.pop(1);
+    setIsButtonLoading(true);
+    const isEmpty = binPos.filter((i) => i === '').length === 0;
+    if (isEmpty) {
+      const payload = {
+        bins: binPos,
+      };
+      await postAssignBin(payload, orderId);
+
+      navigation.pop();
+    } else {
+      ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
+    }
+    setIsButtonLoading(false);
   };
 
   const {
@@ -49,8 +69,9 @@ const BinAssignScreen = ({
           onChangeBins={() => {}}
           hide
         />
-        {Array.apply('', Array(parseInt(bins === '' ? 0 : bins))).map(
-          (val, indx) => (
+        {binPos &&
+          binPos.length !== 0 &&
+          binPos.map((val, indx) => (
             <InputWithLabel
               key={indx}
               iconName="EditSVG"
@@ -59,12 +80,12 @@ const BinAssignScreen = ({
               value={binPos[indx]}
               onChangeText={(text) => onBinAssign(text, indx)}
             />
-          ),
-        )}
+          ))}
         <Button
           title={locale?.save}
           onPress={onSave}
           style={{ width: width - 60 }}
+          loading={isButtonLoading}
         />
       </ScrollView>
     </SafeAreaView>

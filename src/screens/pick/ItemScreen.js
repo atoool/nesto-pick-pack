@@ -93,11 +93,17 @@ const TimerComponent = ({ ss, inMinute, call }) => {
           <View style={styles.timerDivider} />
         </>
       )}
-      <Text style={!inMinute ? Typography.bold17White : Typography.bold13White}>
-        {!inMinute
-          ? `${HoursString}:${minutesString} Hrs`
-          : `${minutesString}:${secondString}`}
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text
+          style={!inMinute ? Typography.bold30White : Typography.bold13White}>
+          {!inMinute && `${HoursString}:${minutesString} `}
+        </Text>
+        {!inMinute && <Text style={Typography.bold17White}>Hrs</Text>}
+        <Text
+          style={!inMinute ? Typography.bold30White : Typography.bold13White}>
+          {inMinute && `${minutesString}:${secondString}`}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -239,10 +245,11 @@ const VerifyItemSection = ({
                 }}
               />
             )}
-            <Divider />
           </>
         )}
-        {substituteItems ? (
+
+        <Divider />
+        {substituteItems && status !== 3 ? (
           <>
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -307,7 +314,6 @@ const VerifyItemSection = ({
           </>
         ) : (
           <>
-            <Divider />
             <Button
               scanButton
               title={locale?.IS_scanBar}
@@ -400,6 +406,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
   },
   timerContainer2: { padding: 10, marginHorizontal: 0, marginVertical: 0 },
   itemImageContainer: {

@@ -20,6 +20,7 @@ const ScanScreen = ({
   route: {
     params: {
       item: { qty, id },
+      orderId = '#',
     },
   },
 }) => {
@@ -83,19 +84,21 @@ const ScanScreen = ({
           alignItems: 'center',
         }}>
         <View>
+          {orderId === '#' && (
+            <Text
+              style={{
+                textAlign: 'center',
+                marginBottom: 20,
+                fontWeight: 'bold',
+                fontSize: 20,
+              }}>
+              {locale?.SS_scanbar}
+            </Text>
+          )}
           <Text
             style={{
               textAlign: 'center',
-              marginTop: 60,
-              fontWeight: 'bold',
-              fontSize: 20,
-            }}>
-            {locale?.SS_scanbar}
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginTop: 10,
+              // marginTop: 10,
               borderWidth: 0.5,
               color: Colors.lightGray,
               borderColor: Colors.lightGray,
@@ -107,13 +110,14 @@ const ScanScreen = ({
         </View>
         <View
           style={{
-            height: 'auto',
+            height: '50%',
             width: '80%',
             alignItems: 'center',
             justifyContent: 'center',
+            marginVertical: 20,
           }}>
           <RNCamera
-            style={{ height: '35%', width: '80%' }}
+            style={{ height: '80%', width: '100%' }}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{

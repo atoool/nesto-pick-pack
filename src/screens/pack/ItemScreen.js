@@ -71,6 +71,7 @@ const ItemScreen = ({
         <VerifyItemSection
           containerRef={containerRef.current}
           item={item}
+          orderId={orderId}
           navigation={navigation}
           postRePick={postRePick}
         />
@@ -172,7 +173,13 @@ const ItemSection = ({
   );
 };
 
-const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
+const VerifyItemSection = ({
+  item,
+  navigation,
+  containerRef,
+  postRePick,
+  orderId,
+}) => {
   const generateArray = (element) =>
     Array.apply(null, Array(item.qty)).map((itm) => element);
 
@@ -242,7 +249,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
                       styles.passTextBox,
                       // eslint-disable-next-line react-native/no-inline-styles
                       {
-                        backgroundColor: item
+                        backgroundColor: itm
                           ? Colors.primaryGreen
                           : 'rgba(0,0,0,0)',
                       },
@@ -250,7 +257,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
                     <Text
                       style={[
                         styles.textCenter,
-                        item
+                        itm
                           ? { ...Typography.bold13White }
                           : { ...Typography.bold13 },
                       ]}>
@@ -264,7 +271,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
                       styles.failTextBox,
                       // eslint-disable-next-line react-native/no-inline-styles
                       {
-                        backgroundColor: item
+                        backgroundColor: itm
                           ? 'rgba(0,0,0,0)'
                           : Colors.secondaryRed,
                       },
@@ -272,7 +279,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
                     <Text
                       style={[
                         styles.textCenter,
-                        !item
+                        !itm
                           ? { ...Typography.bold13White }
                           : { ...Typography.bold13 },
                       ]}>
@@ -339,7 +346,7 @@ const VerifyItemSection = ({ item, navigation, containerRef, postRePick }) => {
             titleStyle={Typography.bold17White}
             style={styles.scanButton}
             onPress={() => {
-              navigation.navigate('ScanScreen', { item });
+              navigation.navigate('ScanScreen', { item, orderId });
             }}
           />
           <View style={styles.scanFailedBox}>

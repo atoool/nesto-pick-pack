@@ -58,7 +58,10 @@ const PackStackNavigators = () => {
       <Stack.Screen
         name="ScanScreen"
         component={ScanScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          title: locale?.SS_scanbar,
+          ...headerOptions,
+        })}
       />
       <Stack.Screen
         name="BinAssignScreen"

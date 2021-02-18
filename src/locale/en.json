@@ -60,6 +60,7 @@
   "printBinButton": "Printing labels & Assign bins",
   "PS_printingLabel": "Printing labels",
   "BAS_printLabel": "Print labels for this order",
+  "BAS_emptyBin":"All fields are required",
   "BAS_printLabel2": "Assign positions for each bin for the order ",
   "BAS_howMany": "How many bins are needed ?",
   "BAS_order": "Order number to print",

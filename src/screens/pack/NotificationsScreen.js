@@ -9,6 +9,7 @@ import { PackerContext } from '../../context/PackerContext';
 
 const NotificationsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     locale: { locale },
@@ -26,13 +27,23 @@ const NotificationsScreen = () => {
     }
   };
 
-  useEffect(() => {}, []);
+  const onMount = async () => {
+    await getAllNotifications();
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    onMount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.notifications} />
       <FlatList
-        ListEmptyComponent={() => <NoContent name={'NoNotificationSVG'} />}
+        ListEmptyComponent={() => (
+          <NoContent name={'NoNotificationSVG'} isLoading={isLoading} />
+        )}
         data={notifications}
         contentContainerStyle={{ paddingBottom: 60 }}
         keyExtractor={(item, index) => index.toString()}
