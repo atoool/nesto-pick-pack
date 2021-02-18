@@ -220,7 +220,11 @@ const VerifyItemSection = ({
             />
             {someOutofStock && (
               <TextInput
-                placeholder={locale?.placeholder.countOfOutStock}
+                placeholder={
+                  status === 3
+                    ? locale?.placeholder.critical
+                    : locale?.placeholder.countOfOutStock
+                }
                 keyboardType={'number-pad'}
                 onChangeText={(t) =>
                   setItemQty(t.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ''))

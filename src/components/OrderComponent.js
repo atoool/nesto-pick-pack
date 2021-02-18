@@ -35,7 +35,9 @@ const OrderComponent = ({
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
   const timer = timeLeft
-    ? new Date(timeLeft).getSeconds() - new Date().getSeconds()
+    ? new Date(timeLeft) - new Date() <= 0
+      ? 0
+      : new Date(timeLeft) - new Date()
     : 0;
   return (
     <>

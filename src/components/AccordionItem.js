@@ -16,7 +16,14 @@ import TickComponent from './TickComponent';
 
 const now = Date.now();
 const AccordionItem = ({
-  order: { id, items, time_slot, binsAssigned },
+  order: {
+    id,
+    items,
+    time_slot,
+    binsAssigned,
+    order_start_time,
+    order_end_time,
+  },
   index,
   itemCount,
   status,
@@ -29,7 +36,11 @@ const AccordionItem = ({
   timeLeft = now,
   readyButtonLoading = false,
 }) => {
-  time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
+  time_slot = time_slot
+    ? userType === 'packer'
+      ? { start_time: order_start_time, end_time: order_end_time }
+      : time_slot
+    : { start_time: now, end_time: now };
   return (
     <View style={styles.container}>
       <OrderComponent

@@ -57,8 +57,8 @@ const PickList = ({
                   style={[
                     styles.deliveryStatusCircle,
                     {
-                      backgroundColor: item?.dfc
-                        ? item.dfc !== ''
+                      backgroundColor: item.dfc
+                        ? Colors[item?.dfc?.toLowerCase()]
                           ? Colors[item.dfc.toLowerCase()]
                           : Colors.chilled
                         : Colors.chilled,
@@ -66,13 +66,15 @@ const PickList = ({
                   ]}
                 />
                 <Text style={Typography.bold15}>
-                  {item.qty ? item.qty : 1}x {item.name}
+                  {item.qty ? item.qty : 1}x{' '}
+                  {item.name ? item.name : '[item_name missing]'}
                 </Text>
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  {item.orderId ? item.orderId : '#####'} | {item?.department}{' '}
-                  {item?.position}
+                  #{item.orderId ? item.orderId : '[order_id missing]'} |{' '}
+                  {item?.department ? item?.department : '[department missing]'}{' '}
+                  {item?.position ? item?.position : '[position missing]'}
                 </Text>
               </View>
               {item.binsAssigned && item.binsAssigned?.length !== 0 && (

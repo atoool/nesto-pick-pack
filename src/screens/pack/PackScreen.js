@@ -18,14 +18,14 @@ const PackScreen = ({ navigation }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { assignBinList, getAssignBinList, setOrderReady } = useContext(
+  const { orderList, getPackerOrderList, setOrderReady } = useContext(
     PackerContext,
   );
 
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      await getOrders();
+      await getPackerOrderList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -35,7 +35,7 @@ const PackScreen = ({ navigation }) => {
 
   const getOrders = async () => {
     setLoading(true);
-    await getAssignBinList();
+    await getPackerOrderList();
     setLoading(false);
   };
 
@@ -70,7 +70,7 @@ const PackScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
       <FlatList
-        data={assignBinList}
+        data={orderList}
         ListEmptyComponent={() => (
           <NoContent name="NoOrdersSVG" isLoading={isLoading} />
         )}

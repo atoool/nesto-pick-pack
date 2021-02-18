@@ -31,6 +31,6 @@ export default {
   primaryRed: '#FFF5F5',
   lightViolet: '#889BFF',
   chilled: '#C91614',
-  frozen: '#A4880B',
-  fresh: '#3C7EE0',
+  dry: '#A4880B',
+  frozen: '#3C7EE0',
 };

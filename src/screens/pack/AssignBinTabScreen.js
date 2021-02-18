@@ -15,7 +15,7 @@ const AssignBinTabScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { orderList, getPackerOrderList } = useContext(PackerContext);
+  const { assignBinList, getAssignBinList } = useContext(PackerContext);
 
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const AssignBinTabScreen = () => {
   const _getOrdersList = async () => {
     setRefreshing(true);
     try {
-      await getOrders();
+      await getAssignBinList();
       setRefreshing(false);
     } catch (e) {
       console.log(e);
@@ -32,7 +32,7 @@ const AssignBinTabScreen = () => {
   };
   const getOrders = async () => {
     setLoading(true);
-    await getPackerOrderList();
+    await getAssignBinList();
     setLoading(false);
   };
   useEffect(() => {
@@ -44,7 +44,7 @@ const AssignBinTabScreen = () => {
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Now} />
       <FlatList
-        data={orderList}
+        data={assignBinList}
         ListEmptyComponent={() => (
           <NoContent name="NoOrdersSVG" isLoading={isLoading} />
         )}
@@ -63,13 +63,23 @@ const AssignBinTabScreen = () => {
 };
 
 const AccordionItem = ({
-  order: { id, items, order_type, time_slot, timeLeft },
+  order: {
+    id,
+    items,
+    order_type,
+    time_slot,
+    timeLeft,
+    order_start_time,
+    order_end_time,
+  },
   index,
 }) => {
   const now = Date.now();
   const navigation = useNavigation();
   const orderId = id ? id : '';
-  time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
+  time_slot = order_start_time
+    ? { start_time: order_start_time, end_time: order_end_time }
+    : { start_time: now, end_time: now };
   timeLeft = timeLeft ? timeLeft : now;
   const {
     locale: { locale },
