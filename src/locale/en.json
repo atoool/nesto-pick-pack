@@ -16,7 +16,7 @@
   },
   "missing":{
     "aisle":"Aisle missing",
-    "dept":"Department missing",
+    "dept":"Department missing"
   },
   "placeholder": {
     "email": "Email Address",
@@ -46,10 +46,10 @@
   "timeRemain": "Time remaining",
   "signin": "Sign in",
   "Login": "Login",
-  "LoginText": "Login to Access your profile",
+  "LoginText": "Login to access your profile",
   "networkError": "Failed to connect any network!",
   "validEmail":"Invalid email address or password",
-  "BAS_Position": "Position of Bin",
+  "BAS_Position": "Position of bin",
   "save": "Save",
   "picked": "Picked",
   "packed": "Packed",

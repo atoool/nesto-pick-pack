@@ -34,11 +34,12 @@ const OrderComponent = ({
   } = useContext(AppContext);
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
-  const timer = timeLeft
-    ? new Date(timeLeft) - new Date() <= 0
-      ? 0
-      : new Date(timeLeft) - new Date()
-    : 0;
+  const timer =
+    (timeLeft
+      ? new Date(timeLeft) - new Date() <= 0
+        ? 0
+        : new Date(timeLeft) - new Date()
+      : 0) / 1000;
   return (
     <>
       {!pick && (
@@ -88,7 +89,7 @@ const TimerComponent = ({ ss }) => {
   const HoursString = Math.floor(now / 3600)
     .toString()
     .padStart(2, 0);
-  const minutesString = Math.floor(now / 60)
+  const minutesString = Math.floor((now % 3600) / 60)
     .toString()
     .padStart(2, 0);
 

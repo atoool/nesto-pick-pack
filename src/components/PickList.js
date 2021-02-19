@@ -49,6 +49,7 @@ const PickList = ({
               navigation.navigate('ItemScreen', {
                 orderId: item.orderId,
                 item,
+                timeLeft,
               })
             }>
             <View>

@@ -26,10 +26,15 @@ const w = screenWidth - 32;
 const ItemScreen = ({
   navigation,
   route: {
-    params: { orderId, item },
+    params: { orderId, item, timeLeft },
   },
 }) => {
-  const ss = 3600;
+  const ss =
+    (timeLeft
+      ? new Date(timeLeft) - new Date() <= 0
+        ? 0
+        : new Date(timeLeft) - new Date()
+      : 0) / 1000;
   const [timerOn, setTimerOn] = useState(false);
   const [timeOut, setTimeOut] = useState(false);
 
@@ -83,7 +88,7 @@ const TimerComponent = ({ ss, inMinute, call }) => {
   const HoursString = Math.floor(now / 3600)
     .toString()
     .padStart(2, 0);
-  const minutesString = Math.floor(now / 60)
+  const minutesString = Math.floor((now % 3600) / 60)
     .toString()
     .padStart(2, 0);
 
@@ -198,7 +203,7 @@ const VerifyItemSection = ({
   setTimerOut,
   onManualEntry,
 }) => {
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(2);
   const someOutofStock = status === 1 || status === 3;
   const substituteItems = status === 1 || status === 0 || status === 3;
   const [itemsQty, setItemQty] = useState(0);

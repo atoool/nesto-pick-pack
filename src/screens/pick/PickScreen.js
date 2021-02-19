@@ -62,12 +62,16 @@ const PickScreen = () => {
             orderType={item.order_type ? item.order_type : locale?.status.SD}
             itemCount={''}
             startTime={
-              item.timeslot.start_time ? item.timeslot.start_time : new Date()
+              item.timeslot.start_time ? item.timeslot.start_time : Date.now()
             }
             endTime={
-              item.timeslot.end_time ? item.timeslot.end_time : new Date()
+              item.timeslot.end_time ? item.timeslot.end_time : Date.now()
             }
-            timeLeft={Date.now()}
+            timeLeft={
+              item?.pickingDeadlineTimestamp
+                ? item?.pickingDeadlineTimestamp
+                : Date.now()
+            }
           />
         )}
       />
