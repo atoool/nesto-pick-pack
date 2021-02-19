@@ -458,8 +458,8 @@ const styles = StyleSheet.create({
   orderTypeBox: { flexDirection: 'row', alignItems: 'center' },
   //verification
   reviewBox: { paddingVertical: 20, paddingHorizontal: 32 },
-  reviewTitle: { fontWeight: 'bold', fontSize: 20 },
-  reviewText: { fontSize: 14, marginTop: 5, marginBottom: 10 },
+  reviewTitle: { ...Typography.bold20 },
+  reviewText: { ...Typography.normal12, marginTop: 5, marginBottom: 10 },
   reviewItemBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
   dropLabelText: {
     paddingLeft: 30,
     width: '100%',
-    fontSize: 13,
+    ...Typography.norma13,
   },
   scanButton: { padding: 30, margin: 32 },
   scanFailedBox: { alignItems: 'center', paddingVertical: 20 },
@@ -542,8 +542,8 @@ const styles = StyleSheet.create({
     color: Colors.secondaryRed,
   },
   rePickBox: { paddingVertical: 10, paddingHorizontal: 32 },
-  rePickTitle: { fontWeight: 'bold', fontSize: 20 },
-  rePickText: { fontSize: 14, marginTop: 5, marginBottom: 10 },
+  rePickTitle: { ...Typography.bold20 },
+  rePickText: { ...Typography.normal14, marginTop: 5, marginBottom: 10 },
   rePickButton: { width: 180, marginVertical: 20 },
 });
 

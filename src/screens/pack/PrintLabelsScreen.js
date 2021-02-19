@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
-import { Colors, width } from '../../styles';
+import { Colors, Typography, width } from '../../styles';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
   const [orderId, setOrderId] = useState(params.orderId);
@@ -84,13 +84,11 @@ const PrintLabelComponent = ({
         </View>
         <Text
           style={{
-            color: Colors.WHITE,
-            fontSize: 16,
+            ...Typography.bold16White,
             flex: 1,
             textAlign: 'center',
             textAlignVertical: 'bottom',
             marginTop: 20,
-            fontWeight: 'bold',
           }}>
           {printLabelText}
         </Text>
@@ -127,8 +125,7 @@ const InputWithLabel = ({
 }) => {
   return (
     <View style={{ flex: 1, marginTop: top }}>
-      <Text
-        style={{ color: Colors.darkText, fontSize: 16, fontWeight: 'bold' }}>
+      <Text style={{ color: Colors.darkText, ...Typography.bold16 }}>
         {label}
       </Text>
       <Input

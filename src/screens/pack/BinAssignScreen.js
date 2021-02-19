@@ -14,7 +14,7 @@ import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
-import { Colors, width } from '../../styles';
+import { Colors, Typography, width } from '../../styles';
 
 const BinAssignScreen = ({
   route: {
@@ -172,17 +172,15 @@ const styles = StyleSheet.create({
   },
   barcode: { flex: 1 },
   printLabelText: {
-    color: Colors.WHITE,
-    fontSize: 16,
     flex: 1,
     textAlign: 'center',
     textAlignVertical: 'bottom',
     marginTop: 20,
-    fontWeight: 'bold',
+    ...Typography.bold16White,
   },
   //inputWithLabel
   labelTextView: { flex: 1 },
-  labelText: { color: Colors.darkText, fontSize: 16, fontWeight: 'bold' },
+  labelText: { color: Colors.darkText, ...Typography.bold16 },
   inputStyle: { marginTop: 5 },
 });
 

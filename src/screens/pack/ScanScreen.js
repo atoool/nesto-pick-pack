@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { Colors } from '../../styles';
+import { Colors, Typography } from '../../styles';
 import * as Progress from 'react-native-progress';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
@@ -89,8 +89,7 @@ const ScanScreen = ({
               style={{
                 textAlign: 'center',
                 marginBottom: 20,
-                fontWeight: 'bold',
-                fontSize: 20,
+                ...Typography.bold20,
               }}>
               {locale?.SS_scanbar}
             </Text>
@@ -102,7 +101,7 @@ const ScanScreen = ({
               borderWidth: 0.5,
               color: Colors.lightGray,
               borderColor: Colors.lightGray,
-              fontSize: 12,
+              ...Typography.normal12,
               padding: 10,
             }}>
             {locale?.SS_scanbarText}
@@ -149,7 +148,7 @@ const ScanScreen = ({
             textAlign: 'center',
             marginTop: 10,
             color: Colors.lightGray,
-            fontSize: 12,
+            ...Typography.normal12,
           }}>
           {locale?.SS_scanningCode} ...
         </Text>
@@ -282,7 +281,9 @@ const LinkButton = ({ title, onPress, style }) => (
     style={[{ backgroundColor: 'rgba(0,0,0,0)' }, style]}
     onPress={onPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
-    <Text style={{ color: Colors.secondaryRed, fontSize: 12 }}>{title}</Text>
+    <Text style={{ color: Colors.secondaryRed, ...Typography.normal12 }}>
+      {title}
+    </Text>
   </TouchableOpacity>
 );
 
