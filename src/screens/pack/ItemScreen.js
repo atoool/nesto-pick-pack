@@ -75,7 +75,7 @@ const ItemScreen = ({
           start_time={formatAmPm(new Date(start))}
           end_time={formatAmPm(new Date(end))}
         />
-        {item?.packing_completed ? (
+        {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
           <VerifyItemSection
@@ -390,8 +390,8 @@ const VerifiedItem = ({ locale }) => {
   return (
     <>
       <Divider />
-      <View style={styles.rePickBox}>
-        <View style={styles.verifytitleBox}>
+      <View style={[styles.rePickBox, { marginTop: 10 }]}>
+        <View style={styles.verifyTitleBox}>
           <VerifiedSVG />
           <Text style={[styles.rePickTitle, styles.marginLeft20]}>
             {locale?.IS_verifiedTitle}
@@ -568,7 +568,7 @@ const styles = StyleSheet.create({
   rePickText: { ...Typography.normal14, marginTop: 5, marginBottom: 10 },
   rePickButton: { width: 180, marginVertical: 20 },
   marginLeft20: { marginLeft: 20 },
-  verifytitleBox: { flexDirection: 'row', alignItems: 'center' },
+  verifyTitleBox: { flexDirection: 'row', alignItems: 'center' },
 });
 
 export default ItemScreen;

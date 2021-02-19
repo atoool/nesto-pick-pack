@@ -65,7 +65,7 @@ const ItemScreen = ({
             item?.picking_completed ? locale?.status?.PiC : locale?.status?.Pi
           }
         />
-        {item?.picking_completed ? (
+        {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
           <VerifyItemSection
@@ -421,7 +421,7 @@ const VerifiedItem = ({ locale }) => {
   return (
     <>
       <Divider />
-      <View style={styles.verifyBox}>
+      <View style={[styles.verifyBox, { marginTop: 10 }]}>
         <View style={styles.verifyTitleBox}>
           <VerifiedSVG />
           <Text style={styles.verifyTitle}>{locale?.IS_verifiedTitle}</Text>
