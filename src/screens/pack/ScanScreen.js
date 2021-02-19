@@ -109,14 +109,14 @@ const ScanScreen = ({
         </View>
         <View
           style={{
-            height: '50%',
+            height: 'auto',
             width: '80%',
             alignItems: 'center',
             justifyContent: 'center',
             marginVertical: 20,
           }}>
           <RNCamera
-            style={{ height: '80%', width: '100%' }}
+            style={{ height: '35%', width: '80%' }}
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}
             androidCameraPermissionOptions={{

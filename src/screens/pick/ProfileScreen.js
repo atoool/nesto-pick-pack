@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/Feather';
@@ -19,6 +20,25 @@ const ProfileScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+
+  const onLogOut = async () => {
+    Alert.alert(
+      '',
+      locale?.PS_logoutAlert,
+      [
+        {
+          text: locale?.no,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: locale?.yes,
+          onPress: logOutUser,
+        },
+      ],
+      { cancelable: false },
+    );
+  };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.profile} />
@@ -30,7 +50,7 @@ const ProfileScreen = () => {
       <MarkAvailability title={locale?.P_markAvail} />
       {/* <LinkButton title="Mark availability" topBorder={true} /> */}
       {/* <LinkButton title="My statistics" /> */}
-      <LinkButton title={locale?.signout} onPress={logOutUser} />
+      <LinkButton title={locale?.signout} onPress={onLogOut} />
     </SafeAreaView>
   );
 };

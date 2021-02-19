@@ -71,37 +71,6 @@ const ScanScreen = ({
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <RNCamera
-        style={{
-          height: '100%',
-          width: '100%',
-          position: 'absolute',
-          zIndex: -1,
-        }}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.on}
-        androidCameraPermissionOptions={{
-          title: locale?.SS_permitTitle,
-          message: locale?.SS_permitText,
-          buttonPositive: locale?.ok,
-          buttonNegative: locale?.cancel,
-        }}
-        notAuthorizedView={
-          <View
-            style={{
-              height: '35%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Button
-              title="Enable camera permission"
-              onPress={() => Linking.openSettings()}
-            />
-          </View>
-        }
-        captureAudio={false}
-        onBarCodeRead={onScan}
-      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -134,9 +103,38 @@ const ScanScreen = ({
         </View>
         <View
           style={{
-            height: '40%',
-            width: '120%',
+            height: 'auto',
+            width: '80%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginVertical: 20,
           }}>
+          <RNCamera
+            style={{ height: '35%', width: '80%' }}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.on}
+            androidCameraPermissionOptions={{
+              title: locale?.SS_permitTitle,
+              message: locale?.SS_permitText,
+              buttonPositive: locale?.ok,
+              buttonNegative: locale?.cancel,
+            }}
+            notAuthorizedView={
+              <View
+                style={{
+                  height: '35%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Button
+                  title="Enable camera permission"
+                  onPress={() => Linking.openSettings()}
+                />
+              </View>
+            }
+            captureAudio={false}
+            onBarCodeRead={onScan}
+          />
           <BarCodeMask />
         </View>
         <Text
