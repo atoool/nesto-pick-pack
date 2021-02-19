@@ -18,6 +18,7 @@ import Arrow from '../../components/Arrow';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import Divider from '../../components/Divider';
+import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 
 function formatAmPm(date) {
   var hours = date.getHours();
@@ -74,14 +75,18 @@ const ItemScreen = ({
           start_time={formatAmPm(new Date(start))}
           end_time={formatAmPm(new Date(end))}
         />
-        <VerifyItemSection
-          containerRef={containerRef.current}
-          item={item}
-          orderId={orderId}
-          navigation={navigation}
-          postRePick={postRePick}
-          onManualEntry={onManualEntry}
-        />
+        {item?.packing_completed ? (
+          <VerifiedItem locale={locale} />
+        ) : (
+          <VerifyItemSection
+            containerRef={containerRef.current}
+            item={item}
+            orderId={orderId}
+            navigation={navigation}
+            postRePick={postRePick}
+            onManualEntry={onManualEntry}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -381,6 +386,23 @@ const VerifyItemSection = ({
   );
 };
 
+const VerifiedItem = ({ locale }) => {
+  return (
+    <>
+      <Divider />
+      <View style={styles.rePickBox}>
+        <View style={styles.verifytitleBox}>
+          <VerifiedSVG />
+          <Text style={[styles.rePickTitle, styles.marginLeft20]}>
+            {locale?.IS_verifiedTitle}
+          </Text>
+        </View>
+        <Text style={styles.rePickText}>{locale?.IS_verifiedText}</Text>
+      </View>
+    </>
+  );
+};
+
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
   timerDivider: {
@@ -545,6 +567,8 @@ const styles = StyleSheet.create({
   rePickTitle: { ...Typography.bold20 },
   rePickText: { ...Typography.normal14, marginTop: 5, marginBottom: 10 },
   rePickButton: { width: 180, marginVertical: 20 },
+  marginLeft20: { marginLeft: 20 },
+  verifytitleBox: { flexDirection: 'row', alignItems: 'center' },
 });
 
 export default ItemScreen;

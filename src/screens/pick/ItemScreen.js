@@ -19,6 +19,7 @@ import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';
+import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -64,20 +65,24 @@ const ItemScreen = ({
             item?.picking_completed ? locale?.status?.PiC : locale?.status?.Pi
           }
         />
-        <VerifyItemSection
-          navigation={navigation}
-          item={item}
-          timeOut={timeOut}
-          timerOn={timerOn}
-          setTimerOn={() => {
-            setTimerOn(true);
-          }}
-          setTimerOut={() => {
-            setTimeOut(true);
-            setTimerOn(false);
-          }}
-          onManualEntry={onManualEntry}
-        />
+        {item?.picking_completed ? (
+          <VerifiedItem locale={locale} />
+        ) : (
+          <VerifyItemSection
+            navigation={navigation}
+            item={item}
+            timeOut={timeOut}
+            timerOn={timerOn}
+            setTimerOn={() => {
+              setTimerOn(true);
+            }}
+            setTimerOut={() => {
+              setTimeOut(true);
+              setTimerOn(false);
+            }}
+            onManualEntry={onManualEntry}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -411,6 +416,21 @@ const Divider = () => (
     }}
   />
 );
+
+const VerifiedItem = ({ locale }) => {
+  return (
+    <>
+      <Divider />
+      <View style={styles.verifyBox}>
+        <View style={styles.verifyTitleBox}>
+          <VerifiedSVG />
+          <Text style={styles.verifyTitle}>{locale?.IS_verifiedTitle}</Text>
+        </View>
+        <Text style={styles.verifyText}>{locale?.IS_verifiedText}</Text>
+      </View>
+    </>
+  );
+};
 const styles = StyleSheet.create({
   timerDivider: {
     height: '100%',
@@ -471,6 +491,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  verifyBox: { paddingVertical: 10, paddingHorizontal: 32 },
+  verifyTitle: { ...Typography.bold20, marginLeft: 20 },
+  verifyText: { ...Typography.normal14, marginTop: 5, marginBottom: 10 },
+  verifyTitleBox: { flexDirection: 'row', alignItems: 'center' },
 });
 
 export default ItemScreen;
