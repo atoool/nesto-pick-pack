@@ -32,16 +32,16 @@ export const PackerContextProvider = ({ children }) => {
 
   const getPackerOrderList = async () => {
     try {
-      const list = packerOrders.data; //mock
-      // const list = await getOrdersListPack();
+      // const list = packerOrders.data; //mock
+      const list = await getOrdersListPack();
       setOrderList(list);
     } catch (e) {}
   };
 
   const getAssignBinList = async () => {
     try {
-      const list = packerBinAssign.data; //mock
-      // const list = await getAssignBinListPack();
+      // const list = packerBinAssign.data; //mock
+      const list = await getAssignBinListPack();
       setAssignBinList(list);
     } catch (e) {}
   };

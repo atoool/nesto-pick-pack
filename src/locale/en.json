@@ -136,6 +136,7 @@
   "SS_scanbarText": "Place the bar code inside the frame to scan and please avoid shaketo get result quickly",
   "SS_permitTitle": "Permission to use camera",
   "SS_permitText": "We need your permission to use your camera",
+  "SS_enableCam":"Enable camera permission",
   "ok": "Ok",
   "cancel": "Cancel",
   "SS_scanningCode": "Scanning code",

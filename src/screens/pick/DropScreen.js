@@ -89,6 +89,7 @@ const DropScreen = () => {
             }
             onReadyPress={onDropToBin}
             buttonTitle={locale.DS_dropReady}
+            showReadyButton={item?.picking_completed}
             readyButtonLoading={dropButtonLoading}
           />
         )}

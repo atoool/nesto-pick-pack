@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { Colors } from '../styles';
+import { Colors, Typography } from '../styles';
 
 const CustomTabBar = ({ state, descriptors, navigation, title }) => {
   return (
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
     height: 25,
     marginTop: 7,
   },
-  label: { fontSize: 12, marginTop: 5 },
+  label: { ...Typography.normal12, marginTop: 5 },
 });
 export default CustomTabBar;

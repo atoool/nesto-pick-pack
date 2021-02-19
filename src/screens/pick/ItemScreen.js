@@ -38,6 +38,12 @@ const ItemScreen = ({
   } = useContext(AppContext);
 
   const { setItemPicked } = useContext(PickerContext);
+
+  const onManualEntry = async (itemsQty) => {
+    await setItemPicked(item?.id, item?.item_type, itemsQty).then(() => {
+      navigation.pop();
+    });
+  };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -65,7 +71,7 @@ const ItemScreen = ({
             setTimeOut(true);
             setTimerOn(false);
           }}
-          setItemPicked={setItemPicked}
+          onManualEntry={onManualEntry}
         />
       </ScrollView>
     </SafeAreaView>
@@ -190,7 +196,7 @@ const VerifyItemSection = ({
   timeOut,
   timerOn,
   setTimerOut,
-  setItemPicked,
+  onManualEntry,
 }) => {
   const [status, setStatus] = useState(0);
   const someOutofStock = status === 1 || status === 3;
@@ -336,14 +342,7 @@ const VerifyItemSection = ({
             />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
               <Text>{locale?.IS_scanFailed}</Text>
-              <TouchableOpacity
-                onPress={async () => {
-                  await setItemPicked(item?.id, item?.item_type, itemsQty).then(
-                    () => {
-                      navigation.pop();
-                    },
-                  );
-                }}>
+              <TouchableOpacity onPress={() => onManualEntry(itemsQty)}>
                 <Text
                   style={{
                     textDecorationLine: 'underline',

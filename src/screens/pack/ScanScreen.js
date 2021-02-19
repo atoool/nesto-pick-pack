@@ -19,7 +19,7 @@ const ScanScreen = ({
   navigation,
   route: {
     params: {
-      item: { qty, id },
+      item: { qty, id, item_type },
       orderId = '#',
     },
   },
@@ -69,7 +69,7 @@ const ScanScreen = ({
   };
 
   const onComplete = async () => {
-    await setPackedItemAsMarked(id);
+    await setPackedItemAsMarked(id, item_type);
     navigation.navigate('ItemSuccessScreen');
   };
 
@@ -134,7 +134,7 @@ const ScanScreen = ({
                   alignItems: 'center',
                 }}>
                 <Button
-                  title="Enable camera permission"
+                  title={locale?.SS_enableCam}
                   onPress={() => Linking.openSettings()}
                 />
               </View>

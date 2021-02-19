@@ -29,29 +29,46 @@ export const getAssignBinListPack = async () => {
     ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
-export const setPackedItemAsMarked = async (id) => {
+export const setPackedItemAsMarked = async (id, item_type) => {
   const URL = `/packer/item/pack/${id}`;
-  return get(URL, true, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  const extraParams = `&item_type=${item_type}`;
+  return get(URL, true, true, extraParams)
+    .then((e) => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const setOrderReady = async (id) => {
   const URL = `/packer/order/ready/${id}`;
-  return get(URL, true, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return get(URL, true, true)
+    .then((e) => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const postAssignBin = async (PAYLOAD, id) => {
   const URL = `/packer/order/assign-bin/${id}`;
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return post(URL, PAYLOAD, true)
+    .then((e) => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const postRePick = async (PAYLOAD, id) => {
   const URL = `/packer/item/repick/${id}`;
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return post(URL, PAYLOAD, true)
+    .then((e) => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 
 //picker
@@ -72,15 +89,23 @@ export const setItemPicked = async (id, item_type, critical_qty) => {
   const extraParams = `${
     critical_qty ? '&critical_qty=' + critical_qty : ''
   }&item_type=${item_type}`;
-  return get(URL, true, false, extraParams).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return get(URL, true, true, extraParams)
+    .then(() => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const setItemDrop = async (id) => {
   const URL = `/picker/order/drop/${id}`;
-  return get(URL, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return get(URL, true)
+    .then(() => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const getSimilarItems = async (id) => {
   const URL = `/picker/item/similar-items/${id}`;
@@ -102,15 +127,23 @@ export const getSubstitutedList = async (id) => {
 };
 export const postSubstitutes = async (PAYLOAD) => {
   const URL = '/picker/item/perform-substitution';
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return post(URL, PAYLOAD, true)
+    .then(() => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 export const postSuggestedSubstitutes = async (PAYLOAD) => {
   const URL = '/picker/item/substitutes';
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
+  return post(URL, PAYLOAD, true)
+    .then(() => {
+      ToastAndroid.show('Success', ToastAndroid.SHORT);
+    })
+    .catch((e) => {
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+    });
 };
 
 export const getStatistics = async () => {

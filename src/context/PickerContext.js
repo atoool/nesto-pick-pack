@@ -47,8 +47,8 @@ export const PickerContextProvider = ({ children }) => {
 
   const getOrdersList = async () => {
     try {
-      const res = pickerOrders.data; //mock
-      // const res = await getOrdersListPick();
+      // const res = pickerOrders.data; //mock
+      const res = await getOrdersListPick();
       setOrders(res);
     } catch (e) {
       console.log(e);
@@ -57,8 +57,8 @@ export const PickerContextProvider = ({ children }) => {
 
   const getDropList = async () => {
     try {
-      const res = pickerDropList.data; //mock
-      // const res = await getOrdersDropList();
+      // const res = pickerDropList.data; //mock
+      const res = await getOrdersDropList();
       setDropList(res);
     } catch (e) {
       console.log(e);

@@ -79,7 +79,8 @@ const setUpConfig = async (isAuthenticated) => {
       const CONFIG = {
         headers: {
           'content-type': 'application/json',
-          'access-token': access_token,
+          'access-token':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdGF0dXMiOiIyMDAiLCJVc2VyaWQiOiIxNyIsIlRva2VuIjoibWN0cDZsdXU0ZGVrbTdmMXh5b3RuazJpczVnMTk2NHIiLCJVc2VybmFtZSI6ImFqaW1zaGFAcmlhZnkubWUiLCJVc2VyUm9sZSI6IkFkbWluaXN0cmF0b3JzIiwiaWF0IjoxNjEyNTE5ODQ1fQ.5zILXIDKbBiS58PVkIEGSdjrS41zm7y2Dgscpk8c8nA',
         },
       };
       return CONFIG;
@@ -103,7 +104,7 @@ const get = async (
       version,
       buildNumber,
       country,
-      lang,
+      lang = 'en',
       network,
       loadcount,
       devtype,
@@ -132,7 +133,7 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
       version,
       buildNumber,
       country,
-      lang,
+      lang = 'en',
       network,
       loadcount,
       devtype,

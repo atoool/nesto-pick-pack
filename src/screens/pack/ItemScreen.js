@@ -47,7 +47,13 @@ const ItemScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { postRePick } = useContext(PackerContext);
+  const { postRePick, setPackedItemAsMarked } = useContext(PackerContext);
+
+  const onManualEntry = async () => {
+    await setPackedItemAsMarked(item?.id, item?.item_type).then(() => {
+      navigation.pop();
+    });
+  };
 
   return (
     <SafeAreaView
@@ -74,6 +80,7 @@ const ItemScreen = ({
           orderId={orderId}
           navigation={navigation}
           postRePick={postRePick}
+          onManualEntry={onManualEntry}
         />
       </ScrollView>
     </SafeAreaView>
@@ -179,6 +186,7 @@ const VerifyItemSection = ({
   containerRef,
   postRePick,
   orderId,
+  onManualEntry,
 }) => {
   const generateArray = (element) =>
     Array.apply(null, Array(item.qty)).map((itm) => element);
@@ -346,12 +354,14 @@ const VerifyItemSection = ({
             titleStyle={Typography.bold17White}
             style={styles.scanButton}
             onPress={() => {
-              navigation.navigate('ScanScreen', { item, orderId });
+              navigation.navigate('ScanScreen', { item });
             }}
           />
           <View style={styles.scanFailedBox}>
             <Text>{locale?.IS_scanFailed}</Text>
-            <Text style={styles.scanManualText}>{locale?.IS_scanManual}</Text>
+            <TouchableOpacity onPress={onManualEntry}>
+              <Text style={styles.scanManualText}>{locale?.IS_scanManual}</Text>
+            </TouchableOpacity>
           </View>
         </>
       ) : (
