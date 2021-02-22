@@ -61,7 +61,9 @@ const BinAssignScreen = ({
         contentContainerStyle={styles.scrollView}>
         <PrintLabelComponent
           orderIdLabel={locale?.BAS_order}
-          printLabelText={`${locale?.BAS_printLabel2}${orderId ? orderId : ''}`}
+          printLabelText={`${locale?.BAS_printLabel2}${
+            orderId ? '#' + orderId : ''
+          }`}
           binCountLabel={locale?.BAS_howMany}
           orderId={orderId}
           bins={bins}

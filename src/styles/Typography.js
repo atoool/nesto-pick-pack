@@ -80,11 +80,13 @@ export default StyleSheet.create({
   normal13: {
     fontSize: 13,
     fontFamily: 'roboto',
+    color: Colors.BLACK,
   },
   bold13: {
     fontWeight: 'bold',
     fontSize: 13,
     fontFamily: 'roboto',
+    color: Colors.BLACK,
   },
   bold13White: {
     fontWeight: 'bold',

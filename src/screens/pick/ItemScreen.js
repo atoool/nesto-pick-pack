@@ -36,7 +36,7 @@ const ItemScreen = ({
         ? 0
         : new Date(timeLeft) - new Date()
       : 0) / 1000;
-  const [timerOn, setTimerOn] = useState(false);
+  const [timerOn, setTimerOn] = useState(item?.substitution_initiated);
   const [timeOut, setTimeOut] = useState(false);
 
   const {
@@ -50,6 +50,7 @@ const ItemScreen = ({
       navigation.pop();
     });
   };
+  item?.substitution_initiated && setTimerOn(true);
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -311,13 +312,24 @@ const VerifyItemSection = ({
                 }
                 style={{ flex: 0, width: 200, marginBottom: 20 }}
                 onPress={() => {
-                  if (!item.substituted && !timeOut) {
-                    setTimerOn(true);
-                    return;
-                  } else if (!item.substituted && timeOut) {
-                    navigation.pop();
-                    return;
-                  }
+                  // if (!item.substituted && !timeOut) {
+                  //   setTimerOn(true);
+                  // } else if (!item.substituted && timeOut) {
+                  //   navigation.pop();
+                  //   return;
+                  // }
+                  const qtys = item?.qty ? item?.qty : 0;
+                  const requiredQty = isNaN(itemsQty)
+                    ? status === 0
+                      ? qtys
+                      : 0
+                    : itemsQty;
+                  const existingQty =
+                    qtys === 0
+                      ? qtys
+                      : status === 0
+                      ? qtys
+                      : qtys - requiredQty;
                   const routeTo = item.substituted
                     ? 'SubstitutionDetailsScreen'
                     : timeOut
@@ -326,8 +338,8 @@ const VerifyItemSection = ({
                   navigation.navigate(routeTo, {
                     item,
                     orderId: item.orderId,
-                    existingQty: 4, //add data
-                    requiredQty: 2, //add data
+                    existingQty,
+                    requiredQty,
                   });
                 }}
               />

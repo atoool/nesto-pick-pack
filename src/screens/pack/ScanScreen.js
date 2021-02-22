@@ -64,6 +64,8 @@ const ScanScreen = ({
         setItemScanned(success);
         setBarcodeArray([...barcodeArray, barcode?.data]);
       }
+    } else if (!totalItem) {
+      await Linking.openURL('http://com.nesto.store/PackScreen');
     }
     totalItem && success / totalItem >= 1 && (await onComplete());
   };

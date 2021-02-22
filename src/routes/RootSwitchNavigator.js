@@ -25,13 +25,13 @@ const RootSwitchNavigator = () => {
         />
       </Stack.Navigator>
     );
-  } else if (userType === 'Picker') {
+  } else if (userType.toLowerCase() === 'picker') {
     return (
       <PickerContextProvider>
         <PickTabsNavigator />
       </PickerContextProvider>
     );
-  } else if (userType === 'Packer') {
+  } else if (userType.toLowerCase() === 'packer') {
     return (
       <PackerContextProvider>
         <PackTabsNavigator />

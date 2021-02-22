@@ -8,6 +8,7 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  ToastAndroid,
 } from 'react-native';
 import Button from '../../components/Button';
 import { Typography, Colors, width } from '../../styles';
@@ -233,13 +234,18 @@ const VerifyItemSection = ({
 
   const onRePick = async () => {
     const good_qty = issue.filter((i) => i === 'Good quality').length;
-    const bad_qty = issue.length - good_qty;
+    if (good_qty === item?.qty) {
+      ToastAndroid.show(locale?.IS_reviewFailed, ToastAndroid.SHORT);
+      return;
+    }
+    const bad_qty = item?.qty - good_qty;
     const payload = {
       bad_reviews: issue,
       good_qty,
       bad_qty,
+      item_type: item?.item_type,
     };
-    await postRePick(payload, item._id);
+    await postRePick(payload, item?.item_id);
     navigation.navigate('RepickSuccessScreen');
   };
 
@@ -359,7 +365,10 @@ const VerifyItemSection = ({
             titleStyle={Typography.bold17White}
             style={styles.scanButton}
             onPress={() => {
-              navigation.navigate('ScanScreen', { item });
+              navigation.navigate('ScanScreen', {
+                item,
+                orderId: item?.orderId,
+              });
             }}
           />
           <View style={styles.scanFailedBox}>

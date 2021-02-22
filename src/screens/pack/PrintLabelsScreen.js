@@ -1,15 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { createRef, useContext, useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import Barcode from 'react-native-barcode-builder';
+import ViewShot from 'react-native-view-shot';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { Colors, Typography, width } from '../../styles';
+import {
+  USBPrinter,
+  NetPrinter,
+  BLEPrinter,
+} from 'react-native-thermal-receipt-printer';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
   const [orderId, setOrderId] = useState(params.orderId);
   const [bins, setBins] = useState('1');
+  const [barcodeURI, setBarcodeURI] = useState(null);
+
+  let viewShot = createRef(null);
 
   const {
     locale: { locale },
@@ -27,6 +36,16 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
     navigation.navigate('BinAssignScreen', { orderId, bins });
   };
 
+  const onPrint = () => {
+    // USBPrinter.printText('<C>sample text</C>\n');
+
+    if (viewShot.current) {
+      viewShot.current.capture().then((uri) => {
+        setBarcodeURI(uri);
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView
@@ -40,11 +59,13 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
           bins={bins}
           onChangeOrderId={onChangeOrderId}
           onChangeBins={onChangeBins}
+          viewShot={viewShot}
         />
         <Button
           disabled={orderId == ''}
           title="Print your label"
           style={{ marginVertical: 20, borderRadius: 7, width: width - 60 }}
+          onPress={onPrint}
         />
         <Button
           title="Assign bin"
@@ -65,6 +86,7 @@ const PrintLabelComponent = ({
   binCountLabel,
   orderIdLabel,
   printLabelText,
+  viewShot,
 }) => {
   return (
     <>
@@ -77,7 +99,15 @@ const PrintLabelComponent = ({
         }}>
         <View style={{ flex: 1 }}>
           {orderId ? (
-            <Barcode value={orderId} height={50} width={1} />
+            <ViewShot
+              ref={(re) => {
+                if (viewShot) {
+                  viewShot.current = re;
+                }
+              }}
+              options={{ format: 'jpg', quality: 0.9 }}>
+              <Barcode value={orderId} height={50} width={1} />
+            </ViewShot>
           ) : (
             <Loader small green />
           )}

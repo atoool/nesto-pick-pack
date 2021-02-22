@@ -65,7 +65,6 @@ const PackScreen = ({ navigation }) => {
       return 0;
     }
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />

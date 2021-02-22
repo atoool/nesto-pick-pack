@@ -61,7 +61,7 @@ export const postAssignBin = async (PAYLOAD, id) => {
     });
 };
 export const postRePick = async (PAYLOAD, id) => {
-  const URL = `/packer/item/repick/${id}`;
+  const URL = `/packer/perform/repick/${id}`;
   return post(URL, PAYLOAD, true)
     .then((e) => {
       ToastAndroid.show('Success', ToastAndroid.SHORT);
