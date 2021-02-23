@@ -21,13 +21,14 @@ import { PickerContext } from '../../context/PickerContext';
 import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
+import formatAmPm from '../../utils/formatAmPm';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
 const SubstitutesScreen = ({
   route: {
-    params: { item, requiredQty, existingQty },
+    params: { item, requiredQty, existingQty, startTime, endTime },
   },
   navigation,
 }) => {
@@ -92,13 +93,17 @@ const SubstitutesScreen = ({
       ) : (
         <ScrollView nestedScrollEnabled>
           <ItemSection
-            title={item.name}
+            title={item?.name}
             price={item?.price && item.price.toFixed(2)}
-            quantity={item.qty}
-            position={item.position}
-            department={item.department}
-            type={item.orderType}
-            status={locale?.status.Pi}
+            quantity={item?.qty}
+            position={item?.position}
+            department={item?.department}
+            type={item?.orderType}
+            status={
+              item?.picking_completed ? locale?.status?.PiC : locale?.status.Pi
+            }
+            startTime={startTime}
+            endTime={endTime}
           />
           {similarItems && (
             <ItemCheckList
@@ -128,11 +133,15 @@ const ItemSection = ({
   department,
   type,
   status,
+  startTime,
+  endTime,
 }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
 
+  const sTime = formatAmPm(startTime);
+  const eTime = formatAmPm(endTime);
   return (
     <>
       <View style={styles.itemImageContainer}>
@@ -175,10 +184,10 @@ const ItemSection = ({
                 <Text style={Typography.bold15}>{type}</Text>
               </View>
               <View style={styles.deliverBoxRow2}>
-                <Text>9:00 AM</Text>
+                <Text>{startTime}</Text>
                 <Arrow width={30} />
                 {/* <Text> ------------> </Text> */}
-                <Text>10:00 AM</Text>
+                <Text>{eTime}</Text>
               </View>
             </View>
             <View style={styles.quantityPill}>

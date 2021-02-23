@@ -106,9 +106,9 @@ const AccordionItem = ({
         <Button
           title={buttonTitle}
           style={styles.button}
-          loading={readyButtonLoading}
+          loading={readyButtonLoading === index}
           onPress={() => {
-            onReadyPress && onReadyPress(id);
+            onReadyPress && onReadyPress(id, index);
           }}
         />
       )}

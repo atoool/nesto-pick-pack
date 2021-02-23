@@ -20,6 +20,8 @@ import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
+import Loader from '../../components/Loader';
+import formatAmPm from '../../utils/formatAmPm';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -27,7 +29,7 @@ const w = screenWidth - 32;
 const ItemScreen = ({
   navigation,
   route: {
-    params: { orderId, item, timeLeft },
+    params: { orderId, item, timeLeft, startTime, endTime },
   },
 }) => {
   const ss =
@@ -38,6 +40,7 @@ const ItemScreen = ({
       : 0) / 1000;
   const [timerOn, setTimerOn] = useState(item?.substitution_initiated);
   const [timeOut, setTimeOut] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     locale: { locale },
@@ -46,11 +49,21 @@ const ItemScreen = ({
   const { setItemPicked } = useContext(PickerContext);
 
   const onManualEntry = async (itemsQty) => {
+    setIsLoading(true);
     await setItemPicked(item?.id, item?.item_type, itemsQty).then(() => {
       navigation.pop();
     });
+    setIsLoading(false);
   };
   item?.substitution_initiated && setTimerOn(true);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <Loader fullScreen />
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -65,6 +78,8 @@ const ItemScreen = ({
           status={
             item?.picking_completed ? locale?.status?.PiC : locale?.status?.Pi
           }
+          startTime={startTime}
+          endTime={endTime}
         />
         {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
@@ -82,6 +97,8 @@ const ItemScreen = ({
               setTimerOn(false);
             }}
             onManualEntry={onManualEntry}
+            startTime={startTime}
+            endTime={endTime}
           />
         )}
       </ScrollView>
@@ -136,11 +153,14 @@ const ItemSection = ({
   department,
   type,
   status,
+  startTime,
+  endTime,
 }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-
+  const sTime = formatAmPm(startTime);
+  const eTime = formatAmPm(endTime);
   return (
     <>
       <View style={styles.itemImageContainer}>
@@ -183,10 +203,10 @@ const ItemSection = ({
                 <Text style={Typography.bold15}>{type}</Text>
               </View>
               <View style={styles.deliverBoxRow2}>
-                <Text>9:00 AM</Text>
+                <Text>{sTime}</Text>
                 <Arrow width={30} />
                 {/* <Text> ------------> </Text> */}
-                <Text>10:00 AM</Text>
+                <Text>{eTime}</Text>
               </View>
             </View>
             <View style={styles.quantityPill}>
@@ -208,6 +228,8 @@ const VerifyItemSection = ({
   timerOn,
   setTimerOut,
   onManualEntry,
+  startTime,
+  endTime,
 }) => {
   const [status, setStatus] = useState(2);
   const someOutofStock = status === 1 || status === 3;
@@ -335,12 +357,15 @@ const VerifyItemSection = ({
                     : timeOut
                     ? 'ContactFCMScreen'
                     : 'SubstitutesScreen';
-                  navigation.navigate(routeTo, {
-                    item,
-                    orderId: item.orderId,
-                    existingQty,
-                    requiredQty,
-                  });
+                  routeTo !== 'ContactFCMScreen' &&
+                    navigation.navigate(routeTo, {
+                      item,
+                      orderId: item.orderId,
+                      existingQty,
+                      requiredQty,
+                      startTime,
+                      endTime,
+                    });
                 }}
               />
             )}
@@ -449,6 +474,11 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: Colors.WHITE,
     opacity: 0.25,
+  },
+  loading: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: Colors.WHITE,
   },
   timerContainer: {
     backgroundColor: Colors.secondaryRed,

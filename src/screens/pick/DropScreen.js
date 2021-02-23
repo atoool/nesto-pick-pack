@@ -21,7 +21,7 @@ const DropScreen = () => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [dropButtonLoading, setDropButtonLoading] = useState(false);
+  const [dropButtonLoading, setDropButtonLoading] = useState(null);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -45,10 +45,10 @@ const DropScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDropToBin = async (id) => {
-    setDropButtonLoading(true);
+  const onDropToBin = async (id, index) => {
+    setDropButtonLoading(index);
     await setItemDrop(id);
-    setDropButtonLoading(false);
+    setDropButtonLoading(null);
   };
 
   const getPackedItemCount = (list) => {

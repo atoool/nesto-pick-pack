@@ -70,15 +70,15 @@ const OrderComponent = ({
             <Text style={Typography.normal15}>{eTime}</Text>
           </View>
         </View>
-        {(!pick || index === 0) && (
-          <View style={styles.counter}>
-            <Text style={Typography.normal12}>{locale.timeLeft}</Text>
-            <View style={styles.timeLeftBox}>
-              <TimerComponent ss={timer} />
-              <Text style={Typography.normal12}> Hrs</Text>
-            </View>
+        {/* {(!pick || index === 0) && ( */}
+        <View style={styles.counter}>
+          <Text style={Typography.normal12}>{locale.timeLeft}</Text>
+          <View style={styles.timeLeftBox}>
+            <TimerComponent ss={timer} />
+            <Text style={Typography.normal12}> Hrs</Text>
           </View>
-        )}
+        </View>
+        {/* )} */}
       </View>
     </>
   );

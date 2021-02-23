@@ -50,6 +50,8 @@ const PickList = ({
                 orderId: item.orderId,
                 item,
                 timeLeft,
+                startTime,
+                endTime,
               })
             }>
             <View>
@@ -73,7 +75,7 @@ const PickList = ({
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  #{item.orderId ? item.orderId : '[order_id missing]'} |{' '}
+                  #{item?.orderId ? item?.orderId : '[order_id missing]'} |{' '}
                   {item?.department ? item?.department : '[department missing]'}{' '}
                   {item?.position ? item?.position : '[position missing]'}
                 </Text>
@@ -85,7 +87,7 @@ const PickList = ({
                       <StatusPill
                         backgroundColor={'#C5B171'}
                         marginRight={5}
-                        text={itm.bin_number}
+                        text={itm?.bin_number}
                         paddingVertical={0}
                       />
                     </View>

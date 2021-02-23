@@ -21,7 +21,7 @@ const PackScreen = ({ navigation, route }) => {
   const flatListRef = createRef(null);
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [readyButtonLoading, setReadyButtonLoading] = useState(false);
+  const [readyButtonLoading, setReadyButtonLoading] = useState(null);
 
   const {
     locale: { locale },
@@ -60,10 +60,10 @@ const PackScreen = ({ navigation, route }) => {
       order_type,
     });
 
-  const onReadyPress = async (id) => {
-    setReadyButtonLoading(true);
+  const onReadyPress = async (id, index) => {
+    setReadyButtonLoading(index);
     await setOrderReady(id);
-    setReadyButtonLoading(false);
+    setReadyButtonLoading(null);
   };
 
   const getPackedItemCount = (list) => {
@@ -103,13 +103,15 @@ const PackScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <AccordionItem
             order={{ id: item?.id ? item?.id : '####', ...item }}
             orderType={item?.order_type ? item?.order_type : locale?.status.SD}
             status={
               item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
             }
+            timeLeft={item?.packing_deadline_timestamp}
+            index={index}
             itemCount={
               getPackedItemCount(item?.items) +
               '/' +
