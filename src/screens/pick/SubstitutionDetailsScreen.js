@@ -31,6 +31,7 @@ const SubstitutionDetailsScreen = ({
   const { substitutedList, getSubstitutedItems } = useContext(PickerContext);
   useEffect(() => {
     onMount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onMount = async () => await getSubstitutedItems(item._id);
   return (
@@ -42,11 +43,11 @@ const SubstitutionDetailsScreen = ({
           statusText="The Customer has responded to the query & chosen a substitute"
         />
         <ItemSection
-          title={item.name}
-          price={item?.price && item.price.toFixed(2)}
-          quantity={item.qty}
-          position={item.position}
-          department={item.department}
+          title={item?.name}
+          price={item?.price && item?.price.toFixed(2)}
+          quantity={item?.qty}
+          position={item?.position}
+          department={item?.department}
           type="Express Delivery"
           status="Picking completed"
         />
@@ -101,6 +102,7 @@ const ItemSection = ({
   department,
   type,
   status,
+  img,
 }) => {
   const {
     locale: { locale },
@@ -111,8 +113,8 @@ const ItemSection = ({
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
           <Image
-            source={images.colgate}
-            resizeMode={'contain'}
+            source={{ uri: img }}
+            resizeMode={'cover'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
         </View>
@@ -242,6 +244,7 @@ const styles = StyleSheet.create({
     height: (1 * w) / 2,
     width: screenWidth - 64,
     borderRadius: 7,
+    overflow: 'hidden',
   },
   deliveryStatusCircle: {
     width: 14,

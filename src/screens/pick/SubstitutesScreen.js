@@ -69,23 +69,22 @@ const SubstitutesScreen = ({
       ToastAndroid.show('Empty list', ToastAndroid.SHORT);
     } else {
       const payload = {
-        original_item_id: item.item_id,
+        original_item_id: item?.item_id,
         more_quantity_required: requiredQty,
         existing_quantity: existingQty,
-        order_id: item.orderId,
-        item_type: item.item_type,
+        order_id: item?.orderId,
+        item_type: item?.item_type,
         suggested_items: isCheckedListEmpty,
       };
       try {
         await postSuggestedSubstitutes(payload);
         navigation.navigate('SubstituteRequestedScreen');
       } catch (e) {
-        ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+        ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
       }
     }
     setIsSuggestLoad(false);
   };
-
   return (
     <SafeAreaView style={styles.container}>
       {!similarItems || similarItems.length === 0 ? (
@@ -98,12 +97,13 @@ const SubstitutesScreen = ({
             quantity={item?.qty}
             position={item?.position}
             department={item?.department}
-            type={item?.orderType}
+            type={item?.order_type}
             status={
               item?.picking_completed ? locale?.status?.PiC : locale?.status.Pi
             }
             startTime={startTime}
             endTime={endTime}
+            img={item?.image_url}
           />
           {similarItems && (
             <ItemCheckList
@@ -135,6 +135,7 @@ const ItemSection = ({
   status,
   startTime,
   endTime,
+  img,
 }) => {
   const {
     locale: { locale },
@@ -147,8 +148,8 @@ const ItemSection = ({
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
           <Image
-            source={Images.colgate}
-            resizeMode={'contain'}
+            source={{ uri: img }}
+            resizeMode={'cover'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
         </View>
@@ -184,7 +185,7 @@ const ItemSection = ({
                 <Text style={Typography.bold15}>{type}</Text>
               </View>
               <View style={styles.deliverBoxRow2}>
-                <Text>{startTime}</Text>
+                <Text>{sTime}</Text>
                 <Arrow width={30} />
                 {/* <Text> ------------> </Text> */}
                 <Text>{eTime}</Text>
@@ -270,6 +271,7 @@ const styles = StyleSheet.create({
     height: (1 * w) / 2,
     width: screenWidth - 64,
     borderRadius: 7,
+    overflow: 'hidden',
   },
   deliveryStatusCircle: {
     width: 14,

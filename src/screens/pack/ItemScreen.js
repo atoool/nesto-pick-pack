@@ -21,6 +21,7 @@ import { PackerContext } from '../../context/PackerContext';
 import Divider from '../../components/Divider';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 import Loader from '../../components/Loader';
+import TimerComponent from '../../components/TimerComponent';
 
 function formatAmPm(date) {
   var hours = date.getHours();
@@ -73,7 +74,7 @@ const ItemScreen = ({
       ref={(r) => (containerRef.current = r?.props)}
       style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TimerComponent ss={timer} />
+        <TimerComponent fullTimer ss={timer} />
         <ItemSection
           title={item?.name ? item?.name : 'item'}
           price={item?.price ? item?.price : 0}
@@ -86,6 +87,7 @@ const ItemScreen = ({
           type={order_type ? order_type : locale?.status.SD}
           start_time={formatAmPm(new Date(start))}
           end_time={formatAmPm(new Date(end))}
+          img={item?.image_url}
         />
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
@@ -104,28 +106,6 @@ const ItemScreen = ({
   );
 };
 
-const TimerComponent = ({ ss }) => {
-  const now = useTimer(ss);
-  const HoursString = Math.floor(now / 3600)
-    .toString()
-    .padStart(2, 0);
-  const minutesString = Math.floor(now / 60)
-    .toString()
-    .padStart(2, 0);
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
-  return (
-    <View style={styles.timerContainer}>
-      <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
-      <View style={styles.timerDivider} />
-      <Text style={Typography.bold17White}>
-        {HoursString}:{minutesString} Hrs
-      </Text>
-    </View>
-  );
-};
-
 const ItemSection = ({
   title,
   price,
@@ -135,6 +115,7 @@ const ItemSection = ({
   status,
   type,
   start_time,
+  img,
   end_time,
 }) => {
   const {
@@ -145,8 +126,8 @@ const ItemSection = ({
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
           <Image
-            source={images.colgate}
-            resizeMode={'contain'}
+            source={{ uri: img }}
+            resizeMode={'cover'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
         </View>
@@ -457,6 +438,7 @@ const styles = StyleSheet.create({
     height: (1 * w) / 2,
     width: screenWidth - 64,
     borderRadius: 7,
+    overflow: 'hidden',
   },
   deliveryStatusCircle: {
     width: 14,

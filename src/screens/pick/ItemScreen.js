@@ -9,19 +9,19 @@ import {
   ScrollView,
   TextInput,
   Image,
+  ToastAndroid,
 } from 'react-native';
 import { Typography, Colors } from '../../styles';
-import useTimer from '../../hooks/useTimer';
 import Button from '../../components/Button';
 import StatusPill from '../../components/StatusPill';
 import Arrow from '../../components/Arrow';
-import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 import Loader from '../../components/Loader';
 import formatAmPm from '../../utils/formatAmPm';
+import TimerComponent from '../../components/TimerComponent';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -67,7 +67,7 @@ const ItemScreen = ({
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TimerComponent ss={ss} />
+        <TimerComponent fullTimer ss={ss} />
         <ItemSection
           title={item?.name ? item?.name : ''}
           price={item?.price ? item.price.toFixed(2) : 0}
@@ -80,6 +80,7 @@ const ItemScreen = ({
           }
           startTime={startTime}
           endTime={endTime}
+          img={item?.image_url}
         />
         {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
@@ -106,45 +107,6 @@ const ItemScreen = ({
   );
 };
 
-const TimerComponent = ({ ss, inMinute, call }) => {
-  const now = useTimer(ss);
-  const HoursString = Math.floor(now / 3600)
-    .toString()
-    .padStart(2, 0);
-  const minutesString = Math.floor((now % 3600) / 60)
-    .toString()
-    .padStart(2, 0);
-
-  const secondString = Math.floor(now - Math.floor(now / 60) * 60)
-    .toString()
-    .padStart(2, 0);
-
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
-  inMinute && now <= 0 && call();
-  return (
-    <View style={[styles.timerContainer, inMinute && styles.timerContainer2]}>
-      {!inMinute && (
-        <>
-          <Text style={Typography.bold17White}>{locale?.timeRemain}</Text>
-          <View style={styles.timerDivider} />
-        </>
-      )}
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text
-          style={!inMinute ? Typography.bold30White : Typography.bold13White}>
-          {!inMinute && `${HoursString}:${minutesString} `}
-        </Text>
-        {!inMinute && <Text style={Typography.bold17White}>Hrs</Text>}
-        <Text
-          style={!inMinute ? Typography.bold30White : Typography.bold13White}>
-          {inMinute && `${minutesString}:${secondString}`}
-        </Text>
-      </View>
-    </View>
-  );
-};
 const ItemSection = ({
   title,
   price,
@@ -155,6 +117,7 @@ const ItemSection = ({
   status,
   startTime,
   endTime,
+  img,
 }) => {
   const {
     locale: { locale },
@@ -166,8 +129,8 @@ const ItemSection = ({
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
           <Image
-            source={Images.colgate}
-            resizeMode={'contain'}
+            source={{ uri: img }}
+            resizeMode={'cover'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
         </View>
@@ -240,6 +203,31 @@ const VerifyItemSection = ({
     locale: { locale },
   } = useContext(AppContext);
 
+  const onVerifyButton = () => {
+    if ((itemsQty === '0' || !itemsQty) && status === 1) {
+      ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);
+    } else {
+      const qtys = item?.qty ? item?.qty : 0;
+      const requiredQty = status === 0 ? qtys : isNaN(itemsQty) ? 0 : itemsQty;
+      const existingQty =
+        qtys === 0 ? qtys : status === 0 ? qtys : qtys - requiredQty;
+
+      const routeTo = item.substituted
+        ? 'SubstitutionDetailsScreen'
+        : timeOut
+        ? 'ContactFCMScreen'
+        : 'SubstitutesScreen';
+      routeTo !== 'ContactFCMScreen' &&
+        navigation.navigate(routeTo, {
+          item,
+          orderId: item.orderId,
+          existingQty,
+          requiredQty,
+          startTime,
+          endTime,
+        });
+    }
+  };
   return (
     <>
       <Divider />
@@ -310,6 +298,7 @@ const VerifyItemSection = ({
                 <TimerComponent
                   ss={Constants.awaitTime}
                   call={setTimerOut}
+                  fullTimer
                   inMinute
                 />
               )}
@@ -333,40 +322,7 @@ const VerifyItemSection = ({
                     : locale?.IS_substituteButton
                 }
                 style={{ flex: 0, width: 200, marginBottom: 20 }}
-                onPress={() => {
-                  // if (!item.substituted && !timeOut) {
-                  //   setTimerOn(true);
-                  // } else if (!item.substituted && timeOut) {
-                  //   navigation.pop();
-                  //   return;
-                  // }
-                  const qtys = item?.qty ? item?.qty : 0;
-                  const requiredQty = isNaN(itemsQty)
-                    ? status === 0
-                      ? qtys
-                      : 0
-                    : itemsQty;
-                  const existingQty =
-                    qtys === 0
-                      ? qtys
-                      : status === 0
-                      ? qtys
-                      : qtys - requiredQty;
-                  const routeTo = item.substituted
-                    ? 'SubstitutionDetailsScreen'
-                    : timeOut
-                    ? 'ContactFCMScreen'
-                    : 'SubstitutesScreen';
-                  routeTo !== 'ContactFCMScreen' &&
-                    navigation.navigate(routeTo, {
-                      item,
-                      orderId: item.orderId,
-                      existingQty,
-                      requiredQty,
-                      startTime,
-                      endTime,
-                    });
-                }}
+                onPress={onVerifyButton}
               />
             )}
           </>
@@ -468,6 +424,7 @@ const VerifiedItem = ({ locale }) => {
     </>
   );
 };
+
 const styles = StyleSheet.create({
   timerDivider: {
     height: '100%',
@@ -503,6 +460,7 @@ const styles = StyleSheet.create({
     height: (1 * w) / 2,
     width: screenWidth - 64,
     borderRadius: 7,
+    overflow: 'hidden',
   },
   deliveryStatusCircle: {
     width: 14,

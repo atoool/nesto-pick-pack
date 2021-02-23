@@ -1,22 +1,11 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { AppContext } from '../context/AppContext';
-import useTimer from '../hooks/useTimer';
 import { Colors, Typography } from '../styles';
+import formatAmPm from '../utils/formatAmPm';
 import Arrow from './Arrow';
 import StatusPill from './StatusPill';
-
-function formatAmPm(date) {
-  let dt = new Date(date);
-  var minutes = dt.getMinutes();
-  var hours = dt.getHours();
-  var AmPm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + AmPm;
-  return strTime;
-}
+import TimerComponent from './TimerComponent';
 
 const OrderComponent = ({
   orderId,
@@ -81,22 +70,6 @@ const OrderComponent = ({
         {/* )} */}
       </View>
     </>
-  );
-};
-
-const TimerComponent = ({ ss }) => {
-  const now = useTimer(ss);
-  const HoursString = Math.floor(now / 3600)
-    .toString()
-    .padStart(2, 0);
-  const minutesString = Math.floor((now % 3600) / 60)
-    .toString()
-    .padStart(2, 0);
-
-  return (
-    <Text style={Typography.timeLeft}>
-      {HoursString}:{minutesString}
-    </Text>
   );
 };
 
