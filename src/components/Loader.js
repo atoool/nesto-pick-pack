@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.WHITE,
   },
   fullScreenLoader: {
     backgroundColor: Colors.WHITE,

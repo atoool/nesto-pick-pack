@@ -7,7 +7,7 @@ const config = {
     PackNow: {
       initialRouteName: 'PackScreen',
       screens: {
-        PackScreen: 'PackScreen',
+        PackScreen: { path: 'PackScreen/:index', parse: { index: Number } },
         ItemListScreen: 'PackNow/ItemListScreen',
         ItemScreen: { path: 'PackNow/ItemScreen/:item' },
         ItemSuccessScreen: 'PackNow/ItemSuccessScreen',

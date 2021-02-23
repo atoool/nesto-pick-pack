@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -31,7 +32,7 @@ const ScanScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { setPackedItemAsMarked } = useContext(PackerContext);
+  const { setPackedItemAsMarked, orderList } = useContext(PackerContext);
 
   const onScanMismatch = () => {
     Alert.alert(
@@ -57,22 +58,44 @@ const ScanScreen = ({
   };
 
   const onScan = async (barcode) => {
-    const success = itemScanned + 1;
     if (totalItem && itemScanned < totalItem && barcode?.data?.length !== 0) {
-      const temp = barcodeArray.indexOf(barcode?.data) > -1;
-      if (!temp) {
-        setItemScanned(success);
-        setBarcodeArray([...barcodeArray, barcode?.data]);
-      }
-    } else if (!totalItem) {
-      await Linking.openURL('http://com.nesto.store/PackScreen');
+      await onItemScan(barcode);
+    } else if (!totalItem && barcode?.data?.length !== 0) {
+      await onBinScanner(barcode);
     }
-    totalItem && success / totalItem >= 1 && (await onComplete());
+  };
+
+  const onItemScan = async (barcode) => {
+    const temp = barcodeArray.indexOf(barcode?.data) > -1;
+    if (!temp) {
+      const success = itemScanned + 1;
+      setItemScanned(success);
+      setBarcodeArray([...barcodeArray, barcode?.data]);
+      success / totalItem >= 1 && (await onComplete());
+    }
   };
 
   const onComplete = async () => {
     await setPackedItemAsMarked(id, item_type);
     navigation.navigate('ItemSuccessScreen');
+  };
+
+  const onBinScanner = async (barcode) => {
+    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
+    // if (!temp) {
+    // setBarcodeArray([...barcodeArray, barcode?.data]);
+    let i = null;
+    for (let j = 0; j < orderList?.length; j++) {
+      if (barcode?.data === orderList[j]?.id?.toString()) {
+        i = j;
+        break;
+      }
+    }
+    // i === null
+    // ? ToastAndroid.show(locale?.IS_matchFailed, ToastAndroid.SHORT)
+    // :
+    await Linking.openURL('http://com.nesto.store/PackScreen/' + i);
+    // }
   };
 
   return (

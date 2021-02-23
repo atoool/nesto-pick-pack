@@ -1,5 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import React, {
+  createRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { SafeAreaView, FlatList, StyleSheet, Linking } from 'react-native';
 import packerOrders from '../../mock/packerOrders.json';
 import Title from '../../components/Title';
 // import { getOrdersList } from '../../api';
@@ -9,8 +15,10 @@ import AccordionItem from '../../components/AccordionItem';
 import Divider from '../../components/Divider';
 import { Colors } from '../../styles';
 import { PackerContext } from '../../context/PackerContext';
+import { useFocusEffect } from '@react-navigation/native';
 
-const PackScreen = ({ navigation }) => {
+const PackScreen = ({ navigation, route }) => {
+  const flatListRef = createRef(null);
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [readyButtonLoading, setReadyButtonLoading] = useState(false);
@@ -65,6 +73,19 @@ const PackScreen = ({ navigation }) => {
       return 0;
     }
   };
+  useEffect(() => {
+    if (
+      route?.params?.index &&
+      orderList?.length > 1 &&
+      route?.params?.index < orderList?.length
+    ) {
+      flatListRef.current.scrollToIndex({
+        index: route?.params?.index,
+        animated: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route?.params?.index]);
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
@@ -73,6 +94,9 @@ const PackScreen = ({ navigation }) => {
         ListEmptyComponent={() => (
           <NoContent name="NoOrdersSVG" isLoading={isLoading} />
         )}
+        ref={(r) => {
+          flatListRef.current = r;
+        }}
         contentContainerStyle={styles.contentContainer}
         keyExtractor={(item, indx) => `${indx}${item.id}`}
         ItemSeparatorComponent={() => <Divider />}

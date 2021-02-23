@@ -20,6 +20,7 @@ import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import Divider from '../../components/Divider';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
+import Loader from '../../components/Loader';
 
 function formatAmPm(date) {
   var hours = date.getHours();
@@ -42,6 +43,8 @@ const ItemScreen = ({
 }) => {
   const containerRef = createRef(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const start = new Date(time_slot?.end_time).valueOf();
   const end = new Date(time_slot?.end_time).valueOf();
   const timer = useTimer(start - end);
@@ -52,11 +55,19 @@ const ItemScreen = ({
   const { postRePick, setPackedItemAsMarked } = useContext(PackerContext);
 
   const onManualEntry = async () => {
+    setIsLoading(true);
     await setPackedItemAsMarked(item?.id, item?.item_type).then(() => {
       navigation.pop();
     });
+    setIsLoading(false);
   };
-
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <Loader fullScreen />
+      </View>
+    );
+  }
   return (
     <SafeAreaView
       ref={(r) => (containerRef.current = r?.props)}
@@ -414,6 +425,11 @@ const VerifiedItem = ({ locale }) => {
 
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
+  loading: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: Colors.WHITE,
+  },
   timerDivider: {
     height: '100%',
     width: 1,

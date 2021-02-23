@@ -74,6 +74,7 @@
   "IS_scanFailed": "Scan failed? Then use",
   "IS_scanManual": "Manual entry",
   "IS_reviewFailed":"Select fail issue",
+  "IS_matchFailed":"Found no matches!",
   "IS_verifyit": "Verify item",
   "IS_verifiedTitle":"Item verified & picked",
   "IS_verifiedText":"This item has been marked as verified and picked",
