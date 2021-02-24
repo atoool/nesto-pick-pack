@@ -9,9 +9,9 @@
     "pack": "Pack Now",
     "Substituted": "Substituted",
     "drop": "Drop Now",
-    "Print_Labels": "Print Labels",
-    "Assign_Bin": "Assign Bin",
-    "Assign_Now": "Assign Now",
+    "Print_Labels": "Print labels",
+    "Assign_Bin": "Assign Bins",
+    "Bin_pos": "Bin positions",
     "statistics": "My statistics"
   },
   "missing":{
@@ -22,7 +22,8 @@
     "email": "Email Address",
     "password": "Password",
     "countOfOutStock": "Enter count of out of stock items",
-    "critical":"Enter count of remaining items"
+    "critical":"Enter count of remaining items",
+    "enterPos":"Enter position"
   },
   "departments": {
     "h": "Health Department"
@@ -44,12 +45,13 @@
   },
   "timeLeft": "Time left",
   "timeRemain": "Time remaining",
-  "signin": "Sign in",
+  "signin": "Sign In",
   "Login": "Login",
   "LoginText": "Login to access your profile",
   "networkError": "Failed to connect any network!",
   "validEmail":"Invalid email address or password",
-  "BAS_Position": "Position of bin",
+  "invalidLogin":"Invalid login",
+  "BAS_Position": "Position of Bin",
   "save": "Save",
   "picked": "Picked",
   "packed": "Packed",
@@ -59,6 +61,7 @@
   "items": "items",
   "yes":"Yes",
   "no":"No",
+  "confirm":"Confirm",
   "errorAlert":"Something went wrong",
   "printBinButton": "Printing labels & Assign bins",
   "PS_printingLabel": "Printing labels",
@@ -141,7 +144,7 @@
   "SS_opt1Pick": "No, Don't pick",
   "SS_opt2Pick": "Yes pack this",
   "SS_scanbar": "Scan Bar Code",
-  "SS_scanbarText": "Place the bar code inside the frame to scan and please avoid shaketo get result quickly",
+  "SS_scanbarText": "Place the bar code inside the frame to scan and please avoid shake to get result quickly",
   "SS_permitTitle": "Permission to use camera",
   "SS_permitText": "We need your permission to use your camera",
   "SS_enableCam":"Enable camera permission",

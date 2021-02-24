@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import {
   getOrdersListPick,
   getOrdersDropList,
@@ -13,6 +13,7 @@ import {
 } from '../api';
 import pickerOrders from '../mock/pickerOrders.json';
 import pickerDropList from '../mock/pickerDropList.json';
+import { AppContext } from './AppContext';
 
 export const PickerContext = createContext({
   orders: [],
@@ -41,14 +42,14 @@ export const PickerContextProvider = ({ children }) => {
   const [substitutedList, setSubstitutedList] = useState({});
   const [notifications, setNotifications] = useState([]);
 
-  useEffect(() => {
-    // getOrdersList();
-  }, []);
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const getOrdersList = async () => {
     try {
       // const res = pickerOrders.data; //mock
-      const res = await getOrdersListPick();
+      const res = await getOrdersListPick(locale);
       setOrders(res);
     } catch (e) {
       console.log(e);
@@ -58,7 +59,7 @@ export const PickerContextProvider = ({ children }) => {
   const getDropList = async () => {
     try {
       // const res = pickerDropList.data; //mock
-      const res = await getOrdersDropList();
+      const res = await getOrdersDropList(locale);
       setDropList(res);
     } catch (e) {
       console.log(e);
@@ -67,7 +68,7 @@ export const PickerContextProvider = ({ children }) => {
 
   const getSimilarItemList = async (id) => {
     try {
-      const list = await getSimilarItems(id);
+      const list = await getSimilarItems(id, locale);
       setSimilarItems(list);
     } catch (e) {
       console.log(e);
@@ -76,7 +77,7 @@ export const PickerContextProvider = ({ children }) => {
 
   const getSubstitutedItems = async (id) => {
     try {
-      const list = await getSubstitutedList(id);
+      const list = await getSubstitutedList(id, locale);
       setSubstitutedList(list);
     } catch (e) {
       console.log(e);
@@ -85,7 +86,7 @@ export const PickerContextProvider = ({ children }) => {
 
   const getPickerSuggestedItems = async (id) => {
     try {
-      const list = await getPickerSuggestions(id);
+      const list = await getPickerSuggestions(id, locale);
       setPickerSuggestions(list);
     } catch (e) {
       console.log(e);
@@ -94,7 +95,7 @@ export const PickerContextProvider = ({ children }) => {
 
   const getAllNotifications = async () => {
     try {
-      const list = await getNotifications();
+      const list = await getNotifications(locale);
       const temp = list.filter((item) => item.role === 'picker');
       setNotifications(temp);
     } catch (e) {}
@@ -107,16 +108,18 @@ export const PickerContextProvider = ({ children }) => {
     substitutedList,
     pickerSuggestions,
     notifications,
-    getOrdersList,
-    getDropList,
-    setItemPicked,
-    setItemDrop,
-    getSimilarItemList,
-    getSubstitutedItems,
-    getPickerSuggestedItems,
-    postSubstitutes,
-    postSuggestedSubstitutes,
-    getAllNotifications,
+    getOrdersList, //
+    getDropList, //
+    setItemPicked: async (id, item_type, critical_qty) =>
+      await setItemPicked(id, item_type, critical_qty, locale),
+    setItemDrop: async (id) => await setItemDrop(id, locale),
+    getSimilarItemList, //
+    getSubstitutedItems, //
+    getPickerSuggestedItems, //
+    postSubstitutes: async (PAYLOAD) => await postSubstitutes(PAYLOAD, locale),
+    postSuggestedSubstitutes: async (PAYLOAD) =>
+      await postSuggestedSubstitutes(PAYLOAD),
+    getAllNotifications, //
   };
   return (
     <PickerContext.Provider value={value}>{children}</PickerContext.Provider>

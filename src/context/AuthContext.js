@@ -14,14 +14,14 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [val, setVal] = useState(initialAuthState);
-  const emailLogin = async (email, password) => {
+  const emailLogin = async (email, password, locale) => {
     try {
       console.log('email login');
       const {
         accessToken,
         // access_token_timestamp,
         userRole,
-      } = await login({ email, password });
+      } = await login({ email, password }, locale);
 
       logInUser(accessToken, '', userRole);
     } catch (e) {

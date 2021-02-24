@@ -15,6 +15,7 @@ import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import { Colors, Typography, width } from '../../styles';
+import { Constants } from '../../utils';
 
 const BinAssignScreen = ({
   route: {
@@ -76,15 +77,17 @@ const BinAssignScreen = ({
           binPos.map((val, indx) => (
             <InputWithLabel
               key={indx}
+              placeholder={locale?.placeholder?.enterPos}
               iconName="EditSVG"
               label={locale?.BAS_Position + (indx + 1)}
               top={10}
               value={binPos[indx]}
               onChangeText={(text) => onBinAssign(text, indx)}
+              maxLength={Constants.binPositionLimit}
             />
           ))}
         <Button
-          title={locale?.save}
+          title={locale?.confirm}
           onPress={onSave}
           style={{ width: width - 60 }}
           loading={isButtonLoading}
@@ -125,6 +128,7 @@ const PrintLabelComponent = ({
             keyboard={'numeric'}
             value={bins}
             onChangeText={onChangeBins}
+            maxLength={Constants.binsNeededLimit}
           />
 
           <InputWithLabel
@@ -133,6 +137,7 @@ const PrintLabelComponent = ({
             top={10}
             value={orderId}
             onChangeText={onChangeOrderId}
+            maxLength={Constants.orderIdLimit}
           />
         </>
       )}
@@ -147,16 +152,20 @@ const InputWithLabel = ({
   value,
   keyboard,
   iconName,
+  placeholder,
+  maxLength,
 }) => {
   return (
     <View style={[styles.labelTextView, { marginTop: top }]}>
       <Text style={styles.labelText}>{label}</Text>
       <Input
+        placeholder={placeholder}
         iconName={iconName}
         style={styles.inputStyle}
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboard}
+        maxLength={maxLength}
       />
     </View>
   );

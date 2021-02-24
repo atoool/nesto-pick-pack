@@ -45,7 +45,7 @@ const LoginScreen = () => {
     if (validateEmail(email, password)) {
       try {
         setLoading(true);
-        await emailLogin(email, password);
+        await emailLogin(email, password, locale);
       } catch (e) {
         console.log(e);
       }

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
   getAssignBinListPack,
   getOrdersListPack,
@@ -10,6 +10,7 @@ import {
 } from '../api';
 import packerOrders from '../mock/packerOrders.json';
 import packerBinAssign from '../mock/packerBinAssign.json';
+import { AppContext } from './AppContext';
 
 export const PackerContext = createContext({
   orderList: [],
@@ -28,12 +29,15 @@ export const PackerContextProvider = ({ children }) => {
   const [orderList, setOrderList] = useState([]);
   const [assignBinList, setAssignBinList] = useState([]);
   const [notifications, setNotifications] = useState([]);
-  useEffect(() => {}, []);
+
+  const {
+    locale: { locale },
+  } = useContext(AppContext);
 
   const getPackerOrderList = async () => {
     try {
       // const list = packerOrders.data; //mock
-      const list = await getOrdersListPack();
+      const list = await getOrdersListPack(locale);
       setOrderList(list);
     } catch (e) {}
   };
@@ -41,14 +45,14 @@ export const PackerContextProvider = ({ children }) => {
   const getAssignBinList = async () => {
     try {
       // const list = packerBinAssign.data; //mock
-      const list = await getAssignBinListPack();
+      const list = await getAssignBinListPack(locale);
       setAssignBinList(list);
     } catch (e) {}
   };
 
   const getAllNotifications = async () => {
     try {
-      const list = await getNotifications();
+      const list = await getNotifications(locale);
       const temp = list.filter((item) => item.role === 'packer');
       setNotifications(temp);
     } catch (e) {}
@@ -60,10 +64,12 @@ export const PackerContextProvider = ({ children }) => {
     notifications,
     getPackerOrderList,
     getAssignBinList,
-    setOrderReady,
-    setPackedItemAsMarked,
-    postRePick,
-    postAssignBin,
+    setOrderReady: async (id) => await setOrderReady(id, locale),
+    setPackedItemAsMarked: async (id, item_type) =>
+      await setPackedItemAsMarked(id, item_type, locale),
+    postRePick: async (PAYLOAD, id) => await postRePick(PAYLOAD, id, locale),
+    postAssignBin: async (PAYLOAD, id) =>
+      await postAssignBin(PAYLOAD, id, locale),
     getAllNotifications,
   };
   return (

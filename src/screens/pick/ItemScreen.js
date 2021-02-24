@@ -167,7 +167,7 @@ const ItemSection = ({
               </View>
               <View style={styles.deliverBoxRow2}>
                 <Text>{sTime}</Text>
-                <Arrow width={30} />
+                <Arrow width={60} />
                 {/* <Text> ------------> </Text> */}
                 <Text>{eTime}</Text>
               </View>
@@ -275,6 +275,11 @@ const VerifyItemSection = ({
                   paddingLeft: 20,
                   borderColor: Colors.offWhite,
                 }}
+                maxLength={
+                  status === 3
+                    ? Constants.criticalStockLimit
+                    : Constants.outOfStockLimit
+                }
               />
             )}
           </>
@@ -338,14 +343,20 @@ const VerifyItemSection = ({
                 navigation.navigate('ScanScreen', {
                   totalItem: item?.qty,
                   itemId: item?.id,
-                  criticalQty: itemsQty,
+                  criticalQty:
+                    status === 2 ? Constants.defaultCriticalValue : itemsQty,
                   itemType: item?.item_type,
                 });
               }}
             />
             <View style={{ alignItems: 'center', paddingVertical: 32 }}>
               <Text>{locale?.IS_scanFailed}</Text>
-              <TouchableOpacity onPress={() => onManualEntry(itemsQty)}>
+              <TouchableOpacity
+                onPress={() =>
+                  onManualEntry(
+                    status === 2 ? Constants.defaultCriticalValue : itemsQty,
+                  )
+                }>
                 <Text
                   style={{
                     textDecorationLine: 'underline',

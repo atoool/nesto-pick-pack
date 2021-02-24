@@ -10,7 +10,7 @@ import PackScanSVG from './PackScanSVG.svg';
 import NotificationSVG from './NotificationSVG.svg';
 import NoOrdersSVG from './NoOrdersSVG.svg';
 import MarkAvailabilitySVG from './MarkAvailabilitySVG.svg';
-import HistorySVG from './HistorySVG.svg';
+import BinAssignSVG from './BinAssignSVG.svg';
 import CartSVG from './CartSVG.svg';
 import EditSVG from './EditSVG.svg';
 import UserSVG from './UserSVG.svg';
@@ -22,7 +22,9 @@ import NoResponseSVG from './NoResponseSVG.svg';
 import SuccessSubstituteSVG from './SuccessSubstituteSVG.svg';
 import ItemRemovedSVG from './ItemRemovedSVG.svg';
 import CustAvailableSVG from './CustAvailableSVG.svg';
+import DropSVG from './DropSVG.svg';
 export {
+  DropSVG,
   PickerChoiceSVG,
   NoResponseSVG,
   SuccessSubstituteSVG,
@@ -40,7 +42,7 @@ export {
   NotificationSVG,
   NoOrdersSVG,
   MarkAvailabilitySVG,
-  HistorySVG,
+  BinAssignSVG,
   CartSVG,
   UserSVG,
   EditSVG,

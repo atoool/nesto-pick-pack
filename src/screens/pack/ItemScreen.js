@@ -22,17 +22,7 @@ import Divider from '../../components/Divider';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 import Loader from '../../components/Loader';
 import TimerComponent from '../../components/TimerComponent';
-
-function formatAmPm(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var AmPm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + AmPm;
-  return strTime;
-}
+import formatAmPm from '../../utils/formatAmPm';
 
 const screenWidth = width;
 const w = width - 32;

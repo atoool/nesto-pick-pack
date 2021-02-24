@@ -42,7 +42,7 @@ const AssignBinTabScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Title text={locale?.headings.Assign_Now} />
+      <Title text={locale?.headings.Assign_Bin} />
       <FlatList
         data={assignBinList}
         ListEmptyComponent={() => (

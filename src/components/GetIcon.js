@@ -12,7 +12,7 @@ import {
   NotificationSVG,
   NoOrdersSVG,
   MarkAvailabilitySVG,
-  HistorySVG,
+  BinAssignSVG,
   CartSVG,
   EditSVG,
   LockSVG,
@@ -24,6 +24,7 @@ import {
   SuccessSubstituteSVG,
   ItemRemovedSVG,
   CustAvailableSVG,
+  DropSVG,
 } from '../assets/svg';
 
 const GetIcon = ({ name, color, width }) => {
@@ -32,7 +33,7 @@ const GetIcon = ({ name, color, width }) => {
   } else if (name === 'Notifications') {
     return <NotificationSVG color={color} width={width} />;
   } else if (name === 'AssignBin') {
-    return <HistorySVG color={color} width={width} />;
+    return <BinAssignSVG color={color} width={width} />;
   } else if (name === 'Profile') {
     return <ProfileSVG color={color} width={width} />;
   } else if (name === 'UserSVG') {
@@ -75,6 +76,8 @@ const GetIcon = ({ name, color, width }) => {
     return <NoResponseSVG color={color} width={width} />;
   } else if (name === 'ItemRemovedSVG') {
     return <ItemRemovedSVG color={color} width={width} />;
+  } else if (name === 'DropSVG') {
+    return <DropSVG color={color} width={width} />;
   }
 };
 

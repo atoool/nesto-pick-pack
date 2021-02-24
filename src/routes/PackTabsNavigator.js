@@ -7,7 +7,7 @@ import NotificationsScreen from '../screens/pack/NotificationsScreen';
 import PackStackNavigator from '../routes/PackStackNavigators';
 import ScanScreen from '../screens/pack/ScanScreen';
 //SVG for Tab Icons
-import HistorySVG from '../assets/svg/HistorySVG.svg';
+import BinAssignSVG from '../assets/svg/BinAssignSVG.svg';
 import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
@@ -31,7 +31,7 @@ const PackTabsNavigator = () => {
       tabBar={(props) => <PackTabBar {...props} />}>
       <Tabs.Screen
         name="AssignBin"
-        options={{ title: locale?.headings?.Assign_Now }}
+        options={{ title: locale?.headings?.Assign_Bin }}
         component={AssignStackNavigator}
       />
       <Tabs.Screen
@@ -121,7 +121,7 @@ const getIconBasedOnRouteName = (routeName, color) => {
   } else if (routeName === 'Notifications') {
     return <NotificationSVG color={color} width={20} />;
   } else if (routeName === 'AssignBin') {
-    return <HistorySVG color={color} width={20} />;
+    return <BinAssignSVG color={color} width={20} />;
   } else if (routeName === 'Profile') {
     return <ProfileSVG color={color} width={20} />;
   }

@@ -7,7 +7,7 @@ import NotificationsScreen from '../screens/pick/NotificationsScreen';
 import ProfileScreen from '../screens/pick/ProfileScreen';
 import PickStackNavigator from '../routes/PickStackNavigator';
 //SVG for Tab Icons
-import HistorySVG from '../assets/svg/HistorySVG.svg';
+import DropSVG from '../assets/svg/DropSVG.svg';
 import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
@@ -102,7 +102,7 @@ const getIconBasedOnRouteName = (routeName, color) => {
   } else if (routeName === 'Notifications') {
     return <NotificationSVG color={color} width={20} />;
   } else if (routeName === 'Drop') {
-    return <HistorySVG color={color} width={20} />;
+    return <DropSVG color={color} width={20} />;
   } else if (routeName === 'Profile') {
     return <ProfileSVG color={color} width={20} />;
   }

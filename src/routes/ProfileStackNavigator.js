@@ -31,7 +31,7 @@ const ProfileStackNavigator = () => {
         name="BinAssignScreen"
         component={BinAssignScreen}
         options={({ route }) => ({
-          title: locale.headings.Assign_Now,
+          title: locale.headings.Bin_pos,
           ...headerOptions,
         })}
       />

@@ -26,6 +26,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 21,
     fontFamily: 'roboto',
+    color: Colors.BLACK,
   },
   bold20White: {
     fontWeight: 'bold',
@@ -37,6 +38,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     fontFamily: 'roboto',
+    color: Colors.BLACK,
   },
   normal18: {
     fontSize: 18,

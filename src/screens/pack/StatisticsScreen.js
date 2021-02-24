@@ -8,7 +8,7 @@ const data = [
     subtitle: 'Timing on record',
     value: 20,
     unit: 'Min',
-    avg: '3 Picks',
+    avg: '3 Packs',
     color: '#87A53A',
   },
   {
@@ -16,7 +16,7 @@ const data = [
     subtitle: 'Timing on record',
     value: 20,
     unit: 'Min',
-    avg: '3 Picks',
+    avg: '3 Packs',
     color: '#22923F',
   },
   {
@@ -24,7 +24,7 @@ const data = [
     subtitle: 'Timing on record',
     value: 20,
     unit: 'Min',
-    avg: '3 Picks',
+    avg: '3 Packs',
     color: '#C71712',
   },
 ];

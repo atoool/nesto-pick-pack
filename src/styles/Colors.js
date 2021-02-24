@@ -33,4 +33,6 @@ export default {
   chilled: '#C91614',
   dry: '#A4880B',
   frozen: '#3C7EE0',
+  semiTransparent: 'rgba(0,0,0,0.1)',
+  transparent: 'rgba(0,0,0,0)',
 };

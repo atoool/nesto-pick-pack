@@ -1,5 +1,11 @@
 import React, { createRef, useContext, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import Barcode from 'react-native-barcode-builder';
 import ViewShot from 'react-native-view-shot';
 import Button from '../../components/Button';
@@ -12,6 +18,7 @@ import {
   NetPrinter,
   BLEPrinter,
 } from 'react-native-thermal-receipt-printer';
+import { Constants } from '../../utils';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
   const [orderId, setOrderId] = useState(params.orderId);
@@ -29,11 +36,19 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
   };
 
   const onChangeBins = (num) => {
-    setBins(num);
+    num.indexOf('.') === -1 &&
+      num.indexOf(',') === -1 &&
+      // eslint-disable-next-line radix
+      parseInt(num) !== 0 &&
+      setBins(num);
   };
 
   const onAssignBinPress = () => {
-    navigation.navigate('BinAssignScreen', { orderId, bins });
+    if (bins !== '' && orderId && orderId !== '') {
+      navigation.navigate('BinAssignScreen', { orderId, bins });
+    } else {
+      ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);
+    }
   };
 
   const onPrint = () => {
@@ -62,13 +77,13 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
           viewShot={viewShot}
         />
         <Button
-          disabled={orderId == ''}
-          title="Print your label"
+          disabled={orderId === ''}
+          title={locale?.PLS_printLabel}
           style={{ marginVertical: 20, borderRadius: 7, width: width - 60 }}
           onPress={onPrint}
         />
         <Button
-          title="Assign bin"
+          title={locale?.PLS_assignBin}
           onPress={onAssignBinPress}
           style={{ marginVertical: 0, borderRadius: 7, width: width - 60 }}
         />
@@ -131,6 +146,7 @@ const PrintLabelComponent = ({
         keyboard={'numeric'}
         value={bins}
         onChangeText={onChangeBins}
+        maxLength={Constants.binsNeededLimit}
       />
       {!hide && (
         <InputWithLabel
@@ -139,6 +155,7 @@ const PrintLabelComponent = ({
           top={10}
           value={orderId}
           onChangeText={onChangeOrderId}
+          maxLength={Constants.orderIdLimit}
         />
       )}
     </>
@@ -152,6 +169,7 @@ const InputWithLabel = ({
   value,
   keyboard,
   iconName,
+  maxLength,
 }) => {
   return (
     <View style={{ flex: 1, marginTop: top }}>
@@ -163,6 +181,7 @@ const InputWithLabel = ({
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboard}
+        maxLength={maxLength}
       />
     </View>
   );

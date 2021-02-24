@@ -13,6 +13,7 @@ import { Typography, Colors } from '../../styles';
 import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
+import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 
 const ProfileScreen = () => {
   const { logOutUser } = useContext(AuthContext);
@@ -89,7 +90,9 @@ const MarkAvailability = ({ topBorder, title }) => {
 const ProfileSection = ({ name, email, phone }) => {
   return (
     <View style={styles.profileSectionContainer}>
-      <View style={styles.profileImageView} />
+      <View style={styles.profileImageView}>
+        <ProfileImageSVG />
+      </View>
       <View>
         <Text style={Typography.bold16}>{name}</Text>
         <Text>{email}</Text>
@@ -100,11 +103,11 @@ const ProfileSection = ({ name, email, phone }) => {
 
 const styles = StyleSheet.create({
   profileImageView: {
-    backgroundColor: 'gray',
+    // backgroundColor: Colors.secondaryGray,
     width: 60,
     height: 60,
-    borderRadius: 60,
-    marginRight: 20,
+    marginLeft: -32,
+    marginRight: 50,
   },
   profileSectionContainer: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -13,8 +13,12 @@ import { Typography, Colors } from '../../styles';
 import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
+import ModalComponent from '../../components/ModalComponent';
+import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 
 const ProfileScreen = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { logOutUser } = useContext(AuthContext);
 
   const {
@@ -28,22 +32,8 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('StatisticsScreen');
   };
   const onLogOut = async () => {
-    Alert.alert(
-      '',
-      locale?.PS_logoutAlert,
-      [
-        {
-          text: locale?.no,
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: locale?.yes,
-          onPress: logOutUser,
-        },
-      ],
-      { cancelable: false },
-    );
+    logOutUser();
+    setModalVisible(false);
   };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -56,7 +46,18 @@ const ProfileScreen = ({ navigation }) => {
       <MarkAvailability title={locale?.P_markAvail} />
       <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
       <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
-      <LinkButton title={locale?.signout} onPress={onLogOut} />
+      <LinkButton
+        title={locale?.signout}
+        onPress={() => setModalVisible(true)}
+      />
+      <ModalComponent
+        visible={modalVisible}
+        text={locale?.PS_logoutAlert}
+        button1Text={locale?.no}
+        button2Text={locale?.yes}
+        onButton1Press={() => setModalVisible(false)}
+        onButton2Press={onLogOut}
+      />
     </SafeAreaView>
   );
 };
@@ -95,7 +96,9 @@ const MarkAvailability = ({ topBorder, title }) => {
 const ProfileSection = ({ name, email, phone }) => {
   return (
     <View style={styles.profileSectionContainer}>
-      <View style={styles.profileImageView} />
+      <View style={styles.profileImageView}>
+        <ProfileImageSVG />
+      </View>
       <View>
         <Text style={Typography.bold16}>{name}</Text>
         <Text>{email}</Text>
@@ -106,11 +109,11 @@ const ProfileSection = ({ name, email, phone }) => {
 
 const styles = StyleSheet.create({
   profileImageView: {
-    backgroundColor: 'gray',
+    // backgroundColor: Colors.secondaryGray,
     width: 60,
     height: 60,
-    borderRadius: 60,
-    marginRight: 20,
+    marginLeft: -32,
+    marginRight: 50,
   },
   profileSectionContainer: {
     flexDirection: 'row',
