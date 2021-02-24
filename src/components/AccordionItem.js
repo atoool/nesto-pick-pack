@@ -87,12 +87,16 @@ const AccordionItem = ({
                         : item.picker_checked
                     }
                   />
-                  <View>
-                    <Text style={Typography.bold15}>
-                      {item.qty ? item.qty : 1}x {item.name}
+                  <View style={styles.textBox}>
+                    <Text style={styles.itemTitle}>
+                      {item.qty ? item.qty : 1}x{' '}
+                      {item.name ? item.name : '[item_name missing]'}
                     </Text>
-                    <Text style={Typography.normal12}>
-                      {item.department} | {item.position}
+                    <Text style={styles.itemText}>
+                      {item?.department
+                        ? item?.department
+                        : '[department missing]'}{' '}
+                      | {item?.position ? item?.position : '[position missing]'}
                     </Text>
                   </View>
                 </View>
@@ -138,6 +142,9 @@ const styles = StyleSheet.create({
   },
   button: { marginTop: 20 },
   statusPill: { marginBottom: 5 },
+  itemTitle: { ...Typography.bold15, flexWrap: 'wrap' },
+  textBox: { width: '75%' },
+  itemText: { ...Typography.normal12, flexWrap: 'wrap' },
 });
 
 export default AccordionItem;

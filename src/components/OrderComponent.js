@@ -51,7 +51,8 @@ const OrderComponent = ({
         <View style={styles.historyBox}>
           <View style={styles.statusBox}>
             <View style={styles.deliveryStatusCircle} />
-            <Text style={Typography.bold15}>{orderType}</Text>
+            <Text style={Typography.bold15}>Scheduled delivery</Text>
+            {/* mock orderType */}
           </View>
           <View style={styles.deliveryBox}>
             <Text style={Typography.normal15}>{sTime}</Text>

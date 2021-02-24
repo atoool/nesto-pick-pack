@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -14,8 +14,10 @@ import MarkAvailabilitySVG from '../../assets/svg/MarkAvailabilitySVG';
 import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
+import ModalComponent from '../../components/ModalComponent';
 
 const ProfileScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const { logOutUser } = useContext(AuthContext);
 
   const {
@@ -23,22 +25,8 @@ const ProfileScreen = () => {
   } = useContext(AppContext);
 
   const onLogOut = async () => {
-    Alert.alert(
-      '',
-      locale?.PS_logoutAlert,
-      [
-        {
-          text: locale?.no,
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: locale?.yes,
-          onPress: logOutUser,
-        },
-      ],
-      { cancelable: false },
-    );
+    logOutUser();
+    setModalVisible(false);
   };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -51,7 +39,18 @@ const ProfileScreen = () => {
       <MarkAvailability title={locale?.P_markAvail} />
       {/* <LinkButton title="Mark availability" topBorder={true} /> */}
       {/* <LinkButton title="My statistics" /> */}
-      <LinkButton title={locale?.signout} onPress={onLogOut} />
+      <LinkButton
+        title={locale?.signout}
+        onPress={() => setModalVisible(true)}
+      />
+      <ModalComponent
+        visible={modalVisible}
+        text={locale?.PS_logoutAlert}
+        button1Text={locale?.no}
+        button2Text={locale?.yes}
+        onButton1Press={() => setModalVisible(false)}
+        onButton2Press={onLogOut}
+      />
     </SafeAreaView>
   );
 };

@@ -54,7 +54,7 @@ const PickList = ({
                 endTime,
               })
             }>
-            <View>
+            <View style={styles.itemBox}>
               <View style={styles.itemTitleBox}>
                 <View
                   style={[
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
   departmentBox: { marginBottom: 5 },
   statusPill: { marginBottom: 5 },
+  itemBox: { width: '92%' },
 });
 
 export default PickList;

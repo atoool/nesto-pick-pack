@@ -182,7 +182,8 @@ const ItemSection = ({
             <View style={styles.historyBox}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>{type}</Text>
+                <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
+                {/* mock orderType */}
               </View>
               <View style={styles.deliverBoxRow2}>
                 <Text>{sTime}</Text>
