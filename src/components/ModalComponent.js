@@ -33,7 +33,7 @@ const ModalComponent = ({
           <Text style={styles.modalText}>{text}</Text>
           <View style={styles.row}>
             <TouchableHighlight
-              style={[styles.openButton, styles.marginRight]}
+              style={[styles.openButton]}
               onPressIn={() => setHighlight(1)}
               onPressOut={() => setHighlight(0)}
               onPress={onButton1Press}>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: Colors.WHITE,
     borderRadius: 20,
-    padding: 35,
+    padding: 30,
     alignItems: 'center',
     shadowColor: Colors.BLACK,
     shadowOffset: {
@@ -105,18 +105,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalTitle: {
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: 'center',
     ...Typography.bold20,
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 20,
     textAlign: 'center',
     color: Colors.BLACK,
     ...Typography.normal15,
   },
   row: { flexDirection: 'row' },
-  marginRight: { marginRight: 30 },
 });
 
 export default ModalComponent;

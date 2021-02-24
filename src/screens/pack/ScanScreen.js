@@ -15,6 +15,7 @@ import * as Progress from 'react-native-progress';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import Button from '../../components/Button';
+import ModalComponent from '../../components/ModalComponent';
 
 const ScanScreen = ({
   navigation,
@@ -28,33 +29,18 @@ const ScanScreen = ({
   const totalItem = qty;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
   const { setPackedItemAsMarked, orderList } = useContext(PackerContext);
 
-  const onScanMismatch = () => {
-    Alert.alert(
-      locale?.SS_alertTitle,
-      locale?.SS_alertText,
-      [
-        {
-          text: locale?.SS_alertopt1,
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: locale?.SS_alertopt2,
-          onPress: async () => {
-            const temp = itemScanned + 1;
-            setItemScanned(temp);
-            totalItem && temp / totalItem >= 1 && (await onComplete());
-          },
-        },
-      ],
-      { cancelable: false },
-    );
+  const onScanMismatch = async () => {
+    const temp = itemScanned + 1;
+    setItemScanned(temp);
+    totalItem && temp / totalItem >= 1 && (await onComplete());
+    setModalVisible(false);
   };
 
   const onScan = async (barcode) => {
@@ -205,11 +191,23 @@ const ScanScreen = ({
               </Text>
             </View>
             <View>
-              <LinkButton title={locale?.SS_scanmis} onPress={onScanMismatch} />
+              <LinkButton
+                title={locale?.SS_scanmis}
+                onPress={() => setModalVisible(true)}
+              />
             </View>
           </>
         )}
       </ScrollView>
+      <ModalComponent
+        visible={modalVisible}
+        title={locale?.SS_alertTitle}
+        text={locale?.SS_alertText}
+        button1Text={locale?.SS_alertopt1}
+        button2Text={locale?.SS_alertopt2}
+        onButton1Press={() => setModalVisible(false)}
+        onButton2Press={onScanMismatch}
+      />
     </SafeAreaView>
   );
 };
