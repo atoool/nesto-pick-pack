@@ -72,27 +72,33 @@ const DropScreen = () => {
         ItemSeparatorComponent={() => <Divider />}
         onRefresh={onRefresh}
         refreshing={refreshing}
-        renderItem={({ item, index }) => (
-          <AccordionItem
-            order={item}
-            index={index}
-            orderType={item.order_type ? item.order_type : locale?.status.SD}
-            status={
-              item.picking_completed ? locale?.status.PiC : locale.status.Pi
-            }
-            itemCount={
-              getPackedItemCount(item?.items) +
-              '/' +
-              item?.items?.length +
-              ' ' +
-              locale?.packed
-            }
-            onReadyPress={onDropToBin}
-            buttonTitle={locale.DS_dropReady}
-            showReadyButton={item?.picking_completed}
-            readyButtonLoading={dropButtonLoading}
-          />
-        )}
+        renderItem={({ item, index }) => {
+          const picking_completed =
+            item?.items?.filter((itm) => {
+              if (itm?.picker_checked) {
+                return itm;
+              }
+            })?.length === item?.items?.length;
+          return (
+            <AccordionItem
+              order={item}
+              index={index}
+              orderType={item.order_type ? item.order_type : locale?.status.SD}
+              status={picking_completed ? locale?.status.PiC : locale.status.Pi}
+              itemCount={
+                getPackedItemCount(item?.items) +
+                '/' +
+                item?.items?.length +
+                ' ' +
+                locale?.packed
+              }
+              onReadyPress={onDropToBin}
+              buttonTitle={locale.DS_dropReady}
+              showReadyButton={picking_completed}
+              readyButtonLoading={dropButtonLoading}
+            />
+          );
+        }}
       />
     </SafeAreaView>
   );

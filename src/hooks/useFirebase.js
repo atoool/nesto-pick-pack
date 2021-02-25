@@ -59,10 +59,10 @@ export function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Linking.openURL(remoteMessage.data.key_1);
+      // Linking.openURL(remoteMessage.data.key_1);
       console.warn(
         'FCM NOTIFCATION WHILE APP IN FG',
-        JSON.stringify(remoteMessage.notification),
+        JSON.stringify(remoteMessage.data),
       );
     });
 
@@ -88,9 +88,9 @@ export function useFirebase() {
       if (remoteMessage) {
         console.log(
           'Notification caused app to open from background state:',
-          remoteMessage.notification,
+          remoteMessage.data,
         );
-        Linking.openURL(remoteMessage.data.key_1);
+        // Linking.openURL(remoteMessage.data.key_1);
       }
     });
     // Check whether an initial notification is available

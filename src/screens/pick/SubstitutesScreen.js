@@ -15,13 +15,13 @@ import Arrow from '../../components/Arrow';
 import StatusPill from '../../components/StatusPill';
 import { AppContext } from '../../context/AppContext';
 import { Colors, Typography } from '../../styles';
-import Images from '../../assets/images';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
 import formatAmPm from '../../utils/formatAmPm';
+import { Constants } from '../../utils';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -37,13 +37,16 @@ const SubstitutesScreen = ({
     getSimilarItemList,
     postSuggestedSubstitutes,
   } = useContext(PickerContext);
+
+  const tempAr = similarItems
+    ? Array.apply('', Array(similarItems?.length)).map((i) => null)
+    : [];
+
   const {
     locale: { locale },
   } = useContext(AppContext);
 
-  const [checkedList, setCheckedList] = useState(
-    Array.apply('', Array(similarItems.length)).map((i) => null),
-  );
+  const [checkedList, setCheckedList] = useState(tempAr);
 
   const [isSuggestLoad, setIsSuggestLoad] = useState();
 
@@ -69,7 +72,7 @@ const SubstitutesScreen = ({
       ToastAndroid.show('Empty list', ToastAndroid.SHORT);
     } else {
       const payload = {
-        original_item_id: item?.item_id,
+        original_item_id: item?.id,
         more_quantity_required: requiredQty,
         existing_quantity: existingQty,
         order_id: item?.orderId,
@@ -79,9 +82,7 @@ const SubstitutesScreen = ({
       try {
         await postSuggestedSubstitutes(payload);
         navigation.navigate('SubstituteRequestedScreen');
-      } catch (e) {
-        ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
-      }
+      } catch {}
     }
     setIsSuggestLoad(false);
   };
@@ -90,7 +91,7 @@ const SubstitutesScreen = ({
       {!similarItems || similarItems.length === 0 ? (
         <Loader fullScreen />
       ) : (
-        <ScrollView nestedScrollEnabled>
+        <ScrollView>
           <ItemSection
             title={item?.name}
             price={item?.price && item.price.toFixed(2)}
@@ -113,14 +114,20 @@ const SubstitutesScreen = ({
               checkedList={checkedList}
             />
           )}
-          <Button
-            title={locale.IS_substituteButton}
-            style={{ borderRadius: 0 }}
-            loading={isSuggestLoad}
-            onPress={onSuggestSubstitute}
-          />
         </ScrollView>
       )}
+      <Button
+        title={locale.IS_substituteButton}
+        style={{
+          borderRadius: 0,
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          zIndex: 5,
+        }}
+        loading={isSuggestLoad}
+        onPress={onSuggestSubstitute}
+      />
     </SafeAreaView>
   );
 };
@@ -159,10 +166,13 @@ const ItemSection = ({
           <View style={{ flexDirection: 'row' }}>
             <StatusPill
               backgroundColor="#A1C349"
-              text={position}
+              text={position ? position : Constants.emptyPosition}
               marginRight={10}
             />
-            <StatusPill backgroundColor="#C5B171" text={department} />
+            <StatusPill
+              backgroundColor="#C5B171"
+              text={department ? department : Constants.emptyDepartment}
+            />
           </View>
           <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ flex: 1 }}>
@@ -207,6 +217,7 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
   return (
     <FlatList
       data={items}
+      scrollEnabled={false}
       style={styles.orderItemsList}
       keyExtractor={(item, indx) => `${indx}${item.id}`}
       showsVerticalScrollIndicator={false}
@@ -215,7 +226,13 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
         <TouchableOpacity onPress={() => onPress(index)}>
           <View style={styles.orderItem}>
             <View style={styles.departmentBox}>
-              <TickComponent enabled={checkedList[index] !== null} />
+              <TickComponent
+                enabled={
+                  checkedList?.length === 0
+                    ? false
+                    : checkedList[index] !== null
+                }
+              />
               <View>
                 <Text style={Typography.bold15}>
                   {item.qty}x {item.name}
@@ -315,6 +332,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginHorizontal: 32,
     marginVertical: 20,
+    marginBottom: 60,
   },
   departmentBox: {
     flexDirection: 'row',

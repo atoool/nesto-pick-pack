@@ -103,32 +103,42 @@ const PackScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
-        renderItem={({ item, index }) => (
-          <AccordionItem
-            order={{ id: item?.id ? item?.id : '####', ...item }}
-            orderType={item?.order_type ? item?.order_type : locale?.status.SD}
-            status={
-              item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
-            }
-            timeLeft={item?.packing_deadline_timestamp}
-            index={index}
-            itemCount={
-              getPackedItemCount(item?.items) +
-              '/' +
-              (item?.items ? item?.items.length : 0) +
-              ' ' +
-              locale?.packed
-            }
-            onPress={(itm) => {
-              navigateTo(item?.id, itm, item.time_slot, item.order_type);
-            }}
-            buttonTitle={locale?.PS_isReady}
-            onReadyPress={onReadyPress}
-            showReadyButton={item?.packing_completed}
-            userType={'packer'}
-            readyButtonLoading={readyButtonLoading}
-          />
-        )}
+        renderItem={({ item, index }) => {
+          const packing_completed =
+            item?.items?.filter((itm) => {
+              if (itm?.packer_checked) {
+                return itm;
+              }
+            })?.length === item?.items?.length;
+          return (
+            <AccordionItem
+              order={{ id: item?.id ? item?.id : '####', ...item }}
+              orderType={
+                item?.order_type ? item?.order_type : locale?.status.SD
+              }
+              status={
+                packing_completed ? locale?.status.PaC : locale?.status.Pa
+              }
+              timeLeft={item?.packing_deadline_timestamp}
+              index={index}
+              itemCount={
+                getPackedItemCount(item?.items) +
+                '/' +
+                (item?.items ? item?.items.length : 0) +
+                ' ' +
+                locale?.packed
+              }
+              onPress={(itm) => {
+                navigateTo(item?.id, itm, item.time_slot, item.order_type);
+              }}
+              buttonTitle={locale?.PS_isReady}
+              onReadyPress={onReadyPress}
+              showReadyButton={packing_completed}
+              userType={'packer'}
+              readyButtonLoading={readyButtonLoading}
+            />
+          );
+        }}
       />
     </SafeAreaView>
   );

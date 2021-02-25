@@ -107,7 +107,7 @@ export const setItemDrop = async (id, locale) => {
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
     });
 };
-export const getSimilarItems = async (id) => {
+export const getSimilarItems = async (id, locale) => {
   const URL = `/picker/item/similar-items/${id}`;
   return get(URL, true).catch((e) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
@@ -143,6 +143,7 @@ export const postSuggestedSubstitutes = async (PAYLOAD, locale) => {
     })
     .catch((e) => {
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      throw e;
     });
 };
 

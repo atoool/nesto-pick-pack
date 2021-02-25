@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 import OrderComponent from '../../components/OrderComponent';
 import Divider from '../../components/Divider';
 import { PackerContext } from '../../context/PackerContext';
+import { Constants } from '../../utils';
 
 const AssignBinTabScreen = () => {
   const {
@@ -117,11 +118,15 @@ const AccordionItem = ({
               <View style={styles.orderNameBox}>
                 <View style={[styles.deliveryStatusCircle]} />
                 <Text style={Typography.bold15}>
-                  {item.qty ? item.qty : 1}x {item.name}
+                  {item?.qty ? item?.qty : 1}x{' '}
+                  {item?.name ? item?.name : Constants.emptyItemName}
                 </Text>
               </View>
               <Text style={styles.departmentBox}>
-                {item.department} | {item.position}
+                {item?.department
+                  ? item?.department
+                  : Constants.emptyDepartment}{' '}
+                | {item?.position ? item?.position : Constants.emptyPosition}
               </Text>
             </View>
           )}

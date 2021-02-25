@@ -23,6 +23,7 @@ import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 import Loader from '../../components/Loader';
 import TimerComponent from '../../components/TimerComponent';
 import formatAmPm from '../../utils/formatAmPm';
+import { Constants } from '../../utils';
 
 const screenWidth = width;
 const w = width - 32;
@@ -66,11 +67,13 @@ const ItemScreen = ({
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent fullTimer ss={timer} />
         <ItemSection
-          title={item?.name ? item?.name : 'item'}
+          title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
           quantity={item?.qty ? item?.qty : 1}
-          position={item?.position ? item?.position : ''}
-          department={item?.department ? item?.department : ''}
+          position={item?.position ? item?.position : Constants.emptyPosition}
+          department={
+            item?.department ? item?.department : Constants.emptyDepartment
+          }
           status={
             item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
           }

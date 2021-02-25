@@ -118,7 +118,7 @@ export const PickerContextProvider = ({ children }) => {
     getPickerSuggestedItems, //
     postSubstitutes: async (PAYLOAD) => await postSubstitutes(PAYLOAD, locale),
     postSuggestedSubstitutes: async (PAYLOAD) =>
-      await postSuggestedSubstitutes(PAYLOAD),
+      await postSuggestedSubstitutes(PAYLOAD, locale),
     getAllNotifications, //
   };
   return (

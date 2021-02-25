@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RightCaretSVG } from '../assets/svg';
 import { Colors, Typography } from '../styles';
+import { Constants } from '../utils';
 import Button from './Button';
 import Divider from './Divider';
 import OrderComponent from './OrderComponent';
@@ -90,13 +91,16 @@ const AccordionItem = ({
                   <View style={styles.textBox}>
                     <Text style={styles.itemTitle}>
                       {item.qty ? item.qty : 1}x{' '}
-                      {item.name ? item.name : '[item_name missing]'}
+                      {item.name ? item.name : Constants.emptyItemName}
                     </Text>
                     <Text style={styles.itemText}>
                       {item?.department
                         ? item?.department
-                        : '[department missing]'}{' '}
-                      | {item?.position ? item?.position : '[position missing]'}
+                        : Constants.emptyDepartment}{' '}
+                      |{' '}
+                      {item?.position
+                        ? item?.position
+                        : Constants.emptyPosition}
                     </Text>
                   </View>
                 </View>

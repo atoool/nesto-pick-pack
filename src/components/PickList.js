@@ -12,6 +12,7 @@ import { RightCaretSVG } from '../assets/svg';
 import StatusPill from './StatusPill';
 import OrderComponent from './OrderComponent';
 import Divider from './Divider';
+import { Constants } from '../utils';
 
 const PickList = ({
   items,
@@ -70,14 +71,16 @@ const PickList = ({
                 />
                 <Text style={Typography.bold15}>
                   {item.qty ? item.qty : 1}x{' '}
-                  {item.name ? item.name : '[item_name missing]'}
+                  {item.name ? item.name : Constants.emptyItemName}
                 </Text>
               </View>
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
-                  #{item?.orderId ? item?.orderId : '[order_id missing]'} |{' '}
-                  {item?.department ? item?.department : '[department missing]'}{' '}
-                  {item?.position ? item?.position : '[position missing]'}
+                  #{item?.orderId ? item?.orderId : Constants.emptyOrderId} |{' '}
+                  {item?.department
+                    ? item?.department
+                    : Constants.emptyDepartment}{' '}
+                  {item?.position ? item?.position : Constants.emptyPosition}
                 </Text>
               </View>
               {item.binsAssigned && item.binsAssigned?.length !== 0 && (
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
   },
   departmentBox: { marginBottom: 5 },
   statusPill: { marginBottom: 5 },
-  itemBox: { width: '92%' },
+  itemBox: { width: '85%' },
 });
 
 export default PickList;

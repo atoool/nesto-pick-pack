@@ -7,6 +7,11 @@ const Constants = {
   outOfStockLimit: 2,
   criticalStockLimit: 3,
   defaultCriticalValue: 0,
+  timerUpperLimit: '>100',
+  emptyPosition: '[position missing]',
+  emptyDepartment: '[department missing]',
+  emptyItemName: '[item_name missing]',
+  emptyOrderId: '[order_id missing]',
 };
 
 export default Constants;

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import useTimer from '../hooks/useTimer';
 import { Colors, Typography } from '../styles';
+import { Constants } from '../utils';
 
 const TimerComponent = ({ ss, fullTimer, inMinute, call }) => {
   let HoursString = '00';
@@ -37,7 +38,9 @@ const TimerComponent = ({ ss, fullTimer, inMinute, call }) => {
         <View style={styles.timeBox}>
           <Text
             style={!inMinute ? Typography.bold30White : Typography.bold13White}>
-            {!inMinute && `${HoursString}:${minutesString} `}
+            {HoursString.length > 2
+              ? Constants.timerUpperLimit
+              : !inMinute && `${HoursString}:${minutesString} `}
           </Text>
           {!inMinute && <Text style={Typography.bold17White}>Hrs</Text>}
           <Text
@@ -50,7 +53,9 @@ const TimerComponent = ({ ss, fullTimer, inMinute, call }) => {
   }
   return (
     <Text style={Typography.timeLeft}>
-      {HoursString}:{minutesString}
+      {HoursString.length > 2
+        ? Constants.timerUpperLimit
+        : `${HoursString}:${minutesString}`}
     </Text>
   );
 };
