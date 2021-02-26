@@ -28,6 +28,7 @@ const PackTabsNavigator = () => {
   return (
     <Tabs.Navigator
       initialRouteName="AssignBin"
+      screenOptions={{ tabBarVisible: false }}
       tabBar={(props) => <PackTabBar {...props} />}>
       <Tabs.Screen
         name="AssignBin"

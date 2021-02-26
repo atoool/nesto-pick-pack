@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/Feather';
@@ -37,27 +38,29 @@ const ProfileScreen = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
-      <Title text={locale?.headings?.profile} />
-      <ProfileSection
-        name="John Doe"
-        email="john@gmail.com"
-        phone="+91 8891356128"
-      />
-      <MarkAvailability title={locale?.P_markAvail} />
-      <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
-      <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
-      <LinkButton
-        title={locale?.signout}
-        onPress={() => setModalVisible(true)}
-      />
-      <ModalComponent
-        visible={modalVisible}
-        text={locale?.PS_logoutAlert}
-        button1Text={locale?.no}
-        button2Text={locale?.yes}
-        onButton1Press={() => setModalVisible(false)}
-        onButton2Press={onLogOut}
-      />
+      <ScrollView>
+        <Title text={locale?.headings?.profile} />
+        <ProfileSection
+          name="John Doe"
+          email="john@gmail.com"
+          phone="+91 8891356128"
+        />
+        <MarkAvailability title={locale?.P_markAvail} />
+        <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
+        <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
+        <LinkButton
+          title={locale?.signout}
+          onPress={() => setModalVisible(true)}
+        />
+        <ModalComponent
+          visible={modalVisible}
+          text={locale?.PS_logoutAlert}
+          button1Text={locale?.no}
+          button2Text={locale?.yes}
+          onButton1Press={() => setModalVisible(false)}
+          onButton2Press={onLogOut}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };

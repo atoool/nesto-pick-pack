@@ -27,6 +27,7 @@ const PickTabsNavigator = () => {
   return (
     <Tabs.Navigator
       initialRouteName="Pick now"
+      screenOptions={{ tabBarVisible: false }}
       tabBar={(props) => <PickTabBar {...props} />}>
       <Tabs.Screen
         name="Pick now"
