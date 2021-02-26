@@ -38,38 +38,39 @@ const SubstitutesScreen = ({
     postSuggestedSubstitutes,
   } = useContext(PickerContext);
 
-  const tempAr = similarItems
-    ? Array.apply('', Array(similarItems?.length)).map((i) => null)
-    : [];
-
   const {
     locale: { locale },
   } = useContext(AppContext);
 
-  const [checkedList, setCheckedList] = useState(tempAr);
+  const [checkedList, setCheckedList] = useState([]);
 
-  const [isSuggestLoad, setIsSuggestLoad] = useState();
+  const [isSuggestLoad, setIsSuggestLoad] = useState(false);
 
   const onCheck = (i) => {
+    console.warn(
+      checkedList?.length === 0 ? false : checkedList[i] !== null,
+      checkedList,
+    );
     const temp = checkedList;
     temp[i] = !checkedList[i] ? similarItems[i] : null;
     setCheckedList([...temp]);
   };
 
   useEffect(() => {
+    console.warn(item.id);
     onMount();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onMount = async () => {
-    await getSimilarItemList(1);
+    await getSimilarItemList(item.id);
   };
 
   const onSuggestSubstitute = async () => {
     setIsSuggestLoad(true);
     const isCheckedListEmpty = checkedList.filter((itm) => itm !== null);
     if (isCheckedListEmpty.length === 0) {
-      ToastAndroid.show('Empty list', ToastAndroid.SHORT);
+      ToastAndroid.show(locale?.selectSubst, ToastAndroid.SHORT);
     } else {
       const payload = {
         original_item_id: item?.id,
@@ -232,11 +233,7 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
           <View style={styles.orderItem}>
             <View style={styles.departmentBox}>
               <TickComponent
-                enabled={
-                  checkedList?.length === 0
-                    ? false
-                    : checkedList[index] !== null
-                }
+                enabled={checkedList?.length === 0 ? false : checkedList[index]}
               />
               <View>
                 <Text style={Typography.bold15}>
