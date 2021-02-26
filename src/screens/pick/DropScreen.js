@@ -90,7 +90,7 @@ const DropScreen = () => {
                 '/' +
                 item?.items?.length +
                 ' ' +
-                locale?.packed
+                locale?.picked
               }
               onReadyPress={onDropToBin}
               buttonTitle={locale.DS_dropReady}

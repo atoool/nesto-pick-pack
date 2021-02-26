@@ -68,6 +68,7 @@ export const postRePick = async (PAYLOAD, id, locale) => {
     })
     .catch((e) => {
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      throw e;
     });
 };
 

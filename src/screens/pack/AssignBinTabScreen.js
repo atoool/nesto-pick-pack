@@ -56,7 +56,11 @@ const AssignBinTabScreen = () => {
         onRefresh={() => _getOrdersList()}
         refreshing={refreshing}
         renderItem={({ item, index }) => (
-          <AccordionItem order={item} index={index} timeLeft={null} />
+          <AccordionItem
+            order={item}
+            index={index}
+            timeLeft={item?.hand_off_time}
+          />
         )}
       />
     </SafeAreaView>

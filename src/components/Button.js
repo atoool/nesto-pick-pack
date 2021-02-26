@@ -21,7 +21,7 @@ const Button = ({
   disabled,
 }) => (
   <TouchableOpacity
-    disabled={disabled}
+    disabled={disabled || loading}
     style={Platform.OS === 'ios' && [styles.btnStyle, style]}
     onPress={onPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>

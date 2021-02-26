@@ -231,8 +231,10 @@ const VerifyItemSection = ({
       bad_qty,
       item_type: item?.item_type,
     };
-    await postRePick(payload, item?.item_id);
-    navigation.navigate('RepickSuccessScreen');
+    try {
+      await postRePick(payload, item?.id);
+      navigation.navigate('RepickSuccessScreen');
+    } catch {}
   };
 
   return (

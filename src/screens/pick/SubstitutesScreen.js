@@ -91,43 +91,48 @@ const SubstitutesScreen = ({
       {!similarItems || similarItems.length === 0 ? (
         <Loader fullScreen />
       ) : (
-        <ScrollView>
-          <ItemSection
-            title={item?.name}
-            price={item?.price && item.price.toFixed(2)}
-            quantity={item?.qty}
-            position={item?.position}
-            department={item?.department}
-            type={item?.order_type}
-            status={
-              item?.picking_completed ? locale?.status?.PiC : locale?.status.Pi
-            }
-            startTime={startTime}
-            endTime={endTime}
-            img={item?.image_url}
-          />
-          {similarItems && (
-            <ItemCheckList
-              items={similarItems}
-              onPress={onCheck}
-              stock="In stock"
-              checkedList={checkedList}
+        <>
+          <ScrollView>
+            <ItemSection
+              title={item?.name}
+              price={item?.price && item.price.toFixed(2)}
+              quantity={item?.qty}
+              position={item?.position}
+              department={item?.department}
+              type={item?.order_type}
+              status={
+                item?.picking_completed
+                  ? locale?.status?.PiC
+                  : locale?.status.Pi
+              }
+              startTime={startTime}
+              endTime={endTime}
+              img={item?.image_url}
             />
-          )}
-        </ScrollView>
+            {similarItems && (
+              <ItemCheckList
+                items={similarItems}
+                onPress={onCheck}
+                stock="In stock"
+                checkedList={checkedList}
+              />
+            )}
+          </ScrollView>
+
+          <Button
+            title={locale.IS_substituteButton}
+            style={{
+              borderRadius: 0,
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              zIndex: 5,
+            }}
+            loading={isSuggestLoad}
+            onPress={onSuggestSubstitute}
+          />
+        </>
       )}
-      <Button
-        title={locale.IS_substituteButton}
-        style={{
-          borderRadius: 0,
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          zIndex: 5,
-        }}
-        loading={isSuggestLoad}
-        onPress={onSuggestSubstitute}
-      />
     </SafeAreaView>
   );
 };
