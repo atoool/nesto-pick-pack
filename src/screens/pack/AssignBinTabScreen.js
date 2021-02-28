@@ -41,6 +41,8 @@ const AssignBinTabScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(assignBinList);
+
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Bin} />
@@ -71,6 +73,7 @@ const AccordionItem = ({
   order: {
     id,
     items,
+    bins_assigned,
     order_type,
     time_slot,
     timeLeft,
@@ -106,7 +109,7 @@ const AccordionItem = ({
         onPress={() => {
           navigation.navigate('PrintLabelsScreen', { orderId: `${orderId}` });
         }}
-        title={locale?.printBinButton}
+        title={bins_assigned ? locale?.printBinButton : locale?.printBinButton2}
         style={styles.buttonBox}
       />
 
