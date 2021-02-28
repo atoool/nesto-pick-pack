@@ -63,7 +63,7 @@ const SubstitutesScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onMount = async () => {
-    await getSimilarItemList(item.id);
+    await getSimilarItemList(item?.id, item?.item_type);
   };
 
   const onSuggestSubstitute = async () => {

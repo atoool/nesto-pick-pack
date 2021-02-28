@@ -90,8 +90,12 @@ const AccordionItem = ({
                   />
                   <View style={styles.textBox}>
                     <Text style={styles.itemTitle}>
-                      {item.qty ? item.qty : 1}x{' '}
-                      {item.name ? item.name : Constants.emptyItemName}
+                      {item?.total_qty
+                        ? item?.total_qty
+                        : item.qty
+                        ? item.qty
+                        : 1}
+                      x {item.name ? item.name : Constants.emptyItemName}
                     </Text>
                     <Text style={styles.itemText}>
                       {item?.department
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
   button: { marginTop: 20 },
   statusPill: { marginBottom: 5 },
   itemTitle: { ...Typography.bold15, flexWrap: 'wrap' },
-  textBox: { width: '75%' },
+  textBox: { width: '70%' },
   itemText: { ...Typography.normal12, flexWrap: 'wrap' },
 });
 
