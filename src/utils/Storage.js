@@ -44,10 +44,14 @@ const setUserAccessTokenTimeStamp = async (access_token_timestamp) =>
 const getUserType = async () => await getItem('userType');
 const setUserType = async (userType) => await setItem('userType', userType);
 
+const getEmail = async () => await getItem('email');
+const setEmail = async (userType) => await setItem('email', userType);
+
 const logOutUser = async () => {
   await removeItem('access_token');
   await removeItem('access_token_timestamp');
   await removeItem('userType');
+  await removeItem('email');
 };
 
 const getLocale = async () => {
@@ -62,6 +66,8 @@ const setLocale = async (locale) => {
 export default {
   setItem,
   getItem,
+  getEmail,
+  setEmail,
   removeItem,
   getUserAccessToken,
   setUserAccessToken,

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -16,8 +16,10 @@ import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
 import ModalComponent from '../../components/ModalComponent';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
+import { Constants, Storage } from '../../utils';
 
 const ProfileScreen = ({ navigation }) => {
+  const [email, setEmail] = useState(Constants.emptyEmail);
   const [modalVisible, setModalVisible] = useState(false);
 
   const { logOutUser } = useContext(AuthContext);
@@ -36,13 +38,26 @@ const ProfileScreen = ({ navigation }) => {
     logOutUser();
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    const onMount = async () => {
+      const emailId = await Storage.getEmail();
+      setEmail(emailId); //mock
+    };
+    onMount();
+  }, []);
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView>
         <Title text={locale?.headings?.profile} />
         <ProfileSection
-          name="John Doe"
-          email="john@gmail.com"
+          name={
+            email?.split('@')[0]?.toUpperCase()
+              ? email?.split('@')[0]?.toUpperCase()
+              : 'John Doe'
+          }
+          email={email} //mock
           phone="+91 8891356128"
         />
         <MarkAvailability title={locale?.P_markAvail} />

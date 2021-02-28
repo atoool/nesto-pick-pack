@@ -23,13 +23,13 @@ export const AuthContextProvider = ({ children }) => {
         userRole,
       } = await login({ email, password }, locale);
 
-      logInUser(accessToken, '', userRole);
+      logInUser(accessToken, '', userRole, email);
     } catch (e) {
       console.log(e);
       throw e;
     }
   };
-  const logInUser = (access_token, access_token_timestamp, userType) => {
+  const logInUser = (access_token, access_token_timestamp, userType, email) => {
     console.log(
       'Login with: ' + access_token,
       // access_token_timestamp,
@@ -38,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
     Storage.setUserAccessToken(access_token);
     // Storage.setUserAccessTokenTimeStamp(access_token_timestamp);
     Storage.setUserType(userType);
+    Storage.setEmail(email);
     console.log('Login state');
     setVal({
       ...initialAuthState,
@@ -45,6 +46,7 @@ export const AuthContextProvider = ({ children }) => {
       // access_token_timestamp,
       userType,
       authStateLoading: false,
+      email,
     });
   };
 
@@ -57,15 +59,17 @@ export const AuthContextProvider = ({ children }) => {
     access_token,
     // access_token_timestamp,
     userType,
+    email,
   ) => {
     console.log('update: AuthStateContext');
-    console.log(access_token, userType);
+    console.log(access_token, userType, email);
     setVal({
       ...initialAuthState,
       access_token,
       // access_token_timestamp,
       userType,
       authStateLoading: false,
+      email,
     });
   };
   const checkAuthState = async () => {
@@ -73,10 +77,11 @@ export const AuthContextProvider = ({ children }) => {
       const access_token = await Storage.getUserAccessToken();
       // const access_token_timestamp = await Storage.getUserAccessTokenTimeStamp();
       const userType = await Storage.getUserType();
-      updateAuthStateContext(access_token, userType);
+      const email = await Storage.getEmail();
+      updateAuthStateContext(access_token, userType, email);
     } catch (e) {
       console.log(e);
-      console.log('USER NOT AUTHORISED');
+      console.log('USER NOT AUTHORIZED');
       logOutUser();
     }
   };
