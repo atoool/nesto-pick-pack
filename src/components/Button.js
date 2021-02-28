@@ -26,12 +26,17 @@ const Button = ({
       Platform.OS === 'ios' && [
         styles.btnStyle,
         style,
-        { backgroundColor: disabled ? Colors.primary5 : Colors.secondaryRed },
+        { backgroundColor: disabled ? Colors.primary4 : Colors.secondaryRed },
       ]
     }
     onPress={onPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
-    <View style={[styles.btnStyle, style]}>
+    <View
+      style={[
+        styles.btnStyle,
+        style,
+        { backgroundColor: disabled ? Colors.primary4 : Colors.secondaryRed },
+      ]}>
       <View
         style={[
           styles.titleView,
