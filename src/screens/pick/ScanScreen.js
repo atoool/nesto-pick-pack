@@ -177,8 +177,8 @@ const ScanScreen = ({
         visible={modalVisible}
         title={locale?.SS_alertTitle}
         text={locale?.SS_alertText}
-        button1Text={locale?.SS_alertopt1}
-        button2Text={locale?.SS_alertopt2}
+        button1Text={locale?.SS_opt1Pick}
+        button2Text={locale?.SS_opt2Pick}
         onButton1Press={() => setModalVisible(false)}
         onButton2Press={onScanMismatch}
       />

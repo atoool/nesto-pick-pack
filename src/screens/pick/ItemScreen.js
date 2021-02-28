@@ -29,16 +29,14 @@ const ItemScreen = ({
     params: { item, timeLeft, startTime, endTime },
   },
 }) => {
-  const ss =
-    (timeLeft
-      ? new Date(timeLeft) - new Date() <= 0
-        ? 0
-        : new Date(timeLeft) - new Date()
-      : 0) / 1000;
+  const ss = timeLeft
+    ? new Date(timeLeft) < new Date()
+      ? 0
+      : new Date(timeLeft) / 1000 - new Date() / 1000
+    : 0;
   // const [timerOn, setTimerOn] = useState(item?.substitution_initiated);
   const [timeOut, setTimeOut] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     locale: { locale },
   } = useContext(AppContext);
