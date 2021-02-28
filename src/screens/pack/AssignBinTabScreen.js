@@ -83,9 +83,7 @@ const AccordionItem = ({
   const now = Date.now();
   const navigation = useNavigation();
   const orderId = id ? id : '';
-  time_slot = order_start_time
-    ? { start_time: order_start_time, end_time: order_end_time }
-    : { start_time: now, end_time: now };
+  time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
   timeLeft = timeLeft ? timeLeft : now;
   const {
     locale: { locale },
