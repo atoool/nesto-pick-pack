@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -15,9 +15,11 @@ import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 import ModalComponent from '../../components/ModalComponent';
+import { Constants, Storage } from '../../utils';
 
 const ProfileScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [email, setEmail] = useState(Constants.emptyEmail);
   const { logOutUser } = useContext(AuthContext);
 
   const {
@@ -28,12 +30,25 @@ const ProfileScreen = () => {
     logOutUser();
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    const onMount = async () => {
+      const emailId = await Storage.getEmail();
+      setEmail(emailId);
+    };
+    onMount();
+  }, []);
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.profile} />
       <ProfileSection
-        name="John Doe"
-        email="john@gmail.com"
+        name={
+          email?.split('@')[0]?.toUpperCase()
+            ? email?.split('@')[0]?.toUpperCase()
+            : 'John Doe'
+        }
+        email={email}
         phone="+91 8891356128"
       />
       <MarkAvailability title={locale?.P_markAvail} />
