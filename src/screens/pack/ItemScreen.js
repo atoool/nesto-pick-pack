@@ -189,7 +189,7 @@ const VerifyItemSection = ({
     Array.apply(null, Array(item.qty)).map((itm) => element);
 
   const [passItem, setPassItem] = useState(generateArray(true));
-  const [issue, setIssue] = useState(generateArray('Good quality'));
+  const [issue, setIssue] = useState(generateArray('no issue selected'));
   const [showDropDown, setShowDropDown] = useState(generateArray(false));
   const [currentDropDown, setCurrentDropDown] = useState(0);
 
@@ -224,7 +224,7 @@ const VerifyItemSection = ({
   );
 
   const onRePick = async () => {
-    const good_qty = issue.filter((i) => i === 'Good quality').length;
+    const good_qty = issue.filter((i) => i === 'no issue selected').length;
     if (good_qty === item?.qty) {
       ToastAndroid.show(locale?.IS_reviewFailed, ToastAndroid.SHORT);
       return;

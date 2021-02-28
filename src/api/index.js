@@ -108,9 +108,10 @@ export const setItemDrop = async (id, locale) => {
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
     });
 };
-export const getSimilarItems = async (id, locale) => {
+export const getSimilarItems = async (id, locale, item_type) => {
   const URL = `/picker/item/similar-items/${id}`;
-  return get(URL, true).catch((e) => {
+  const extraParams = `&item_type=${item_type}`;
+  return get(URL, true, false, extraParams).catch((e) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
 };
