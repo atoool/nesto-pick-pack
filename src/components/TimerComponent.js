@@ -10,7 +10,7 @@ const TimerComponent = ({ ss, fullTimer, inMinute, call }) => {
   let minutesString = '00';
   let secondString = '00';
   const now = useTimer(ss);
-  if (ss === 0) {
+  if (ss !== 0) {
     HoursString = Math.floor(now / 3600)
       .toString()
       .padStart(2, 0);

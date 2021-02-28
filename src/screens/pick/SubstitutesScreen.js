@@ -36,6 +36,7 @@ const SubstitutesScreen = ({
     similarItems,
     getSimilarItemList,
     postSuggestedSubstitutes,
+    getOrdersList,
   } = useContext(PickerContext);
 
   const {
@@ -57,7 +58,7 @@ const SubstitutesScreen = ({
   };
 
   useEffect(() => {
-    console.warn(item.id);
+    // console.warn(item.id);
     onMount();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,8 +81,11 @@ const SubstitutesScreen = ({
         item_type: item?.item_type,
         suggested_items: isCheckedListEmpty,
       };
+      console.warn(payload);
       try {
-        await postSuggestedSubstitutes(payload);
+        await postSuggestedSubstitutes(payload).then(async () => {
+          await getOrdersList();
+        });
         navigation.navigate('SubstituteRequestedScreen');
       } catch {}
     }
@@ -210,7 +214,9 @@ const ItemSection = ({
             </View>
             <View style={styles.quantityPill}>
               <Text style={Typography.bold13White}>x</Text>
-              <Text style={Typography.bold20White}>{quantity}</Text>
+              <Text style={Typography.bold20White}>
+                {quantity ? quantity : 1}
+              </Text>
             </View>
           </View>
         </View>
@@ -235,16 +241,11 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
               <TickComponent
                 enabled={checkedList?.length === 0 ? false : checkedList[index]}
               />
-              <View>
-                <Text style={Typography.bold15}>
-                  {item.qty}x {item.name}
-                </Text>
-                <Text style={Typography.normal12}>
-                  {item.department} | {item.position}
-                </Text>
+              <View style={styles.suggestList}>
+                <Text style={Typography.bold15}>{item.name}</Text>
               </View>
             </View>
-            <Text
+            {/* <Text
               style={[
                 styles.stockBox,
                 {
@@ -255,7 +256,7 @@ const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
                 },
               ]}>
               {stock}
-            </Text>
+            </Text> */}
           </View>
         </TouchableOpacity>
       )}
@@ -340,11 +341,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 10,
   },
   stockBox: {
     marginRight: 20,
     ...Typography.normal12,
   },
+  suggestList: { width: '80%' },
 });
 
 export default SubstitutesScreen;
