@@ -120,7 +120,7 @@ const get = async (
       return result.data.data;
     }
   } catch (e) {
-    console.warn(e);
+    // console.warn(e);
     networkErrorLogger(e, URL, 'nil');
   }
 };
@@ -151,7 +151,7 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
     // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
     return result.data.data;
   } catch (e) {
-    console.warn(e);
+    // console.warn(e);
     networkErrorLogger(e, URL, PAYLOAD);
   }
 };

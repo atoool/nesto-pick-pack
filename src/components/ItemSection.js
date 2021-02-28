@@ -19,6 +19,7 @@ const ItemSection = ({
   endTime,
   img,
   locale,
+  originalItem,
 }) => {
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
@@ -29,20 +30,25 @@ const ItemSection = ({
           <Image
             source={{ uri: img }}
             resizeMode={'cover'}
-            style={styles.itemImage}
+            style={[
+              styles.itemImage,
+              originalItem && { tintColor: Colors.primary6 },
+            ]}
           />
         </View>
       </View>
       <View style={styles.contentBox}>
         <View style={styles.subContentBox}>
-          <View style={styles.statusPillBox}>
-            <StatusPill
-              backgroundColor="#A1C349"
-              text={position}
-              marginRight={10}
-            />
-            <StatusPill backgroundColor="#C5B171" text={department} />
-          </View>
+          {!originalItem && (
+            <View style={styles.statusPillBox}>
+              <StatusPill
+                backgroundColor="#A1C349"
+                text={position}
+                marginRight={10}
+              />
+              <StatusPill backgroundColor="#C5B171" text={department} />
+            </View>
+          )}
           <View style={styles.textContentBox}>
             <View style={styles.titleBox}>
               <Text style={Typography.bold21}>{title}</Text>
@@ -53,24 +59,26 @@ const ItemSection = ({
               <Text> {locale?.IS_perQuantity}</Text>
             </View>
           </View>
-          <View style={styles.rowBox}>
-            <View style={styles.historyBox}>
-              <View style={styles.rowBox}>
-                <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
-                {/* mock orderType */}
+          {!originalItem && (
+            <View style={styles.rowBox}>
+              <View style={styles.historyBox}>
+                <View style={styles.rowBox}>
+                  <View style={styles.deliveryStatusCircle} />
+                  <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
+                  {/* mock orderType */}
+                </View>
+                <View style={styles.deliverBoxRow2}>
+                  <Text>{sTime}</Text>
+                  <Arrow width={60} />
+                  <Text>{eTime}</Text>
+                </View>
               </View>
-              <View style={styles.deliverBoxRow2}>
-                <Text>{sTime}</Text>
-                <Arrow width={60} />
-                <Text>{eTime}</Text>
+              <View style={styles.quantityPill}>
+                <Text style={Typography.bold13White}>x</Text>
+                <Text style={Typography.bold20White}>{quantity}</Text>
               </View>
             </View>
-            <View style={styles.quantityPill}>
-              <Text style={Typography.bold13White}>x</Text>
-              <Text style={Typography.bold20White}>{quantity}</Text>
-            </View>
-          </View>
+          )}
         </View>
       </View>
     </>

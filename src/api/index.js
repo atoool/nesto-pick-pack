@@ -144,6 +144,7 @@ export const postSuggestedSubstitutes = async (PAYLOAD, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
+      // console.warn(e);
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
       throw e;
     });
