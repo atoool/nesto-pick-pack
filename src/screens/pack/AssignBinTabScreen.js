@@ -109,7 +109,7 @@ const AccordionItem = ({
         onPress={() => {
           navigation.navigate('PrintLabelsScreen', { orderId: `${orderId}` });
         }}
-        title={bins_assigned ? locale?.printBinButton : locale?.printBinButton2}
+        title={bins_assigned ? locale?.printBinButton2 : locale?.printBinButton}
         style={styles.buttonBox}
       />
 
