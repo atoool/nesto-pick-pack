@@ -44,13 +44,18 @@ const ItemScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { postRePick, setPackedItemAsMarked } = useContext(PackerContext);
+  const { postRePick, setPackedItemAsMarked, getPackerOrderList } = useContext(
+    PackerContext,
+  );
 
   const onManualEntry = async () => {
     setIsLoading(true);
-    await setPackedItemAsMarked(item?.id, item?.item_type).then(() => {
-      navigation.pop();
-    });
+    try {
+      await setPackedItemAsMarked(item?.id, item?.item_type).then(async () => {
+        await getPackerOrderList();
+        navigation.pop();
+      });
+    } catch {}
     setIsLoading(false);
   };
   if (isLoading) {

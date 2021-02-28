@@ -41,11 +41,15 @@ const ItemScreen = ({
     locale: { locale },
   } = useContext(AppContext);
 
-  const { setItemPicked } = useContext(PickerContext);
+  const { setItemPicked, getOrdersList, getDropList } = useContext(
+    PickerContext,
+  );
 
   const onManualEntry = async (itemsQty) => {
     setIsLoading(true);
-    await setItemPicked(item?.id, item?.item_type, itemsQty).then(() => {
+    await setItemPicked(item?.id, item?.item_type, itemsQty).then(async () => {
+      await getOrdersList();
+      await getDropList();
       navigation.pop();
     });
     setIsLoading(false);

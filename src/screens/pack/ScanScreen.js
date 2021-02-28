@@ -34,7 +34,9 @@ const ScanScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { setPackedItemAsMarked, orderList } = useContext(PackerContext);
+  const { setPackedItemAsMarked, orderList, getPackerOrderList } = useContext(
+    PackerContext,
+  );
 
   const onScanMismatch = async () => {
     const temp = itemScanned + 1;
@@ -62,7 +64,9 @@ const ScanScreen = ({
   };
 
   const onComplete = async () => {
-    await setPackedItemAsMarked(id, item_type);
+    await setPackedItemAsMarked(id, item_type).then(async () => {
+      await getPackerOrderList;
+    });
     navigation.navigate('ItemSuccessScreen');
   };
 

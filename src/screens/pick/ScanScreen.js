@@ -29,7 +29,9 @@ const ScanScreen = ({
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { setItemPicked } = useContext(PickerContext);
+  const { setItemPicked, getOrdersList, getDropList } = useContext(
+    PickerContext,
+  );
 
   const onScanMismatch = async () => {
     const temp = itemScanned + 1;
@@ -51,7 +53,9 @@ const ScanScreen = ({
   };
 
   const onComplete = async () => {
-    await setItemPicked(itemId, itemType, criticalQty).then(() => {
+    await setItemPicked(itemId, itemType, criticalQty).then(async () => {
+      await getOrdersList();
+      await getDropList();
       navigation.navigate('ItemSuccessScreen');
     });
   };

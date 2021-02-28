@@ -41,8 +41,6 @@ const AssignBinTabScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(assignBinList);
-
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.Assign_Bin} />

@@ -113,6 +113,7 @@ const AccordionItem = ({
       {showReadyButton && (
         <Button
           title={buttonTitle}
+          disabled={binsAssigned ? binsAssigned.length === 0 : true}
           style={styles.button}
           loading={readyButtonLoading === index}
           onPress={() => {

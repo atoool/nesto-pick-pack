@@ -34,20 +34,27 @@ const BinAssignScreen = ({
     binPos[indx] = txt;
     setBinPos([...binPos]);
   };
-  const { postAssignBin } = useContext(PackerContext);
+  const { postAssignBin, getAssignBinList, getPackerOrderList } = useContext(
+    PackerContext,
+  );
   const onSave = async () => {
     setIsButtonLoading(true);
-    const isEmpty = binPos.filter((i) => i === '').length === 0;
-    if (isEmpty) {
-      const payload = {
-        bins: binPos,
-      };
-      await postAssignBin(payload, orderId);
+    try {
+      const isEmpty = binPos.filter((i) => i === '').length === 0;
+      if (isEmpty) {
+        const payload = {
+          bins: binPos,
+        };
+        await postAssignBin(payload, orderId).then(async () => {
+          await getAssignBinList();
+          await getPackerOrderList();
+        });
 
-      navigation.pop();
-    } else {
-      ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
-    }
+        navigation.pop();
+      } else {
+        ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
+      }
+    } catch {}
     setIsButtonLoading(false);
   };
 

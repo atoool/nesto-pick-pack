@@ -43,7 +43,11 @@ const DropScreen = () => {
 
   const onDropToBin = async (id, index) => {
     setDropButtonLoading(index);
-    await setItemDrop(id);
+    try {
+      await setItemDrop(id).then(async () => {
+        await getDropList();
+      });
+    } catch {}
     setDropButtonLoading(null);
   };
 
