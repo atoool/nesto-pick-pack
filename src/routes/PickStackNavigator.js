@@ -9,10 +9,6 @@ import PickCompletedScreen from '../screens/pick/PickCompletedScreen';
 import SubstitutesScreen from '../screens/pick/SubstitutesScreen';
 import SubstitutionDetailsScreen from '../screens/pick/SubstitutionDetailsScreen';
 import Browser from '../screens/common/Browser';
-import ContactFCMScreen from '../screens/pick/ContactFCMScreen';
-import CustomerAvailScreen from '../screens/pick/CustomerAvailScreen';
-import PickerChoiceScreen from '../screens/pick/PickerChoiceScreen';
-import ItemRemovedScreen from '../screens/pick/ItemRemovedScreen';
 import { AppContext } from '../context/AppContext';
 
 const Stack = createStackNavigator();
@@ -70,38 +66,6 @@ const PickStackNavigator = () => {
       <Stack.Screen
         name="SubstitutionDetailsScreen"
         component={SubstitutionDetailsScreen}
-        options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          ...headerOptions,
-        })}
-      />
-      <Stack.Screen
-        name="ContactFCMScreen"
-        component={ContactFCMScreen}
-        options={({ route }) => ({
-          title: route.params.orderId,
-          ...headerOptions,
-        })}
-      />
-      <Stack.Screen
-        name="CustomerAvailScreen"
-        component={CustomerAvailScreen}
-        options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          ...headerOptions,
-        })}
-      />
-      <Stack.Screen
-        name="PickerChoiceScreen"
-        component={PickerChoiceScreen}
-        options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          ...headerOptions,
-        })}
-      />
-      <Stack.Screen
-        name="ItemRemovedScreen"
-        component={ItemRemovedScreen}
         options={({ route }) => ({
           title: '#' + route.params.orderId,
           ...headerOptions,

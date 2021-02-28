@@ -13,23 +13,18 @@ import {
 } from 'react-native';
 import { Typography, Colors } from '../../styles';
 import Button from '../../components/Button';
-import StatusPill from '../../components/StatusPill';
-import Arrow from '../../components/Arrow';
 import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';
 import VerifiedSVG from '../../assets/svg/VerifiedSVG';
 import Loader from '../../components/Loader';
-import formatAmPm from '../../utils/formatAmPm';
 import TimerComponent from '../../components/TimerComponent';
-
-const screenWidth = Math.round(Dimensions.get('window').width);
-const w = screenWidth - 32;
+import ItemSection from '../../components/ItemSection';
 
 const ItemScreen = ({
   navigation,
   route: {
-    params: { orderId, item, timeLeft, startTime, endTime },
+    params: { item, timeLeft, startTime, endTime },
   },
 }) => {
   const ss =
@@ -65,7 +60,7 @@ const ItemScreen = ({
     );
   }
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent fullTimer ss={ss} />
         <ItemSection
@@ -83,6 +78,7 @@ const ItemScreen = ({
           startTime={startTime}
           endTime={endTime}
           img={item?.image_url}
+          locale={locale}
         />
         {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
@@ -106,83 +102,6 @@ const ItemScreen = ({
         )}
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-const ItemSection = ({
-  title,
-  price,
-  quantity,
-  position,
-  department,
-  type,
-  status,
-  startTime,
-  endTime,
-  img,
-}) => {
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
-  const sTime = formatAmPm(startTime);
-  const eTime = formatAmPm(endTime);
-  return (
-    <>
-      <View style={styles.itemImageContainer}>
-        <View style={styles.itemImage}>
-          <Image
-            source={{ uri: img }}
-            resizeMode={'cover'}
-            style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
-          />
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', marginHorizontal: 32 }}>
-        <View style={{ flex: 1 }}>
-          <View style={{ flexDirection: 'row' }}>
-            <StatusPill
-              backgroundColor="#A1C349"
-              text={position}
-              marginRight={10}
-            />
-            <StatusPill backgroundColor="#C5B171" text={department} />
-          </View>
-          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-            <View style={{ flex: 1 }}>
-              <Text style={Typography.bold21}>{title}</Text>
-              <Text style={Typography.normal15}>{status}</Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-end',
-              }}>
-              <Text style={Typography.bold21}>${price}</Text>
-              <Text> {locale?.IS_perQuantity}</Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={styles.historyBox}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
-                {/* mock orderType */}
-              </View>
-              <View style={styles.deliverBoxRow2}>
-                <Text>{sTime}</Text>
-                <Arrow width={60} />
-                {/* <Text> ------------> </Text> */}
-                <Text>{eTime}</Text>
-              </View>
-            </View>
-            <View style={styles.quantityPill}>
-              <Text style={Typography.bold13White}>x</Text>
-              <Text style={Typography.bold20White}>{quantity}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </>
   );
 };
 
@@ -446,6 +365,7 @@ const VerifiedItem = ({ locale }) => {
 };
 
 const styles = StyleSheet.create({
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
   timerDivider: {
     height: '100%',
     width: 1,
@@ -468,49 +388,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timerContainer2: { padding: 10, marginHorizontal: 0, marginVertical: 0 },
-  itemImageContainer: {
-    marginHorizontal: 32,
-    marginBottom: 24,
-    alignItems: 'center',
-  },
-  itemImage: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.offWhite,
-    height: (1 * w) / 2,
-    width: screenWidth - 64,
-    borderRadius: 7,
-    overflow: 'hidden',
-  },
-  deliveryStatusCircle: {
-    width: 14,
-    height: 14,
-    backgroundColor: '#889BFF',
-    borderRadius: 14,
-    marginRight: 10,
-  },
-  historyBox: {
-    backgroundColor: Colors.offWhite,
-    padding: 10,
-    borderRadius: 7,
-    height: 60,
-    flex: 1,
-  },
-  quantityPill: {
-    backgroundColor: Colors.secondaryRed,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 7,
-    marginLeft: 10,
-    height: 60,
-  },
   flexDirectionRow: { flexDirection: 'row' },
-  deliverBoxRow2: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   verifyBox: { paddingVertical: 10, paddingHorizontal: 32 },
   verifyTitle: { ...Typography.bold20, marginLeft: 20 },
   verifyText: { ...Typography.normal14, marginTop: 5, marginBottom: 10 },

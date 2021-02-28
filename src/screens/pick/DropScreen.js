@@ -3,10 +3,6 @@ import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
 //Components
 import Title from '../../components/Title';
 import NoContent from '../../components/NoContent';
-//Mock Imports
-import pickerOrders from '../../mock/pickerOrders.json';
-
-// import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
 import AccordionItem from '../../components/AccordionItem';
 import { Colors } from '../../styles';
