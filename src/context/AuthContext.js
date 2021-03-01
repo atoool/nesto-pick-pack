@@ -1,7 +1,8 @@
 import React, { createContext, useState } from 'react';
+import messaging from '@react-native-firebase/messaging';
 //TODO: API
 import Storage from '../utils/Storage';
-import { login } from '../api';
+import { login, updateFCMToken } from '../api';
 
 const initialAuthState = {
   authStateLoading: true,
@@ -21,7 +22,11 @@ export const AuthContextProvider = ({ children }) => {
         accessToken,
         // access_token_timestamp,
         userRole,
-      } = await login({ email, password }, locale);
+      } = await login({ email, password }, locale).then(async () => {
+        const fcm_token = await Storage.getItem('fcm_token');
+        updateFCMToken({ fcm_token }, locale);
+        console.warn(fcm_token);
+      });
 
       logInUser(accessToken, '', userRole, email);
     } catch (e) {
@@ -53,6 +58,7 @@ export const AuthContextProvider = ({ children }) => {
   const logOutUser = async () => {
     await Storage.logOutUser();
     setVal({ ...initialAuthState, authStateLoading: false });
+    await messaging().deleteToken();
   };
 
   const updateAuthStateContext = async (
