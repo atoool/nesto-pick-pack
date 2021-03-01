@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   Text,
   View,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Image,
   ToastAndroid,
 } from 'react-native';
 import { Typography, Colors } from '../../styles';
@@ -30,11 +28,10 @@ const ItemScreen = ({
   },
 }) => {
   const ss = timeLeft
-    ? new Date(timeLeft) < new Date()
+    ? new Date(timeLeft) <= now
       ? 0
-      : new Date(timeLeft) / 1000 - new Date() / 1000
+      : new Date(timeLeft) / 1000 - now / 1000
     : 0;
-  // const [timerOn, setTimerOn] = useState(item?.substitution_initiated);
   const [timeOut, setTimeOut] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -54,10 +51,6 @@ const ItemScreen = ({
     });
     setIsLoading(false);
   };
-
-  // useEffect(() => {
-  //   item?.substitution_initiated && setTimerOn(true);
-  // }, [item.substitution_initiated]);
 
   if (isLoading) {
     return (
@@ -121,10 +114,8 @@ const ItemScreen = ({
             navigation={navigation}
             item={item}
             timeOut={timeOut}
-            // timerOn={timerOn}
             setTimerOut={() => {
               setTimeOut(true);
-              // setTimerOn(false);
             }}
             onManualEntry={onManualEntry}
             startTime={startTime}

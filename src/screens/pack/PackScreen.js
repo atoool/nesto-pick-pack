@@ -1,12 +1,5 @@
-import React, {
-  createRef,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { SafeAreaView, FlatList, StyleSheet, Linking } from 'react-native';
-import packerOrders from '../../mock/packerOrders.json';
+import React, { createRef, useContext, useEffect, useState } from 'react';
+import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import Title from '../../components/Title';
 // import { getOrdersList } from '../../api';
 import { AppContext } from '../../context/AppContext';
@@ -15,7 +8,6 @@ import AccordionItem from '../../components/AccordionItem';
 import Divider from '../../components/Divider';
 import { Colors } from '../../styles';
 import { PackerContext } from '../../context/PackerContext';
-import { useFocusEffect } from '@react-navigation/native';
 
 const PackScreen = ({ navigation, route }) => {
   const flatListRef = createRef(null);

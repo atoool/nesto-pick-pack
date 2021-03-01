@@ -23,12 +23,11 @@ const OrderComponent = ({
   } = useContext(AppContext);
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
-  const timer =
-    (timeLeft
-      ? new Date(timeLeft) - new Date() <= 0
-        ? 0
-        : new Date(timeLeft) - new Date()
-      : 0) / 1000;
+  const timer = timeLeft
+    ? new Date(timeLeft) <= new Date()
+      ? 0
+      : new Date(timeLeft) / 1000 - new Date() / 1000
+    : 0;
   return (
     <>
       {!pick && (

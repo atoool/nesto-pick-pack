@@ -38,9 +38,9 @@ const AccordionItem = ({
   readyButtonLoading = false,
 }) => {
   time_slot = time_slot
-    ? userType === 'packer'
-      ? { start_time: order_start_time, end_time: order_end_time }
-      : time_slot
+    ? // ? userType === 'packer'
+      //   ? { start_time: order_start_time, end_time: order_end_time }
+      time_slot
     : { start_time: now, end_time: now };
   return (
     <View style={styles.container}>

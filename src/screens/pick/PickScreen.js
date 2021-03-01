@@ -10,6 +10,8 @@ import PickList from '../../components/PickList';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 
+const now = Date.now();
+
 const PickScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -57,20 +59,18 @@ const PickScreen = () => {
         refreshing={refreshing}
         renderItem={({ item, index }) => (
           <PickList
-            items={item.items ? item.items : []}
+            items={item?.items ? item?.items : []}
             index={index}
-            orderType={item.order_type ? item.order_type : locale?.status.SD}
+            orderType={item?.order_type ? item?.order_type : locale?.status?.SD}
             itemCount={''}
             startTime={
-              item.timeslot.start_time ? item.timeslot.start_time : Date.now()
+              item?.timeslot?.start_time ? item?.timeslot?.start_time : now
             }
-            endTime={
-              item.timeslot.end_time ? item.timeslot.end_time : Date.now()
-            }
+            endTime={item?.timeslot?.end_time ? item?.timeslot?.end_time : now}
             timeLeft={
               item?.pickingDeadlineTimestamp
                 ? item?.pickingDeadlineTimestamp
-                : Date.now()
+                : now
             }
           />
         )}
