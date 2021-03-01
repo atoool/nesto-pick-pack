@@ -22,7 +22,6 @@ const PickTabsNavigator = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  useFirebase();
   useSubscribeTopic('picker');
   return (
     <Tabs.Navigator

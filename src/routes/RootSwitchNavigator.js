@@ -6,7 +6,7 @@ import LoginScreen from '../screens/common/LoginScreen';
 import PickTabsNavigator from '../routes/PickTabsNavigator';
 import { AuthContext } from '../context/AuthContext';
 import PackTabsNavigator from './PackTabsNavigator';
-import { useSubscribeTopic } from '../hooks/useFirebase';
+import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
 import { PickerContextProvider } from '../context/PickerContext';
 import { PackerContextProvider } from '../context/PackerContext';
 
@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const RootSwitchNavigator = () => {
   const { authStateLoading, userType } = useContext(AuthContext);
-
+  useFirebase();
   if (authStateLoading) {
     return (
       <Stack.Navigator initialRouteName="SplashScreen">

@@ -23,7 +23,6 @@ const PackTabsNavigator = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  useFirebase();
   useSubscribeTopic('packer');
   return (
     <Tabs.Navigator

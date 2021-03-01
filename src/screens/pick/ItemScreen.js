@@ -176,6 +176,21 @@ const VerifyItemSection = ({
         });
     }
   };
+
+  const getTimeRemain = (substituteInitTime) => {
+    const timeLeft = timeOut
+      ? 0
+      : substituteInitTime
+      ? Constants.awaitTime + new Date(substituteInitTime).valueOf() / 1000 >
+        new Date().valueOf() / 1000
+        ? Constants.awaitTime +
+          new Date(substituteInitTime).valueOf() / 1000 -
+          new Date().valueOf() / 1000
+        : 0
+      : 0;
+    return timeLeft;
+  };
+
   return (
     <>
       <Divider />
@@ -254,17 +269,7 @@ const VerifyItemSection = ({
               </Text>
               {!item?.substituted && item?.substitution_initiated && (
                 <TimerComponent
-                  ss={
-                    timeOut
-                      ? 0
-                      : item?.substitution_initiated_timestamp
-                      ? new Date().valueOf() / 1000 -
-                        new Date(
-                          item?.substitution_initiated_timestamp,
-                        ).valueOf() /
-                          1000
-                      : 0
-                  }
+                  ss={getTimeRemain(item?.substitution_initiated_timestamp)}
                   call={setTimerOut}
                   fullTimer
                   inMinute

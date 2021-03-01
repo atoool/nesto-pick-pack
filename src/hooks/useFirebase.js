@@ -1,9 +1,8 @@
-import { useEffect, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
 import { Linking } from 'react-native';
-// import { updateFCMToken } from '../api';
-// import * as RootNavigation from '../RootNavigation';
-// import { NotificationsContext } from '../context/NotificationsContext';
+import { Storage } from '../utils';
 
 async function getTok() {
   try {
@@ -28,9 +27,8 @@ async function getTok() {
         console.log('fcmToken=================>');
         console.log(token);
         console.log('<=================fcmToken');
-        const PAYLOAD = { token };
-        // await updateFCMToken(PAYLOAD);
-        console.log('FCM Token Sent', PAYLOAD);
+        await Storage.setItem('fcm_token', token);
+        // console.log('FCM Token Sent', PAYLOAD);
       }
     }
   } catch (e) {
@@ -67,7 +65,6 @@ export function useFirebase() {
     });
 
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Register background handler
@@ -78,7 +75,6 @@ export function useFirebase() {
       },
     );
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //INVOKED WHEN APP IS CLOSED
@@ -106,9 +102,7 @@ export function useFirebase() {
     //       // Linking.openURL(remoteMessage.data.key_1)
     //     }
     //   });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   useEffect(() => {
     getTok();
   }, []);
