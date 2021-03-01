@@ -178,9 +178,9 @@ export const updateProfile = async (PAYLOAD) => {
   });
 };
 
-export const updateFCMToken = async (PAYLOAD, locale) => {
-  const URL = '/basic/add-fcm-token';
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
-  });
-};
+// export const updateFCMToken = async (PAYLOAD, locale) => {
+//   const URL = '/basic/add-fcm-token';
+//   return post(URL, PAYLOAD, true).catch((e) => {
+//     ToastAndroid.show(e, ToastAndroid.SHORT);
+//   });
+// };
