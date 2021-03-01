@@ -53,7 +53,7 @@ export function useUnSubscribeTopic(topic) {
   //  },[])
 }
 
-export function useFirebase() {
+export function useFirebase(authStateLoading, userType) {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -105,5 +105,5 @@ export function useFirebase() {
   }, []);
   useEffect(() => {
     getTok();
-  }, []);
+  }, [authStateLoading, userType]);
 }

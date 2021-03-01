@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const RootSwitchNavigator = () => {
   const { authStateLoading, userType } = useContext(AuthContext);
-  useFirebase();
+  useFirebase(authStateLoading, userType);
   if (authStateLoading) {
     return (
       <Stack.Navigator initialRouteName="SplashScreen">

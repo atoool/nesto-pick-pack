@@ -22,11 +22,10 @@ export const AuthContextProvider = ({ children }) => {
         accessToken,
         // access_token_timestamp,
         userRole,
-      } = await login({ email, password }, locale).then(async () => {
-        // const fcm_token = await Storage.getItem('fcm_token');
-        // updateFCMToken({ fcm_token }, locale);
-        // console.warn(fcm_token);
-      });
+      } = await login({ email, password }, locale);
+      const fcm_token = await Storage.getItem('fcm_token');
+      updateFCMToken({ fcm_token }, locale);
+      console.warn(fcm_token);
 
       logInUser(accessToken, '', userRole, email);
     } catch (e) {
@@ -58,7 +57,7 @@ export const AuthContextProvider = ({ children }) => {
   const logOutUser = async () => {
     await Storage.logOutUser();
     setVal({ ...initialAuthState, authStateLoading: false });
-    // await messaging().deleteToken();
+    await messaging().deleteToken();
   };
 
   const updateAuthStateContext = async (
