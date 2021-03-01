@@ -166,7 +166,7 @@ const ItemSection = ({
         <View style={styles.itemImage}>
           <Image
             source={{ uri: img }}
-            resizeMode={'cover'}
+            resizeMode={'contain'}
             style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
           />
         </View>

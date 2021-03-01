@@ -29,7 +29,7 @@ const ItemSection = ({
         <View style={styles.itemImageBox}>
           <Image
             source={{ uri: img }}
-            resizeMode={'cover'}
+            resizeMode={'contain'}
             style={[
               styles.itemImage,
               originalItem && { tintColor: Colors.primary6 },

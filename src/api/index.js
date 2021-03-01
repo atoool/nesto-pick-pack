@@ -95,6 +95,7 @@ export const setItemPicked = async (id, item_type, critical_qty, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
+      console.log(e);
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
     });
 };
@@ -180,7 +181,6 @@ export const updateProfile = async (PAYLOAD) => {
 
 export const updateFCMToken = async (PAYLOAD, locale) => {
   const URL = '/basic/add-fcm-token';
-  console.warn(PAYLOAD);
   return post(URL, PAYLOAD, true).catch((e) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });

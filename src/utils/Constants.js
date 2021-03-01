@@ -1,6 +1,6 @@
 const Constants = {
   timeSlot: { start: '0:00 AM', end: '0:00 AM' },
-  awaitTime: 10,
+  awaitTime: 600,
   binsNeededLimit: 2,
   orderIdLimit: 20,
   binPositionLimit: 4,

@@ -25,7 +25,6 @@ export const AuthContextProvider = ({ children }) => {
       } = await login({ email, password }, locale);
       const fcm_token = await Storage.getItem('fcm_token');
       updateFCMToken({ fcm_token }, locale);
-      console.warn(fcm_token);
 
       logInUser(accessToken, '', userRole, email);
     } catch (e) {
