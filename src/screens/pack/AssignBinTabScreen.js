@@ -93,7 +93,7 @@ const AccordionItem = ({
       <OrderComponent
         orderId={orderId}
         items={items?.length + ' ' + locale?.items}
-        status={locale?.status.BA}
+        status={bins_assigned ? locale?.status.BA : locale?.status.BAP}
         orderType={order_type}
         index={index}
         startTime={time_slot.start_time}

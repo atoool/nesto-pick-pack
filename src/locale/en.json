@@ -36,9 +36,10 @@
     "AD": "Awaiting delivery",
     "ED": "Express delivery",
     "SD": "Scheduled delivery",
-    "BA": "Pending assign",
-    "subst":"Substituted item",
-    "original":"Original item"
+    "BAP": "Pending assign",
+    "BA": "Bins Assigned",
+    "subst": "Substituted item",
+    "original": "Original item"
   },
   "reviews": {
     "opt1": "Physical damage",
