@@ -48,12 +48,8 @@ const SubstitutesScreen = ({
   const [isSuggestLoad, setIsSuggestLoad] = useState(false);
 
   const onCheck = (i) => {
-    console.warn(
-      checkedList?.length === 0 ? false : checkedList[i] !== null,
-      checkedList,
-    );
     const temp = checkedList;
-    temp[i] = !checkedList[i] ? similarItems[i] : null;
+    temp[i] = !temp[i] ? similarItems[i] : null;
     setCheckedList([...temp]);
   };
 
@@ -69,7 +65,11 @@ const SubstitutesScreen = ({
 
   const onSuggestSubstitute = async () => {
     setIsSuggestLoad(true);
-    const isCheckedListEmpty = checkedList.filter((itm) => itm !== null);
+    const isCheckedListEmpty = checkedList.filter((itm) => {
+      if (itm !== null) {
+        return itm;
+      }
+    });
     if (isCheckedListEmpty.length === 0) {
       ToastAndroid.show(locale?.selectSubst, ToastAndroid.SHORT);
     } else {

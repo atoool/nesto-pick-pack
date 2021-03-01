@@ -29,16 +29,14 @@ const ItemScreen = ({
     params: { item, timeLeft, startTime, endTime },
   },
 }) => {
-  const ss =
-    (timeLeft
-      ? new Date(timeLeft) - new Date() <= 0
-        ? 0
-        : new Date(timeLeft) - new Date()
-      : 0) / 1000;
+  const ss = timeLeft
+    ? new Date(timeLeft) < new Date()
+      ? 0
+      : new Date(timeLeft) / 1000 - new Date() / 1000
+    : 0;
   // const [timerOn, setTimerOn] = useState(item?.substitution_initiated);
   const [timeOut, setTimeOut] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -149,7 +147,7 @@ const VerifyItemSection = ({
 }) => {
   const [status, setStatus] = useState(2);
   const someOutofStock = status === 1 || status === 3;
-  const substituteItems = status === 1 || status === 0 || status === 3;
+  const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
 
   const {
@@ -171,11 +169,11 @@ const VerifyItemSection = ({
       const existingQty =
         qtys === 0 ? qtys : status === 0 ? qtys : qtys - requiredQty;
 
-      const routeTo = item.substituted
-        ? 'SubstitutionDetailsScreen'
-        : timeOut
-        ? 'ContactFCMScreen'
-        : 'SubstitutesScreen';
+      const routeTo =
+        // item.substituted
+        //   ? 'SubstitutionDetailsScreen'
+        //   :
+        timeOut ? 'ContactFCMScreen' : 'SubstitutesScreen';
       routeTo !== 'ContactFCMScreen' &&
         navigation.navigate(routeTo, {
           item,
@@ -250,14 +248,16 @@ const VerifyItemSection = ({
         )}
 
         {(item?.substitution_initiated && !item?.substituted) ||
-        (substituteItems && status !== 3) ? (
+        substituteItems ? (
           <View style={{ marginHorizontal: 32 }}>
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Typography.bold21}>
                 {!timeOut
                   ? item?.substitution_initiated
-                    ? locale?.IS_waitSubstituteTitle
+                    ? substituteItems
+                      ? locale?.IS_substituteTitle
+                      : locale?.IS_waitSubstituteTitle
                     : locale?.IS_substituteTitle
                   : locale?.IS_noRespSubstituteTitle}
               </Text>
@@ -287,7 +287,7 @@ const VerifyItemSection = ({
                   : locale?.IS_substituteText
                 : locale?.IS_noRespSubstituteText}
             </Text>
-            {(!item?.substitution_initiated || timeOut) && (
+            {(!item?.substitution_initiated || timeOut || substituteItems) && (
               <Button
                 title={
                   timeOut
