@@ -57,16 +57,18 @@ const networkErrorLogger = (e, URL, PAYLOAD) => {
     // Flash.showError('Network Error');
     throw 'Network Error. Ensure you are connected to internet.';
   } else {
-    let { error, status } = e.response.data;
-    if (status === 401) {
+    let { error_code, message } = e.response.data;
+    console.warn(e.response);
+    if (error_code === 400) {
       //TODO: Logout
+      throw message;
     } else {
       console.log('Server Error');
       // Flash.showError('Server Error! Please Try again after sometime.');
     }
-    if (typeof error === 'string') {
-      console.info(error);
-      throw error;
+    if (typeof error_code === 'string') {
+      console.info(error_code);
+      throw error_code;
     } else {
       throw 'Fatal Error. Contact Admin.';
     }

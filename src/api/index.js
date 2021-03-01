@@ -13,8 +13,7 @@ export const login = async (PAYLOAD, locale) => {
 export const getNotifications = async (locale) => {
   const URL = '/picker-packer/notifications';
   return get(URL, false).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 
@@ -22,15 +21,13 @@ export const getNotifications = async (locale) => {
 export const getOrdersListPack = async (locale) => {
   const URL = '/packer/order-list-packitem';
   return get(URL, true, false).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const getAssignBinListPack = async (locale) => {
   const URL = '/packer/order-list-binassign';
   return get(URL, true, false).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const setPackedItemAsMarked = async (id, item_type, locale) => {
@@ -41,8 +38,7 @@ export const setPackedItemAsMarked = async (id, item_type, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const setOrderReady = async (id, locale) => {
@@ -52,8 +48,7 @@ export const setOrderReady = async (id, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const postAssignBin = async (PAYLOAD, id, locale) => {
@@ -63,8 +58,7 @@ export const postAssignBin = async (PAYLOAD, id, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const postRePick = async (PAYLOAD, id, locale) => {
@@ -74,8 +68,7 @@ export const postRePick = async (PAYLOAD, id, locale) => {
       ToastAndroid.show(locale.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
       throw e;
     });
 };
@@ -84,15 +77,13 @@ export const postRePick = async (PAYLOAD, id, locale) => {
 export const getOrdersListPick = async (locale) => {
   const URL = '/picker/order-list-pick';
   return get(URL, true, false).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const getOrdersDropList = async (locale) => {
   const URL = '/picker/order-list-drop';
   return get(URL, true, false).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const setItemPicked = async (id, item_type, critical_qty, locale) => {
@@ -105,8 +96,7 @@ export const setItemPicked = async (id, item_type, critical_qty, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const setItemDrop = async (id, locale) => {
@@ -116,30 +106,26 @@ export const setItemDrop = async (id, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const getSimilarItems = async (id, locale, item_type) => {
   const URL = `/picker/item/similar-items/${id}`;
   const extraParams = `&item_type=${item_type}`;
   return get(URL, true, false, extraParams).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const getPickerSuggestions = async (id, locale) => {
   const URL = `/picker/item/suggests/${id}`;
   return get(URL, true).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const getSubstitutedList = async (id, locale) => {
   const URL = `/picker/item/substitute/${id}`;
   return get(URL, true).catch((e) => {
-    console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 export const postSubstitutes = async (PAYLOAD, locale) => {
@@ -149,8 +135,7 @@ export const postSubstitutes = async (PAYLOAD, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
     });
 };
 export const postSuggestedSubstitutes = async (PAYLOAD, locale) => {
@@ -160,8 +145,7 @@ export const postSuggestedSubstitutes = async (PAYLOAD, locale) => {
       ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
-      console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
       throw e;
     });
 };
@@ -197,6 +181,6 @@ export const updateProfile = async (PAYLOAD) => {
 export const updateFCMToken = async (PAYLOAD, locale) => {
   const URL = '/basic/add-fcm-token';
   return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
