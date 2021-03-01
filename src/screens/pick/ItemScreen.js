@@ -67,10 +67,8 @@ const ItemScreen = ({
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price?.toFixed(2) : 0}
           quantity={item?.qty ? item?.qty : 0}
-          position={item?.position ? item.position : Constants.emptyPosition}
-          department={
-            item?.department ? item?.department : Constants.emptyDepartment
-          }
+          position={item?.position}
+          department={item?.department}
           type={item?.order_type ? item?.order_type : locale?.status?.SD}
           status={
             item?.picking_completed

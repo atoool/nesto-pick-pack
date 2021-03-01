@@ -39,14 +39,18 @@ const ItemSection = ({
       </View>
       <View style={styles.contentBox}>
         <View style={styles.subContentBox}>
-          {!originalItem && (
+          {!originalItem && (position || department) && (
             <View style={styles.statusPillBox}>
-              <StatusPill
-                backgroundColor="#A1C349"
-                text={position}
-                marginRight={10}
-              />
-              <StatusPill backgroundColor="#C5B171" text={department} />
+              {position && (
+                <StatusPill
+                  backgroundColor="#A1C349"
+                  text={position}
+                  marginRight={10}
+                />
+              )}
+              {department && (
+                <StatusPill backgroundColor="#C5B171" text={department} />
+              )}
             </View>
           )}
           <View style={styles.textContentBox}>

@@ -75,10 +75,8 @@ const ItemScreen = ({
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
           quantity={item?.qty ? item?.qty : 1}
-          position={item?.position ? item?.position : Constants.emptyPosition}
-          department={
-            item?.department ? item?.department : Constants.emptyDepartment
-          }
+          position={item?.position}
+          department={item?.department}
           status={
             item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
           }
@@ -132,14 +130,20 @@ const ItemSection = ({
       </View>
       <View style={styles.itemContentBox}>
         <View style={styles.itemContentSubBox}>
-          <View style={styles.statusBox}>
-            <StatusPill
-              backgroundColor="#A1C349"
-              text={position}
-              marginRight={10}
-            />
-            <StatusPill backgroundColor="#C5B171" text={department} />
-          </View>
+          {(position || department) && (
+            <View style={styles.statusBox}>
+              {position && (
+                <StatusPill
+                  backgroundColor="#A1C349"
+                  text={position}
+                  marginRight={10}
+                />
+              )}
+              {department && (
+                <StatusPill backgroundColor="#C5B171" text={department} />
+              )}
+            </View>
+          )}
           <View style={styles.itemBox}>
             <View style={styles.itemTitleBox}>
               <Text style={Typography.bold21}>{title}</Text>
