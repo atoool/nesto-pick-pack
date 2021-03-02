@@ -66,7 +66,9 @@ const ItemScreen = ({
         <ItemSection
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price?.toFixed(2) : 0}
-          quantity={item?.qty ? item?.qty : 0}
+          quantity={
+            item?.qty ? item?.qty : item?.repick_qty ? item?.repick_qty : 0
+          }
           position={item?.position}
           department={item?.department}
           type={item?.order_type ? item?.order_type : locale?.status?.SD}
@@ -75,6 +77,10 @@ const ItemScreen = ({
               ? locale?.status?.PiC
               : item?.assigned_item
               ? locale?.status?.subst
+              : item?.substitution_initiated
+              ? locale?.status?.si
+              : !item?.repick_completed
+              ? locale?.status?.rp
               : locale?.status?.Pi
           }
           startTime={startTime}
@@ -144,16 +150,17 @@ const VerifyItemSection = ({
   } = useContext(AppContext);
 
   const onVerifyButton = () => {
+    const qty = item?.qty ? item?.qty : item?.repick_qty ? item?.repick_qty : 0;
     if (!itemsQty && status === 1) {
       ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);
     } else if (
       // eslint-disable-next-line radix
-      (itemsQty === '0' || parseInt(itemsQty) >= item?.qty) &&
+      (itemsQty === '0' || parseInt(itemsQty) >= qty) &&
       status === 1
     ) {
       ToastAndroid.show(locale?.invalidValue, ToastAndroid.SHORT);
     } else {
-      const qtys = item?.qty ? item?.qty : 0;
+      const qtys = qty ? qty : 0;
       const requiredQty = status === 0 ? qtys : isNaN(itemsQty) ? 0 : itemsQty;
       const existingQty =
         qtys === 0 ? qtys : status === 0 ? qtys : qtys - requiredQty;
@@ -305,7 +312,11 @@ const VerifyItemSection = ({
               style={{ padding: 30 }}
               onPress={() => {
                 navigation.navigate('ScanScreen', {
-                  totalItem: item?.qty,
+                  totalItem: item?.qty
+                    ? item?.qty
+                    : item?.repick_qty
+                    ? item?.repick_qty
+                    : null,
                   itemId: item?.id,
                   criticalQty:
                     status === 2 ? Constants.defaultCriticalValue : itemsQty,

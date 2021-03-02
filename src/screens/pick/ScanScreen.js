@@ -34,15 +34,25 @@ const ScanScreen = ({
   );
 
   const onScanMismatch = async () => {
-    const temp = itemScanned + 1;
-    setItemScanned(temp);
-    totalItem && temp / totalItem >= 1 && (await onComplete());
+    if (totalItem / itemScanned >= 1) {
+      await onComplete();
+    } else {
+      const temp = itemScanned + 1;
+      setItemScanned(temp);
+      totalItem && temp / totalItem >= 1 && (await onComplete());
+    }
     setModalVisible(false);
   };
 
   const onScan = async (barcode) => {
     const success = itemScanned + 1;
-    if (totalItem && itemScanned < totalItem && barcode?.data?.length !== 0) {
+    if (totalItem / itemScanned >= 1) {
+      // await onComplete();
+    } else if (
+      totalItem &&
+      itemScanned < totalItem &&
+      barcode?.data?.length !== 0
+    ) {
       const temp = barcodeArray.indexOf(barcode?.data) > -1;
       if (!temp) {
         setItemScanned(success);
@@ -53,11 +63,13 @@ const ScanScreen = ({
   };
 
   const onComplete = async () => {
-    await setItemPicked(itemId, itemType, criticalQty).then(async () => {
-      await getOrdersList();
-      await getDropList();
-      navigation.navigate('ItemSuccessScreen');
-    });
+    try {
+      await setItemPicked(itemId, itemType, criticalQty).then(async () => {
+        await getOrdersList();
+        await getDropList();
+        navigation.navigate('ItemSuccessScreen');
+      });
+    } catch {}
   };
 
   return (

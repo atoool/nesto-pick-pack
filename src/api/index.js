@@ -42,7 +42,8 @@ export const setPackedItemAsMarked = async (id, item_type, locale) => {
     })
     .catch((e) => {
       console.log(e);
-      ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      ToastAndroid.show(e, ToastAndroid.SHORT);
+      throw e;
     });
 };
 export const setOrderReady = async (id, locale) => {
@@ -107,6 +108,7 @@ export const setItemPicked = async (id, item_type, critical_qty, locale) => {
     .catch((e) => {
       console.log(e);
       ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      throw e;
     });
 };
 export const setItemDrop = async (id, locale) => {

@@ -74,7 +74,13 @@ const ItemScreen = ({
         <ItemSection
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
-          quantity={item?.qty ? item?.qty : 1}
+          quantity={
+            item?.qty
+              ? item?.qty
+              : item?.repick_qty
+              ? item?.total_qty - item?.repick_qty
+              : 1
+          }
           position={item?.position}
           department={item?.department}
           status={
@@ -95,6 +101,7 @@ const ItemScreen = ({
             navigation={navigation}
             postRePick={postRePick}
             onManualEntry={onManualEntry}
+            getPackerOrderList={getPackerOrderList}
           />
         )}
       </ScrollView>
@@ -188,10 +195,17 @@ const VerifyItemSection = ({
   postRePick,
   orderId,
   onManualEntry,
+  getPackerOrderList,
 }) => {
+  const qty = item?.qty
+    ? item?.qty
+    : item?.repick_qty
+    ? item?.total_qty - item?.repick_qty
+    : 1;
   const generateArray = (element) =>
-    Array.apply(null, Array(item.qty)).map((itm) => element);
+    Array.apply(null, Array(qty)).map((itm) => element);
 
+  const [isRePickLoading, setIsRePickLoading] = useState(false);
   const [passItem, setPassItem] = useState(generateArray(true));
   const [issue, setIssue] = useState(generateArray('no issue selected'));
   const [showDropDown, setShowDropDown] = useState(generateArray(false));
@@ -208,6 +222,7 @@ const VerifyItemSection = ({
   ];
   const onCheckPass = (val, index) => {
     passItem[index] = val;
+    passItem[index] && onSetIssue('no issue selected', index);
     setPassItem([...passItem]);
   };
   const onShowDropDown = (val, index) => {
@@ -228,12 +243,15 @@ const VerifyItemSection = ({
   );
 
   const onRePick = async () => {
+    setIsRePickLoading(true);
     const good_qty = issue.filter((i) => i === 'no issue selected').length;
-    if (good_qty === item?.qty) {
+    const pass_item = passItem.filter((i) => i === true).length;
+    if (good_qty !== pass_item) {
       ToastAndroid.show(locale?.IS_reviewFailed, ToastAndroid.SHORT);
+      setIsRePickLoading(false);
       return;
     }
-    const bad_qty = item?.qty - good_qty;
+    const bad_qty = qty - good_qty;
     const payload = {
       bad_reviews: issue,
       good_qty,
@@ -243,13 +261,18 @@ const VerifyItemSection = ({
     try {
       await postRePick(payload, item?.id);
       navigation.navigate('RepickSuccessScreen');
+      await getPackerOrderList();
     } catch {
-      if (item?.repicked) {
+      if (item?.repick_completed) {
         ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+      } else if (item?.repick_completed === false) {
+        ToastAndroid.show(locale?.error?.repicking, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
       }
+      setIsRePickLoading(false);
     }
+    setIsRePickLoading(false);
   };
 
   return (
@@ -386,6 +409,7 @@ const VerifyItemSection = ({
           <Text style={styles.rePickTitle}>{locale?.IS_reviewit}</Text>
           <Text style={styles.rePickText}>{locale?.IS_reviewText}</Text>
           <Button
+            loading={isRePickLoading}
             title={locale?.IS_askTo}
             style={styles.rePickButton}
             onPress={async () => {

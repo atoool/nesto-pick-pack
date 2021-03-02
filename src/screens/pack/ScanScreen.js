@@ -21,12 +21,17 @@ const ScanScreen = ({
   navigation,
   route: {
     params: {
+      item,
       item: { qty, id, item_type },
       orderId = '#',
     },
   },
 }) => {
-  const totalItem = qty;
+  const totalItem = qty
+    ? qty
+    : item?.repick_qty
+    ? item?.total_qty - item?.repick_qty
+    : 1;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,9 +44,13 @@ const ScanScreen = ({
   );
 
   const onScanMismatch = async () => {
-    const temp = itemScanned + 1;
-    setItemScanned(temp);
-    totalItem && temp / totalItem >= 1 && (await onComplete());
+    if (itemScanned / totalItem >= 1) {
+      await onComplete();
+    } else {
+      const temp = itemScanned + 1;
+      setItemScanned(temp);
+      totalItem && temp / totalItem >= 1 && (await onComplete());
+    }
     setModalVisible(false);
   };
 
@@ -55,7 +64,9 @@ const ScanScreen = ({
 
   const onItemScan = async (barcode) => {
     const temp = barcodeArray.indexOf(barcode?.data) > -1;
-    if (!temp) {
+    if (itemScanned / totalItem >= 1) {
+      await onComplete();
+    } else if (!temp) {
       const success = itemScanned + 1;
       setItemScanned(success);
       setBarcodeArray([...barcodeArray, barcode?.data]);
@@ -64,10 +75,14 @@ const ScanScreen = ({
   };
 
   const onComplete = async () => {
-    await setPackedItemAsMarked(id, item_type).then(async () => {
-      await getPackerOrderList;
-    });
-    navigation.navigate('ItemSuccessScreen');
+    try {
+      await setPackedItemAsMarked(id, item_type).then(async () => {
+        navigation.navigate('ItemSuccessScreen');
+        await getPackerOrderList;
+      });
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
   const onBinScanner = async (barcode) => {

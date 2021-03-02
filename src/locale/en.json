@@ -39,11 +39,14 @@
     "BAP": "Pending assign",
     "BA": "Bins Assigned",
     "subst": "Substituted item",
-    "original": "Original item"
+    "original": "Original item",
+    "rp":"Re-picking now",
+    "si":"Substitution initiated"
   },
   "error":{
     "substituted":"This item has already been substituted",
-    "repicked":"This item has already been re-picked"
+    "repicked":"This item has already been re-picked",
+    "repicking":"This item has already been initiated re-picking"
   },
   "reviews": {
     "opt1": "Physical damage",

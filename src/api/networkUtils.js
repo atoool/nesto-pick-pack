@@ -58,7 +58,7 @@ const networkErrorLogger = (e, URL, PAYLOAD) => {
     throw 'Network Error. Ensure you are connected to internet.';
   } else {
     let { error_code, message } = e.response.data;
-    console.warn(e.response);
+    // console.warn(e.response);
     if (error_code === 400) {
       //TODO: Logout
       throw message;
