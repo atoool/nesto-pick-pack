@@ -176,7 +176,7 @@ const ScanScreen = ({
       <ModalComponent
         visible={modalVisible}
         title={locale?.SS_alertTitle}
-        text={locale?.SS_alertText}
+        text={locale?.SS_alertTextPick}
         button1Text={locale?.SS_opt1Pick}
         button2Text={locale?.SS_opt2Pick}
         onButton1Press={() => setModalVisible(false)}

@@ -243,7 +243,11 @@ const VerifyItemSection = ({
     try {
       await postRePick(payload, item?.id);
       navigation.navigate('RepickSuccessScreen');
-    } catch {}
+    } catch {
+      if (item?.repicked) {
+        ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+      }
+    }
   };
 
   return (

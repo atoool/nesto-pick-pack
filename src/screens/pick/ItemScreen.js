@@ -176,19 +176,17 @@ const VerifyItemSection = ({
   };
 
   const getTimeRemain = (substituteInitTime) => {
-    const timeLeft = timeOut
-      ? 0
-      : substituteInitTime
-      ? Constants.awaitTime + new Date(substituteInitTime).valueOf() / 1000 >
-        new Date().valueOf() / 1000
-        ? Constants.awaitTime +
-          new Date(substituteInitTime).valueOf() / 1000 -
-          new Date().valueOf() / 1000
-        : 0
-      : 0;
-    return timeLeft;
+    let timeLeft = 0;
+    if (!timeOut && substituteInitTime) {
+      const initTimeInSeconds = new Date(substituteInitTime).valueOf() / 1000;
+      const endTimeInSeconds = Constants.awaitTime + initTimeInSeconds;
+      const timeInSecondsNow = new Date().valueOf() / 1000;
+      if (endTimeInSeconds > timeInSecondsNow) {
+        timeLeft = endTimeInSeconds - timeInSecondsNow;
+      }
+      return timeLeft;
+    }
   };
-
   return (
     <>
       <Divider />

@@ -41,6 +41,10 @@
     "subst": "Substituted item",
     "original": "Original item"
   },
+  "error":{
+    "substituted":"This item has already been substituted",
+    "repicked":"This item has already been re-picked"
+  },
   "reviews": {
     "opt1": "Physical damage",
     "opt2": "Physical broken",
@@ -146,7 +150,7 @@
   "SS_alertopt1": "No, Don't pack",
   "SS_alertopt2": "Yes pack this",
   "SS_alertTitlePick": "Scan mismatch",
-  "SS_alertTextPick": "There seems to be a mismatch in the bar code. Do you want to continue packing of item regardless ?",
+  "SS_alertTextPick": "There seems to be a mismatch in the bar code. Do you want to continue picking of item regardless ?",
   "SS_opt1Pick": "No, Don't pick",
   "SS_opt2Pick": "Yes pick this",
   "SS_scanbar": "Scan Bar Code",

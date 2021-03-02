@@ -87,7 +87,13 @@ const SubstitutesScreen = ({
           await getOrdersList();
         });
         navigation.navigate('SubstituteRequestedScreen');
-      } catch {}
+      } catch {
+        if (item?.substituted || item?.item?.assigned_item) {
+          ToastAndroid.show(locale?.error?.substituted, ToastAndroid.SHORT);
+        } else if (item?.item?.repicked) {
+          ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+        }
+      }
     }
     setIsSuggestLoad(false);
   };
