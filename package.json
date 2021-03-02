@@ -1,13 +1,14 @@
 {
   "name": "NestoPickPack",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "buildNumber": "5",
+  "env": "staging",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "move-apk": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber.apk",
+    "move-apk": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env.apk",
     "buildandroid": "cd android && ./gradlew assembleRelease && cd .. && yarn run move-apk",
     "runandroid": "react-native run-android --variant=release && yarn run move-apk",
     "upver": "node ./upver.js",
