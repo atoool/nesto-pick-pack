@@ -246,6 +246,8 @@ const VerifyItemSection = ({
     } catch {
       if (item?.repicked) {
         ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
       }
     }
   };

@@ -92,6 +92,8 @@ const SubstitutesScreen = ({
           ToastAndroid.show(locale?.error?.substituted, ToastAndroid.SHORT);
         } else if (item?.item?.repicked) {
           ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
         }
       }
     }
