@@ -79,7 +79,7 @@ const ItemScreen = ({
               ? locale?.status?.subst
               : item?.substitution_initiated
               ? locale?.status?.si
-              : !item?.repick_completed
+              : item?.repick_completed === false
               ? locale?.status?.rp
               : locale?.status?.Pi
           }
