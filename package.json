@@ -1,8 +1,8 @@
 {
   "name": "NestoPickPack",
-  "version": "0.0.4",
-  "buildNumber": "5",
-  "env": "staging",
+  "version": "0.0.5",
+  "buildNumber": "6",
+  "env": "dev",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

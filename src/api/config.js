@@ -1,4 +1,4 @@
-const API_URL = 'https://staging-api.nesto.shop/';
+const API_URL = 'https://dev-api.nesto.shop/';
 const IMAGES_API_URL = 'https://api.ketomined.ie/';
 const TERMS_URL =
   'https://photoapps.s3.amazonaws.com/ketomined/ketomined_termsandconditions.html';
