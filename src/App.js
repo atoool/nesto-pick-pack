@@ -38,11 +38,6 @@ const App = () => {
           <RootSwitchNavigator />
         </NavigationContainer>
         <SnackBar title={locale?.networkError} showSnack={showSnack} />
-        <InAppMessage
-          title={locale?.headings.notifications}
-          text={locale?.networkError}
-          showSnack={false}
-        />
       </AuthContextProvider>
     </AppContextProvider>
   );
