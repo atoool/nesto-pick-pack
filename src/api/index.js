@@ -6,7 +6,7 @@ export const login = async (PAYLOAD, locale) => {
   const URL = '/basic/login';
   return post(URL, PAYLOAD, false).catch((e) => {
     console.log(e);
-    ToastAndroid.show(locale?.invalidLogin, ToastAndroid.SHORT);
+    ToastAndroid.show(e, ToastAndroid.SHORT);
   });
 };
 

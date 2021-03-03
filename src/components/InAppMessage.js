@@ -1,17 +1,14 @@
-import React, { useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
+import { AppContext } from '../context/AppContext';
 import { Colors, Typography } from '../styles';
 
-const InAppMessage = ({
-  style,
-  title,
-  text,
-  titleStyle,
-  showSnack,
-  textStyle,
-}) => {
+const InAppMessage = ({ style, titleStyle, textStyle }) => {
   const slideAnim = useRef(new Animated.Value(-500)).current;
-
+  const { showInAppMessage, inAppMessage, onSetShowInAppMessage } = useContext(
+    AppContext,
+  );
   const show = () => {
     // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(slideAnim, {
@@ -19,6 +16,9 @@ const InAppMessage = ({
       duration: 200,
       useNativeDriver: true,
     }).start();
+    setTimeout(() => {
+      onSetShowInAppMessage(false);
+    }, 5000);
   };
 
   const hide = () => {
@@ -29,7 +29,7 @@ const InAppMessage = ({
       useNativeDriver: true,
     }).start();
   };
-  showSnack ? show() : hide();
+  showInAppMessage ? show() : hide();
   return (
     <Animated.View
       style={[
@@ -37,8 +37,8 @@ const InAppMessage = ({
         style ? style : {},
         { transform: [{ translateY: slideAnim }] },
       ]}>
-      <Text style={[titleStyle, styles.title]}>{title}</Text>
-      <Text style={[textStyle, styles.text]}>{text}</Text>
+      <Text style={[titleStyle, styles.title]}>{inAppMessage?.title}</Text>
+      <Text style={[textStyle, styles.text]}>{inAppMessage?.body}</Text>
     </Animated.View>
   );
 };

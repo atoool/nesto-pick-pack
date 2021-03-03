@@ -41,7 +41,7 @@
     "subst": "Substituted item",
     "original": "Original item",
     "rp":"Re-picking now",
-    "si":"Substitution initiated"
+    "si":"Substitution initiated",
   },
   "error":{
     "substituted":"This item has already been substituted",
@@ -52,6 +52,9 @@
     "opt1": "Physical damage",
     "opt2": "Physical broken",
     "opt3": "Expired product"
+  },
+  "push":{
+    "newOrder":"New order is assigned to you"
   },
   "timeLeft": "Time left",
   "timeRemain": "Time remaining",

@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, useState, useEffect } from 'react';
 import { I18nManager } from 'react-native';
 import RNRestart from 'react-native-restart';
+import InAppMessage from '../components/InAppMessage';
 import { useSubscribeTopic, useUnSubscribeTopic } from '../hooks/useFirebase';
 import en from '../locale/en.json';
 import { Storage } from '../utils';
@@ -9,12 +11,18 @@ const LOCALES = [{ lan: 'English', locale: en, isRTL: false }];
 
 export const AppContext = createContext({
   locale: LOCALES[0],
+  showInAppMessage: false,
+  onSetShowInAppMessage: () => {},
+  inAppMessage: { title: '', body: '' },
+  onSetInAppMessage: () => {},
 });
 
 export const AppContextProvider = ({ children }) => {
   //locale
   const [languages, setLanguages] = useState();
   const [locale, setLocale] = useState(LOCALES[0]);
+  const [showInAppMessage, setShowInAppMessage] = useState(false);
+  const [inAppMessage, setInAppMessage] = useState({ title: '', body: '' });
 
   const loadLocale = async () => {
     try {
@@ -59,11 +67,19 @@ export const AppContextProvider = ({ children }) => {
     setLocale(_locale);
     languageRestart(_locale?.rtl ?? LOCALES[0].rtl);
   };
-
   const value = {
     locale,
     languages,
     changeLocale,
+    showInAppMessage,
+    inAppMessage,
+    onSetInAppMessage: (val) => setInAppMessage(val),
+    onSetShowInAppMessage: (val) => setShowInAppMessage(val),
   };
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={value}>
+      <InAppMessage />
+      {children}
+    </AppContext.Provider>
+  );
 };

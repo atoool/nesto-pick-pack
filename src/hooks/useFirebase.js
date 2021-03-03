@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { Linking } from 'react-native';
 import { Storage } from '../utils';
+import { PickerContext } from '../context/PickerContext';
+import { PackerContext } from '../context/PackerContext';
+import { AppContext } from '../context/AppContext';
 
 async function getTok() {
   try {
@@ -54,14 +56,29 @@ export function useUnSubscribeTopic(topic) {
 }
 
 export function useFirebase(authStateLoading, userType) {
+  const { getOrdersList, getDropList } = useContext(PickerContext);
+  const { getAssignBinList, getPackerOrderList } = useContext(PackerContext);
+  const { onSetInAppMessage, onSetShowInAppMessage } = useContext(AppContext);
+
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      // Linking.openURL(remoteMessage.data.key_1);
-      console.warn(
-        'FCM NOTIFCATION WHILE APP IN FG',
-        JSON.stringify(remoteMessage.data),
-      );
+      const action = remoteMessage?.data?.action
+        ? remoteMessage?.data?.action
+        : '';
+      const title = remoteMessage?.notification?.title
+        ? remoteMessage?.notification?.title
+        : '';
+      if (userType?.toLowerCase() === 'picker' && action === 'order_update') {
+        await getOrdersList();
+        await getDropList();
+        onSetShowInAppMessage(true);
+      } else if (action === 'order_update') {
+        await getPackerOrderList();
+        await getAssignBinList();
+        onSetShowInAppMessage(true);
+      }
+      title !== '' && onSetInAppMessage(remoteMessage.notification);
     });
 
     return unsubscribe;
@@ -86,23 +103,10 @@ export function useFirebase(authStateLoading, userType) {
           'Notification caused app to open from background state:',
           remoteMessage.data,
         );
-        // Linking.openURL(remoteMessage.data.key_1);
       }
     });
-    // Check whether an initial notification is available
-    // messaging()
-    //   .getInitialNotification()
-    //   .then(async (remoteMessage) => {
-    //     if (remoteMessage) {
-
-    //       console.log(
-    //         'Notification caused app to open from quit state:',
-    //         remoteMessage.data,
-    //       );
-    //       // Linking.openURL(remoteMessage.data.key_1)
-    //     }
-    //   });
   }, []);
+
   useEffect(() => {
     getTok();
   }, [authStateLoading, userType]);
