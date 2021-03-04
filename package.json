@@ -1,7 +1,7 @@
 {
   "name": "NestoPickPack",
-  "version": "0.0.4",
-  "buildNumber": "5",
+  "version": "0.0.6",
+  "buildNumber": "7",
   "env": "staging",
   "private": true,
   "scripts": {
