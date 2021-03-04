@@ -8,11 +8,11 @@ const Constants = {
   criticalStockLimit: 3,
   defaultCriticalValue: 0,
   timerUpperLimit: '>100',
-  emptyPosition: '[position missing]',
-  emptyDepartment: '[department missing]',
-  emptyItemName: '[item_name missing]',
-  emptyOrderId: '[order_id missing]',
-  emptyEmail: '[email missing]',
+  emptyPosition: 'Position missing',
+  emptyDepartment: 'Department missing',
+  emptyItemName: 'Item name missing',
+  emptyOrderId: 'Order id missing',
+  emptyEmail: 'Email missing',
 };
 
 export default Constants;

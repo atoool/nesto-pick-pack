@@ -54,7 +54,7 @@
     "opt3": "Expired product"
   },
   "push":{
-    "newOrder":"New order is assigned to you"
+    "orderRefresh":"Orders refreshed"
   },
   "timeLeft": "Time left",
   "timeRemain": "Time remaining",

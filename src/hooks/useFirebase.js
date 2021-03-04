@@ -5,6 +5,8 @@ import { Storage } from '../utils';
 import { PickerContext } from '../context/PickerContext';
 import { PackerContext } from '../context/PackerContext';
 import { AppContext } from '../context/AppContext';
+import { ToastAndroid } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
 
 async function getTok() {
   try {
@@ -55,10 +57,15 @@ export function useUnSubscribeTopic(topic) {
   //  },[])
 }
 
-export function useFirebase(authStateLoading, userType) {
+export function useFirebase() {
   const { getOrdersList, getDropList } = useContext(PickerContext);
   const { getAssignBinList, getPackerOrderList } = useContext(PackerContext);
-  const { onSetInAppMessage, onSetShowInAppMessage } = useContext(AppContext);
+  const {
+    onSetInAppMessage,
+    onSetShowInAppMessage,
+    locale: { locale },
+  } = useContext(AppContext);
+  const { authStateLoading, userType } = useContext(AuthContext);
 
   // //Invoked when app is open.
   useEffect(() => {
@@ -70,19 +77,24 @@ export function useFirebase(authStateLoading, userType) {
         ? remoteMessage?.notification?.title
         : '';
       if (userType?.toLowerCase() === 'picker' && action === 'order_update') {
+        onSetShowInAppMessage(true);
         await getOrdersList();
         await getDropList();
+        ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
+      } else if (
+        userType?.toLowerCase() === 'packer' &&
+        action === 'order_update'
+      ) {
         onSetShowInAppMessage(true);
-      } else if (action === 'order_update') {
         await getPackerOrderList();
         await getAssignBinList();
-        onSetShowInAppMessage(true);
+        ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
       }
       title !== '' && onSetInAppMessage(remoteMessage.notification);
     });
 
     return unsubscribe;
-  }, []);
+  }, [userType]);
 
   // Register background handler
   useEffect(() => {
