@@ -15,7 +15,7 @@ import PackScanSVG from '../assets/svg/PackScanSVG.svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import { AppContext } from '../context/AppContext';
-import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
+import { useSubscribeTopic } from '../hooks/useFirebase';
 import AssignStackNavigator from './AssignStackNavigator';
 
 const Tabs = createBottomTabNavigator();

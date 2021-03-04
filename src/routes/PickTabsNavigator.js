@@ -11,7 +11,7 @@ import DropSVG from '../assets/svg/DropSVG.svg';
 import NotificationSVG from '../assets/svg/NotificationSVG.svg';
 import PickSVG from '../assets/svg/PickSVG.svg';
 import ProfileSVG from '../assets/svg/ProfileSVG.svg';
-import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
+import { useSubscribeTopic } from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
 import DropScreen from '../screens/pick/DropScreen';
