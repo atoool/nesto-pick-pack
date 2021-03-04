@@ -17,6 +17,7 @@ import { AppContext } from '../../context/AppContext';
 import ModalComponent from '../../components/ModalComponent';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 import { Constants, Storage } from '../../utils';
+import TestTouchable from '../../components/TestTouchable';
 
 const ProfileScreen = ({ navigation }) => {
   const [email, setEmail] = useState(Constants.emptyEmail);
@@ -51,15 +52,17 @@ const ProfileScreen = ({ navigation }) => {
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <ScrollView>
         <Title text={locale?.headings?.profile} />
-        <ProfileSection
-          name={
-            email?.split('@')[0]?.toUpperCase()
-              ? email?.split('@')[0]?.toUpperCase()
-              : 'John Doe'
-          }
-          email={email} //mock
-          phone="+91 8891356128"
-        />
+        <TestTouchable>
+          <ProfileSection
+            name={
+              email?.split('@')[0]?.toUpperCase()
+                ? email?.split('@')[0]?.toUpperCase()
+                : 'John Doe'
+            }
+            email={email} //mock
+            phone="+91 8891356128"
+          />
+        </TestTouchable>
         <MarkAvailability title={locale?.P_markAvail} />
         <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
         <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />

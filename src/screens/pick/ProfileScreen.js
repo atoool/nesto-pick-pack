@@ -16,6 +16,7 @@ import { AppContext } from '../../context/AppContext';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 import ModalComponent from '../../components/ModalComponent';
 import { Constants, Storage } from '../../utils';
+import TestTouchable from '../../components/TestTouchable';
 
 const ProfileScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,15 +43,17 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <Title text={locale?.headings.profile} />
-      <ProfileSection
-        name={
-          email?.split('@')[0]?.toUpperCase()
-            ? email?.split('@')[0]?.toUpperCase()
-            : 'John Doe'
-        }
-        email={email}
-        phone="+91 8891356128"
-      />
+      <TestTouchable>
+        <ProfileSection
+          name={
+            email?.split('@')[0]?.toUpperCase()
+              ? email?.split('@')[0]?.toUpperCase()
+              : 'John Doe'
+          }
+          email={email}
+          phone="+91 8891356128"
+        />
+      </TestTouchable>
       <MarkAvailability title={locale?.P_markAvail} />
       {/* <LinkButton title="Mark availability" topBorder={true} /> */}
       {/* <LinkButton title="My statistics" /> */}
