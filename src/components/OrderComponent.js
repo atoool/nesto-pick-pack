@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { Colors, Typography } from '../styles';
+import { Constants } from '../utils';
 import formatAmPm from '../utils/formatAmPm';
 import Arrow from './Arrow';
 import StatusPill from './StatusPill';
@@ -33,7 +34,9 @@ const OrderComponent = ({
       {!pick && (
         <View style={styles.container}>
           <View>
-            <Text style={Typography.bold17}>{'#' + orderId}</Text>
+            <Text style={Typography.bold17}>
+              {`#${orderId ? orderId : Constants.emptyOrderId}`}
+            </Text>
             <Text style={Typography.normal15}>{status}</Text>
           </View>
           <View>
@@ -61,7 +64,7 @@ const OrderComponent = ({
         </View>
         {/* {(!pick || index === 0) && ( */}
         <View style={styles.counter}>
-          <Text style={Typography.normal12}>{locale.timeLeft}</Text>
+          <Text style={Typography.normal12}>{locale?.timeLeft}</Text>
           <View style={styles.timeLeftBox}>
             <TimerComponent ss={timer} />
             <Text style={Typography.normal12}> Hrs</Text>
@@ -81,6 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between',
     marginTop: 5,
+    flexWrap: 'wrap',
   },
   deliveryStatusCircle: {
     width: 12,
@@ -91,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   historyBox: {
-    height: 70,
+    height: 'auto',
     backgroundColor: Colors.offWhite,
     padding: 10,
     marginVertical: 10,

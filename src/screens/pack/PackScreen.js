@@ -8,6 +8,7 @@ import AccordionItem from '../../components/AccordionItem';
 import Divider from '../../components/Divider';
 import { Colors } from '../../styles';
 import { PackerContext } from '../../context/PackerContext';
+import { Constants } from '../../utils';
 
 const PackScreen = ({ navigation, route }) => {
   const flatListRef = createRef(null);
@@ -44,10 +45,16 @@ const PackScreen = ({ navigation, route }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const navigateTo = (orderId, item, time_slot, order_type) =>
+  const navigateTo = (
+    orderId,
+    item,
+    time_slot,
+    order_type,
+    sales_incremental_id,
+  ) =>
     navigation.navigate('ItemScreen', {
       orderId: orderId,
-      // sales_incremental_id
+      sales_incremental_id,
       item,
       time_slot,
       order_type,
@@ -107,7 +114,6 @@ const PackScreen = ({ navigation, route }) => {
             })?.length === item?.items?.length;
           return (
             <AccordionItem
-              // sales_incremental_id
               order={{ id: item?.id ? item?.id : '#', ...item }}
               orderType={
                 item?.order_type ? item?.order_type : locale?.status.SD
@@ -120,12 +126,20 @@ const PackScreen = ({ navigation, route }) => {
               itemCount={
                 getPackedItemCount(item?.items) +
                 '/' +
-                (item?.items ? item?.items.length : 0) +
+                (item?.items ? item?.items?.length : 0) +
                 ' ' +
                 locale?.packed
               }
               onPress={(itm) => {
-                navigateTo(item?.id, itm, item.time_slot, item.order_type);
+                navigateTo(
+                  item?.id,
+                  itm,
+                  item?.time_slot,
+                  item?.order_type,
+                  item?.sales_incremental_id
+                    ? item?.sales_incremental_id
+                    : Constants.emptyOrderId,
+                );
               }}
               buttonTitle={locale?.PS_isReady}
               onReadyPress={onReadyPress}

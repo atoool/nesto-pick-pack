@@ -170,7 +170,9 @@ const VerifyItemSection = ({
         navigation.navigate(routeTo, {
           item,
           orderId: item?.orderId,
-          // sales_incremental_id
+          sales_incremental_id: item?.sales_incremental_id
+            ? item?.sales_incremental_id
+            : Constants?.emptyOrderId,
           existingQty,
           requiredQty,
           startTime,

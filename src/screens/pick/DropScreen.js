@@ -83,7 +83,7 @@ const DropScreen = () => {
             <AccordionItem
               order={item}
               index={index}
-              orderType={item.order_type ? item.order_type : locale?.status.SD}
+              orderType={item?.order_type ? item.order_type : locale?.status.SD}
               status={picking_completed ? locale?.status.PiC : locale.status.Pi}
               itemCount={
                 getPackedItemCount(item?.items) +

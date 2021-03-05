@@ -93,7 +93,7 @@ const AccordionItem = ({
   return (
     <View style={styles.accordion}>
       <OrderComponent
-        orderId={orderId}
+        orderId={sales_incremental_id}
         items={items?.length + ' ' + locale?.items}
         status={bins_assigned ? locale?.status.BA : locale?.status.BAP}
         orderType={order_type}
@@ -107,7 +107,7 @@ const AccordionItem = ({
         onPress={() => {
           navigation.navigate('PrintLabelsScreen', {
             orderId: `${orderId}`,
-            // sales_incremental_id
+            sales_incremental_id,
           });
         }}
         title={bins_assigned ? locale?.printBinButton2 : locale?.printBinButton}

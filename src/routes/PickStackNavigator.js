@@ -28,8 +28,7 @@ const PickStackNavigator = () => {
         name="ItemScreen"
         component={ItemScreen}
         options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          // route.params.sales_incremental_id
+          title: '#' + route?.params?.sales_incremental_id,
           ...headerOptions,
         })}
       />
@@ -60,8 +59,7 @@ const PickStackNavigator = () => {
         name="SubstitutesScreen"
         component={SubstitutesScreen}
         options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          // route.params.sales_incremental_id
+          title: '#' + route?.params?.sales_incremental_id,
           ...headerOptions,
         })}
       />
@@ -69,8 +67,7 @@ const PickStackNavigator = () => {
         name="SubstitutionDetailsScreen"
         component={SubstitutionDetailsScreen}
         options={({ route }) => ({
-          title: '#' + route.params.orderId,
-          // route.params.sales_incremental_id
+          title: '#' + route?.params?.sales_incremental_id,
           ...headerOptions,
         })}
       />
