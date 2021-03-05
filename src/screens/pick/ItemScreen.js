@@ -27,6 +27,7 @@ const ItemScreen = ({
     params: { item, timeLeft, startTime, endTime },
   },
 }) => {
+  console.warn(item?.sku, 'sku');
   const ss = timeLeft
     ? new Date(timeLeft) <= now
       ? 0
@@ -88,6 +89,13 @@ const ItemScreen = ({
           img={item?.image_url}
           locale={locale}
         />
+        <View style={styles.skuBox}>
+          <Text style={Typography.normal15}>
+            {item?.sku ? item?.sku : Constants.emptySku}
+          </Text>
+          {/* mock orderType */}
+        </View>
+
         {item?.assigned_item && (
           <>
             <Divider />
@@ -417,6 +425,16 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: Colors.WHITE,
     opacity: 0.25,
+  },
+  skuBox: {
+    backgroundColor: Colors.offWhite,
+    padding: 10,
+    borderRadius: 7,
+    height: 60,
+    flex: 1,
+    marginTop: 20,
+    marginHorizontal: 32,
+    justifyContent: 'center',
   },
   loading: {
     height: '100%',

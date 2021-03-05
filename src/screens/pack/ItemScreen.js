@@ -92,6 +92,12 @@ const ItemScreen = ({
           end_time={formatAmPm(new Date(end))}
           img={item?.image_url}
         />
+        <View style={styles.skuBox}>
+          <Text style={Typography.normal15}>
+            {item?.sku ? item?.sku : Constants.emptySku}
+          </Text>
+          {/* mock orderType */}
+        </View>
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
@@ -420,6 +426,16 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: Colors.WHITE,
     opacity: 0.25,
+  },
+  skuBox: {
+    backgroundColor: Colors.offWhite,
+    padding: 10,
+    borderRadius: 7,
+    height: 60,
+    flex: 1,
+    marginTop: 20,
+    marginHorizontal: 32,
+    justifyContent: 'center',
   },
   timerContainer: {
     backgroundColor: Colors.secondaryRed,

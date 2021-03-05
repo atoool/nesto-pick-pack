@@ -13,6 +13,7 @@ const Constants = {
   emptyItemName: 'Item name missing',
   emptyOrderId: 'Order id missing',
   emptyEmail: 'Email missing',
+  emptySku: 'item sku empty',
 };
 
 export default Constants;
