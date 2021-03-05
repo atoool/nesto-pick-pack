@@ -32,7 +32,7 @@ const ScanScreen = ({
     ? qty
     : item?.repick_qty
     ? item?.total_qty - item?.repick_qty
-    : 1;
+    : null;
   const [itemScanned, setItemScanned] = useState(0);
   const [barcodeArray, setBarcodeArray] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);

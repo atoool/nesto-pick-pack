@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.secondaryGray,
     width: 60,
     height: 60,
-    marginLeft: -32,
-    marginRight: 50,
+    marginLeft: 0,
+    marginRight: 20,
   },
   profileSectionContainer: {
     flexDirection: 'row',
