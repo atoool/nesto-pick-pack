@@ -82,7 +82,6 @@ const AccordionItem = ({
   },
   index,
 }) => {
-  // console.warn();
   const now = Date.now();
   const navigation = useNavigation();
   const orderId = id ? id : '';
@@ -106,7 +105,10 @@ const AccordionItem = ({
 
       <Button
         onPress={() => {
-          navigation.navigate('PrintLabelsScreen', { orderId: `${orderId}` });
+          navigation.navigate('PrintLabelsScreen', {
+            orderId: `${orderId}`,
+            // sales_incremental_id
+          });
         }}
         title={bins_assigned ? locale?.printBinButton2 : locale?.printBinButton}
         style={styles.buttonBox}

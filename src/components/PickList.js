@@ -49,6 +49,7 @@ const PickList = ({
             onPress={() =>
               navigation.navigate('ItemScreen', {
                 orderId: item.orderId,
+                // sales_incremental_id
                 item,
                 timeLeft,
                 startTime,
@@ -77,6 +78,7 @@ const PickList = ({
               <View style={styles.departmentBox}>
                 <Text style={Typography.normal12}>
                   #{item?.orderId ? item?.orderId : Constants.emptyOrderId} |{' '}
+                  {/* sales_incremental_id */}
                   {item?.department
                     ? item?.department
                     : Constants.emptyDepartment}{' '}

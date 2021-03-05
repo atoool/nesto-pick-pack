@@ -165,15 +165,12 @@ const VerifyItemSection = ({
       const existingQty =
         qtys === 0 ? qtys : status === 0 ? qtys : qtys - requiredQty;
 
-      const routeTo =
-        // item.substituted
-        //   ? 'SubstitutionDetailsScreen'
-        //   :
-        timeOut ? 'ContactFCMScreen' : 'SubstitutesScreen';
+      const routeTo = timeOut ? 'ContactFCMScreen' : 'SubstitutesScreen';
       routeTo !== 'ContactFCMScreen' &&
         navigation.navigate(routeTo, {
           item,
           orderId: item?.orderId,
+          // sales_incremental_id
           existingQty,
           requiredQty,
           startTime,

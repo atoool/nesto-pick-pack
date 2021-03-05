@@ -29,6 +29,7 @@ const PickStackNavigator = () => {
         component={ItemScreen}
         options={({ route }) => ({
           title: '#' + route.params.orderId,
+          // route.params.sales_incremental_id
           ...headerOptions,
         })}
       />
@@ -60,6 +61,7 @@ const PickStackNavigator = () => {
         component={SubstitutesScreen}
         options={({ route }) => ({
           title: '#' + route.params.orderId,
+          // route.params.sales_incremental_id
           ...headerOptions,
         })}
       />
@@ -68,6 +70,7 @@ const PickStackNavigator = () => {
         component={SubstitutionDetailsScreen}
         options={({ route }) => ({
           title: '#' + route.params.orderId,
+          // route.params.sales_incremental_id
           ...headerOptions,
         })}
       />

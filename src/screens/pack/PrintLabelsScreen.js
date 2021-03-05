@@ -45,7 +45,11 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
 
   const onAssignBinPress = () => {
     if (bins !== '' && orderId && orderId !== '') {
-      navigation.navigate('BinAssignScreen', { orderId, bins });
+      navigation.navigate('BinAssignScreen', {
+        orderId,
+        bins,
+        // sales_incremental_id
+      });
     } else {
       ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);
     }

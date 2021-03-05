@@ -56,7 +56,7 @@ const ItemScreen = ({
         navigation.navigate('ItemSuccessScreen');
       });
     } catch {}
-    setIsLoading(false);
+    // setIsLoading(false);
   };
   if (isLoading) {
     return (

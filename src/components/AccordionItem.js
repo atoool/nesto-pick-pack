@@ -19,6 +19,7 @@ const now = Date.now();
 const AccordionItem = ({
   order: {
     id,
+    // sales_incremental_id
     items,
     time_slot,
     binsAssigned,
@@ -46,6 +47,7 @@ const AccordionItem = ({
     <View style={styles.container}>
       <OrderComponent
         orderId={id}
+        // sales_incremental_id
         items={itemCount}
         status={status}
         orderType={orderType}

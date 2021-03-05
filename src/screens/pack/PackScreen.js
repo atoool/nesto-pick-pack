@@ -47,6 +47,7 @@ const PackScreen = ({ navigation, route }) => {
   const navigateTo = (orderId, item, time_slot, order_type) =>
     navigation.navigate('ItemScreen', {
       orderId: orderId,
+      // sales_incremental_id
       item,
       time_slot,
       order_type,
@@ -106,7 +107,8 @@ const PackScreen = ({ navigation, route }) => {
             })?.length === item?.items?.length;
           return (
             <AccordionItem
-              order={{ id: item?.id ? item?.id : '####', ...item }}
+              // sales_incremental_id
+              order={{ id: item?.id ? item?.id : '#', ...item }}
               orderType={
                 item?.order_type ? item?.order_type : locale?.status.SD
               }

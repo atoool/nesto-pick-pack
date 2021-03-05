@@ -19,7 +19,11 @@ import { Constants } from '../../utils';
 
 const BinAssignScreen = ({
   route: {
-    params: { orderId, bins },
+    params: {
+      orderId,
+      bins,
+      // sales_incremental_id
+    },
   },
   navigation,
 }) => {
@@ -71,6 +75,7 @@ const BinAssignScreen = ({
           orderIdLabel={locale?.BAS_order}
           printLabelText={`${locale?.BAS_printLabel2}${
             orderId ? '#' + orderId : ''
+            // sales_incremental_id
           }`}
           binCountLabel={locale?.BAS_howMany}
           orderId={orderId}
