@@ -53,7 +53,7 @@ const ItemScreen = ({
     try {
       await setPackedItemAsMarked(item?.id, item?.item_type).then(async () => {
         await getPackerOrderList();
-        navigation.pop();
+        navigation.navigate('ItemSuccessScreen');
       });
     } catch {}
     setIsLoading(false);

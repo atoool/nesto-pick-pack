@@ -38,7 +38,7 @@ export const setPackedItemAsMarked = async (id, item_type, locale) => {
   const extraParams = `&item_type=${item_type}`;
   return get(URL, true, true, extraParams)
     .then((e) => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -50,7 +50,7 @@ export const setOrderReady = async (id, locale) => {
   const URL = `/packer/order/ready/${id}`;
   return get(URL, true, true)
     .then((e) => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -61,7 +61,7 @@ export const postAssignBin = async (PAYLOAD, id, locale) => {
   const URL = `/packer/order/assign-bin/${id}`;
   return post(URL, PAYLOAD, true)
     .then((e) => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -103,7 +103,7 @@ export const setItemPicked = async (id, item_type, critical_qty, locale) => {
   }&item_type=${item_type}`;
   return get(URL, true, true, extraParams)
     .then(() => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -115,7 +115,7 @@ export const setItemDrop = async (id, locale) => {
   const URL = `/picker/order/drop/${id}`;
   return get(URL, true)
     .then(() => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -148,7 +148,7 @@ export const postSubstitutes = async (PAYLOAD, locale) => {
   const URL = '/picker/item/perform-substitution';
   return post(URL, PAYLOAD, true)
     .then(() => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
@@ -159,7 +159,7 @@ export const postSuggestedSubstitutes = async (PAYLOAD, locale) => {
   const URL = '/picker/item/substitutes';
   return post(URL, PAYLOAD, true)
     .then(() => {
-      ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);

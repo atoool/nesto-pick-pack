@@ -54,7 +54,9 @@ const PackScreen = ({ navigation, route }) => {
 
   const onReadyPress = async (id, index) => {
     setReadyButtonLoading(index);
-    await setOrderReady(id);
+    await setOrderReady(id).then(async () => {
+      await getPackerOrderList();
+    });
     setReadyButtonLoading(null);
   };
 

@@ -77,9 +77,12 @@ const AccordionItem = ({
     timeLeft,
     order_start_time,
     order_end_time,
+    sales_incremental_id,
+    sales_order_id,
   },
   index,
 }) => {
+  // console.warn();
   const now = Date.now();
   const navigation = useNavigation();
   const orderId = id ? id : '';

@@ -47,9 +47,9 @@ const ItemScreen = ({
     await setItemPicked(item?.id, item?.item_type, itemsQty).then(async () => {
       await getOrdersList();
       await getDropList();
-      navigation.pop();
+      navigation.navigate('ItemSuccessScreen');
     });
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   if (isLoading) {
