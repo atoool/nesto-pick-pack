@@ -1,7 +1,8 @@
 import axios from 'axios';
 import ExtraPayload from '../utils/ExtraPayload';
 import Storage from '../utils/Storage';
-import { API_URL } from './config';
+import { env } from '../config/env';
+const API_URL = env.apiUrl;
 
 const DEFAULT_CONFIG = {
   headers: {

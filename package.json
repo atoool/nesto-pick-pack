@@ -1,19 +1,24 @@
 {
   "name": "NestoPickPack",
-  "version": "0.0.6",
-  "buildNumber": "7",
-  "env": "staging",
+  "version": "0.0.7",
+  "buildNumber": "1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
     "start": "react-native start",
-    "move-apk": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env.apk",
-    "buildandroid": "cd android && ./gradlew assembleRelease && cd .. && yarn run move-apk",
-    "runandroid": "react-native run-android --variant=release && yarn run move-apk",
+    "set:env:dev": "node ./scripts/set-env.js --env dev",
+    "set:env:staging": "node ./scripts/set-env.js --env staging",
+    "move:apk:staging": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-staging.apk",
+    "move:apk:dev": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-dev.apk",
     "upver": "node ./upver.js",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:android:dev": "yarn set:env:dev && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:dev",
+    "run:android:dev": "yarn set:env:dev && yarn android --variant=release && yarn move:apk:dev",
+    "run:android:dev:debug": "yarn set:env:dev && yarn android",
+    "build:android:staging": "yarn set:env:staging && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:staging",
+    "run:android:staging": "yarn set:env:staging && yarn android --variant=release && yarn move:apk:staging",
+    "run:android:staging:debug": "yarn set:env:staging && yarn android"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.3",
@@ -57,7 +62,8 @@
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "16.13.1",
-    "replace-in-file": "^6.2.0"
+    "replace-in-file": "^6.2.0",
+    "yargs": "^16.2.0"
   },
   "jest": {
     "preset": "react-native"

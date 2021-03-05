@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { ToastAndroid, TouchableOpacity } from 'react-native';
-import { API_URL } from '../api/config';
+import { env } from '../config/env';
 import ExtraPayload from '../utils/ExtraPayload';
+const API_URL = env.apiUrl;
 
 const TestTouchable = ({ children }) => {
   const [data, setData] = useState({ version: '', build: '', baseURL: '' });
