@@ -24,6 +24,7 @@ import Loader from '../../components/Loader';
 import TimerComponent from '../../components/TimerComponent';
 import formatAmPm from '../../utils/formatAmPm';
 import { Constants } from '../../utils';
+import DropDown from '../../components/DropDown';
 
 const screenWidth = width;
 const w = width - 32;
@@ -335,47 +336,14 @@ const VerifyItemSection = ({
               </View>
             </View>
             {!passItem[index] && (
-              <View style={styles.dropBox}>
-                <Text style={{ ...Typography.normal12 }}>
-                  {locale?.IS_reviewit}
-                </Text>
-                <View style={styles.dropDefaultBox}>
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      onShowDropDown(!showDropDown[index], index);
-                    }}>
-                    <View style={styles.dropDefaultItemBox}>
-                      <Text style={styles.dropDefaultItemText}>
-                        {issue[index]}
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                  {showDropDown[index] && (
-                    <View style={styles.dropListBox}>
-                      {issueList.map((elem, key) => (
-                        <TouchableOpacity
-                          key={key}
-                          onPress={() => {
-                            onSetIssue(elem.value, index);
-                          }}
-                          style={styles.dropTouch}>
-                          <View
-                            style={[
-                              styles.dropListItemBox,
-                              item.value === issue[index] && {
-                                backgroundColor: Colors.offWhite,
-                              },
-                            ]}>
-                            <Text style={styles.dropLabelText}>
-                              {elem.label}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              </View>
+              <DropDown
+                showDropDown={showDropDown}
+                onShowDropDown={onShowDropDown}
+                index={index}
+                issue={issue}
+                list={issueList}
+                onSetIssue={onSetIssue}
+              />
             )}
           </View>
         ))}
