@@ -93,9 +93,7 @@ const ItemScreen = ({
           img={item?.image_url}
         />
         <View style={styles.skuBox}>
-          <Text style={Typography.normal15}>
-            {item?.sku ? item?.sku : Constants.emptySku}
-          </Text>
+          <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
           {/* mock orderType */}
         </View>
         {item?.packer_checked ? (
@@ -436,6 +434,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
   timerContainer: {
     backgroundColor: Colors.secondaryRed,

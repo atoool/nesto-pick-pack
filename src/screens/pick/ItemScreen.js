@@ -90,10 +90,7 @@ const ItemScreen = ({
           locale={locale}
         />
         <View style={styles.skuBox}>
-          <Text style={Typography.normal15}>
-            {item?.sku ? item?.sku : Constants.emptySku}
-          </Text>
-          {/* mock orderType */}
+          <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
         </View>
 
         {item?.assigned_item && (
@@ -435,6 +432,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
   loading: {
     height: '100%',
