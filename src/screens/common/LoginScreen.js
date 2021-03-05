@@ -14,6 +14,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { Typography } from '../../styles';
 import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
+import TestTouchable from '../../components/TestTouchable';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -58,7 +59,9 @@ const LoginScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <Image style={styles.logoImage} source={Images.logo} />
+        <TestTouchable>
+          <Image style={styles.logoImage} source={Images.logo} />
+        </TestTouchable>
         <Text style={Typography.bold30}>{locale?.Login}</Text>
         <Text style={styles.loginText}>{locale?.LoginText}</Text>
         <Input
