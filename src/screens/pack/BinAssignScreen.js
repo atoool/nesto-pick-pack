@@ -62,6 +62,10 @@ const BinAssignScreen = ({
     locale: { locale },
   } = useContext(AppContext);
 
+  const printLabelText = `${locale?.BAS_printLabel2}${
+    sales_incremental_id ? '#' + sales_incremental_id : ''
+  }`;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -69,11 +73,9 @@ const BinAssignScreen = ({
         contentContainerStyle={styles.scrollView}>
         <PrintLabelComponent
           orderIdLabel={locale?.BAS_order}
-          printLabelText={`${locale?.BAS_printLabel2}${
-            sales_incremental_id ? '#' + sales_incremental_id : ''
-          }`}
+          printLabelText={printLabelText}
           binCountLabel={locale?.BAS_howMany}
-          orderId={orderId}
+          orderId={sales_incremental_id}
           bins={bins}
           onChangeOrderId={() => {}}
           onChangeBins={() => {}}
@@ -104,50 +106,22 @@ const BinAssignScreen = ({
   );
 };
 
-const PrintLabelComponent = ({
-  onChangeOrderId,
-  onChangeBins,
-  orderId,
-  bins,
-  hide,
-  binCountLabel,
-  orderIdLabel,
-  printLabelText,
-}) => {
+const PrintLabelComponent = ({ orderId, printLabelText }) => {
   return (
     <>
       <View style={styles.labelContainer}>
         <View style={styles.barcode}>
           {orderId ? (
-            <Barcode value={orderId} height={50} width={1} />
+            <>
+              <Text style={styles.orderIdStyle}>#{orderId}</Text>
+              <Barcode value={orderId} height={50} width={1} />
+            </>
           ) : (
             <Loader small green />
           )}
         </View>
         <Text style={styles.printLabelText}>{printLabelText}</Text>
       </View>
-      {!hide && (
-        <>
-          <InputWithLabel
-            iconName="CartSVG"
-            label={binCountLabel}
-            top={30}
-            keyboard={'numeric'}
-            value={bins}
-            onChangeText={onChangeBins}
-            maxLength={Constants.binsNeededLimit}
-          />
-
-          <InputWithLabel
-            iconName="EditSVG"
-            label={orderIdLabel}
-            top={10}
-            value={orderId}
-            onChangeText={onChangeOrderId}
-            maxLength={Constants.orderIdLimit}
-          />
-        </>
-      )}
     </>
   );
 };
@@ -186,20 +160,27 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondaryRed,
     borderRadius: 12,
     alignItems: 'center',
-    padding: 40,
+    padding: 20,
   },
   barcode: { flex: 1 },
   printLabelText: {
     flex: 1,
     textAlign: 'center',
     textAlignVertical: 'bottom',
-    marginTop: 20,
+    marginTop: 10,
     ...Typography.bold16White,
   },
   //inputWithLabel
   labelTextView: { flex: 1 },
   labelText: { color: Colors.darkText, ...Typography.bold16 },
   inputStyle: { marginTop: 5 },
+  orderIdStyle: {
+    ...Typography.bold16White,
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+    marginBottom: 10,
+  },
 });
 
 export default BinAssignScreen;

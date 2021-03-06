@@ -5,6 +5,7 @@ import {
   Text,
   ToastAndroid,
   View,
+  StyleSheet,
 } from 'react-native';
 import Barcode from 'react-native-barcode-builder';
 import ViewShot from 'react-native-view-shot';
@@ -13,17 +14,11 @@ import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import { AppContext } from '../../context/AppContext';
 import { Colors, Typography, width } from '../../styles';
-import {
-  USBPrinter,
-  NetPrinter,
-  BLEPrinter,
-} from 'react-native-thermal-receipt-printer';
 import { Constants } from '../../utils';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
   const [orderId, setOrderId] = useState(params.orderId);
   const [bins, setBins] = useState('1');
-  const [barcodeURI, setBarcodeURI] = useState(null);
 
   let viewShot = createRef(null);
 
@@ -57,24 +52,23 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
 
   const onPrint = () => {
     // USBPrinter.printText('<C>sample text</C>\n');
-
-    if (viewShot.current) {
-      viewShot.current.capture().then((uri) => {
-        setBarcodeURI(uri);
-      });
-    }
+    // if (viewShot.current) {
+    //   viewShot.current.capture().then((uri) => {
+    //     setBarcodeURI(uri);
+    //   });
+    // }
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 30, paddingBottom: 60 }}>
+        contentContainerStyle={styles.scrollView}>
         <PrintLabelComponent
           orderIdLabel={locale?.BAS_order}
           printLabelText={locale?.BAS_printLabel}
           binCountLabel={locale?.BAS_howMany}
-          orderId={orderId}
+          orderId={params.sales_incremental_id}
           bins={bins}
           onChangeOrderId={onChangeOrderId}
           onChangeBins={onChangeBins}
@@ -83,13 +77,13 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
         <Button
           disabled={orderId === ''}
           title={locale?.PLS_printLabel}
-          style={{ marginVertical: 20, borderRadius: 7, width: width - 60 }}
+          style={styles.printBtnBaseStyle}
           onPress={onPrint}
         />
         <Button
           title={locale?.PLS_assignBin}
           onPress={onAssignBinPress}
-          style={{ marginVertical: 0, borderRadius: 7, width: width - 60 }}
+          style={styles.assignBtnBaseStyle}
         />
       </ScrollView>
     </SafeAreaView>
@@ -97,26 +91,17 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
 };
 
 const PrintLabelComponent = ({
-  onChangeOrderId,
   onChangeBins,
   orderId,
   bins,
-  hide,
   binCountLabel,
-  orderIdLabel,
   printLabelText,
   viewShot,
 }) => {
   return (
     <>
-      <View
-        style={{
-          backgroundColor: Colors.secondaryRed,
-          borderRadius: 12,
-          alignItems: 'center',
-          padding: 40,
-        }}>
-        <View style={{ flex: 1 }}>
+      <View style={styles.labelContainer}>
+        <View style={styles.labelTextView}>
           {orderId ? (
             <ViewShot
               ref={(re) => {
@@ -125,22 +110,14 @@ const PrintLabelComponent = ({
                 }
               }}
               options={{ format: 'jpg', quality: 0.9 }}>
+              <Text style={styles.orderIdStyle}>#{orderId}</Text>
               <Barcode value={orderId} height={50} width={1} />
             </ViewShot>
           ) : (
             <Loader small green />
           )}
         </View>
-        <Text
-          style={{
-            ...Typography.bold16White,
-            flex: 1,
-            textAlign: 'center',
-            textAlignVertical: 'bottom',
-            marginTop: 20,
-          }}>
-          {printLabelText}
-        </Text>
+        <Text style={styles.printLabelText}>{printLabelText}</Text>
       </View>
 
       <InputWithLabel
@@ -152,16 +129,6 @@ const PrintLabelComponent = ({
         onChangeText={onChangeBins}
         maxLength={Constants.binsNeededLimit}
       />
-      {!hide && (
-        <InputWithLabel
-          iconName="EditSVG"
-          label={orderIdLabel}
-          top={10}
-          value={orderId}
-          onChangeText={onChangeOrderId}
-          maxLength={Constants.orderIdLimit}
-        />
-      )}
     </>
   );
 };
@@ -176,7 +143,7 @@ const InputWithLabel = ({
   maxLength,
 }) => {
   return (
-    <View style={{ flex: 1, marginTop: top }}>
+    <View style={[styles.labelTextView, { marginTop: top }]}>
       <Text style={{ color: Colors.darkText, ...Typography.bold16 }}>
         {label}
       </Text>
@@ -190,5 +157,38 @@ const InputWithLabel = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
+  scrollView: { margin: 30, paddingBottom: 60 },
+  //printLabelComponent
+  labelContainer: {
+    backgroundColor: Colors.secondaryRed,
+    borderRadius: 12,
+    alignItems: 'center',
+    padding: 20,
+  },
+  barcode: { flex: 1 },
+  printLabelText: {
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+    marginTop: 10,
+    ...Typography.bold16White,
+  },
+  //inputWithLabel
+  labelTextView: { flex: 1 },
+  labelText: { color: Colors.darkText, ...Typography.bold16 },
+  inputStyle: { marginTop: 5 },
+  orderIdStyle: {
+    ...Typography.bold16White,
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+    marginBottom: 10,
+  },
+  printBtnBaseStyle: { marginVertical: 20, borderRadius: 7, width: width - 60 },
+  assignBtnBaseStyle: { marginVertical: 0, borderRadius: 7, width: width - 60 },
+});
 
 export default PrintLabelsScreen;

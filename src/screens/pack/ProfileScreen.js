@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
@@ -29,9 +28,6 @@ const ProfileScreen = ({ navigation }) => {
     locale: { locale },
   } = useContext(AppContext);
 
-  const onLabelPress = () => {
-    navigation.navigate('PrintLabelsScreen', { orderId: null });
-  };
   const onStatisticsPress = () => {
     navigation.navigate('StatisticsScreen');
   };
@@ -65,7 +61,6 @@ const ProfileScreen = ({ navigation }) => {
         </TestTouchable>
         <MarkAvailability title={locale?.P_markAvail} />
         <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
-        <LinkButton title={locale?.P_printlabel} onPress={onLabelPress} />
         <LinkButton
           title={locale?.signout}
           onPress={() => setModalVisible(true)}
