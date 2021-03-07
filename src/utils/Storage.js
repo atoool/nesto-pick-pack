@@ -14,7 +14,7 @@ const getItem = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value === null) {
-      throw `No Value for "${key}" in Storage`;
+      throw `No Value for "${key}" in Storage 💾`;
     }
     return value;
   } catch (e) {

@@ -70,7 +70,7 @@ export function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log('\nFirebase Notification when App is open\n');
+      console.log('\n🔥 Firebase Notification when App is open\n');
       console.log(remoteMessage);
       const action = remoteMessage?.data?.action
         ? remoteMessage?.data?.action
@@ -102,6 +102,8 @@ export function useFirebase() {
   useEffect(() => {
     const unsubscribe = messaging().setBackgroundMessageHandler(
       async (remoteMessage) => {
+        console.log('\n🔥 Firebase Notification when App is open\n');
+        console.log(remoteMessage);
         //TODO:
       },
     );
@@ -114,7 +116,7 @@ export function useFirebase() {
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
       if (remoteMessage) {
         console.log(
-          'Notification caused app to open from background state:',
+          '\n🔥 Firebase Notification caused app to open from background state:',
           remoteMessage.data,
         );
       }
