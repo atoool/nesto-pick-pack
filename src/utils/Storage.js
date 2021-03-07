@@ -52,7 +52,6 @@ const logOutUser = async () => {
   await removeItem('access_token_timestamp');
   await removeItem('userType');
   await removeItem('email');
-  await removeItem('fcm_token');
 };
 
 const getLocale = async () => {

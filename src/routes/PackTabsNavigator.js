@@ -15,7 +15,7 @@ import PackScanSVG from '../assets/svg/PackScanSVG.svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import { AppContext } from '../context/AppContext';
-import { useSubscribeTopic } from '../hooks/useFirebase';
+import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
 import AssignStackNavigator from './AssignStackNavigator';
 
 const Tabs = createBottomTabNavigator();
@@ -23,6 +23,7 @@ const PackTabsNavigator = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+  useFirebase();
   useSubscribeTopic('packer');
   return (
     <Tabs.Navigator

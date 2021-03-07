@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { Storage } from '../utils';
 import { PickerContext } from '../context/PickerContext';
 import { PackerContext } from '../context/PackerContext';
 import { AppContext } from '../context/AppContext';
 import { ToastAndroid } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+import { updateFCMToken } from '../api';
 
 async function getTok() {
   try {
@@ -31,8 +31,8 @@ async function getTok() {
         console.log('fcmToken=================>');
         console.log(token);
         console.log('<=================fcmToken');
-        await Storage.setItem('fcm_token', token);
-        // console.log('FCM Token Sent', PAYLOAD);
+        const PAYLOAD = { fcm_token: token };
+        await updateFCMToken(PAYLOAD);
       }
     }
   } catch (e) {
@@ -70,6 +70,8 @@ export function useFirebase() {
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.log('\nFirebase Notification when App is open\n');
+      console.log(remoteMessage);
       const action = remoteMessage?.data?.action
         ? remoteMessage?.data?.action
         : '';

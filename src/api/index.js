@@ -1,5 +1,5 @@
 import { ToastAndroid } from 'react-native';
-import { put, post, get } from './networkUtils';
+import { post, get } from './networkUtils';
 
 // Endpoints that Doesn't Require Authentication
 export const login = async (PAYLOAD, locale) => {
@@ -12,7 +12,7 @@ export const login = async (PAYLOAD, locale) => {
 
 export const getNotifications = async (locale) => {
   const URL = '/picker-packer/notifications';
-  return get(URL, false).catch((e) => {
+  return get(URL).catch((e) => {
     console.log(e);
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
@@ -198,7 +198,7 @@ export const getUserProfile = async () => {
 
 export const updateFCMToken = async (PAYLOAD, locale) => {
   const URL = '/basic/add-fcm-token';
-  return post(URL, PAYLOAD, true).catch((e) => {
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+  return post(URL, PAYLOAD).catch((e) => {
+    console.error('Error Updating FCM Token');
   });
 };

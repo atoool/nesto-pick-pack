@@ -11,8 +11,6 @@ import {
   postSuggestedSubstitutes,
   getNotifications,
 } from '../api';
-import pickerOrders from '../mock/pickerOrders.json';
-import pickerDropList from '../mock/pickerDropList.json';
 import { AppContext } from './AppContext';
 
 export const PickerContext = createContext({
