@@ -84,7 +84,7 @@ const ScanScreen = ({
         navigation.navigate('ItemSuccessScreen');
       });
     } catch (e) {
-      console.warn(e);
+      setLoader(false);
     }
   };
 
