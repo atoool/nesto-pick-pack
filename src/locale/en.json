@@ -41,7 +41,7 @@
     "subst": "Substituted item",
     "original": "Original item",
     "rp":"Re-picking now",
-    "si":"Substitution initiated",
+    "si":"Substitution initiated"
   },
   "error":{
     "substituted":"This item has already been substituted",
@@ -75,6 +75,7 @@
   "items": "items",
   "yes": "Yes",
   "no": "No",
+  "noSimilar":"No similar items found",
   "selectSubst": "Select substitutes",
   "confirm": "Confirm",
   "errorAlert": "Something went wrong",

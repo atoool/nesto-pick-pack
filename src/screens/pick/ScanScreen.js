@@ -61,7 +61,10 @@ const ScanScreen = ({
         setBarcodeArray([...barcodeArray, barcode?.data]);
       }
     }
-    totalItem && success / totalItem >= 1 && (await onComplete());
+    const check = success / totalItem;
+    if (totalItem && check >= 1) {
+      await onComplete();
+    }
   };
 
   const onComplete = async () => {
@@ -72,7 +75,9 @@ const ScanScreen = ({
         await getDropList();
         navigation.navigate('ItemSuccessScreen');
       });
-    } catch {}
+    } catch {
+      setLoader(false);
+    }
   };
 
   return (

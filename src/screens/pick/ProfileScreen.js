@@ -16,9 +16,10 @@ import { AppContext } from '../../context/AppContext';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 import ModalComponent from '../../components/ModalComponent';
 import { Constants, Storage } from '../../utils';
+import { CommonActions } from '@react-navigation/native';
 import TestTouchable from '../../components/TestTouchable';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState(Constants.emptyEmail);
   const { logOutUser } = useContext(AuthContext);
@@ -28,7 +29,13 @@ const ProfileScreen = () => {
   } = useContext(AppContext);
 
   const onLogOut = async () => {
-    logOutUser();
+    await logOutUser();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Pick now' }],
+      }),
+    );
     setModalVisible(false);
   };
 

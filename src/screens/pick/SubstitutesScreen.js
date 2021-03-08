@@ -101,7 +101,7 @@ const SubstitutesScreen = ({
   };
   return (
     <SafeAreaView style={styles.container}>
-      {!similarItems || similarItems.length === 0 ? (
+      {!similarItems ? (
         <Loader fullScreen />
       ) : (
         <>
@@ -122,14 +122,13 @@ const SubstitutesScreen = ({
               endTime={endTime}
               img={item?.image_url}
             />
-            {similarItems && (
-              <ItemCheckList
-                items={similarItems}
-                onPress={onCheck}
-                stock="In stock"
-                checkedList={checkedList}
-              />
-            )}
+            <ItemCheckList
+              items={similarItems}
+              onPress={onCheck}
+              stock="In stock"
+              checkedList={checkedList}
+              locale={locale}
+            />
           </ScrollView>
 
           <Button
@@ -233,13 +232,16 @@ const ItemSection = ({
   );
 };
 
-const ItemCheckList = ({ items, onPress, stock, checkedList }) => {
+const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
   return (
     <FlatList
       data={items}
       scrollEnabled={false}
       style={styles.orderItemsList}
       keyExtractor={(item, indx) => `${indx}${item.id}`}
+      ListEmptyComponent={() => (
+        <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
+      )}
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item, index }) => (
@@ -356,6 +358,12 @@ const styles = StyleSheet.create({
     ...Typography.normal12,
   },
   suggestList: { width: '80%' },
+  emptyChecklist: {
+    ...Typography.normal15,
+    marginVertical: 20,
+    alignSelf: 'center',
+    color: Colors.primary4,
+  },
 });
 
 export default SubstitutesScreen;

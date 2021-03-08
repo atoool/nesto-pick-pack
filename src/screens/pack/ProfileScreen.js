@@ -17,6 +17,7 @@ import ModalComponent from '../../components/ModalComponent';
 import ProfileImageSVG from '../../assets/svg/ProfileImageSVG';
 import { Constants, Storage } from '../../utils';
 import TestTouchable from '../../components/TestTouchable';
+import { CommonActions } from '@react-navigation/native';
 
 const ProfileScreen = ({ navigation }) => {
   const [email, setEmail] = useState(Constants.emptyEmail);
@@ -32,7 +33,13 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('StatisticsScreen');
   };
   const onLogOut = async () => {
-    logOutUser();
+    await logOutUser();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'AssignBin' }],
+      }),
+    );
     setModalVisible(false);
   };
 

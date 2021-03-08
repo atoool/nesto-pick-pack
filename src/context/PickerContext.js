@@ -64,9 +64,9 @@ export const PickerContextProvider = ({ children }) => {
     }
   };
 
-  const getSimilarItemList = async (id) => {
+  const getSimilarItemList = async (id, item_type) => {
     try {
-      const list = await getSimilarItems(id, locale);
+      const list = await getSimilarItems(id, item_type, locale);
       setSimilarItems(list);
     } catch (e) {
       console.log(e);

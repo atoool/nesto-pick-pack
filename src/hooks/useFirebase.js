@@ -67,32 +67,35 @@ export function useFirebase() {
   } = useContext(AppContext);
   const { authStateLoading, userType } = useContext(AuthContext);
 
+  const onNotificationReceive = async (remoteMessage) => {
+    const action = remoteMessage?.data?.action
+      ? remoteMessage?.data?.action
+      : '';
+    const title = remoteMessage?.notification?.title
+      ? remoteMessage?.notification?.title
+      : '';
+    if (userType?.toLowerCase() === 'picker' && action === 'order_update') {
+      onSetShowInAppMessage(true);
+      await getOrdersList();
+      await getDropList();
+      ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
+    } else if (
+      userType?.toLowerCase() === 'packer' &&
+      action === 'order_update'
+    ) {
+      onSetShowInAppMessage(true);
+      await getPackerOrderList();
+      await getAssignBinList();
+      ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
+    }
+    title !== '' && onSetInAppMessage(remoteMessage.notification);
+  };
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log('\n🔥 Firebase Notification when App is open\n');
       console.log(remoteMessage);
-      const action = remoteMessage?.data?.action
-        ? remoteMessage?.data?.action
-        : '';
-      const title = remoteMessage?.notification?.title
-        ? remoteMessage?.notification?.title
-        : '';
-      if (userType?.toLowerCase() === 'picker' && action === 'order_update') {
-        onSetShowInAppMessage(true);
-        await getOrdersList();
-        await getDropList();
-        ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
-      } else if (
-        userType?.toLowerCase() === 'packer' &&
-        action === 'order_update'
-      ) {
-        onSetShowInAppMessage(true);
-        await getPackerOrderList();
-        await getAssignBinList();
-        ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
-      }
-      title !== '' && onSetInAppMessage(remoteMessage.notification);
+      onNotificationReceive(remoteMessage);
     });
 
     return unsubscribe;
@@ -105,6 +108,7 @@ export function useFirebase() {
         console.log('\n🔥 Firebase Notification when App is open\n');
         console.log(remoteMessage);
         //TODO:
+        onNotificationReceive(remoteMessage);
       },
     );
     return unsubscribe;
@@ -117,8 +121,9 @@ export function useFirebase() {
       if (remoteMessage) {
         console.log(
           '\n🔥 Firebase Notification caused app to open from background state:',
-          remoteMessage.data,
+          remoteMessage,
         );
+        onNotificationReceive(remoteMessage);
       }
     });
   }, []);
