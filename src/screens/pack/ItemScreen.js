@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     height: 60,
     flex: 1,
-    marginTop: 20,
+    marginBottom: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
     flexWrap: 'wrap',

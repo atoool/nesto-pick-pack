@@ -47,32 +47,36 @@ const ScanScreen = ({
 
   const onScanMismatch = async () => {
     setModalVisible(false);
-    if (itemScanned / totalItem >= 1) {
+    const temp = itemScanned + 1;
+    if (temp / totalItem >= 1) {
+      setItemScanned(temp);
       await onComplete();
     } else {
-      const temp = itemScanned + 1;
       setItemScanned(temp);
-      totalItem && temp / totalItem >= 1 && (await onComplete());
     }
   };
 
   const onScan = async (barcode) => {
-    if (totalItem && itemScanned < totalItem && barcode?.data?.length !== 0) {
-      await onItemScan(barcode);
-    } else if (!totalItem && barcode?.data?.length !== 0) {
-      await onBinScanner(barcode);
+    if (barcode?.data?.length !== 0) {
+      if (totalItem) {
+        await onItemScan(barcode);
+      } else if (!totalItem) {
+        await onBinScanner(barcode);
+      }
     }
   };
 
   const onItemScan = async (barcode) => {
     const temp = barcodeArray.indexOf(barcode?.data) > -1;
-    if (itemScanned / totalItem >= 1) {
-      await onComplete();
-    } else if (!temp) {
-      const success = itemScanned + 1;
-      setItemScanned(success);
-      setBarcodeArray([...barcodeArray, barcode?.data]);
-      success / totalItem >= 1 && (await onComplete());
+    const success = itemScanned + 1;
+    if (!temp) {
+      if (success / totalItem >= 1) {
+        setItemScanned(success);
+        await onComplete();
+      } else {
+        setItemScanned(success);
+        setBarcodeArray([...barcodeArray, barcode?.data]);
+      }
     }
   };
 

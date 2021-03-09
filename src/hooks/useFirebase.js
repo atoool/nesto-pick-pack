@@ -67,15 +67,16 @@ export function useFirebase() {
   } = useContext(AppContext);
   const { authStateLoading, userType } = useContext(AuthContext);
 
-  const onNotificationReceive = async (remoteMessage) => {
+  const onNotificationReceive = async (remoteMessage, foreground) => {
     const action = remoteMessage?.data?.action
       ? remoteMessage?.data?.action
       : '';
     const title = remoteMessage?.notification?.title
       ? remoteMessage?.notification?.title
       : '';
+    foreground && title !== '' && onSetInAppMessage(remoteMessage.notification);
     if (userType?.toLowerCase() === 'picker' && action === 'order_update') {
-      onSetShowInAppMessage(true);
+      foreground && onSetShowInAppMessage(true);
       await getOrdersList();
       await getDropList();
       ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
@@ -83,19 +84,18 @@ export function useFirebase() {
       userType?.toLowerCase() === 'packer' &&
       action === 'order_update'
     ) {
-      onSetShowInAppMessage(true);
+      foreground && onSetShowInAppMessage(true);
       await getPackerOrderList();
       await getAssignBinList();
       ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
     }
-    title !== '' && onSetInAppMessage(remoteMessage.notification);
   };
   // //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log('\n🔥 Firebase Notification when App is open\n');
       console.log(remoteMessage);
-      onNotificationReceive(remoteMessage);
+      await onNotificationReceive(remoteMessage, true);
     });
 
     return unsubscribe;
@@ -108,7 +108,7 @@ export function useFirebase() {
         console.log('\n🔥 Firebase Notification when App is open\n');
         console.log(remoteMessage);
         //TODO:
-        onNotificationReceive(remoteMessage);
+        await onNotificationReceive(remoteMessage, false);
       },
     );
     return unsubscribe;
@@ -123,7 +123,7 @@ export function useFirebase() {
           '\n🔥 Firebase Notification caused app to open from background state:',
           remoteMessage,
         );
-        onNotificationReceive(remoteMessage);
+        await onNotificationReceive(remoteMessage, false);
       }
     });
   }, []);

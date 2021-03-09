@@ -36,34 +36,31 @@ const ScanScreen = ({
   );
 
   const onScanMismatch = async () => {
+    const temp = itemScanned + 1;
     setModalVisible(false);
-    if (totalItem / itemScanned >= 1) {
+    if (totalItem && temp / totalItem >= 1) {
       await onComplete();
     } else {
-      const temp = itemScanned + 1;
       setItemScanned(temp);
-      totalItem && temp / totalItem >= 1 && (await onComplete());
     }
   };
 
   const onScan = async (barcode) => {
-    const success = itemScanned + 1;
-    if (totalItem / itemScanned >= 1) {
-      // await onComplete();
-    } else if (
+    const temp = barcodeArray.indexOf(barcode?.data) > -1;
+    if (
       totalItem &&
       itemScanned < totalItem &&
-      barcode?.data?.length !== 0
+      barcode?.data?.length !== 0 &&
+      !temp
     ) {
-      const temp = barcodeArray.indexOf(barcode?.data) > -1;
-      if (!temp) {
+      const success = itemScanned + 1;
+      if (success / totalItem >= 1) {
+        setItemScanned(success);
+        await onComplete();
+      } else {
         setItemScanned(success);
         setBarcodeArray([...barcodeArray, barcode?.data]);
       }
-    }
-    const check = success / totalItem;
-    if (totalItem && check >= 1) {
-      await onComplete();
     }
   };
 

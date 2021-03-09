@@ -81,7 +81,6 @@ const SubstitutesScreen = ({
         item_type: item?.item_type,
         suggested_items: isCheckedListEmpty,
       };
-      console.warn(payload);
       try {
         await postSuggestedSubstitutes(payload).then(async () => {
           await getOrdersList();
