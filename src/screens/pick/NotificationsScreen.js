@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  notificationBodyContainer: { marginLeft: 20, flex: 1 },
+  notificationBodyContainer: { marginLeft: 20, flex: 1, marginTop: 5 },
   notificationIconStyle: {
     alignItems: 'center',
     justifyContent: 'center',
