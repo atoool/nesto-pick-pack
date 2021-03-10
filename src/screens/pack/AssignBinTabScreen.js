@@ -11,6 +11,7 @@ import OrderComponent from '../../components/OrderComponent';
 import Divider from '../../components/Divider';
 import { PackerContext } from '../../context/PackerContext';
 import { Constants } from '../../utils';
+import StatusPill from '../../components/StatusPill';
 
 const AssignBinTabScreen = () => {
   const {
@@ -72,6 +73,7 @@ const AccordionItem = ({
     id,
     items,
     bins_assigned,
+    binsAssigned,
     order_type,
     time_slot,
     timeLeft,
@@ -102,12 +104,26 @@ const AccordionItem = ({
         endTime={time_slot.end_time}
         timeLeft={timeLeft}
       />
-
+      <View style={styles.positionBox}>
+        {binsAssigned &&
+          binsAssigned?.map((itm, i) => (
+            <View key={i} style={styles.statusPill}>
+              <StatusPill
+                backgroundColor="#C5B171"
+                marginRight={5}
+                text={itm?.bin_number}
+                paddingVertical={5}
+                textStyle={Typography.bold13White}
+              />
+            </View>
+          ))}
+      </View>
       <Button
         onPress={() => {
           navigation.navigate('PrintLabelsScreen', {
             orderId: `${orderId}`,
             sales_incremental_id,
+            binsAssigned: !binsAssigned ? [] : binsAssigned,
           });
         }}
         title={bins_assigned ? locale?.printBinButton2 : locale?.printBinButton}
@@ -124,8 +140,19 @@ const AccordionItem = ({
           renderItem={({ item }) => (
             <View style={styles.orderItem}>
               <View style={styles.orderNameBox}>
-                <View style={[styles.deliveryStatusCircle]} />
-                <Text style={Typography.bold15}>
+                <View
+                  style={[
+                    styles.deliveryStatusCircle,
+                    {
+                      backgroundColor: item?.dfc
+                        ? Colors[item?.dfc?.toLowerCase()]
+                          ? Colors[item.dfc.toLowerCase()]
+                          : Colors.chilled
+                        : Colors.chilled,
+                    },
+                  ]}
+                />
+                <Text style={styles.itemNameText}>
                   {item?.qty ? item?.qty : 1}x{' '}
                   {item?.name ? item?.name : Constants.emptyItemName}
                 </Text>
@@ -189,11 +216,19 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingVertical: 10,
   },
-  departmentBox: { ...Typography.normal12, marginLeft: 22 },
+  departmentBox: {
+    ...Typography.normal12,
+    marginLeft: 22,
+    width: '90%',
+    flexWrap: 'wrap',
+  },
   orderNameBox: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  itemNameText: { ...Typography.bold15, flexWrap: 'wrap', width: '90%' },
+  statusPill: { marginBottom: 5 },
+  positionBox: { flexDirection: 'row', marginBottom: 5, flexWrap: 'wrap' },
 });
 
 export default AssignBinTabScreen;

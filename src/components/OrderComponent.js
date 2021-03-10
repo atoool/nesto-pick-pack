@@ -57,9 +57,9 @@ const OrderComponent = ({
             {/* mock orderType */}
           </View>
           <View style={styles.deliveryBox}>
-            <Text style={Typography.normal15}>{sTime}</Text>
+            <Text style={Typography.normal13}>{sTime}</Text>
             <Arrow />
-            <Text style={Typography.normal15}>{eTime}</Text>
+            <Text style={Typography.normal13}>{eTime}</Text>
           </View>
         </View>
         {/* {(!pick || index === 0) && ( */}

@@ -16,9 +16,17 @@ import { AppContext } from '../../context/AppContext';
 import { Colors, Typography, width } from '../../styles';
 import { Constants } from '../../utils';
 
-const PrintLabelsScreen = ({ route: { params }, navigation }) => {
-  const [orderId, setOrderId] = useState(params.orderId);
-  const [bins, setBins] = useState('1');
+const PrintLabelsScreen = ({
+  route: {
+    params,
+    params: { binsAssigned },
+  },
+  navigation,
+}) => {
+  const [orderId, setOrderId] = useState(params?.orderId);
+
+  const binArrayLength = binsAssigned?.length === 0 ? 1 : binsAssigned?.length;
+  const [bins, setBins] = useState(binArrayLength.toString());
 
   let viewShot = createRef(null);
 
@@ -40,10 +48,15 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
 
   const onAssignBinPress = () => {
     if (bins !== '' && orderId && orderId !== '') {
+      const binsLength =
+        bins >= binsAssigned?.length
+          ? bins - binsAssigned?.length
+          : binsAssigned?.length;
       navigation.navigate('BinAssignScreen', {
         orderId,
-        bins,
+        bins: binsLength,
         sales_incremental_id: params?.sales_incremental_id,
+        binsAssigned: binsAssigned,
       });
     } else {
       ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);

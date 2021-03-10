@@ -99,6 +99,7 @@ export default StyleSheet.create({
   normal12: {
     fontSize: 12,
     fontFamily: 'roboto',
+    color: Colors.BLACK,
   },
   normal12White: {
     fontSize: 12,

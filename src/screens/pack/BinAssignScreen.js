@@ -20,7 +20,7 @@ import { Constants } from '../../utils';
 
 const BinAssignScreen = ({
   route: {
-    params: { orderId, bins, sales_incremental_id },
+    params: { orderId, bins, sales_incremental_id, binsAssigned },
   },
   navigation,
 }) => {
@@ -82,9 +82,21 @@ const BinAssignScreen = ({
           onChangeBins={() => {}}
           hide
         />
+        {binsAssigned &&
+          binsAssigned?.length !== 0 &&
+          binsAssigned?.map((val, indx) => (
+            <InputWithLabel
+              key={indx}
+              editable={false}
+              iconName="EditSVG"
+              label={locale?.BAS_Position + (indx + 1)}
+              top={10}
+              value={val?.bin_number}
+            />
+          ))}
         {binPos &&
-          binPos.length !== 0 &&
-          binPos.map((val, indx) => (
+          binPos?.length !== 0 &&
+          binPos?.map((val, indx) => (
             <InputWithLabel
               key={indx}
               placeholder={locale?.placeholder?.enterPos}
@@ -144,6 +156,7 @@ const InputWithLabel = ({
   iconName,
   placeholder,
   maxLength,
+  editable,
 }) => {
   return (
     <View style={[styles.labelTextView, { marginTop: top }]}>
@@ -156,6 +169,7 @@ const InputWithLabel = ({
         onChangeText={onChangeText}
         keyboardType={keyboard}
         maxLength={maxLength}
+        editable={editable}
       />
     </View>
   );

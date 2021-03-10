@@ -72,6 +72,7 @@ const ItemScreen = ({
       style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TimerComponent fullTimer ss={timer} />
+        {console.warn(item?.repicked === false)}
         <ItemSection
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
@@ -85,7 +86,11 @@ const ItemScreen = ({
           position={item?.position}
           department={item?.department}
           status={
-            item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
+            item?.repick_completed === false
+              ? locale?.status?.rp
+              : item?.packing_completed
+              ? locale?.status.PaC
+              : locale?.status.Pa
           }
           type={order_type ? order_type : locale?.status.SD}
           start_time={formatAmPm(new Date(start))}
