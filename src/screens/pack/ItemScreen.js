@@ -370,7 +370,7 @@ const VerifyItemSection = ({
               navigation.navigate('ScanScreen', {
                 item,
                 orderId: item?.orderId,
-                barcodeId: item?.barcodeId,
+                barcodeId: item?.barcode,
               });
             }}
           />
