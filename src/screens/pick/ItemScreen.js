@@ -27,7 +27,6 @@ const ItemScreen = ({
     params: { item, timeLeft, startTime, endTime },
   },
 }) => {
-  console.warn(item?.sku, 'sku');
   const ss = timeLeft
     ? new Date(timeLeft) <= now
       ? 0

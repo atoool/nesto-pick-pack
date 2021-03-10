@@ -29,6 +29,7 @@ const ProfileScreen = ({ navigation }) => {
   } = useContext(AppContext);
 
   const onLogOut = async () => {
+    setModalVisible(false);
     await logOutUser();
     navigation.dispatch(
       CommonActions.reset({
@@ -36,7 +37,6 @@ const ProfileScreen = ({ navigation }) => {
         routes: [{ name: 'Pick now' }],
       }),
     );
-    setModalVisible(false);
   };
 
   useEffect(() => {

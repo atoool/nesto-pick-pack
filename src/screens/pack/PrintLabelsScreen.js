@@ -74,12 +74,12 @@ const PrintLabelsScreen = ({ route: { params }, navigation }) => {
           onChangeBins={onChangeBins}
           viewShot={viewShot}
         />
-        <Button
+        {/* <Button
           disabled={orderId === ''}
           title={locale?.PLS_printLabel}
           style={styles.printBtnBaseStyle}
           onPress={onPrint}
-        />
+        /> */}
         <Button
           title={locale?.PLS_assignBin}
           onPress={onAssignBinPress}

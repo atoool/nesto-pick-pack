@@ -33,6 +33,7 @@ const ProfileScreen = ({ navigation }) => {
     navigation.navigate('StatisticsScreen');
   };
   const onLogOut = async () => {
+    setModalVisible(false);
     await logOutUser();
     navigation.dispatch(
       CommonActions.reset({
@@ -40,7 +41,6 @@ const ProfileScreen = ({ navigation }) => {
         routes: [{ name: 'AssignBin' }],
       }),
     );
-    setModalVisible(false);
   };
 
   useEffect(() => {

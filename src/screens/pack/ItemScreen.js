@@ -207,7 +207,6 @@ const VerifyItemSection = ({
     : item?.repick_qty
     ? item?.total_qty - item?.repick_qty
     : 1;
-  console.warn(qty);
   const generateArray = (element) =>
     Array.apply(null, Array(qty)).map((itm) => element);
 

@@ -12,6 +12,7 @@ import Barcode from 'react-native-barcode-builder';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
+import ModalComponent from '../../components/ModalComponent';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import { Colors, Typography, width } from '../../styles';
@@ -29,6 +30,7 @@ const BinAssignScreen = ({
   ).map((i) => '');
   const [binPos, setBinPos] = useState(emptyArray);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onBinAssign = (txt, indx) => {
     binPos[indx] = txt;
@@ -38,6 +40,7 @@ const BinAssignScreen = ({
     PackerContext,
   );
   const onSave = async () => {
+    setModalVisible(false);
     setIsButtonLoading(true);
     try {
       const isEmpty = binPos.filter((i) => i === '').length === 0;
@@ -62,9 +65,7 @@ const BinAssignScreen = ({
     locale: { locale },
   } = useContext(AppContext);
 
-  const printLabelText = `${locale?.BAS_printLabel2}${
-    sales_incremental_id ? '#' + sales_incremental_id : ''
-  }`;
+  const printLabelText = `${locale?.BAS_printLabel2}`;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -97,11 +98,19 @@ const BinAssignScreen = ({
           ))}
         <Button
           title={locale?.confirm}
-          onPress={onSave}
+          onPress={() => setModalVisible(true)}
           style={{ width: width - 60 }}
           loading={isButtonLoading}
         />
       </ScrollView>
+      <ModalComponent
+        visible={modalVisible}
+        text={locale?.BAS_confirm}
+        button1Text={locale?.no}
+        button2Text={locale?.yes}
+        onButton1Press={() => setModalVisible(false)}
+        onButton2Press={onSave}
+      />
     </SafeAreaView>
   );
 };

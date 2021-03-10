@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -11,6 +11,7 @@ import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
 import Button from './Button';
 import Divider from './Divider';
+import ModalComponent from './ModalComponent';
 import OrderComponent from './OrderComponent';
 import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
@@ -37,12 +38,15 @@ const AccordionItem = ({
   userType,
   timeLeft = now,
   readyButtonLoading = false,
+  locale,
 }) => {
   time_slot = time_slot
     ? // ? userType === 'packer'
       //   ? { start_time: order_start_time, end_time: order_end_time }
       time_slot
     : { start_time: now, end_time: now };
+
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container}>
       <OrderComponent
@@ -122,10 +126,22 @@ const AccordionItem = ({
           style={styles.button}
           loading={readyButtonLoading === index}
           onPress={() => {
-            onReadyPress && onReadyPress(id, index);
+            setModalVisible(true);
           }}
         />
       )}
+
+      <ModalComponent
+        visible={modalVisible}
+        text={userType === 'packer' ? locale?.PS_confirm : locale?.DS_confirm}
+        button1Text={locale?.no}
+        button2Text={locale?.yes}
+        onButton1Press={() => setModalVisible(false)}
+        onButton2Press={() => {
+          setModalVisible(false);
+          onReadyPress && onReadyPress(id, index);
+        }}
+      />
     </View>
   );
 };

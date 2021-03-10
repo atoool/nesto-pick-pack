@@ -146,6 +146,7 @@ const PackScreen = ({ navigation, route }) => {
               showReadyButton={packing_completed}
               userType={'packer'}
               readyButtonLoading={readyButtonLoading}
+              locale={locale}
             />
           );
         }}

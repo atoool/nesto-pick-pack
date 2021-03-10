@@ -84,7 +84,8 @@
   "PS_printingLabel": "Printing labels",
   "BAS_printLabel": "Print labels for this order",
   "BAS_emptyBin": "All fields are required",
-  "BAS_printLabel2": "Assign positions for each bin for the order ",
+  "BAS_printLabel2": "Assign positions for each bin",
+  "BAS_confirm":"Bins are assigning against the order, are you sure to continue?",
   "BAS_howMany": "How many bins are needed?",
   "BAS_order": "Order number to print",
   "ILS_changeBins": "Change the bins & Print labels",
@@ -177,5 +178,7 @@
   "SRS_button": "Pick another item",
   "PS_isReady": "Ready for delivery",
   "PS_logoutAlert": "Do you really wish to sign out?",
-  "DS_dropReady": "Drop to packer bins"
+  "DS_dropReady": "Drop to packer bins",
+  "DS_confirm":"Are you sure to confirm ready for drop to bin?",
+  "PS_confirm":"Are you sure to confirm ready for delivery?"
 }

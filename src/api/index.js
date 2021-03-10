@@ -72,7 +72,7 @@ export const postRePick = async (PAYLOAD, id, locale) => {
   const URL = `/packer/perform/repick/${id}`;
   return post(URL, PAYLOAD, true)
     .then((e) => {
-      ToastAndroid.show(locale.success, ToastAndroid.SHORT);
+      // ToastAndroid.show(locale.success, ToastAndroid.SHORT);
     })
     .catch((e) => {
       console.log(e);
