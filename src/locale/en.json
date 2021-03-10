@@ -158,6 +158,7 @@
   "SS_alertopt1": "No, Don't pack",
   "SS_alertopt2": "Yes pack this",
   "SS_alertTitlePick": "Scan mismatch",
+  "SS_success":"item scanned successfully",
   "SS_alertTextPick": "There seems to be a mismatch in the bar code. Do you want to continue picking of item regardless ?",
   "SS_opt1Pick": "No, Don't pick",
   "SS_opt2Pick": "Yes pick this",

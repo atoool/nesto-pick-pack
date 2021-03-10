@@ -324,6 +324,7 @@ const VerifyItemSection = ({
                   criticalQty:
                     status === 2 ? Constants.defaultCriticalValue : itemsQty,
                   itemType: item?.item_type,
+                  barcodeId: item?.barcode,
                 });
               }}
             />

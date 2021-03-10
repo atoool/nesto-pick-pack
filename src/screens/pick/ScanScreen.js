@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Linking,
+  ToastAndroid,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Colors, Typography } from '../../styles';
@@ -20,12 +21,13 @@ import Loader from '../../components/Loader';
 const ScanScreen = ({
   navigation,
   route: {
-    params: { totalItem, itemId, itemType, criticalQty },
+    params: { totalItem, itemId, itemType, criticalQty, barcodeId },
   },
 }) => {
   const [itemScanned, setItemScanned] = useState(0);
-  const [barcodeArray, setBarcodeArray] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [barcodeArray, setBarcodeArray] = useState([]);
+  const [showMismatchModal, setMismatchModal] = useState(false);
+  const [showSuccessModal, setSuccessModal] = useState(false);
   const [loading, setLoader] = useState(false);
 
   const {
@@ -37,7 +39,7 @@ const ScanScreen = ({
 
   const onScanMismatch = async () => {
     const temp = itemScanned + 1;
-    setModalVisible(false);
+    setMismatchModal(false);
     if (totalItem && temp / totalItem >= 1) {
       await onComplete();
     } else {
@@ -46,12 +48,15 @@ const ScanScreen = ({
   };
 
   const onScan = async (barcode) => {
-    const temp = barcodeArray.indexOf(barcode?.data) > -1;
+    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
     if (
       totalItem &&
+      !showSuccessModal &&
       itemScanned < totalItem &&
       barcode?.data?.length !== 0 &&
-      !temp
+      barcodeId === barcode?.data
+      // &&
+      // !temp
     ) {
       const success = itemScanned + 1;
       if (success / totalItem >= 1) {
@@ -59,7 +64,8 @@ const ScanScreen = ({
         await onComplete();
       } else {
         setItemScanned(success);
-        setBarcodeArray([...barcodeArray, barcode?.data]);
+        setSuccessModal(true);
+        // setBarcodeArray([...barcodeArray, barcode?.data]);
       }
     }
   };
@@ -187,7 +193,10 @@ const ScanScreen = ({
               <View>
                 <LinkButton
                   title={locale?.SS_scanmis}
-                  onPress={() => setModalVisible(true)}
+                  onPress={() => setMismatchModal(true)}
+                  onLongPress={() => {
+                    ToastAndroid.show(barcodeId, ToastAndroid.SHORT);
+                  }}
                 />
               </View>
             </>
@@ -195,13 +204,16 @@ const ScanScreen = ({
         </ScrollView>
       )}
       <ModalComponent
-        visible={modalVisible}
-        title={locale?.SS_alertTitle}
-        text={locale?.SS_alertTextPick}
-        button1Text={locale?.SS_opt1Pick}
-        button2Text={locale?.SS_opt2Pick}
-        onButton1Press={() => setModalVisible(false)}
-        onButton2Press={onScanMismatch}
+        visible={showMismatchModal || showSuccessModal}
+        title={showSuccessModal ? null : locale?.SS_alertTitle}
+        text={showSuccessModal ? locale?.SS_success : locale?.SS_alertTextPick}
+        button1Text={showSuccessModal ? locale?.ok : locale?.SS_opt1Pick}
+        button2Text={showSuccessModal ? null : locale?.SS_opt2Pick}
+        onButton1Press={() => {
+          setSuccessModal(false);
+          setMismatchModal(false);
+        }}
+        onButton2Press={showSuccessModal ? null : onScanMismatch}
       />
     </SafeAreaView>
   );
@@ -294,10 +306,11 @@ const BarCodeMask = () => {
   );
 };
 
-const LinkButton = ({ title, onPress, style }) => (
+const LinkButton = ({ title, onPress, style, onLongPress }) => (
   <TouchableOpacity
     style={[{ backgroundColor: 'rgba(0,0,0,0)' }, style]}
     onPress={onPress}
+    onLongPress={onLongPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     <Text style={{ color: Colors.secondaryRed, ...Typography.normal12 }}>
       {title}
