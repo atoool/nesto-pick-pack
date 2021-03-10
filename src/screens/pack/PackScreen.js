@@ -100,7 +100,7 @@ const PackScreen = ({ navigation, route }) => {
           flatListRef.current = r;
         }}
         contentContainerStyle={styles.contentContainer}
-        keyExtractor={(item, indx) => `${indx}${item.id}`}
+        keyExtractor={(item, indx) => `${indx}${item?.id}`}
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}

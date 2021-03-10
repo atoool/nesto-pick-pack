@@ -95,21 +95,14 @@ const ScanScreen = ({
   };
 
   const onBinScanner = async (barcode) => {
-    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
-    // if (!temp) {
-    // setBarcodeArray([...barcodeArray, barcode?.data]);
     let i = null;
     for (let j = 0; j < orderList?.length; j++) {
-      if (barcode?.data === orderList[j]?.id?.toString()) {
+      if (barcode?.data === orderList[j]?.sales_incremental_id) {
         i = j;
         break;
       }
     }
-    // i === null
-    // ? ToastAndroid.show(locale?.IS_matchFailed, ToastAndroid.SHORT)
-    // :
     await Linking.openURL('http://com.nesto.store/PackScreen/' + i);
-    // }
   };
 
   return (

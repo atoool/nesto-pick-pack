@@ -180,6 +180,6 @@
   "PS_isReady": "Ready for delivery",
   "PS_logoutAlert": "Do you really wish to sign out?",
   "DS_dropReady": "Drop to packer bins",
-  "DS_confirm":"Are you sure to confirm ready for drop to bin?",
-  "PS_confirm":"Are you sure to confirm ready for delivery?"
+  "DS_confirm":"Confirm to proceed drop items to bin?",
+  "PS_confirm":"Confirm to proceed ready for delivery?"
 }
