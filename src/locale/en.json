@@ -85,7 +85,7 @@
   "BAS_printLabel": "Print labels for this order",
   "BAS_emptyBin": "All fields are required",
   "BAS_printLabel2": "Assign positions for each bin",
-  "BAS_confirm":"Bins are assigning against the order, are you sure to continue?",
+  "BAS_confirm":"Bins are assigned against the order successfully",
   "BAS_howMany": "How many bins are needed?",
   "BAS_order": "Order number to print",
   "ILS_changeBins": "Change the bins & Print labels",
