@@ -195,7 +195,7 @@ const ScanScreen = ({
                   title={locale?.SS_scanmis}
                   onPress={() => setMismatchModal(true)}
                   onLongPress={() => {
-                    ToastAndroid.show(barcodeId, ToastAndroid.SHORT);
+                    ToastAndroid.show(barcodeId, ToastAndroid.SHORT); //mock
                   }}
                 />
               </View>

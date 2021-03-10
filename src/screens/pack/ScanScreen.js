@@ -218,8 +218,8 @@ const ScanScreen = ({
                 <LinkButton
                   title={locale?.SS_scanmis}
                   onPress={() => setMismatchModal(true)}
-                  onLongPress={() =>
-                    ToastAndroid.show(barcodeId, ToastAndroid.SHORT)
+                  onLongPress={
+                    () => ToastAndroid.show(barcodeId, ToastAndroid.SHORT) //mock
                   }
                 />
               </View>
