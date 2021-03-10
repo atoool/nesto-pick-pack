@@ -61,12 +61,12 @@ const AccordionItem = ({
       />
       <View style={styles.positionBox}>
         {binsAssigned &&
-          binsAssigned.map((itm, i) => (
+          binsAssigned?.map((itm, i) => (
             <View key={i} style={styles.statusPill}>
               <StatusPill
                 backgroundColor="#C5B171"
                 marginRight={5}
-                text={itm.bin_number}
+                text={itm?.bin_number}
                 paddingVertical={5}
                 textStyle={Typography.bold13White}
               />
@@ -77,7 +77,7 @@ const AccordionItem = ({
         <FlatList
           data={items}
           style={styles.orderItemsList}
-          keyExtractor={(item, indx) => `${indx}${item.id}`}
+          keyExtractor={(item, indx) => `${indx}${item?.id}`}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <Divider />}
           renderItem={({ item }) => (
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingVertical: 10,
   },
-  positionBox: { flexDirection: 'row', marginBottom: 10, flexWrap: 'wrap' },
+  positionBox: { flexDirection: 'row', marginBottom: 5, flexWrap: 'wrap' },
   departmentBox: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -15,6 +15,7 @@ const Input = ({
   style,
   iconName,
   textContentType = 'none',
+  editable = true,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -36,6 +37,7 @@ const Input = ({
         secureTextEntry={secureTextEntry}
         style={styles.textInput}
         textContentType={textContentType}
+        editable={editable}
       />
     </View>
   );

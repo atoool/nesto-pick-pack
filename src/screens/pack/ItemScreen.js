@@ -85,7 +85,11 @@ const ItemScreen = ({
           position={item?.position}
           department={item?.department}
           status={
-            item?.packing_completed ? locale?.status.PaC : locale?.status.Pa
+            item?.repick_completed === false
+              ? locale?.status?.rp
+              : item?.packing_completed
+              ? locale?.status.PaC
+              : locale?.status.Pa
           }
           type={order_type ? order_type : locale?.status.SD}
           start_time={formatAmPm(new Date(start))}

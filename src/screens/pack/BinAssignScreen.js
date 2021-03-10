@@ -83,8 +83,8 @@ const BinAssignScreen = ({
           hide
         />
         {binPos &&
-          binPos.length !== 0 &&
-          binPos.map((val, indx) => (
+          binPos?.length !== 0 &&
+          binPos?.map((val, indx) => (
             <InputWithLabel
               key={indx}
               placeholder={locale?.placeholder?.enterPos}

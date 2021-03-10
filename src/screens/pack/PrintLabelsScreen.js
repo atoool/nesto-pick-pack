@@ -17,7 +17,7 @@ import { Colors, Typography, width } from '../../styles';
 import { Constants } from '../../utils';
 
 const PrintLabelsScreen = ({ route: { params }, navigation }) => {
-  const [orderId, setOrderId] = useState(params.orderId);
+  const [orderId, setOrderId] = useState(params?.orderId);
   const [bins, setBins] = useState('1');
 
   let viewShot = createRef(null);
