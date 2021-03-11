@@ -79,6 +79,8 @@ const ScanScreen = ({
         setSuccessModal(true);
         // setBarcodeArray([...barcodeArray, barcode?.data]);
       }
+    } else {
+      setMismatchModal(true);
     }
   };
 

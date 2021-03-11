@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import {
-  Alert,
   SafeAreaView,
   ScrollView,
   Text,
@@ -67,6 +66,8 @@ const ScanScreen = ({
         setSuccessModal(true);
         // setBarcodeArray([...barcodeArray, barcode?.data]);
       }
+    } else {
+      setMismatchModal(true);
     }
   };
 
