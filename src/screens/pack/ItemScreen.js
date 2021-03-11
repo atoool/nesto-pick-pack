@@ -85,10 +85,12 @@ const ItemScreen = ({
           position={item?.position}
           department={item?.department}
           status={
-            item?.repick_completed === false
-              ? locale?.status?.rp
-              : item?.packing_completed
+            item?.packing_completed
               ? locale?.status.PaC
+              : item?.repick_completed === false
+              ? locale?.status?.ri
+              : item?.repick_completed
+              ? locale?.status?.rc
               : locale?.status.Pa
           }
           type={order_type ? order_type : locale?.status.SD}
@@ -103,15 +105,17 @@ const ItemScreen = ({
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
-          <VerifyItemSection
-            containerRef={containerRef.current}
-            item={item}
-            orderId={orderId}
-            navigation={navigation}
-            postRePick={postRePick}
-            onManualEntry={onManualEntry}
-            getPackerOrderList={getPackerOrderList}
-          />
+          item?.repick_qty && (
+            <VerifyItemSection
+              containerRef={containerRef.current}
+              item={item}
+              orderId={orderId}
+              navigation={navigation}
+              postRePick={postRePick}
+              onManualEntry={onManualEntry}
+              getPackerOrderList={getPackerOrderList}
+            />
+          )
         )}
       </ScrollView>
     </SafeAreaView>

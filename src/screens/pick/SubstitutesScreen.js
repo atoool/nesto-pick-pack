@@ -133,10 +133,8 @@ const SubstitutesScreen = ({
             title={locale.IS_substituteButton}
             style={{
               borderRadius: 0,
-              position: 'absolute',
               bottom: 0,
               width: '100%',
-              zIndex: 5,
             }}
             loading={isSuggestLoad}
             onPress={onSuggestSubstitute}
@@ -250,7 +248,7 @@ const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
                 enabled={checkedList?.length === 0 ? false : checkedList[index]}
               />
               <View style={styles.suggestList}>
-                <Text style={Typography.bold15}>{item.name}</Text>
+                <Text style={styles.suggestItemNameText}>{item.name}</Text>
               </View>
             </View>
             {/* <Text
@@ -355,7 +353,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     ...Typography.normal12,
   },
-  suggestList: { width: '80%', flexWrap: 'wrap' },
+  suggestList: { flexWrap: 'wrap' },
+  suggestItemNameText: { ...Typography.bold15, width: '90%' },
   emptyChecklist: {
     ...Typography.normal15,
     marginVertical: 20,

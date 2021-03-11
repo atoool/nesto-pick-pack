@@ -79,9 +79,9 @@ const ItemScreen = ({
               ? locale?.status?.subst
               : item?.substitution_initiated
               ? locale?.status?.si
-              : item?.repick_completed === false
-              ? locale?.status?.rp
-              : locale?.status?.Pi
+              : // : item?.repick_completed === false
+                // ? locale?.status?.rn
+                locale?.status?.Pi
           }
           startTime={startTime}
           endTime={endTime}
@@ -92,7 +92,7 @@ const ItemScreen = ({
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
         </View>
 
-        {item?.assigned_item && (
+        {/* {item?.assigned_item && (
           <>
             <Divider />
             <ItemSection
@@ -114,7 +114,7 @@ const ItemScreen = ({
               locale={locale}
             />
           </>
-        )}
+        )} */}
         {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
@@ -213,20 +213,20 @@ const VerifyItemSection = ({
                 toggle={status === 2}
                 title={locale?.IS_verifyOpt1}
               />
-              {/* {(item?.substituted || item?.assigned_item) && ( */}
-              <>
-                <RadioItem
-                  onPress={() => setStatus(0)}
-                  toggle={status === 0}
-                  title={locale?.IS_verifyOpt2}
-                />
-                <RadioItem
-                  onPress={() => setStatus(1)}
-                  toggle={status === 1}
-                  title={locale?.IS_verifyOpt3}
-                />
-              </>
-              {/* )} */}
+              {(item?.substituted || item?.assigned_item) && (
+                <>
+                  <RadioItem
+                    onPress={() => setStatus(0)}
+                    toggle={status === 0}
+                    title={locale?.IS_verifyOpt2}
+                  />
+                  <RadioItem
+                    onPress={() => setStatus(1)}
+                    toggle={status === 1}
+                    title={locale?.IS_verifyOpt3}
+                  />
+                </>
+              )}
               <RadioItem
                 onPress={() => setStatus(3)}
                 toggle={status === 3}
