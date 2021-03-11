@@ -32,6 +32,7 @@
     "@react-navigation/native": "^5.9.0",
     "@react-navigation/stack": "^5.13.0",
     "axios": "^0.21.1",
+    "moment-timezone": "^0.5.33",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-barcode-builder": "^2.0.0",
