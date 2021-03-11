@@ -54,14 +54,13 @@ const SubstitutesScreen = ({
   };
 
   useEffect(() => {
-    // console.warn(item.id);
+    const onMount = async () => {
+      await getSimilarItemList(item?.id, item?.item_type);
+    };
     onMount();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const onMount = async () => {
-    await getSimilarItemList(item?.id, item?.item_type);
-  };
 
   const onSuggestSubstitute = async () => {
     setIsSuggestLoad(true);
@@ -100,7 +99,7 @@ const SubstitutesScreen = ({
   };
   return (
     <SafeAreaView style={styles.container}>
-      {!similarItems ? (
+      {!similarItems || similarItems.length === 0 ? (
         <Loader fullScreen />
       ) : (
         <>
@@ -356,7 +355,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     ...Typography.normal12,
   },
-  suggestList: { width: '80%' },
+  suggestList: { width: '80%', flexWrap: 'wrap' },
   emptyChecklist: {
     ...Typography.normal15,
     marginVertical: 20,
