@@ -213,7 +213,7 @@ const VerifyItemSection = ({
                 toggle={status === 2}
                 title={locale?.IS_verifyOpt1}
               />
-              {(item?.substituted || item?.assigned_item) && (
+              {!item?.assigned_item && (
                 <>
                   <RadioItem
                     onPress={() => setStatus(0)}

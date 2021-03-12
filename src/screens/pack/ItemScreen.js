@@ -30,7 +30,7 @@ const screenWidth = width;
 const w = width - 32;
 const ItemScreen = ({
   route: {
-    params: { item, orderId, time_slot, order_type },
+    params: { item, orderId, time_slot, order_type, timeLeft },
   },
   navigation,
 }) => {
@@ -38,9 +38,13 @@ const ItemScreen = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const start = new Date(time_slot?.end_time).valueOf();
-  const end = new Date(time_slot?.end_time).valueOf();
-  const timer = useTimer(start - end);
+  const start = time_slot?.start_time;
+  const end = time_slot?.end_time;
+  const timer = timeLeft
+    ? new Date(timeLeft) <= new Date()
+      ? 0
+      : new Date(timeLeft) / 1000 - new Date() / 1000
+    : 0;
 
   const {
     locale: { locale },
@@ -94,8 +98,8 @@ const ItemScreen = ({
               : locale?.status.Pa
           }
           type={order_type ? order_type : locale?.status.SD}
-          start_time={formatAmPm(new Date(start))}
-          end_time={formatAmPm(new Date(end))}
+          start_time={formatAmPm(start)}
+          end_time={formatAmPm(end)}
           img={item?.image_url}
         />
         <View style={styles.skuBox}>
@@ -105,17 +109,17 @@ const ItemScreen = ({
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
-          item?.repick_qty && (
-            <VerifyItemSection
-              containerRef={containerRef.current}
-              item={item}
-              orderId={orderId}
-              navigation={navigation}
-              postRePick={postRePick}
-              onManualEntry={onManualEntry}
-              getPackerOrderList={getPackerOrderList}
-            />
-          )
+          // (item?.repick_completed === undefined || item?.repick_completed) && (
+          <VerifyItemSection
+            containerRef={containerRef.current}
+            item={item}
+            orderId={orderId}
+            navigation={navigation}
+            postRePick={postRePick}
+            onManualEntry={onManualEntry}
+            getPackerOrderList={getPackerOrderList}
+          />
+          // )
         )}
       </ScrollView>
     </SafeAreaView>
