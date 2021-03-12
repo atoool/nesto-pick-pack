@@ -119,7 +119,6 @@ const ItemScreen = ({
             onManualEntry={onManualEntry}
             getPackerOrderList={getPackerOrderList}
           />
-          // )
         )}
       </ScrollView>
     </SafeAreaView>
