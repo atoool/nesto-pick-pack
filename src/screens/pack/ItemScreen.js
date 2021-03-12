@@ -80,11 +80,7 @@ const ItemScreen = ({
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
           quantity={
-            item?.qty
-              ? item?.qty
-              : item?.repick_qty
-              ? item?.total_qty - item?.repick_qty
-              : 1
+            item?.qty ? item?.qty : item?.repick_qty ? item?.total_qty : 1
           }
           position={item?.position}
           department={item?.department}
@@ -109,16 +105,17 @@ const ItemScreen = ({
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />
         ) : (
-          // (item?.repick_completed === undefined || item?.repick_completed) && (
-          <VerifyItemSection
-            containerRef={containerRef.current}
-            item={item}
-            orderId={orderId}
-            navigation={navigation}
-            postRePick={postRePick}
-            onManualEntry={onManualEntry}
-            getPackerOrderList={getPackerOrderList}
-          />
+          (item?.repick_completed === undefined || item?.repick_completed) && (
+            <VerifyItemSection
+              containerRef={containerRef.current}
+              item={item}
+              orderId={orderId}
+              navigation={navigation}
+              postRePick={postRePick}
+              onManualEntry={onManualEntry}
+              getPackerOrderList={getPackerOrderList}
+            />
+          )
         )}
       </ScrollView>
     </SafeAreaView>
@@ -293,77 +290,80 @@ const VerifyItemSection = ({
 
   return (
     <>
-      <Divider />
-      <View style={styles.reviewBox}>
-        <Text style={styles.reviewTitle}>{locale?.IS_reviewit}</Text>
-        <Text style={styles.reviewText}>{locale?.IS_reviewText}</Text>
-        {passItem.map((itm, index) => (
-          <View key={index}>
-            <View style={styles.reviewItemBox}>
-              <Text style={{ ...Typography.bold13 }}>
-                {locale?.item} {index + 1}
-              </Text>
-              <View style={styles.reviewTouchBox}>
-                <TouchableOpacity onPress={() => onCheckPass(true, index)}>
-                  <View
-                    style={[
-                      styles.passTextBox,
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      {
-                        backgroundColor: itm
-                          ? Colors.primaryGreen
-                          : 'rgba(0,0,0,0)',
-                      },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.textCenter,
-                        itm
-                          ? { ...Typography.bold13White }
-                          : { ...Typography.bold13 },
-                      ]}>
-                      {locale?.pass}
-                    </Text>
+      {item?.repick_completed === undefined && (
+        <>
+          <Divider />
+          <View style={styles.reviewBox}>
+            <Text style={styles.reviewTitle}>{locale?.IS_reviewit}</Text>
+            <Text style={styles.reviewText}>{locale?.IS_reviewText}</Text>
+            {passItem.map((itm, index) => (
+              <View key={index}>
+                <View style={styles.reviewItemBox}>
+                  <Text style={{ ...Typography.bold13 }}>
+                    {locale?.item} {index + 1}
+                  </Text>
+                  <View style={styles.reviewTouchBox}>
+                    <TouchableOpacity onPress={() => onCheckPass(true, index)}>
+                      <View
+                        style={[
+                          styles.passTextBox,
+                          // eslint-disable-next-line react-native/no-inline-styles
+                          {
+                            backgroundColor: itm
+                              ? Colors.primaryGreen
+                              : 'rgba(0,0,0,0)',
+                          },
+                        ]}>
+                        <Text
+                          style={[
+                            styles.textCenter,
+                            itm
+                              ? { ...Typography.bold13White }
+                              : { ...Typography.bold13 },
+                          ]}>
+                          {locale?.pass}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => onCheckPass(false, index)}>
+                      <View
+                        style={[
+                          styles.failTextBox,
+                          // eslint-disable-next-line react-native/no-inline-styles
+                          {
+                            backgroundColor: itm
+                              ? 'rgba(0,0,0,0)'
+                              : Colors.secondaryRed,
+                          },
+                        ]}>
+                        <Text
+                          style={[
+                            styles.textCenter,
+                            !itm
+                              ? { ...Typography.bold13White }
+                              : { ...Typography.bold13 },
+                          ]}>
+                          {locale?.fail}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => onCheckPass(false, index)}>
-                  <View
-                    style={[
-                      styles.failTextBox,
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      {
-                        backgroundColor: itm
-                          ? 'rgba(0,0,0,0)'
-                          : Colors.secondaryRed,
-                      },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.textCenter,
-                        !itm
-                          ? { ...Typography.bold13White }
-                          : { ...Typography.bold13 },
-                      ]}>
-                      {locale?.fail}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                </View>
+                {!passItem[index] && (
+                  <DropDown
+                    showDropDown={showDropDown}
+                    onShowDropDown={onShowDropDown}
+                    index={index}
+                    issue={issue}
+                    list={issueList}
+                    onSetIssue={onSetIssue}
+                  />
+                )}
               </View>
-            </View>
-            {!passItem[index] && (
-              <DropDown
-                showDropDown={showDropDown}
-                onShowDropDown={onShowDropDown}
-                index={index}
-                issue={issue}
-                list={issueList}
-                onSetIssue={onSetIssue}
-              />
-            )}
+            ))}
           </View>
-        ))}
-      </View>
-
+        </>
+      )}
       <Divider />
       {passItem.indexOf(false) <= -1 ? (
         <>

@@ -119,17 +119,17 @@ const AccordionItem = ({
           )}
         />
       )}
-      {showReadyButton && (
-        <Button
-          title={buttonTitle}
-          disabled={binsAssigned ? binsAssigned.length === 0 : true}
-          style={styles.button}
-          loading={readyButtonLoading === index}
-          onPress={() => {
-            setModalVisible(true);
-          }}
-        />
-      )}
+      <Button
+        title={buttonTitle}
+        disabled={
+          !showReadyButton || (binsAssigned ? binsAssigned.length === 0 : true)
+        }
+        style={styles.button}
+        loading={readyButtonLoading === index}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      />
 
       <ModalComponent
         visible={modalVisible}
