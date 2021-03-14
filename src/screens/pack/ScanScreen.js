@@ -28,11 +28,7 @@ const ScanScreen = ({
     },
   },
 }) => {
-  const totalItem = qty
-    ? qty
-    : item?.repick_qty
-    ? item?.total_qty - item?.repick_qty
-    : null;
+  const totalItem = qty ? qty : item?.repick_qty ? item?.total_qty : null;
   const [itemScanned, setItemScanned] = useState(0);
   // const [barcodeArray, setBarcodeArray] = useState([]);
   const [showMismatchModal, setMismatchModal] = useState(false);
