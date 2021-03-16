@@ -7,6 +7,7 @@ import {
   View,
   Linking,
   ToastAndroid,
+  Dimensions,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Colors, Typography } from '../../styles';
@@ -121,14 +122,15 @@ const ScanScreen = ({
           </View>
           <View
             style={{
-              height: 'auto',
-              width: '80%',
-              alignItems: 'center',
-              justifyContent: 'center',
+              height: '35%',
+              width: '100%',
               marginVertical: 20,
             }}>
             <RNCamera
-              style={{ height: '35%', width: '80%' }}
+              style={{
+                flex: 1,
+                overflow: 'hidden',
+              }}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
               androidCameraPermissionOptions={{
@@ -227,7 +229,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           top: 20,
-          left: 40,
+          left: 20,
           backgroundColor: '#566ae6',
           height: 3,
           width: 40,
@@ -237,7 +239,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           top: 20,
-          left: 40,
+          left: 20,
           backgroundColor: '#566ae6',
           height: 40,
           width: 3,
@@ -247,7 +249,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           bottom: 20,
-          left: 40,
+          left: 20,
           backgroundColor: '#566ae6',
           height: 3,
           width: 40,
@@ -257,7 +259,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           bottom: 20,
-          left: 40,
+          left: 20,
           backgroundColor: '#566ae6',
           height: 40,
           width: 3,
@@ -267,7 +269,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           top: 20,
-          right: 40,
+          right: 20,
           backgroundColor: '#566ae6',
           height: 3,
           width: 40,
@@ -277,7 +279,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           top: 20,
-          right: 40,
+          right: 20,
           backgroundColor: '#566ae6',
           height: 40,
           width: 3,
@@ -287,7 +289,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           bottom: 20,
-          right: 40,
+          right: 20,
           backgroundColor: '#566ae6',
           height: 3,
           width: 40,
@@ -297,7 +299,7 @@ const BarCodeMask = () => {
         style={{
           position: 'absolute',
           bottom: 20,
-          right: 40,
+          right: 20,
           backgroundColor: '#566ae6',
           height: 40,
           width: 3,
