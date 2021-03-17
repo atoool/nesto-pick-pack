@@ -96,6 +96,7 @@ const DropScreen = () => {
               buttonTitle={locale.DS_dropReady}
               showReadyButton={picking_completed}
               readyButtonLoading={dropButtonLoading}
+              locale={locale}
             />
           );
         }}

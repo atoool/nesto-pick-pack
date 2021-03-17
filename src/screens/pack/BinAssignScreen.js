@@ -30,7 +30,7 @@ const BinAssignScreen = ({
   ).map((i) => '');
   const [binPos, setBinPos] = useState(emptyArray);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [modalVisible, setModalVisible] = useState(false);
 
   const onBinAssign = (txt, indx) => {
     binPos[indx] = txt;
@@ -40,7 +40,7 @@ const BinAssignScreen = ({
     PackerContext,
   );
   const onSave = async () => {
-    setModalVisible(false);
+    // setModalVisible(false);
     setIsButtonLoading(true);
     try {
       const isEmpty = binPos.filter((i) => i === '').length === 0;
@@ -51,6 +51,7 @@ const BinAssignScreen = ({
         await postAssignBin(payload, orderId).then(async () => {
           await getAssignBinList();
           await getPackerOrderList();
+          ToastAndroid.show(locale?.BAS_confirm, ToastAndroid.SHORT);
         });
 
         navigation.pop();
@@ -110,19 +111,19 @@ const BinAssignScreen = ({
           ))}
         <Button
           title={locale?.confirm}
-          onPress={() => setModalVisible(true)}
+          onPress={onSave}
           style={{ width: width - 60 }}
           loading={isButtonLoading}
         />
       </ScrollView>
-      <ModalComponent
+      {/* <ModalComponent
         visible={modalVisible}
         text={locale?.BAS_confirm}
         button1Text={locale?.no}
         button2Text={locale?.yes}
         onButton1Press={() => setModalVisible(false)}
         onButton2Press={onSave}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

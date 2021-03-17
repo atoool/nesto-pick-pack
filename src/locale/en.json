@@ -40,8 +40,10 @@
     "BA": "Bins Assigned",
     "subst": "Substituted item",
     "original": "Original item",
-    "rp":"Re-picking now",
-    "si":"Substitution initiated"
+    "rn":"Re-picking now",
+    "ri":"Re-picking initiated",
+    "si":"Substitution initiated",
+    "rc":"Re-picking completed"
   },
   "error":{
     "substituted":"This item has already been substituted",
@@ -85,7 +87,7 @@
   "BAS_printLabel": "Print labels for this order",
   "BAS_emptyBin": "All fields are required",
   "BAS_printLabel2": "Assign positions for each bin",
-  "BAS_confirm":"Bins are assigning against the order, are you sure to continue?",
+  "BAS_confirm":"Bins are assigned against the order successfully",
   "BAS_howMany": "How many bins are needed?",
   "BAS_order": "Order number to print",
   "ILS_changeBins": "Change the bins & Print labels",
@@ -155,12 +157,13 @@
   "RSS_button": "Pack another item",
   "SS_alertTitle": "Scan mismatch",
   "SS_alertText": "There seems to be a mismatch in the bar code. Do you want to continue packing of item regardless ?",
-  "SS_alertopt1": "No, Don't pack",
-  "SS_alertopt2": "Yes pack this",
+  "SS_alertopt1": "No, don't pack",
+  "SS_alertopt2": "Yes, pack this",
   "SS_alertTitlePick": "Scan mismatch",
+  "SS_success":"Item scanned successfully",
   "SS_alertTextPick": "There seems to be a mismatch in the bar code. Do you want to continue picking of item regardless ?",
-  "SS_opt1Pick": "No, Don't pick",
-  "SS_opt2Pick": "Yes pick this",
+  "SS_opt1Pick": "No, don't pick",
+  "SS_opt2Pick": "Yes, pick this",
   "SS_scanbar": "Scan Bar Code",
   "SS_scanbarText": "Place the bar code inside the frame to scan and please avoid shake to get result quickly",
   "SS_permitTitle": "Permission to use camera",
@@ -179,6 +182,6 @@
   "PS_isReady": "Ready for delivery",
   "PS_logoutAlert": "Do you really wish to sign out?",
   "DS_dropReady": "Drop to packer bins",
-  "DS_confirm":"Are you sure to confirm ready for drop to bin?",
-  "PS_confirm":"Are you sure to confirm ready for delivery?"
+  "DS_confirm":"Confirm to proceed drop items to bin?",
+  "PS_confirm":"Confirm to proceed ready for delivery?"
 }

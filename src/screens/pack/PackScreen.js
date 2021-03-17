@@ -51,6 +51,7 @@ const PackScreen = ({ navigation, route }) => {
     time_slot,
     order_type,
     sales_incremental_id,
+    timeLeft,
   ) =>
     navigation.navigate('ItemScreen', {
       orderId: orderId,
@@ -58,6 +59,7 @@ const PackScreen = ({ navigation, route }) => {
       item,
       time_slot,
       order_type,
+      timeLeft,
     });
 
   const onReadyPress = async (id, index) => {
@@ -100,7 +102,7 @@ const PackScreen = ({ navigation, route }) => {
           flatListRef.current = r;
         }}
         contentContainerStyle={styles.contentContainer}
-        keyExtractor={(item, indx) => `${indx}${item.id}`}
+        keyExtractor={(item, indx) => `${indx}${item?.id}`}
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
         onRefresh={() => _getOrdersList()}
@@ -139,6 +141,7 @@ const PackScreen = ({ navigation, route }) => {
                   item?.sales_incremental_id
                     ? item?.sales_incremental_id
                     : Constants.emptyOrderId,
+                  item?.packing_deadline_timestamp,
                 );
               }}
               buttonTitle={locale?.PS_isReady}

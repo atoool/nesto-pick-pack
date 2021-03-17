@@ -45,19 +45,21 @@ const ModalComponent = ({
                 {button1Text}
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight
-              style={styles.openButton}
-              onPressIn={() => setHighlight(2)}
-              onPressOut={() => setHighlight(0)}
-              onPress={onButton2Press}>
-              <Text
-                style={[
-                  styles.textStyle,
-                  { color: highlight === 2 ? Colors.WHITE : Colors.BLACK },
-                ]}>
-                {button2Text}
-              </Text>
-            </TouchableHighlight>
+            {onButton2Press && (
+              <TouchableHighlight
+                style={styles.openButton}
+                onPressIn={() => setHighlight(2)}
+                onPressOut={() => setHighlight(0)}
+                onPress={onButton2Press}>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    { color: highlight === 2 ? Colors.WHITE : Colors.BLACK },
+                  ]}>
+                  {button2Text}
+                </Text>
+              </TouchableHighlight>
+            )}
           </View>
         </View>
       </View>

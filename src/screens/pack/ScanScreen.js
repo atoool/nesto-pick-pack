@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import {
-  Alert,
   Linking,
   SafeAreaView,
   ScrollView,
@@ -25,17 +24,15 @@ const ScanScreen = ({
       item,
       item: { qty, id, item_type },
       orderId = '#',
+      barcodeId,
     },
   },
 }) => {
-  const totalItem = qty
-    ? qty
-    : item?.repick_qty
-    ? item?.total_qty - item?.repick_qty
-    : null;
+  const totalItem = qty ? qty : item?.repick_qty ? item?.total_qty : null;
   const [itemScanned, setItemScanned] = useState(0);
-  const [barcodeArray, setBarcodeArray] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [barcodeArray, setBarcodeArray] = useState([]);
+  const [showMismatchModal, setMismatchModal] = useState(false);
+  const [showSuccessModal, setSuccessModal] = useState(false);
   const [loading, setLoader] = useState(false);
 
   const {
@@ -46,7 +43,7 @@ const ScanScreen = ({
   );
 
   const onScanMismatch = async () => {
-    setModalVisible(false);
+    setMismatchModal(false);
     const temp = itemScanned + 1;
     if (temp / totalItem >= 1) {
       setItemScanned(temp);
@@ -67,16 +64,19 @@ const ScanScreen = ({
   };
 
   const onItemScan = async (barcode) => {
-    const temp = barcodeArray.indexOf(barcode?.data) > -1;
+    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
     const success = itemScanned + 1;
-    if (!temp) {
+    if (!showSuccessModal && barcodeId === barcode?.data) {
       if (success / totalItem >= 1) {
         setItemScanned(success);
         await onComplete();
       } else {
         setItemScanned(success);
-        setBarcodeArray([...barcodeArray, barcode?.data]);
+        setSuccessModal(true);
+        // setBarcodeArray([...barcodeArray, barcode?.data]);
       }
+    } else {
+      setMismatchModal(true);
     }
   };
 
@@ -93,21 +93,14 @@ const ScanScreen = ({
   };
 
   const onBinScanner = async (barcode) => {
-    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
-    // if (!temp) {
-    // setBarcodeArray([...barcodeArray, barcode?.data]);
     let i = null;
     for (let j = 0; j < orderList?.length; j++) {
-      if (barcode?.data === orderList[j]?.id?.toString()) {
+      if (barcode?.data === orderList[j]?.sales_incremental_id) {
         i = j;
         break;
       }
     }
-    // i === null
-    // ? ToastAndroid.show(locale?.IS_matchFailed, ToastAndroid.SHORT)
-    // :
     await Linking.openURL('http://com.nesto.store/PackScreen/' + i);
-    // }
   };
 
   return (
@@ -222,7 +215,10 @@ const ScanScreen = ({
               <View>
                 <LinkButton
                   title={locale?.SS_scanmis}
-                  onPress={() => setModalVisible(true)}
+                  onPress={() => setMismatchModal(true)}
+                  onLongPress={
+                    () => ToastAndroid.show(barcodeId, ToastAndroid.SHORT) //mock
+                  }
                 />
               </View>
             </>
@@ -230,13 +226,16 @@ const ScanScreen = ({
         </ScrollView>
       )}
       <ModalComponent
-        visible={modalVisible}
-        title={locale?.SS_alertTitle}
-        text={locale?.SS_alertText}
-        button1Text={locale?.SS_alertopt1}
-        button2Text={locale?.SS_alertopt2}
-        onButton1Press={() => setModalVisible(false)}
-        onButton2Press={onScanMismatch}
+        visible={showMismatchModal || showSuccessModal}
+        title={showSuccessModal ? null : locale?.SS_alertTitle}
+        text={showSuccessModal ? locale?.SS_success : locale?.SS_alertText}
+        button1Text={showSuccessModal ? locale?.ok : locale?.SS_alertopt1}
+        button2Text={showSuccessModal ? null : locale?.SS_alertopt2}
+        onButton1Press={() => {
+          setSuccessModal(false);
+          setMismatchModal(false);
+        }}
+        onButton2Press={showSuccessModal ? null : onScanMismatch}
       />
     </SafeAreaView>
   );
@@ -329,10 +328,11 @@ const BarCodeMask = () => {
   );
 };
 
-const LinkButton = ({ title, onPress, style }) => (
+const LinkButton = ({ title, onPress, style, onLongPress }) => (
   <TouchableOpacity
     style={[{ backgroundColor: 'rgba(0,0,0,0)' }, style]}
     onPress={onPress}
+    onLongPress={onLongPress}
     hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
     <Text style={{ color: Colors.secondaryRed, ...Typography.normal12 }}>
       {title}

@@ -6,7 +6,7 @@ const { argv } = require('yargs');
 const { env } = argv;
 
 // Accepted environment params, they are directly related to the name of the folders created before.
-const acceptedEnvs = ['dev', 'staging'];
+const acceptedEnvs = ['dev', 'staging', 'production'];
 
 // Function that writes on the file.
 function writeFile(file, string) {
