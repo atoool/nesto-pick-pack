@@ -95,7 +95,7 @@ export const PickerContextProvider = ({ children }) => {
     try {
       const list = await getNotifications(locale);
       const temp = list.filter((item) => item.role === 'picker');
-      setNotifications(temp);
+      setNotifications(temp?.reverse());
     } catch (e) {}
   };
 
