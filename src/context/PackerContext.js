@@ -54,7 +54,7 @@ export const PackerContextProvider = ({ children }) => {
     try {
       const list = await getNotifications(locale);
       const temp = list.filter((item) => item.role === 'packer');
-      setNotifications(temp);
+      setNotifications(temp?.reverse());
     } catch (e) {}
   };
 
