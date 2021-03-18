@@ -9,17 +9,20 @@ import { AppContext } from '../../context/AppContext';
 import PickList from '../../components/PickList';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
+import Loader from '../../components/Loader';
 
 const now = Date.now();
 
-const PickScreen = () => {
+const PickScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { orders, getOrdersList } = useContext(PickerContext);
+  const { orders, getOrdersList, setItemPicked, getDropList } = useContext(
+    PickerContext,
+  );
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -43,38 +46,62 @@ const PickScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onManualEntry = async (item, itemsQty) => {
+    setLoading(true);
+    try {
+      await setItemPicked(item?.id, item?.item_type, itemsQty).then(
+        async () => {
+          await getOrdersList();
+          navigation.navigate('ItemSuccessScreen');
+          await getDropList();
+          setLoading(false);
+        },
+      );
+    } catch {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pick} />
-      <FlatList
-        data={orders}
-        ListEmptyComponent={() => (
-          <NoContent name="NoOrdersSVG" isLoading={isLoading} />
-        )}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => `${index}`}
-        ItemSeparatorComponent={() => <Divider />}
-        onRefresh={() => _getOrdersList()}
-        refreshing={refreshing}
-        renderItem={({ item, index }) => (
-          <PickList
-            items={item?.items ? item?.items : []}
-            index={index}
-            orderType={item?.order_type ? item?.order_type : locale?.status?.SD}
-            itemCount={''}
-            startTime={
-              item?.timeslot?.start_time ? item?.timeslot?.start_time : now
-            }
-            endTime={item?.timeslot?.end_time ? item?.timeslot?.end_time : now}
-            timeLeft={
-              item?.pickingDeadlineTimestamp
-                ? item?.pickingDeadlineTimestamp
-                : now
-            }
-          />
-        )}
-      />
+      {!isLoading ? (
+        <FlatList
+          data={orders}
+          ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => `${index}`}
+          ItemSeparatorComponent={() => <Divider />}
+          onRefresh={() => _getOrdersList()}
+          refreshing={refreshing}
+          renderItem={({ item, index }) => (
+            <PickList
+              items={item?.items ? item?.items : []}
+              index={index}
+              orderType={
+                item?.order_type ? item?.order_type : locale?.status?.SD
+              }
+              itemCount={''}
+              startTime={
+                item?.timeslot?.start_time ? item?.timeslot?.start_time : now
+              }
+              endTime={
+                item?.timeslot?.end_time ? item?.timeslot?.end_time : now
+              }
+              timeLeft={
+                item?.pickingDeadlineTimestamp
+                  ? item?.pickingDeadlineTimestamp
+                  : now
+              }
+              locale={locale}
+              onManualEntry={onManualEntry}
+            />
+          )}
+        />
+      ) : (
+        <Loader fullScreen />
+      )}
     </SafeAreaView>
   );
 };

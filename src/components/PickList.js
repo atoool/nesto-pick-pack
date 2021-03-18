@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Typography, Colors } from '../styles';
 import { RightCaretSVG } from '../assets/svg';
 import StatusPill from './StatusPill';
@@ -22,8 +23,19 @@ const PickList = ({
   startTime,
   endTime,
   timeLeft,
+  locale,
+  onManualEntry,
 }) => {
   const navigation = useNavigation();
+
+  const LeftActions = () => {
+    return (
+      <View style={styles.leftAction}>
+        <Text style={Typography.bold16White}>{locale?.PS_addToDrop}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <OrderComponent
@@ -39,74 +51,82 @@ const PickList = ({
       />
       <FlatList
         data={items}
-        style={styles.orderItemsList}
         keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item, indx }) => (
-          <TouchableOpacity
-            style={styles.orderItem}
-            onPress={() =>
-              navigation.navigate('ItemScreen', {
-                orderId: item?.orderId,
-                sales_incremental_id: item?.sales_incremental_id
-                  ? item?.sales_incremental_id
-                  : Constants.emptyOrderId,
-                item,
-                timeLeft,
-                startTime,
-                endTime,
-              })
-            }>
-            <View style={styles.itemBox}>
-              <View style={styles.itemTitleBox}>
-                <View
-                  style={[
-                    styles.deliveryStatusCircle,
-                    {
-                      backgroundColor: item.dfc
-                        ? Colors[item?.dfc?.toLowerCase()]
-                          ? Colors[item.dfc.toLowerCase()]
-                          : Colors.chilled
-                        : Colors.chilled,
-                    },
-                  ]}
-                />
-                <Text style={Typography.bold15}>
-                  {item.qty ? item.qty : 1}x{' '}
-                  {item.name ? item.name : Constants.emptyItemName}
-                </Text>
-              </View>
-              <View style={styles.departmentBox}>
-                <Text style={Typography.normal12}>
-                  #
-                  {item?.sales_incremental_id
-                    ? item?.sales_incremental_id
-                    : Constants.emptyOrderId}{' '}
-                  |{' '}
-                  {item?.department
-                    ? item?.department
-                    : Constants.emptyDepartment}{' '}
-                  {item?.position ? item?.position : Constants.emptyPosition}
-                </Text>
-              </View>
-              {item.binsAssigned && item.binsAssigned?.length !== 0 && (
-                <View style={styles.positionBox}>
-                  {item.binsAssigned.map((itm, i) => (
-                    <View key={i} style={styles.statusPill}>
-                      <StatusPill
-                        backgroundColor={'#C5B171'}
-                        marginRight={5}
-                        text={itm?.bin_number}
-                        paddingVertical={0}
-                      />
+          <Swipeable
+            renderLeftActions={LeftActions}
+            onSwipeableLeftOpen={() => onManualEntry(item, null)}>
+            <View style={styles.orderItemsList}>
+              <TouchableOpacity
+                style={styles.orderItem}
+                onPress={() =>
+                  navigation.navigate('ItemScreen', {
+                    orderId: item?.orderId,
+                    sales_incremental_id: item?.sales_incremental_id
+                      ? item?.sales_incremental_id
+                      : Constants.emptyOrderId,
+                    item,
+                    timeLeft,
+                    startTime,
+                    endTime,
+                  })
+                }>
+                <View style={styles.itemBox}>
+                  <View style={styles.itemTitleBox}>
+                    <View
+                      style={[
+                        styles.deliveryStatusCircle,
+                        {
+                          backgroundColor: item.dfc
+                            ? Colors[item?.dfc?.toLowerCase()]
+                              ? Colors[item.dfc.toLowerCase()]
+                              : Colors.chilled
+                            : Colors.chilled,
+                        },
+                      ]}
+                    />
+                    <Text style={Typography.bold15}>
+                      {item.qty ? item.qty : 1}x{' '}
+                      {item.name ? item.name : Constants.emptyItemName}
+                    </Text>
+                  </View>
+                  <View style={styles.departmentBox}>
+                    <Text style={Typography.normal12}>
+                      #
+                      {item?.sales_incremental_id
+                        ? item?.sales_incremental_id
+                        : Constants.emptyOrderId}{' '}
+                      |{' '}
+                      {item?.department
+                        ? item?.department
+                        : Constants.emptyDepartment}{' '}
+                      {item?.position
+                        ? item?.position
+                        : Constants.emptyPosition}
+                    </Text>
+                  </View>
+                  {item.binsAssigned && item.binsAssigned?.length !== 0 && (
+                    <View style={styles.positionBox}>
+                      {item.binsAssigned.map((itm, i) => (
+                        <View key={i} style={styles.statusPill}>
+                          <StatusPill
+                            backgroundColor={'#C5B171'}
+                            marginRight={5}
+                            text={itm?.bin_number}
+                            paddingVertical={0}
+                          />
+                        </View>
+                      ))}
                     </View>
-                  ))}
+                  )}
                 </View>
-              )}
+
+                <RightCaretSVG />
+              </TouchableOpacity>
             </View>
-            <RightCaretSVG />
-          </TouchableOpacity>
+          </Swipeable>
         )}
       />
     </View>
@@ -148,6 +168,13 @@ const styles = StyleSheet.create({
   departmentBox: { marginBottom: 5 },
   statusPill: { marginBottom: 5 },
   itemBox: { width: '85%' },
+  leftAction: {
+    flex: 1,
+    backgroundColor: Colors.secondaryGreen,
+    justifyContent: 'center',
+    paddingLeft: 20,
+    borderRadius: 10,
+  },
 });
 
 export default PickList;

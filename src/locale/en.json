@@ -183,5 +183,6 @@
   "PS_logoutAlert": "Do you really wish to sign out?",
   "DS_dropReady": "Drop to packer bins",
   "DS_confirm":"Confirm to proceed drop items to bin?",
-  "PS_confirm":"Confirm to proceed ready for delivery?"
+  "PS_confirm":"Confirm to proceed ready for delivery?",
+  "PS_addToDrop":"Adding to drop list"
 }
