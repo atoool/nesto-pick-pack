@@ -172,7 +172,7 @@ const ItemSection = ({
             </View>
             <View style={styles.priceBox}>
               <Text style={Typography.bold21}>
-                ${price ? price?.toFixed(2) : 0}
+                AED {price ? price?.toFixed(2) : 0}
               </Text>
               <Text>{locale?.IS_perQuantity}</Text>
             </View>

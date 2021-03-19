@@ -59,7 +59,7 @@ const ItemSection = ({
               <Text style={Typography.normal15}>{status}</Text>
             </View>
             <View style={styles.priceBox}>
-              <Text style={Typography.bold21}>${price}</Text>
+              <Text style={Typography.bold21}>AED {price}</Text>
               <Text> {locale?.IS_perQuantity}</Text>
             </View>
           </View>
