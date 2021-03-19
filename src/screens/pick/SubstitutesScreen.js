@@ -197,7 +197,7 @@ const ItemSection = ({
                 justifyContent: 'flex-start',
                 alignItems: 'flex-end',
               }}>
-              <Text style={Typography.bold21}>${price}</Text>
+              <Text style={Typography.bold21}>AED {price}</Text>
               <Text> {locale?.IS_perQuantity}</Text>
             </View>
           </View>
