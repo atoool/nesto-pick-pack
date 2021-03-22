@@ -30,9 +30,9 @@ export default {
   primaryGreen: '#A1C349',
   primaryRed: '#FFF5F5',
   lightViolet: '#889BFF',
-  chilled: '#C91614',
-  dry: '#A4880B',
-  frozen: '#3C7EE0',
+  chilled: 'brown',
+  dry: 'blue',
+  frozen: 'silver',
   semiTransparent: 'rgba(0,0,0,0.1)',
   transparent: 'rgba(0,0,0,0)',
 };
