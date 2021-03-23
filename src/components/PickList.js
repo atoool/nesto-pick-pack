@@ -14,6 +14,7 @@ import StatusPill from './StatusPill';
 import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 import { Constants } from '../utils';
+import getColorBin from '../utils/getColorBin';
 
 const PickList = ({
   items,
@@ -112,7 +113,7 @@ const PickList = ({
                       {item.binsAssigned.map((itm, i) => (
                         <View key={i} style={styles.statusPill}>
                           <StatusPill
-                            backgroundColor={'#C5B171'}
+                            backgroundColor={getColorBin(itm?.bin_number)}
                             marginRight={5}
                             text={itm?.bin_number}
                             paddingVertical={0}

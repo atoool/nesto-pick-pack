@@ -9,6 +9,7 @@ import {
 import { RightCaretSVG } from '../assets/svg';
 import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
+import getColorBin from '../utils/getColorBin';
 import Button from './Button';
 import Divider from './Divider';
 import ModalComponent from './ModalComponent';
@@ -64,7 +65,7 @@ const AccordionItem = ({
           binsAssigned?.map((itm, i) => (
             <View key={i} style={styles.statusPill}>
               <StatusPill
-                backgroundColor="#C5B171"
+                backgroundColor={getColorBin(itm?.bin_number)}
                 marginRight={5}
                 text={itm?.bin_number}
                 paddingVertical={5}

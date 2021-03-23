@@ -12,6 +12,7 @@ import Divider from '../../components/Divider';
 import { PackerContext } from '../../context/PackerContext';
 import { Constants } from '../../utils';
 import StatusPill from '../../components/StatusPill';
+import getColorBin from '../../utils/getColorBin';
 
 const AssignBinTabScreen = () => {
   const {
@@ -109,7 +110,7 @@ const AccordionItem = ({
           binsAssigned?.map((itm, i) => (
             <View key={i} style={styles.statusPill}>
               <StatusPill
-                backgroundColor="#C5B171"
+                backgroundColor={getColorBin(itm?.bin_number)}
                 marginRight={5}
                 text={itm?.bin_number}
                 paddingVertical={5}
