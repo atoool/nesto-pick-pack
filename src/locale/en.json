@@ -118,6 +118,7 @@
   "IS_substitutedTitle": "Item substituted",
   "IS_substitutedText": "There has been a substitution for this item.",
   "IS_askTo": "Ask to re-pick",
+  "IS_lessBins":"Number of bins needed should be greater than assigned",
   "IS_contactButton": "Contact FCM",
   "IS_subDetailButton": "View substitution details",
   "IS_substituteButton": "Suggest substitutes",

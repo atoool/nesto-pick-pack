@@ -47,7 +47,10 @@ const PrintLabelsScreen = ({
   };
 
   const onAssignBinPress = () => {
-    if (bins !== '' && orderId && orderId !== '') {
+    // eslint-disable-next-line radix
+    if (parseInt(bins) < binArrayLength) {
+      ToastAndroid.show(locale?.IS_lessBins, ToastAndroid.SHORT);
+    } else if (bins !== '' && orderId && orderId !== '') {
       const binsLength =
         bins >= binsAssigned?.length
           ? bins - binsAssigned?.length

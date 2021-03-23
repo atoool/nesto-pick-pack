@@ -37,7 +37,11 @@ const App = () => {
         <NavigationContainer linking={Linking}>
           <RootSwitchNavigator />
         </NavigationContainer>
-        <SnackBar title={locale?.networkError} showSnack={showSnack} />
+        <SnackBar
+          style={{ bottom: 70 }}
+          title={locale?.networkError}
+          showSnack={showSnack}
+        />
       </AuthContextProvider>
     </AppContextProvider>
   );
