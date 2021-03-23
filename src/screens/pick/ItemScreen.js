@@ -220,11 +220,13 @@ const VerifyItemSection = ({
                     toggle={status === 0}
                     title={locale?.IS_verifyOpt2}
                   />
-                  <RadioItem
-                    onPress={() => setStatus(1)}
-                    toggle={status === 1}
-                    title={locale?.IS_verifyOpt3}
-                  />
+                  {item?.qty !== 1 && (
+                    <RadioItem
+                      onPress={() => setStatus(1)}
+                      toggle={status === 1}
+                      title={locale?.IS_verifyOpt3}
+                    />
+                  )}
                 </>
               )}
               <RadioItem
