@@ -54,7 +54,7 @@ const BinAssignScreen = ({
           ToastAndroid.show(locale?.BAS_confirm, ToastAndroid.SHORT);
         });
 
-        navigation.pop();
+        navigation.popToTop();
       } else {
         ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
       }

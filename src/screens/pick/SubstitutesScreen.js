@@ -10,6 +10,7 @@ import {
   FlatList,
   TouchableOpacity,
   ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
 import Arrow from '../../components/Arrow';
 import StatusPill from '../../components/StatusPill';
@@ -22,6 +23,7 @@ import Button from '../../components/Button';
 import Loader from '../../components/Loader';
 import formatAmPm from '../../utils/formatAmPm';
 import { Constants } from '../../utils';
+import ItemSection from '../../components/ItemSection';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -99,7 +101,7 @@ const SubstitutesScreen = ({
   };
   return (
     <SafeAreaView style={styles.container}>
-      {!similarItems || similarItems.length === 0 ? (
+      {!similarItems ? (
         <Loader fullScreen />
       ) : (
         <>
@@ -119,6 +121,7 @@ const SubstitutesScreen = ({
               startTime={startTime}
               endTime={endTime}
               img={item?.image_url}
+              locale={locale}
             />
             <ItemCheckList
               items={similarItems}
@@ -145,90 +148,15 @@ const SubstitutesScreen = ({
   );
 };
 
-const ItemSection = ({
-  title,
-  price,
-  quantity,
-  position,
-  department,
-  type,
-  status,
-  startTime,
-  endTime,
-  img,
-}) => {
-  const {
-    locale: { locale },
-  } = useContext(AppContext);
-
-  const sTime = formatAmPm(startTime);
-  const eTime = formatAmPm(endTime);
-  return (
-    <>
-      <View style={styles.itemImageContainer}>
-        <View style={styles.itemImage}>
-          <Image
-            source={{ uri: img }}
-            resizeMode={'contain'}
-            style={{ height: (1 * w) / 2, width: screenWidth - 64 }}
-          />
-        </View>
-      </View>
-      <View style={{ flexDirection: 'row', marginHorizontal: 32 }}>
-        <View style={{ flex: 1 }}>
-          <View style={{ flexDirection: 'row' }}>
-            <StatusPill
-              backgroundColor="#A1C349"
-              text={position ? position : Constants.emptyPosition}
-              marginRight={10}
-            />
-            <StatusPill
-              backgroundColor="#C5B171"
-              text={department ? department : Constants.emptyDepartment}
-            />
-          </View>
-          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-            <View style={{ flex: 1 }}>
-              <Text style={Typography.bold21}>{title}</Text>
-              <Text style={Typography.normal15}>{status}</Text>
-            </View>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-end',
-              }}>
-              <Text style={Typography.bold21}>AED {price}</Text>
-              <Text> {locale?.IS_perQuantity}</Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={styles.historyBox}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
-                {/* mock orderType */}
-              </View>
-              <View style={styles.deliverBoxRow2}>
-                <Text>{sTime}</Text>
-                <Arrow width={30} />
-                {/* <Text> ------------> </Text> */}
-                <Text>{eTime}</Text>
-              </View>
-            </View>
-            <View style={styles.quantityPill}>
-              <Text style={Typography.bold13White}>x</Text>
-              <Text style={Typography.bold20White}>
-                {quantity ? quantity : 1}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </>
-  );
-};
-
 const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
+  if (items.length === 0) {
+    return (
+      <ActivityIndicator
+        style={[styles.orderItemsList, { paddingVertical: 20 }]}
+        color={Colors.BLACK}
+      />
+    );
+  }
   return (
     <FlatList
       data={items}
@@ -240,18 +168,21 @@ const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
       )}
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={() => <Divider />}
-      renderItem={({ item, index }) => (
-        <TouchableOpacity onPress={() => onPress(index)}>
-          <View style={styles.orderItem}>
-            <View style={styles.departmentBox}>
-              <TickComponent
-                enabled={checkedList?.length === 0 ? false : checkedList[index]}
-              />
-              <View style={styles.suggestList}>
-                <Text style={styles.suggestItemNameText}>{item.name}</Text>
+      renderItem={({ item, index }) => {
+        return (
+          <TouchableOpacity onPress={() => onPress(index)}>
+            <View style={styles.orderItem}>
+              <View style={styles.departmentBox}>
+                <TickComponent
+                  enabled={
+                    checkedList?.length === 0 ? false : checkedList[index]
+                  }
+                />
+                <View style={styles.suggestList}>
+                  <Text style={styles.suggestItemNameText}>{item.name}</Text>
+                </View>
               </View>
-            </View>
-            {/* <Text
+              {/* <Text
               style={[
                 styles.stockBox,
                 {
@@ -263,9 +194,10 @@ const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
               ]}>
               {stock}
             </Text> */}
-          </View>
-        </TouchableOpacity>
-      )}
+            </View>
+          </TouchableOpacity>
+        );
+      }}
     />
   );
 };
@@ -353,8 +285,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     ...Typography.normal12,
   },
-  suggestList: { flexWrap: 'wrap' },
-  suggestItemNameText: { ...Typography.bold15, width: '90%' },
+  suggestList: { width: '75%' },
+  suggestItemNameText: { ...Typography.bold15, flexWrap: 'wrap' },
   emptyChecklist: {
     ...Typography.normal15,
     marginVertical: 20,
