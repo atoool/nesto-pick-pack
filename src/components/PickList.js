@@ -110,16 +110,20 @@ const PickList = ({
                   </View>
                   {item.binsAssigned && item.binsAssigned?.length !== 0 && (
                     <View style={styles.positionBox}>
-                      {item.binsAssigned.map((itm, i) => (
-                        <View key={i} style={styles.statusPill}>
-                          <StatusPill
-                            backgroundColor={getColorBin(itm?.bin_number)}
-                            marginRight={5}
-                            text={itm?.bin_number}
-                            paddingVertical={0}
-                          />
-                        </View>
-                      ))}
+                      {item.binsAssigned.map(
+                        (itm, i) =>
+                          itm?.bin_number[0]?.toLowerCase() ===
+                            item?.dfc[0]?.toLowerCase() && (
+                            <View key={i} style={styles.statusPill}>
+                              <StatusPill
+                                backgroundColor={getColorBin(itm?.bin_number)}
+                                marginRight={5}
+                                text={itm?.bin_number}
+                                paddingVertical={0}
+                              />
+                            </View>
+                          ),
+                      )}
                     </View>
                   )}
                 </View>

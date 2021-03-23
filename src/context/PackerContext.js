@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import {
   getAssignBinListPack,
   getOrdersListPack,
@@ -8,8 +8,6 @@ import {
   postAssignBin,
   getNotifications,
 } from '../api';
-import packerOrders from '../mock/packerOrders.json';
-import packerBinAssign from '../mock/packerBinAssign.json';
 import { AppContext } from './AppContext';
 
 export const PackerContext = createContext({
