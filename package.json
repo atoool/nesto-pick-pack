@@ -21,8 +21,10 @@
     "build:android:staging": "yarn set:env:staging && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:staging",
     "run:android:staging": "yarn set:env:staging && yarn android --variant=release && yarn move:apk:staging",
     "run:android:staging:debug": "yarn set:env:staging && yarn android",
+    "build:android:production": "yarn set:env:production && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:production",
     "run:android:production": "yarn set:env:production && yarn android --variant=release && yarn move:apk:production",
-    "run:android:production:debug": "yarn set:env:production && yarn android"
+    "run:android:production:debug": "yarn set:env:production && yarn android",
+    "build:android:all": "yarn build:android:dev && yarn build:android:staging && yarn build:android:production"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.3",
