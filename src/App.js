@@ -13,7 +13,7 @@ import { AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
 import { AppContext } from './context/AppContext';
-import InAppMessage from './components/InAppMessage';
+// import InAppMessage from './components/InAppMessage';
 
 const App = () => {
   const [showSnack, setShowSnack] = useState(false);
