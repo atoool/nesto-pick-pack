@@ -35,7 +35,7 @@ const SubstitutesScreen = ({
   navigation,
 }) => {
   const {
-    similarItems,
+    similarItems = [],
     getSimilarItemList,
     postSuggestedSubstitutes,
     getOrdersList,
@@ -149,23 +149,28 @@ const SubstitutesScreen = ({
 };
 
 const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
-  if (items.length === 0) {
-    return (
-      <ActivityIndicator
-        style={[styles.orderItemsList, { paddingVertical: 20 }]}
-        color={Colors.BLACK}
-      />
-    );
-  }
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
   return (
     <FlatList
       data={items}
       scrollEnabled={false}
       style={styles.orderItemsList}
       keyExtractor={(item, indx) => `${indx}${item.id}`}
-      ListEmptyComponent={() => (
-        <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
-      )}
+      ListEmptyComponent={() =>
+        loading ? (
+          <ActivityIndicator
+            style={styles.emptyChecklist}
+            color={Colors.BLACK}
+          />
+        ) : (
+          <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
+        )
+      }
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item, index }) => {
