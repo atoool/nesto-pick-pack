@@ -135,8 +135,8 @@ const SubstitutesScreen = ({
 
           <Button
             title={
-              !loading
-                ? similarItems.length === 0
+              similarItems.length === 0
+                ? !loading
                   ? locale?.IS_notify_CRM
                   : locale.IS_substituteButton
                 : locale.IS_substituteButton
