@@ -121,6 +121,7 @@
   "IS_contactButton": "Contact FCM",
   "IS_subDetailButton": "View substitution details",
   "IS_substituteButton": "Suggest substitutes",
+  "IS_notify_CRM":"Notify CRM",
   "success": "Success",
   "ISS_statusTitle": "Item Packed",
   "ISS_statusText": "This item has been marked as packed",

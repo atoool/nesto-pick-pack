@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   Dimensions,
   ScrollView,
   FlatList,
@@ -12,8 +11,6 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-import Arrow from '../../components/Arrow';
-import StatusPill from '../../components/StatusPill';
 import { AppContext } from '../../context/AppContext';
 import { Colors, Typography } from '../../styles';
 import Divider from '../../components/Divider';
@@ -21,8 +18,6 @@ import { PickerContext } from '../../context/PickerContext';
 import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
-import formatAmPm from '../../utils/formatAmPm';
-import { Constants } from '../../utils';
 import ItemSection from '../../components/ItemSection';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -49,6 +44,8 @@ const SubstitutesScreen = ({
 
   const [isSuggestLoad, setIsSuggestLoad] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const onCheck = (i) => {
     const temp = checkedList;
     temp[i] = !temp[i] ? similarItems[i] : null;
@@ -56,6 +53,9 @@ const SubstitutesScreen = ({
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
     const onMount = async () => {
       await getSimilarItemList(item?.id, item?.item_type);
     };
@@ -71,7 +71,7 @@ const SubstitutesScreen = ({
         return itm;
       }
     });
-    if (isCheckedListEmpty.length === 0) {
+    if (isCheckedListEmpty.length === 0 && similarItems?.length !== 0) {
       ToastAndroid.show(locale?.selectSubst, ToastAndroid.SHORT);
     } else {
       const payload = {
@@ -128,12 +128,19 @@ const SubstitutesScreen = ({
               onPress={onCheck}
               stock="In stock"
               checkedList={checkedList}
+              loading={loading}
               locale={locale}
             />
           </ScrollView>
 
           <Button
-            title={locale.IS_substituteButton}
+            title={
+              !loading
+                ? similarItems.length === 0
+                  ? locale?.IS_notify_CRM
+                  : locale.IS_substituteButton
+                : locale.IS_substituteButton
+            }
             style={{
               borderRadius: 0,
               bottom: 0,
@@ -148,13 +155,14 @@ const SubstitutesScreen = ({
   );
 };
 
-const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+const ItemCheckList = ({
+  items,
+  onPress,
+  stock,
+  checkedList,
+  locale,
+  loading,
+}) => {
   return (
     <FlatList
       data={items}
