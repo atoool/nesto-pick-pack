@@ -67,8 +67,8 @@ const PickList = ({
                       backgroundColor: item.dfc
                         ? Colors[item?.dfc?.toLowerCase()]
                           ? Colors[item.dfc.toLowerCase()]
-                          : Colors.chilled
-                        : Colors.chilled,
+                          : Colors.dfcFallback
+                        : Colors.dfcFallback,
                     },
                   ]}
                 />
