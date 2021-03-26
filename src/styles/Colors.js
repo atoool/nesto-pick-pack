@@ -33,6 +33,7 @@ export default {
   chilled: 'brown',
   dry: 'blue',
   frozen: 'silver',
+  dfcFallback: 'yellow',
   semiTransparent: 'rgba(0,0,0,0.1)',
   transparent: 'rgba(0,0,0,0)',
 };

@@ -4,15 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   Dimensions,
   ScrollView,
   FlatList,
   TouchableOpacity,
   ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
-import Arrow from '../../components/Arrow';
-import StatusPill from '../../components/StatusPill';
 import { AppContext } from '../../context/AppContext';
 import { Colors, Typography } from '../../styles';
 import Divider from '../../components/Divider';
@@ -20,8 +18,6 @@ import { PickerContext } from '../../context/PickerContext';
 import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
-import formatAmPm from '../../utils/formatAmPm';
-import { Constants } from '../../utils';
 import ItemSection from '../../components/ItemSection';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -34,7 +30,7 @@ const SubstitutesScreen = ({
   navigation,
 }) => {
   const {
-    similarItems,
+    similarItems = [],
     getSimilarItemList,
     postSuggestedSubstitutes,
     getOrdersList,
@@ -48,6 +44,8 @@ const SubstitutesScreen = ({
 
   const [isSuggestLoad, setIsSuggestLoad] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const onCheck = (i) => {
     const temp = checkedList;
     temp[i] = !temp[i] ? similarItems[i] : null;
@@ -55,6 +53,9 @@ const SubstitutesScreen = ({
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
     const onMount = async () => {
       await getSimilarItemList(item?.id, item?.item_type);
     };
@@ -70,7 +71,7 @@ const SubstitutesScreen = ({
         return itm;
       }
     });
-    if (isCheckedListEmpty.length === 0) {
+    if (isCheckedListEmpty.length === 0 && similarItems?.length !== 0) {
       ToastAndroid.show(locale?.selectSubst, ToastAndroid.SHORT);
     } else {
       const payload = {
@@ -133,12 +134,19 @@ const SubstitutesScreen = ({
               onPress={onCheck}
               stock="In stock"
               checkedList={checkedList}
+              loading={loading}
               locale={locale}
             />
           </ScrollView>
 
           <Button
-            title={locale.IS_substituteButton}
+            title={
+              similarItems.length === 0
+                ? !loading
+                  ? locale?.IS_notify_CRM
+                  : locale.IS_substituteButton
+                : locale.IS_substituteButton
+            }
             style={{
               borderRadius: 0,
               bottom: 0,
@@ -153,30 +161,47 @@ const SubstitutesScreen = ({
   );
 };
 
-const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
+const ItemCheckList = ({
+  items,
+  onPress,
+  stock,
+  checkedList,
+  locale,
+  loading,
+}) => {
   return (
     <FlatList
       data={items}
       scrollEnabled={false}
       style={styles.orderItemsList}
       keyExtractor={(item, indx) => `${indx}${item.id}`}
-      ListEmptyComponent={() => (
-        <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
-      )}
+      ListEmptyComponent={() =>
+        loading ? (
+          <ActivityIndicator
+            style={styles.emptyChecklist}
+            color={Colors.BLACK}
+          />
+        ) : (
+          <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
+        )
+      }
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={() => <Divider />}
-      renderItem={({ item, index }) => (
-        <TouchableOpacity onPress={() => onPress(index)}>
-          <View style={styles.orderItem}>
-            <View style={styles.departmentBox}>
-              <TickComponent
-                enabled={checkedList?.length === 0 ? false : checkedList[index]}
-              />
-              <View style={styles.suggestList}>
-                <Text style={styles.suggestItemNameText}>{item.name}</Text>
+      renderItem={({ item, index }) => {
+        return (
+          <TouchableOpacity onPress={() => onPress(index)}>
+            <View style={styles.orderItem}>
+              <View style={styles.departmentBox}>
+                <TickComponent
+                  enabled={
+                    checkedList?.length === 0 ? false : checkedList[index]
+                  }
+                />
+                <View style={styles.suggestList}>
+                  <Text style={styles.suggestItemNameText}>{item.name}</Text>
+                </View>
               </View>
-            </View>
-            {/* <Text
+              {/* <Text
               style={[
                 styles.stockBox,
                 {
@@ -188,9 +213,10 @@ const ItemCheckList = ({ items, onPress, stock, checkedList, locale }) => {
               ]}>
               {stock}
             </Text> */}
-          </View>
-        </TouchableOpacity>
-      )}
+            </View>
+          </TouchableOpacity>
+        );
+      }}
     />
   );
 };
