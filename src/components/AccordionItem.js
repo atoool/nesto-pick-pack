@@ -15,6 +15,7 @@ import ModalComponent from './ModalComponent';
 import OrderComponent from './OrderComponent';
 import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
+import getColorBin from '../utils/getColorBin';
 
 const now = Date.now();
 const AccordionItem = ({
@@ -55,8 +56,8 @@ const AccordionItem = ({
         status={status}
         orderType={orderType}
         index={index}
-        startTime={time_slot.start_time}
-        endTime={time_slot.end_time}
+        startTime={time_slot?.start_time}
+        endTime={time_slot?.end_time}
         timeLeft={timeLeft}
       />
       <View style={styles.positionBox}>
@@ -64,7 +65,7 @@ const AccordionItem = ({
           binsAssigned?.map((itm, i) => (
             <View key={i} style={styles.statusPill}>
               <StatusPill
-                backgroundColor="#C5B171"
+                backgroundColor={getColorBin(itm?.bin_number)}
                 marginRight={5}
                 text={itm?.bin_number}
                 paddingVertical={5}
@@ -89,19 +90,36 @@ const AccordionItem = ({
                   <TickComponent
                     enabled={
                       userType === 'packer'
-                        ? item.packer_checked
-                        : item.picker_checked
+                        ? item?.packer_checked
+                        : item?.picker_checked
                     }
                   />
                   <View style={styles.textBox}>
-                    <Text style={styles.itemTitle}>
-                      {item?.total_qty
-                        ? item?.total_qty
-                        : item.qty
-                        ? item.qty
-                        : 1}
-                      x {item.name ? item.name : Constants.emptyItemName}
-                    </Text>
+                    <View style={styles.rowCenter}>
+                      {userType !== 'packer' && (
+                        <View
+                          style={[
+                            styles.deliveryStatusCircle,
+                            {
+                              backgroundColor: item.dfc
+                                ? Colors[item?.dfc?.toLowerCase()]
+                                  ? Colors[item.dfc.toLowerCase()]
+                                  : Colors.chilled
+                                : Colors.chilled,
+                            },
+                          ]}
+                        />
+                      )}
+                      <Text style={styles.itemTitle}>
+                        {item?.total_qty
+                          ? item?.total_qty
+                          : item?.qty
+                          ? item?.qty
+                          : 1}
+                        x {item?.name ? item?.name : Constants.emptyItemName}
+                      </Text>
+                    </View>
+
                     <Text style={styles.itemText}>
                       {item?.department
                         ? item?.department
@@ -171,6 +189,15 @@ const styles = StyleSheet.create({
   itemTitle: { ...Typography.bold15, flexWrap: 'wrap' },
   textBox: { width: '70%' },
   itemText: { ...Typography.normal12, flexWrap: 'wrap' },
+  rowCenter: { flexDirection: 'row', alignItems: 'center' },
+  deliveryStatusCircle: {
+    width: 12,
+    height: 12,
+    backgroundColor: '#889BFF',
+    borderRadius: 14,
+    marginRight: 10,
+    marginTop: 1,
+  },
 });
 
 export default AccordionItem;

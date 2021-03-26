@@ -99,6 +99,17 @@ const SubstitutesScreen = ({
     }
     setIsSuggestLoad(false);
   };
+
+  let status = item?.picking_completed
+    ? locale?.status?.PiC
+    : item?.assigned_item
+    ? locale?.status?.subst
+    : item?.substitution_initiated
+    ? locale?.status?.si
+    : // : item?.repick_completed === false
+      // ? locale?.status?.rn
+      locale?.status?.Pi;
+
   return (
     <SafeAreaView style={styles.container}>
       {!similarItems ? (
@@ -113,11 +124,7 @@ const SubstitutesScreen = ({
               position={item?.position}
               department={item?.department}
               type={item?.order_type}
-              status={
-                item?.picking_completed
-                  ? locale?.status?.PiC
-                  : locale?.status.Pi
-              }
+              status={status}
               startTime={startTime}
               endTime={endTime}
               img={item?.image_url}

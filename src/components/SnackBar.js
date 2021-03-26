@@ -17,7 +17,7 @@ const SnackBar = ({ style, title, titleStyle, showSnack }) => {
   const hide = () => {
     // Will change fadeAnim value to 0 in 5 seconds
     Animated.timing(slideAnim, {
-      toValue: 60,
+      toValue: 150,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -39,12 +39,15 @@ const styles = StyleSheet.create({
   snackView: {
     position: 'absolute',
     height: 60,
-    width: '100%',
+    width: '95%',
     backgroundColor: Colors.errorRed,
-    bottom: 0,
+    bottom: 10,
+    alignSelf: 'center',
+    borderRadius: 10,
+    elevation: 5,
   },
   text: {
-    ...Typography.normal15,
+    ...Typography.bold16White,
     textAlignVertical: 'center',
     textAlign: 'center',
     height: '100%',
