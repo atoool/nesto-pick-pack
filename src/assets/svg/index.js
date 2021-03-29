@@ -23,6 +23,7 @@ import SuccessSubstituteSVG from './SuccessSubstituteSVG.svg';
 import ItemRemovedSVG from './ItemRemovedSVG.svg';
 import CustAvailableSVG from './CustAvailableSVG.svg';
 import DropSVG from './DropSVG.svg';
+import SearchSVG from './SearchSVG.svg';
 export {
   DropSVG,
   PickerChoiceSVG,
@@ -49,4 +50,5 @@ export {
   LockSVG,
   NoNotificationSVG,
   ProfileSVG,
+  SearchSVG,
 };

@@ -12,7 +12,8 @@
     "Print_Labels": "Print labels",
     "Assign_Bin": "Assign Bins",
     "Bin_pos": "Bin positions",
-    "statistics": "My statistics"
+    "statistics": "My statistics",
+    "search":"Search products"
   },
   "missing": {
     "aisle": "Aisle missing",
@@ -23,7 +24,8 @@
     "password": "Password",
     "countOfOutStock": "Enter count of out of stock items",
     "critical": "Enter count of remaining items",
-    "enterPos": "Enter position"
+    "enterPos": "Enter position",
+    "search":"Search a product here"
   },
   "departments": {
     "h": "Health Department"
@@ -187,5 +189,7 @@
   "DS_confirm":"Confirm to proceed drop items to bin?",
   "PS_confirm":"Confirm to proceed ready for delivery?",
   "PS_addToDrop":"Adding to drop list",
-  "SbS_search":"Search from all products"
+  "SbS_search":"Search from all products",
+  "SPS_emptyText":"No results to show",
+  "SPS_button":"Add to check list"
 }

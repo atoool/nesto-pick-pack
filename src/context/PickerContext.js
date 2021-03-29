@@ -10,6 +10,7 @@ import {
   postSubstitutes,
   postSuggestedSubstitutes,
   getNotifications,
+  getAllItems,
 } from '../api';
 import { AppContext } from './AppContext';
 
@@ -30,12 +31,15 @@ export const PickerContext = createContext({
   postSubstitutes: async () => {},
   postSuggestedSubstitutes: async () => {},
   getAllNotifications: async () => {},
+  getAllItemList: async () => {},
+  AddToSimilarList: () => {},
 });
 
 export const PickerContextProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [dropList, setDropList] = useState([]);
   const [similarItems, setSimilarItems] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const [pickerSuggestions, setPickerSuggestions] = useState([]);
   const [substitutedList, setSubstitutedList] = useState({});
   const [notifications, setNotifications] = useState([]);
@@ -73,6 +77,19 @@ export const PickerContextProvider = ({ children }) => {
     }
   };
 
+  const getAllItemList = async (id, item_type) => {
+    try {
+      const list = await getAllItems(id, item_type, locale);
+      setAllItems(list);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const AddToSimilarList = (list) => {
+    setSimilarItems([...list, ...similarItems]);
+  };
+
   const getSubstitutedItems = async (id) => {
     try {
       const list = await getSubstitutedList(id, locale);
@@ -106,18 +123,21 @@ export const PickerContextProvider = ({ children }) => {
     substitutedList,
     pickerSuggestions,
     notifications,
+    allItems,
     getOrdersList, //
     getDropList, //
     setItemPicked: async (id, item_type, critical_qty) =>
       await setItemPicked(id, item_type, critical_qty, locale),
     setItemDrop: async (id) => await setItemDrop(id, locale),
     getSimilarItemList, //
+    getAllItemList,
     getSubstitutedItems, //
     getPickerSuggestedItems, //
     postSubstitutes: async (PAYLOAD) => await postSubstitutes(PAYLOAD, locale),
     postSuggestedSubstitutes: async (PAYLOAD) =>
       await postSuggestedSubstitutes(PAYLOAD, locale),
     getAllNotifications, //
+    AddToSimilarList,
   };
   return (
     <PickerContext.Provider value={value}>{children}</PickerContext.Provider>

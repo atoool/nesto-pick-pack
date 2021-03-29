@@ -2,23 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
-  View,
   Dimensions,
   ScrollView,
-  FlatList,
-  TouchableOpacity,
   ToastAndroid,
-  ActivityIndicator,
 } from 'react-native';
 import { AppContext } from '../../context/AppContext';
-import { Colors, Typography } from '../../styles';
-import Divider from '../../components/Divider';
+import { Colors } from '../../styles';
 import { PickerContext } from '../../context/PickerContext';
-import TickComponent from '../../components/TickComponent';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
 import ItemSection from '../../components/ItemSection';
+import ItemCheckList from '../../components/ItemCheckList';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
@@ -115,7 +109,7 @@ const SubstitutesScreen = ({
         <Loader fullScreen />
       ) : (
         <>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <ItemSection
               title={item?.name}
               price={item?.price && item.price.toFixed(2)}
@@ -131,10 +125,7 @@ const SubstitutesScreen = ({
             />
             <Button
               title={locale?.SbS_search}
-              style={{
-                marginHorizontal: 32,
-                marginTop: 20,
-              }}
+              style={styles.searchButton}
               onPress={() => {}}
             />
             <ItemCheckList
@@ -143,7 +134,7 @@ const SubstitutesScreen = ({
               stock="In stock"
               checkedList={checkedList}
               loading={loading}
-              locale={locale}
+              emptyText={locale?.noSimilar}
             />
           </ScrollView>
 
@@ -155,11 +146,7 @@ const SubstitutesScreen = ({
                   : locale.IS_substituteButton
                 : locale.IS_substituteButton
             }
-            style={{
-              borderRadius: 0,
-              bottom: 0,
-              width: '100%',
-            }}
+            style={styles.suggestButton}
             loading={isSuggestLoad}
             onPress={onSuggestSubstitute}
           />
@@ -169,65 +156,6 @@ const SubstitutesScreen = ({
   );
 };
 
-const ItemCheckList = ({
-  items,
-  onPress,
-  stock,
-  checkedList,
-  locale,
-  loading,
-}) => {
-  return (
-    <FlatList
-      data={items}
-      scrollEnabled={false}
-      style={styles.orderItemsList}
-      keyExtractor={(item, indx) => `${indx}${item.id}`}
-      ListEmptyComponent={() =>
-        loading ? (
-          <ActivityIndicator
-            style={styles.emptyChecklist}
-            color={Colors.BLACK}
-          />
-        ) : (
-          <Text style={styles.emptyChecklist}>{locale?.noSimilar}</Text>
-        )
-      }
-      showsVerticalScrollIndicator={false}
-      ItemSeparatorComponent={() => <Divider />}
-      renderItem={({ item, index }) => {
-        return (
-          <TouchableOpacity onPress={() => onPress(index)}>
-            <View style={styles.orderItem}>
-              <View style={styles.departmentBox}>
-                <TickComponent
-                  enabled={
-                    checkedList?.length === 0 ? false : checkedList[index]
-                  }
-                />
-                <View style={styles.suggestList}>
-                  <Text style={styles.suggestItemNameText}>{item.name}</Text>
-                </View>
-              </View>
-              {/* <Text
-              style={[
-                styles.stockBox,
-                {
-                  color:
-                    stock === 'In stock'
-                      ? Colors.primaryGreen
-                      : Colors.secondaryRed,
-                },
-              ]}>
-              {stock}
-            </Text> */}
-            </View>
-          </TouchableOpacity>
-        );
-      }}
-    />
-  );
-};
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.WHITE },
   timerDivider: {
@@ -288,37 +216,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  orderItem: {
-    marginVertical: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  orderItemsList: {
-    backgroundColor: Colors.offWhite,
-    borderRadius: 7,
-    paddingVertical: 10,
+  searchButton: {
     marginHorizontal: 32,
-    marginVertical: 20,
-    marginBottom: 60,
+    marginTop: 20,
   },
-  departmentBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  stockBox: {
-    marginRight: 20,
-    ...Typography.normal12,
-  },
-  suggestList: { width: '75%' },
-  suggestItemNameText: { ...Typography.bold15, flexWrap: 'wrap' },
-  emptyChecklist: {
-    ...Typography.normal15,
-    marginVertical: 20,
-    alignSelf: 'center',
-    color: Colors.primary4,
+  suggestButton: {
+    borderRadius: 0,
+    bottom: 0,
+    width: '100%',
   },
 });
 

@@ -25,6 +25,7 @@ import {
   ItemRemovedSVG,
   CustAvailableSVG,
   DropSVG,
+  SearchSVG,
 } from '../assets/svg';
 
 const GetIcon = ({ name, color, width }) => {
@@ -78,6 +79,8 @@ const GetIcon = ({ name, color, width }) => {
     return <ItemRemovedSVG color={color} width={width} />;
   } else if (name === 'DropSVG') {
     return <DropSVG color={color} width={width} />;
+  } else if (name === 'SearchSVG') {
+    return <SearchSVG color={color} width={width} />;
   }
 };
 

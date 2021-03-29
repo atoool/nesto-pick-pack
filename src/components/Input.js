@@ -16,10 +16,11 @@ const Input = ({
   iconName,
   textContentType = 'none',
   editable = true,
+  rightIconName,
 }) => {
   return (
     <View style={[styles.container, style]}>
-      {iconName !== '' && (
+      {iconName && (
         <View style={styles.icon}>
           <GetIcon name={iconName} width={20} />
         </View>
@@ -27,7 +28,7 @@ const Input = ({
       <TextInput
         placeholder={placeholder}
         autoCompleteType="off"
-        placeholderTextColor={Colors.darkText}
+        placeholderTextColor={Colors.lightGray}
         value={value}
         onChangeText={onChangeText}
         maxLength={maxLength}
@@ -39,6 +40,7 @@ const Input = ({
         textContentType={textContentType}
         editable={editable}
       />
+      {rightIconName && <GetIcon name={rightIconName} width={20} />}
     </View>
   );
 };
