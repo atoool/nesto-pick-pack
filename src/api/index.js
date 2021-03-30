@@ -130,12 +130,10 @@ export const getSimilarItems = async (id, item_type, locale) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
 };
-export const getAllItems = async (id, item_type, locale) => {
-  const URL = `/picker/item/similar-items/${id}`;
-  const extraParams = `&item_type=${item_type}`;
-  return get(URL, true, false, extraParams).catch((e) => {
+export const getAllItems = async (id, locale) => {
+  const URL = `/crm/search-product/${id}`;
+  return get(URL, true, false).catch((e) => {
     console.log(e);
-    ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
 };
 export const getPickerSuggestions = async (id, locale) => {

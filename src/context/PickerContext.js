@@ -77,9 +77,9 @@ export const PickerContextProvider = ({ children }) => {
     }
   };
 
-  const getAllItemList = async (id, item_type) => {
+  const getAllItemList = async (id) => {
     try {
-      const list = await getAllItems(id, item_type, locale);
+      const list = await getAllItems(id, locale);
       setAllItems(list);
     } catch (e) {
       console.log(e);

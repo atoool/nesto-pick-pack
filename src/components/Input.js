@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import GetIcon from './GetIcon';
 import { Colors } from '../styles';
 
@@ -17,6 +17,7 @@ const Input = ({
   textContentType = 'none',
   editable = true,
   rightIconName,
+  onSearch,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -39,8 +40,13 @@ const Input = ({
         style={styles.textInput}
         textContentType={textContentType}
         editable={editable}
+        onSubmitEditing={onSearch ? onSearch : () => {}}
       />
-      {rightIconName && <GetIcon name={rightIconName} width={20} />}
+      {rightIconName && (
+        <TouchableOpacity onPress={onSearch}>
+          <GetIcon name={rightIconName} width={20} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

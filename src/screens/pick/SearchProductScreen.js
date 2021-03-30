@@ -25,23 +25,26 @@ const SearchProductScreen = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-    const onMount = async () => await getAllItemList(18, 'update');
-    onMount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSearch = (text) => {
+  const onChangeText = (text) => {
     setSearch(text);
+    search !== '' && setList([]);
+  };
+
+  const onSearch = async () => {
+    setLoading(true);
     let listItems = [];
-    if (text !== '') {
-      let txt = text?.toLowerCase();
-      listItems = allItems.filter((item) => {
-        if (item?.name?.toLowerCase()?.indexOf(txt) > -1) {
-          return item;
-        }
-      });
-    }
+    search !== '' &&
+      (await getAllItemList(search)
+        .then(() => {
+          listItems = allItems;
+        })
+        .catch(() => {}));
+
     setList(listItems);
+    setLoading(false);
   };
 
   const onCheck = (i) => {
@@ -55,6 +58,7 @@ const SearchProductScreen = ({ navigation }) => {
     navigation.pop();
   };
 
+  const nonNullArray = checkList.filter((l) => l != null);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,9 +66,10 @@ const SearchProductScreen = ({ navigation }) => {
           placeholder={locale?.placeholder?.search}
           autoCompleteType="off"
           value={search}
-          onChangeText={onSearch}
+          onChangeText={onChangeText}
           rightIconName="SearchSVG"
           style={styles.searchField}
+          onSearch={onSearch}
         />
         <ItemCheckList
           items={list}
@@ -75,6 +80,7 @@ const SearchProductScreen = ({ navigation }) => {
         />
       </ScrollView>
       <Button
+        disabled={nonNullArray.length === 0}
         title={locale?.SPS_button}
         style={styles.suggestButton}
         onPress={onAddToCheckList}
