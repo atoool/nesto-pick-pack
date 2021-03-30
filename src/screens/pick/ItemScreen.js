@@ -90,6 +90,7 @@ const ItemScreen = ({
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
+          {item?.barcode && <Text>Barcode : {item?.barcode}</Text>}
         </View>
 
         {/* {item?.assigned_item && (
