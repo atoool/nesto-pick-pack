@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   deliveryStatusCircle: {
     width: 12,
     height: 12,
-    backgroundColor: '#889BFF',
+    backgroundColor: Colors.lightViolet,
     borderRadius: 14,
     marginRight: 10,
     marginTop: 1,

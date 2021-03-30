@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SafeAreaView, Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Typography, Colors } from '../../styles';
+import { Colors } from '../../styles';
 import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';

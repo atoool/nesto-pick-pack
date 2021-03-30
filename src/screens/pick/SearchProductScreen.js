@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import ItemCheckList from '../../components/ItemCheckList';
 import { AppContext } from '../../context/AppContext';
 import { PickerContext } from '../../context/PickerContext';
+import { Colors } from '../../styles';
 
 const SearchProductScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +84,7 @@ const SearchProductScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: '#fff', flex: 1 },
+  container: { backgroundColor: Colors.WHITE, flex: 1 },
   searchField: {
     marginTop: 20,
     marginBottom: 20,

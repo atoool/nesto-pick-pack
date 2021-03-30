@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 20,
     borderWidth: 2,
-    borderColor: '#C5C5C5',
+    borderColor: Colors.textInputBorder,
     borderRadius: 7,
   },
   icon: {

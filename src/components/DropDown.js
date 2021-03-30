@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   dropListBox: {
     position: 'absolute',
     elevation: 10,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.WHITE,
     width: 190,
     height: 'auto',
     alignSelf: 'center',

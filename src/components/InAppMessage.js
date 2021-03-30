@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { Colors, Typography } from '../styles';

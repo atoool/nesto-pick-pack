@@ -16,7 +16,6 @@ import ModalComponent from './ModalComponent';
 import OrderComponent from './OrderComponent';
 import StatusPill from './StatusPill';
 import TickComponent from './TickComponent';
-import getColorBin from '../utils/getColorBin';
 
 const now = Date.now();
 const AccordionItem = ({
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
   deliveryStatusCircle: {
     width: 12,
     height: 12,
-    backgroundColor: '#889BFF',
+    backgroundColor: Colors.lightViolet,
     borderRadius: 14,
     marginRight: 10,
     marginTop: 1,
