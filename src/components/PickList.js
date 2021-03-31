@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Typography, Colors } from '../styles';
 import { RightCaretSVG } from '../assets/svg';
 import StatusPill from './StatusPill';
@@ -56,82 +55,76 @@ const PickList = ({
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item, indx }) => (
-          <Swipeable
-            renderLeftActions={LeftActions}
-            onSwipeableLeftOpen={() => onManualEntry(item, null)}>
-            <View style={styles.orderItemsList}>
-              <TouchableOpacity
-                style={styles.orderItem}
-                onPress={() =>
-                  navigation.navigate('ItemScreen', {
-                    orderId: item?.orderId,
-                    sales_incremental_id: item?.sales_incremental_id
-                      ? item?.sales_incremental_id
-                      : Constants.emptyOrderId,
-                    item,
-                    timeLeft,
-                    startTime,
-                    endTime,
-                  })
-                }>
-                <View style={styles.itemBox}>
-                  <View style={styles.itemTitleBox}>
-                    <View
-                      style={[
-                        styles.deliveryStatusCircle,
-                        {
-                          backgroundColor: item.dfc
-                            ? Colors[item?.dfc?.toLowerCase()]
-                              ? Colors[item.dfc.toLowerCase()]
-                              : Colors.dfcFallback
-                            : Colors.dfcFallback,
-                        },
-                      ]}
-                    />
-                    <Text style={Typography.bold15}>
-                      {item.qty ? item.qty : 1}x{' '}
-                      {item.name ? item.name : Constants.emptyItemName}
-                    </Text>
-                  </View>
-                  <View style={styles.departmentBox}>
-                    <Text style={Typography.normal12}>
-                      #
-                      {item?.sales_incremental_id
-                        ? item?.sales_incremental_id
-                        : Constants.emptyOrderId}{' '}
-                      |{' '}
-                      {item?.department
-                        ? item?.department
-                        : Constants.emptyDepartment}{' '}
-                      {item?.position
-                        ? item?.position
-                        : Constants.emptyPosition}
-                    </Text>
-                  </View>
-                  {item.binsAssigned && item.binsAssigned?.length !== 0 && (
-                    <View style={styles.positionBox}>
-                      {item.binsAssigned.map(
-                        (itm, i) =>
-                          itm?.bin_number[0]?.toLowerCase() ===
-                            item?.dfc[0]?.toLowerCase() && (
-                            <View key={i} style={styles.statusPill}>
-                              <StatusPill
-                                backgroundColor={getColorBin(itm?.bin_number)}
-                                marginRight={5}
-                                text={itm?.bin_number}
-                                paddingVertical={0}
-                              />
-                            </View>
-                          ),
-                      )}
-                    </View>
-                  )}
+          <View style={styles.orderItemsList}>
+            <TouchableOpacity
+              style={styles.orderItem}
+              onPress={() =>
+                navigation.navigate('ItemScreen', {
+                  orderId: item?.orderId,
+                  sales_incremental_id: item?.sales_incremental_id
+                    ? item?.sales_incremental_id
+                    : Constants.emptyOrderId,
+                  item,
+                  timeLeft,
+                  startTime,
+                  endTime,
+                })
+              }>
+              <View style={styles.itemBox}>
+                <View style={styles.itemTitleBox}>
+                  <View
+                    style={[
+                      styles.deliveryStatusCircle,
+                      {
+                        backgroundColor: item.dfc
+                          ? Colors[item?.dfc?.toLowerCase()]
+                            ? Colors[item.dfc.toLowerCase()]
+                            : Colors.dfcFallback
+                          : Colors.dfcFallback,
+                      },
+                    ]}
+                  />
+                  <Text style={Typography.bold15}>
+                    {item.qty ? item.qty : 1}x{' '}
+                    {item.name ? item.name : Constants.emptyItemName}
+                  </Text>
                 </View>
+                <View style={styles.departmentBox}>
+                  <Text style={Typography.normal12}>
+                    #
+                    {item?.sales_incremental_id
+                      ? item?.sales_incremental_id
+                      : Constants.emptyOrderId}{' '}
+                    |{' '}
+                    {item?.department
+                      ? item?.department
+                      : Constants.emptyDepartment}{' '}
+                    {item?.position ? item?.position : Constants.emptyPosition}
+                  </Text>
+                </View>
+                {item.binsAssigned && item.binsAssigned?.length !== 0 && (
+                  <View style={styles.positionBox}>
+                    {item.binsAssigned.map(
+                      (itm, i) =>
+                        itm?.bin_number[0]?.toLowerCase() ===
+                          item?.dfc[0]?.toLowerCase() && (
+                          <View key={i} style={styles.statusPill}>
+                            <StatusPill
+                              backgroundColor={getColorBin(itm?.bin_number)}
+                              marginRight={5}
+                              text={itm?.bin_number}
+                              paddingVertical={0}
+                            />
+                          </View>
+                        ),
+                    )}
+                  </View>
+                )}
+              </View>
 
-                <RightCaretSVG />
-              </TouchableOpacity>
-            </View>
-          </Swipeable>
+              <RightCaretSVG />
+            </TouchableOpacity>
+          </View>
         )}
       />
     </View>
