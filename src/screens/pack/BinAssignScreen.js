@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -24,13 +24,17 @@ const BinAssignScreen = ({
   },
   navigation,
 }) => {
-  const emptyArray = Array.apply(
-    '',
-    Array(parseInt(bins === '' ? 0 : bins)),
-  ).map((i) => '');
-  const [binPos, setBinPos] = useState(emptyArray);
+  const [binPos, setBinPos] = useState([]);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  // const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const temp = Array.apply('', Array(bins)).map((e, i) =>
+      binsAssigned?.length > i ? binsAssigned[i]?.bin_number : '',
+    );
+    setBinPos(temp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [binsAssigned]);
 
   const onBinAssign = (txt, indx) => {
     binPos[indx] = txt;
@@ -40,26 +44,29 @@ const BinAssignScreen = ({
     PackerContext,
   );
   const onSave = async () => {
-    // setModalVisible(false);
+    setModalVisible(false);
     setIsButtonLoading(true);
     try {
-      const isEmpty = binPos.filter((i) => i === '').length === 0;
-      if (isEmpty) {
-        const payload = {
-          bins: binPos,
-        };
-        await postAssignBin(payload, orderId).then(async () => {
-          await getAssignBinList();
-          await getPackerOrderList();
-          ToastAndroid.show(locale?.BAS_confirm, ToastAndroid.SHORT);
-        });
+      const binValues = binPos.filter((i) => i !== '');
+      const payload = {
+        bins: binValues,
+      };
+      await postAssignBin(payload, orderId).then(async () => {
+        await getAssignBinList();
+        await getPackerOrderList();
+        ToastAndroid.show(locale?.BAS_confirmed, ToastAndroid.SHORT);
+      });
 
-        navigation.popToTop();
-      } else {
-        ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
-      }
+      navigation.popToTop();
     } catch {}
     setIsButtonLoading(false);
+  };
+
+  const onConfirm = () => {
+    const binCheck =
+      binPos.filter((e, i) => binsAssigned?.length > i && e === '').length ===
+      0;
+    binCheck ? onSave() : setModalVisible(true);
   };
 
   const {
@@ -83,18 +90,6 @@ const BinAssignScreen = ({
           onChangeBins={() => {}}
           hide
         />
-        {binsAssigned &&
-          binsAssigned?.length !== 0 &&
-          binsAssigned?.map((val, indx) => (
-            <InputWithLabel
-              key={indx}
-              editable={false}
-              iconName="EditSVG"
-              label={locale?.BAS_Position + (indx + 1)}
-              top={10}
-              value={val?.bin_number}
-            />
-          ))}
         {binPos &&
           binPos?.length !== 0 &&
           binPos?.map((val, indx) => (
@@ -111,19 +106,19 @@ const BinAssignScreen = ({
           ))}
         <Button
           title={locale?.confirm}
-          onPress={onSave}
+          onPress={onConfirm}
           style={{ width: width - 60 }}
           loading={isButtonLoading}
         />
       </ScrollView>
-      {/* <ModalComponent
+      <ModalComponent
         visible={modalVisible}
         text={locale?.BAS_confirm}
         button1Text={locale?.no}
         button2Text={locale?.yes}
         onButton1Press={() => setModalVisible(false)}
         onButton2Press={onSave}
-      /> */}
+      />
     </SafeAreaView>
   );
 };

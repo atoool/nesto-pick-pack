@@ -47,19 +47,14 @@ const PrintLabelsScreen = ({
   };
 
   const onAssignBinPress = () => {
-    // eslint-disable-next-line radix
-    if (parseInt(bins) < binArrayLength) {
-      ToastAndroid.show(locale?.IS_lessBins, ToastAndroid.SHORT);
-    } else if (bins !== '' && orderId && orderId !== '') {
-      const binsLength =
-        bins >= binsAssigned?.length
-          ? bins - binsAssigned?.length
-          : binsAssigned?.length;
+    if (bins !== '' && orderId && orderId !== '') {
+      // eslint-disable-next-line radix
+      const binCount = parseInt(bins);
       navigation.navigate('BinAssignScreen', {
         orderId,
-        bins: binsLength,
+        bins: binCount,
         sales_incremental_id: params?.sales_incremental_id,
-        binsAssigned: binsAssigned,
+        binsAssigned,
       });
     } else {
       ToastAndroid.show(locale?.IS_fieldIsEmpty, ToastAndroid.SHORT);
