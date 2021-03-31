@@ -123,11 +123,6 @@ const SubstitutesScreen = ({
               img={item?.image_url}
               locale={locale}
             />
-            <Button
-              title={locale?.SbS_search}
-              style={styles.searchButton}
-              onPress={() => {}}
-            />
             <ItemCheckList
               items={similarItems}
               onPress={onCheck}
