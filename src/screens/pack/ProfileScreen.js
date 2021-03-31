@@ -67,7 +67,7 @@ const ProfileScreen = ({ navigation }) => {
           />
         </TestTouchable>
         <MarkAvailability title={locale?.P_markAvail} />
-        <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} />
+        {/* <LinkButton title={locale?.P_statistics} onPress={onStatisticsPress} /> */}
         <LinkButton
           title={locale?.signout}
           onPress={() => setModalVisible(true)}
