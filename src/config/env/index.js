@@ -1,1 +1,1 @@
-export { env } from './dev';
+export { env } from './staging';
