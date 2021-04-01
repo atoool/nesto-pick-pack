@@ -133,6 +133,7 @@ const VerifyItemSection = ({
                 />
               )}
             </View>
+
             <Divider />
           </>
         )}
@@ -220,6 +221,7 @@ const VerifyItemSection = ({
 };
 
 const styles = StyleSheet.create({
+  container: { marginHorizontal: 32, marginVertical: 20 },
   mainMargin: { marginHorizontal: 32 },
   verifyText: { marginVertical: 10 },
   textInput: {
@@ -229,8 +231,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     borderColor: Colors.offWhite,
   },
-  verifySubmitBox: { marginHorizontal: 32 },
-  scanBox: { marginHorizontal: 32 },
+  verifySubmitBox: { marginHorizontal: 32, marginTop: 20 },
+  scanBox: { marginHorizontal: 32, marginTop: 20 },
   awaitTimer: { flexDirection: 'row', justifyContent: 'space-between' },
   awaitText: { marginVertical: 10 },
   substButton: { flex: 0, width: 200, marginBottom: 20 },
@@ -241,6 +243,7 @@ const styles = StyleSheet.create({
     ...Typography.bold17,
     color: Colors.secondaryRed,
   },
+  radioBox: { marginHorizontal: 32, marginVertical: 20 },
 });
 
 export default VerifyItemSection;
