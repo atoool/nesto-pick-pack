@@ -127,7 +127,9 @@ const SubstitutesScreen = ({
             <Button
               title={locale?.SbS_search}
               style={styles.searchButton}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('SearchProductScreen');
+              }}
             />
             <ItemCheckList
               items={similarItems}
