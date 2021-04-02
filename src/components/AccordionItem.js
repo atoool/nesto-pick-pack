@@ -113,6 +113,8 @@ const AccordionItem = ({
                       <Text style={styles.itemTitle}>
                         {item?.total_qty
                           ? item?.total_qty
+                          : item?.repick_qty
+                          ? item?.repick_qty
                           : item?.qty
                           ? item?.qty
                           : 1}
