@@ -45,7 +45,12 @@ const VerifyItemSection = ({
       ToastAndroid.show(locale?.invalidValue, ToastAndroid.SHORT);
     } else {
       const qtys = qty ? qty : 0;
-      const requiredQty = status === 0 ? qtys : isNaN(itemsQty) ? 0 : itemsQty;
+      const requiredQty =
+        item?.bf_substitution_initiated || status === 0
+          ? qtys
+          : isNaN(itemsQty)
+          ? 0
+          : itemsQty;
       const existingQty =
         qtys === 0 ? qtys : status === 0 ? qtys : qtys - requiredQty;
 
@@ -77,11 +82,22 @@ const VerifyItemSection = ({
       return timeLeft;
     }
   };
+  const isButcherItem =
+    item?.is_butcher_dependent || item?.is_fishmonger_dependent;
+  const isButcherSubstituting =
+    !item?.butchering_completed && item?.bf_substitution_initiated;
+  const verifyOptShow =
+    (item?.substituted || (!item?.substitution_initiated && !timeOut)) &&
+    !isButcherItem;
+  const showSubstOption =
+    (item?.substitution_initiated && !item?.substituted) ||
+    substituteItems ||
+    isButcherSubstituting;
   return (
     <>
       <Divider />
       <View>
-        {(item?.substituted || (!item?.substitution_initiated && !timeOut)) && (
+        {verifyOptShow && (
           <>
             <View style={styles.radioBox}>
               <Text style={Typography.bold21}>{locale?.IS_verifyit}</Text>
@@ -137,8 +153,7 @@ const VerifyItemSection = ({
           </>
         )}
 
-        {(item?.substitution_initiated && !item?.substituted) ||
-        substituteItems ? (
+        {showSubstOption ? (
           <View style={styles.verifySubmitBox}>
             <View style={styles.awaitTimer}>
               <Text style={Typography.bold21}>
@@ -182,36 +197,44 @@ const VerifyItemSection = ({
           <View style={styles.scanBox}>
             <Button
               scanButton
-              title={locale?.IS_scanBar}
+              title={isButcherItem ? locale?.IS_scanManual : locale?.IS_scanBar}
               subtitle={locale?.IS_toVerify}
               titleStyle={Typography.bold17White}
               style={styles.scanButton}
               onPress={() => {
-                navigation.navigate('ScanScreen', {
-                  totalItem: item?.qty
-                    ? item?.qty
-                    : item?.repick_qty
-                    ? item?.repick_qty
-                    : null,
-                  itemId: item?.id,
-                  criticalQty:
-                    status === 2 ? Constants.defaultCriticalValue : itemsQty,
-                  itemType: item?.item_type,
-                  barcodeId: item?.barcode,
-                });
+                isButcherItem
+                  ? onManualEntry(
+                      status === 2 ? Constants.defaultCriticalValue : itemsQty,
+                    )
+                  : navigation.navigate('ScanScreen', {
+                      totalItem: item?.qty
+                        ? item?.qty
+                        : item?.repick_qty
+                        ? item?.repick_qty
+                        : null,
+                      itemId: item?.id,
+                      criticalQty:
+                        status === 2
+                          ? Constants.defaultCriticalValue
+                          : itemsQty,
+                      itemType: item?.item_type,
+                      barcodeId: item?.barcode,
+                    });
               }}
             />
-            <View style={styles.scanFailBox}>
-              <Text>{locale?.IS_scanFailed}</Text>
-              <TouchableOpacity
-                onPress={() =>
-                  onManualEntry(
-                    status === 2 ? Constants.defaultCriticalValue : itemsQty,
-                  )
-                }>
-                <Text style={styles.scanManual}>{locale?.IS_scanManual}</Text>
-              </TouchableOpacity>
-            </View>
+            {!isButcherItem && (
+              <View style={styles.scanFailBox}>
+                <Text>{locale?.IS_scanFailed}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    onManualEntry(
+                      status === 2 ? Constants.defaultCriticalValue : itemsQty,
+                    )
+                  }>
+                  <Text style={styles.scanManual}>{locale?.IS_scanManual}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         )}
       </View>
@@ -229,8 +252,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     borderColor: Colors.offWhite,
   },
-  verifySubmitBox: { marginHorizontal: 32 },
-  scanBox: { marginHorizontal: 32 },
+  verifySubmitBox: { marginHorizontal: 32, marginVertical: 20 },
+  scanBox: { marginHorizontal: 32, marginVertical: 20 },
   awaitTimer: { flexDirection: 'row', justifyContent: 'space-between' },
   awaitText: { marginVertical: 10 },
   substButton: { flex: 0, width: 200, marginBottom: 20 },
@@ -241,6 +264,7 @@ const styles = StyleSheet.create({
     ...Typography.bold17,
     color: Colors.secondaryRed,
   },
+  radioBox: { marginHorizontal: 32, marginVertical: 20 },
 });
 
 export default VerifyItemSection;

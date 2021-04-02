@@ -54,85 +54,106 @@ const PickList = ({
         data={items}
         keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
+        style={styles.orderItemsList}
         ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item, indx }) => (
-          <Swipeable
-            renderLeftActions={LeftActions}
-            onSwipeableLeftOpen={() => onManualEntry(item, null)}>
-            <View style={styles.orderItemsList}>
-              <TouchableOpacity
-                style={styles.orderItem}
-                onPress={() =>
-                  navigation.navigate('ItemScreen', {
-                    orderId: item?.orderId,
-                    sales_incremental_id: item?.sales_incremental_id
-                      ? item?.sales_incremental_id
-                      : Constants.emptyOrderId,
-                    item,
-                    timeLeft,
-                    startTime,
-                    endTime,
-                  })
-                }>
-                <View style={styles.itemBox}>
-                  <View style={styles.itemTitleBox}>
-                    <View
-                      style={[
-                        styles.deliveryStatusCircle,
-                        {
-                          backgroundColor: item.dfc
-                            ? Colors[item?.dfc?.toLowerCase()]
-                              ? Colors[item.dfc.toLowerCase()]
-                              : Colors.dfcFallback
-                            : Colors.dfcFallback,
-                        },
-                      ]}
-                    />
-                    <Text style={Typography.bold15}>
-                      {item.qty ? item.qty : 1}x{' '}
-                      {item.name ? item.name : Constants.emptyItemName}
-                    </Text>
-                  </View>
-                  <View style={styles.departmentBox}>
-                    <Text style={Typography.normal12}>
-                      #
-                      {item?.sales_incremental_id
+        renderItem={({ item, indx }) => {
+          const butcherCheck =
+            item?.is_butcher_dependent || item?.is_fishmonger_dependent
+              ? !item?.butchering_completed && !item?.fishmongering_completed
+                ? !item?.assigned_item
+                  ? !item?.bf_substitution_initiated
+                  : item?.assigned_item
+                : !item?.butchering_completed && !item?.fishmongering_completed
+              : false;
+          const substitutionInitiated =
+            item?.is_butcher_dependent || item?.is_fishmonger_dependent
+              ? item?.butchering_completed || item?.fishmongering_completed
+              : !item?.substitution_initiated;
+          return (
+            <Swipeable
+              enabled={substitutionInitiated}
+              renderLeftActions={LeftActions}
+              onSwipeableLeftOpen={() => onManualEntry(item, null)}>
+              <View
+                style={[
+                  styles.itemContainer1,
+                  butcherCheck && styles.itemContainer2,
+                ]}>
+                <TouchableOpacity
+                  style={styles.orderItem}
+                  disabled={butcherCheck}
+                  onPress={() =>
+                    navigation.navigate('ItemScreen', {
+                      orderId: item?.orderId,
+                      sales_incremental_id: item?.sales_incremental_id
                         ? item?.sales_incremental_id
-                        : Constants.emptyOrderId}{' '}
-                      |{' '}
-                      {item?.department
-                        ? item?.department
-                        : Constants.emptyDepartment}{' '}
-                      {item?.position
-                        ? item?.position
-                        : Constants.emptyPosition}
-                    </Text>
-                  </View>
-                  {item.binsAssigned && item.binsAssigned?.length !== 0 && (
-                    <View style={styles.positionBox}>
-                      {item.binsAssigned.map(
-                        (itm, i) =>
-                          itm?.bin_number[0]?.toLowerCase() ===
-                            item?.dfc[0]?.toLowerCase() && (
-                            <View key={i} style={styles.statusPill}>
-                              <StatusPill
-                                backgroundColor={getColorBin(itm?.bin_number)}
-                                marginRight={5}
-                                text={itm?.bin_number}
-                                paddingVertical={0}
-                              />
-                            </View>
-                          ),
-                      )}
+                        : Constants.emptyOrderId,
+                      item,
+                      timeLeft,
+                      startTime,
+                      endTime,
+                    })
+                  }>
+                  <View style={styles.itemBox}>
+                    <View style={styles.itemTitleBox}>
+                      <View
+                        style={[
+                          styles.deliveryStatusCircle,
+                          {
+                            backgroundColor: item.dfc
+                              ? Colors[item?.dfc?.toLowerCase()]
+                                ? Colors[item.dfc.toLowerCase()]
+                                : Colors.dfcFallback
+                              : Colors.dfcFallback,
+                          },
+                        ]}
+                      />
+                      <Text style={Typography.bold15}>
+                        {item.qty ? item.qty : 1}x{' '}
+                        {item.name ? item.name : Constants.emptyItemName}
+                      </Text>
                     </View>
-                  )}
-                </View>
+                    <View style={styles.departmentBox}>
+                      <Text style={Typography.normal12}>
+                        #
+                        {item?.sales_incremental_id
+                          ? item?.sales_incremental_id
+                          : Constants.emptyOrderId}{' '}
+                        |{' '}
+                        {item?.department
+                          ? item?.department
+                          : Constants.emptyDepartment}{' '}
+                        {item?.position
+                          ? item?.position
+                          : Constants.emptyPosition}
+                      </Text>
+                    </View>
+                    {item.binsAssigned && item.binsAssigned?.length !== 0 && (
+                      <View style={styles.positionBox}>
+                        {item.binsAssigned.map(
+                          (itm, i) =>
+                            itm?.bin_number[0]?.toLowerCase() ===
+                              item?.dfc[0]?.toLowerCase() && (
+                              <View key={i} style={styles.statusPill}>
+                                <StatusPill
+                                  backgroundColor={getColorBin(itm?.bin_number)}
+                                  marginRight={5}
+                                  text={itm?.bin_number}
+                                  paddingVertical={0}
+                                />
+                              </View>
+                            ),
+                        )}
+                      </View>
+                    )}
+                  </View>
 
-                <RightCaretSVG />
-              </TouchableOpacity>
-            </View>
-          </Swipeable>
-        )}
+                  <RightCaretSVG />
+                </TouchableOpacity>
+              </View>
+            </Swipeable>
+          );
+        }}
       />
     </View>
   );
@@ -158,6 +179,7 @@ const styles = StyleSheet.create({
   orderItemsList: {
     backgroundColor: Colors.offWhite,
     borderRadius: 7,
+    overflow: 'hidden',
   },
   itemTitleBox: {
     flexDirection: 'row',
@@ -178,7 +200,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondaryGreen,
     justifyContent: 'center',
     paddingLeft: 20,
-    borderRadius: 10,
+    // borderRadius: 10,
+  },
+  itemContainer1: {
+    backgroundColor: Colors.offWhite,
+  },
+  itemContainer2: {
+    opacity: 0.3,
+    backgroundColor: Colors.offWhite,
   },
 });
 

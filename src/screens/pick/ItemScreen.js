@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     height: 60,
     flex: 1,
-    marginTop: 20,
+    marginVertical: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
     flexWrap: 'wrap',
