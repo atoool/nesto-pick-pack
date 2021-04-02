@@ -87,7 +87,9 @@ export const PickerContextProvider = ({ children }) => {
   };
 
   const AddToSimilarList = (list) => {
-    setSimilarItems([...list, ...similarItems]);
+    Array.isArray(similarItems)
+      ? setSimilarItems([...list, ...similarItems])
+      : setSimilarItems(list);
   };
 
   const getSubstitutedItems = async (id) => {
