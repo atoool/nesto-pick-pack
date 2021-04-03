@@ -7,6 +7,7 @@ import ItemSuccessScreen from '../screens/pick/ItemSuccessScreen';
 import SubstituteRequestedScreen from '../screens/pick/SubstituteRequestedScreen';
 import PickCompletedScreen from '../screens/pick/PickCompletedScreen';
 import SubstitutesScreen from '../screens/pick/SubstitutesScreen';
+import SearchProductScreen from '../screens/pick/SearchProductScreen';
 import Browser from '../screens/common/Browser';
 import { AppContext } from '../context/AppContext';
 
@@ -59,6 +60,14 @@ const PickStackNavigator = () => {
         component={SubstitutesScreen}
         options={({ route }) => ({
           title: '#' + route?.params?.sales_incremental_id,
+          ...headerOptions,
+        })}
+      />
+      <Stack.Screen
+        name="SearchProductScreen"
+        component={SearchProductScreen}
+        options={({ route }) => ({
+          title: locale?.headings?.search,
           ...headerOptions,
         })}
       />
