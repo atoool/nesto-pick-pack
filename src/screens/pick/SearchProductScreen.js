@@ -28,22 +28,22 @@ const SearchProductScreen = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setList(allItems);
+  }, [allItems]);
+
   const onChangeText = (text) => {
     setSearch(text);
-    search !== '' && setList([]);
+    text === '' && setList([]);
   };
 
   const onSearch = async () => {
     setLoading(true);
-    let listItems = [];
-    search !== '' &&
-      (await getAllItemList(search)
-        .then(() => {
-          listItems = allItems;
-        })
-        .catch(() => {}));
-
-    setList(listItems);
+    if (search !== '') {
+      await getAllItemList(search)
+        .then(() => {})
+        .catch(() => {});
+    }
     setLoading(false);
   };
 
