@@ -45,7 +45,7 @@ const ItemScreen = ({
 
   let status = item?.picking_completed
     ? locale?.status?.PiC
-    : item?.assigned_item
+    : item?.item_type === 'substitute'
     ? locale?.status?.subst
     : item?.substitution_initiated
     ? locale?.status?.si
