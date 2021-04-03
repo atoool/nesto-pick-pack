@@ -48,6 +48,18 @@ const AccordionItem = ({
     : { start_time: now, end_time: now };
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const getQty = (item) => {
+    if (userType === 'packer' && item?.total_qty) {
+      return item?.total_qty;
+    } else if (item?.repick_qty) {
+      return item?.repick_qty;
+    } else if (item?.qty) {
+      return item?.qty;
+    } else {
+      return 1;
+    }
+  };
   return (
     <View style={styles.container}>
       <OrderComponent
@@ -111,14 +123,8 @@ const AccordionItem = ({
                         />
                       )}
                       <Text style={styles.itemTitle}>
-                        {item?.total_qty
-                          ? item?.total_qty
-                          : item?.repick_qty
-                          ? item?.repick_qty
-                          : item?.qty
-                          ? item?.qty
-                          : 1}
-                        x {item?.name ? item?.name : Constants.emptyItemName}
+                        {getQty(item)}x{' '}
+                        {item?.name ? item?.name : Constants.emptyItemName}
                       </Text>
                     </View>
 
