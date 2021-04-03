@@ -39,6 +39,7 @@ const SearchProductScreen = ({ navigation }) => {
 
   const onSearch = async () => {
     setLoading(true);
+    setList([]);
     if (search !== '') {
       await getAllItemList(search)
         .then(() => {})
@@ -54,7 +55,7 @@ const SearchProductScreen = ({ navigation }) => {
   };
 
   const onAddToCheckList = () => {
-    AddToSimilarList(checkList);
+    AddToSimilarList(nonNullArray);
     navigation.pop();
   };
 

@@ -149,6 +149,7 @@ const VerifyItemSection = ({
                 />
               )}
             </View>
+
             <Divider />
           </>
         )}
@@ -243,6 +244,7 @@ const VerifyItemSection = ({
 };
 
 const styles = StyleSheet.create({
+  container: { marginHorizontal: 32, marginVertical: 20 },
   mainMargin: { marginHorizontal: 32 },
   verifyText: { marginVertical: 10 },
   textInput: {
