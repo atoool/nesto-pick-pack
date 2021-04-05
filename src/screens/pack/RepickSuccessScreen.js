@@ -3,6 +3,7 @@ import {
   BackHandler,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -27,59 +28,28 @@ const RepickSuccessScreen = ({ navigation }) => {
     };
   }, []);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.WHITE }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Title
-          text={locale?.success}
-          style={{ borderBottomWidth: 0, alignSelf: 'center' }}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-            justifyContent: 'center',
-            marginTop: 20,
-          }}>
-          <View style={{ right: -17 }}>
+        <Title text={locale?.success} style={styles.title} />
+        <View style={styles.successIconBox}>
+          <View style={styles.successIcon1}>
             <Success1SVG width={100} />
           </View>
-          <View style={{ left: -17 }}>
+          <View style={styles.successIcon2}>
             <Success2SVG width={100} />
           </View>
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-            marginHorizontal: 32,
-            marginVertical: 30,
-          }}>
+        <View style={styles.statusBox}>
           <Text style={Typography.bold17}>{locale?.RSS_statusTitle}</Text>
-          <Text
-            style={[
-              Typography.normal15,
-              { textAlign: 'center', marginTop: 7 },
-            ]}>
-            {locale?.RSS_statusText}
-          </Text>
+          <Text style={styles.statusText}>{locale?.RSS_statusText}</Text>
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-            padding: 32,
-            backgroundColor: Colors.offWhite,
-          }}>
+        <View style={styles.infoBox}>
           <Text style={Typography.bold17}>{locale?.RSS_infoTitle}</Text>
-          <Text
-            style={[
-              Typography.normal15,
-              { textAlign: 'center', marginTop: 7 },
-            ]}>
-            {locale?.RSS_infoText}
-          </Text>
+          <Text style={styles.infoText}>{locale?.RSS_infoText}</Text>
         </View>
         <Button
           title={locale?.RSS_button}
-          style={{ marginVertical: 30, marginHorizontal: 60 }}
+          style={styles.button}
           onPress={() => {
             navigation.pop(2);
           }}
@@ -88,5 +58,31 @@ const RepickSuccessScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: Colors.WHITE },
+  title: { borderBottomWidth: 0, alignSelf: 'center' },
+  successIconBox: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  successIcon1: { right: -17 },
+  successIcon2: { left: -17 },
+  statusBox: {
+    alignItems: 'center',
+    marginHorizontal: 32,
+    marginVertical: 30,
+  },
+  statusText: { ...Typography.normal15, textAlign: 'center', marginTop: 7 },
+  infoBox: {
+    alignItems: 'center',
+    padding: 32,
+    backgroundColor: Colors.offWhite,
+  },
+  infoText: { ...Typography.normal15, textAlign: 'center', marginTop: 7 },
+  button: { marginVertical: 30, marginHorizontal: 60 },
+});
 
 export default RepickSuccessScreen;

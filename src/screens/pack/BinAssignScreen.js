@@ -4,15 +4,12 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   ToastAndroid,
-  View,
 } from 'react-native';
-import Barcode from 'react-native-barcode-builder';
 import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Loader from '../../components/Loader';
+import InputWithLabel from '../../components/InputWithLabel';
 import ModalComponent from '../../components/ModalComponent';
+import PrintLabelComponent from '../../components/PrintLabelComponent';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import { Colors, Typography, width } from '../../styles';
@@ -81,14 +78,8 @@ const BinAssignScreen = ({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollView}>
         <PrintLabelComponent
-          orderIdLabel={locale?.BAS_order}
           printLabelText={printLabelText}
-          binCountLabel={locale?.BAS_howMany}
           orderId={sales_incremental_id}
-          bins={bins}
-          onChangeOrderId={() => {}}
-          onChangeBins={() => {}}
-          hide
         />
         {binPos &&
           binPos?.length !== 0 &&
@@ -123,83 +114,9 @@ const BinAssignScreen = ({
   );
 };
 
-const PrintLabelComponent = ({ orderId, printLabelText }) => {
-  return (
-    <>
-      <View style={styles.labelContainer}>
-        <View style={styles.barcode}>
-          {orderId ? (
-            <>
-              <Text style={styles.orderIdStyle}>#{orderId}</Text>
-              <Barcode value={orderId} height={50} width={1} />
-            </>
-          ) : (
-            <Loader small green />
-          )}
-        </View>
-        <Text style={styles.printLabelText}>{printLabelText}</Text>
-      </View>
-    </>
-  );
-};
-
-const InputWithLabel = ({
-  label,
-  top,
-  onChangeText,
-  value,
-  keyboard,
-  iconName,
-  placeholder,
-  maxLength,
-  editable,
-}) => {
-  return (
-    <View style={[styles.labelTextView, { marginTop: top }]}>
-      <Text style={styles.labelText}>{label}</Text>
-      <Input
-        placeholder={placeholder}
-        iconName={iconName}
-        style={styles.inputStyle}
-        value={value}
-        onChangeText={onChangeText}
-        keyboardType={keyboard}
-        maxLength={maxLength}
-        editable={editable}
-      />
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
   scrollView: { margin: 30, paddingBottom: 60 },
-  //printLabelComponent
-  labelContainer: {
-    backgroundColor: Colors.secondaryRed,
-    borderRadius: 12,
-    alignItems: 'center',
-    padding: 20,
-  },
-  barcode: { flex: 1 },
-  printLabelText: {
-    flex: 1,
-    textAlign: 'center',
-    textAlignVertical: 'bottom',
-    marginTop: 10,
-    ...Typography.bold16White,
-  },
-  //inputWithLabel
-  labelTextView: { flex: 1 },
-  labelText: { color: Colors.darkText, ...Typography.bold16 },
-  inputStyle: { marginTop: 5 },
-  orderIdStyle: {
-    ...Typography.bold16White,
-    flex: 1,
-    textAlign: 'center',
-    textAlignVertical: 'bottom',
-    marginBottom: 10,
-  },
 });
 
 export default BinAssignScreen;
