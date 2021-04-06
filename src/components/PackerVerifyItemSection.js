@@ -31,7 +31,7 @@ const PackerVerifyItemSection = ({
 
   const [isRePickLoading, setIsRePickLoading] = useState(false);
   const [passItem, setPassItem] = useState(generateArray(true));
-  const [issue, setIssue] = useState(generateArray('No issue selected'));
+  const [issue, setIssue] = useState(generateArray('no issue selected'));
   const [showDropDown, setShowDropDown] = useState(generateArray(false));
   const [currentDropDown, setCurrentDropDown] = useState(0);
 
