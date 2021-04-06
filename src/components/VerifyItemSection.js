@@ -24,7 +24,7 @@ const VerifyItemSection = ({
   startTime,
   endTime,
 }) => {
-  const [status, setStatus] = useState(2);
+  const [status, setStatus] = useState(-1);
   const someOutofStock = status === 1 || status === 3;
   const substituteItems = status === 1 || status === 0;
   const [itemsQty, setItemQty] = useState(0);
