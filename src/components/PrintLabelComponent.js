@@ -34,6 +34,7 @@ const PrintLabelComponent = ({ orderId, printLabelText, viewShot }) => {
 };
 
 const styles = StyleSheet.create({
+  labelTextView: { flex: 1 },
   labelContainer: {
     backgroundColor: Colors.secondaryRed,
     borderRadius: 12,
