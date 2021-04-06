@@ -6,7 +6,7 @@ import { Colors } from '../styles';
 const Input = ({
   placeholder,
   secureTextEntry,
-  keyboardType,
+  keyboardType = 'default',
   onChangeText,
   maxLength,
   value,
