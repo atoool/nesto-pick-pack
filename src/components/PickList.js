@@ -109,8 +109,12 @@ const PickList = ({
                         ]}
                       />
                       <Text style={Typography.bold15}>
-                        {item.qty ? item.qty : 1}x{' '}
-                        {item.name ? item.name : Constants.emptyItemName}
+                        {item.qty
+                          ? item.qty
+                          : item?.repick_qty
+                          ? item?.repick_qty
+                          : 1}
+                        x {item.name ? item.name : Constants.emptyItemName}
                       </Text>
                     </View>
                     <View style={styles.departmentBox}>
