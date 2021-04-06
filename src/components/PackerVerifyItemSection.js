@@ -31,7 +31,7 @@ const PackerVerifyItemSection = ({
 
   const [isRePickLoading, setIsRePickLoading] = useState(false);
   const [passItem, setPassItem] = useState(generateArray(true));
-  const [issue, setIssue] = useState(generateArray('no issue selected'));
+  const [issue, setIssue] = useState(generateArray('No issue selected'));
   const [showDropDown, setShowDropDown] = useState(generateArray(false));
   const [currentDropDown, setCurrentDropDown] = useState(0);
 
@@ -43,6 +43,7 @@ const PackerVerifyItemSection = ({
     { label: locale?.reviews.opt1, value: 'Physical damage' },
     { label: locale?.reviews.opt2, value: 'Package broken' },
     { label: locale?.reviews.opt3, value: 'Expired product' },
+    { label: locale?.reviews.opt4, value: 'No item' },
   ];
   const onCheckPass = (val, index) => {
     passItem[index] = val;
