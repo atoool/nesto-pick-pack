@@ -10,6 +10,7 @@ import { RightCaretSVG } from '../assets/svg';
 import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
 import getColorBin from '../utils/getColorBin';
+import getDotColor from '../utils/getDotColor';
 import Button from './Button';
 import Divider from './Divider';
 import ModalComponent from './ModalComponent';
@@ -100,6 +101,7 @@ const AccordionItem = ({
               <View style={styles.orderItem}>
                 <View style={styles.departmentBox}>
                   <TickComponent
+                    color={getDotColor(item?.dfc)}
                     enabled={
                       userType === 'packer'
                         ? item?.packer_checked
@@ -108,20 +110,6 @@ const AccordionItem = ({
                   />
                   <View style={styles.textBox}>
                     <View style={styles.rowCenter}>
-                      {userType !== 'packer' && (
-                        <View
-                          style={[
-                            styles.deliveryStatusCircle,
-                            {
-                              backgroundColor: item.dfc
-                                ? Colors[item?.dfc?.toLowerCase()]
-                                  ? Colors[item.dfc.toLowerCase()]
-                                  : Colors.chilled
-                                : Colors.chilled,
-                            },
-                          ]}
-                        />
-                      )}
                       <Text style={styles.itemTitle}>
                         {getQty(item)}x{' '}
                         {item?.name ? item?.name : Constants.emptyItemName}

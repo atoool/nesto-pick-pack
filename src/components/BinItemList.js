@@ -5,6 +5,7 @@ import { AppContext } from '../context/AppContext';
 import { Colors, Typography, width } from '../styles';
 import { Constants } from '../utils';
 import getColorBin from '../utils/getColorBin';
+import getDotColor from '../utils/getDotColor';
 import Button from './Button';
 import Divider from './Divider';
 import OrderComponent from './OrderComponent';
@@ -86,11 +87,7 @@ const BinItemList = ({
                   style={[
                     styles.deliveryStatusCircle,
                     {
-                      backgroundColor: item?.dfc
-                        ? Colors[item?.dfc?.toLowerCase()]
-                          ? Colors[item.dfc.toLowerCase()]
-                          : Colors.dfcFallback
-                        : Colors.dfcFallback,
+                      backgroundColor: getDotColor(item?.dfc),
                     },
                   ]}
                 />

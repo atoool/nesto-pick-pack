@@ -3,14 +3,16 @@ import { View, StyleSheet } from 'react-native';
 import TickSVG from '../assets/svg/TickSVG';
 import { Colors } from '../styles';
 
-const TickComponent = ({ enabled }) => {
+const TickComponent = ({ enabled, color }) => {
   return (
     <View
       style={[
         styles.container,
         {
           backgroundColor: enabled
-            ? Colors.primaryGreen
+            ? color
+              ? color
+              : Colors.primaryGreen
             : Colors.lineDividerColor,
         },
       ]}>

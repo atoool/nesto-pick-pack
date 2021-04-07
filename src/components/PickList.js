@@ -15,6 +15,7 @@ import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 import { Constants } from '../utils';
 import getColorBin from '../utils/getColorBin';
+import getDotColor from '../utils/getDotColor';
 
 const PickList = ({
   items,
