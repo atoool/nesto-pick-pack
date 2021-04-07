@@ -14,6 +14,7 @@ import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 import { Constants } from '../utils';
 import getColorBin from '../utils/getColorBin';
+import getDotColor from '../utils/getDotColor';
 
 const PickList = ({
   items,
@@ -76,11 +77,7 @@ const PickList = ({
                     style={[
                       styles.deliveryStatusCircle,
                       {
-                        backgroundColor: item.dfc
-                          ? Colors[item?.dfc?.toLowerCase()]
-                            ? Colors[item.dfc.toLowerCase()]
-                            : Colors.dfcFallback
-                          : Colors.dfcFallback,
+                        backgroundColor: getDotColor(item?.dfc),
                       },
                     ]}
                   />
