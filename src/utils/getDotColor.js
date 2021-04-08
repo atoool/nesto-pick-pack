@@ -4,8 +4,8 @@ function getDotColor(dfc) {
   return dfc
     ? Colors[dfc?.toLowerCase()]
       ? Colors[dfc?.toLowerCase()]
-      : 'dfcFallback'
-    : 'dfcFallback';
+      : Colors.dfcFallback
+    : Colors.dfcFallback;
 }
 
 export default getDotColor;

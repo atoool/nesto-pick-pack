@@ -101,7 +101,7 @@ const AccordionItem = ({
               <View style={styles.orderItem}>
                 <View style={styles.departmentBox}>
                   <TickComponent
-                    color={getDotColor(item?.dfc)}
+                    color={Colors.primaryGreen}
                     enabled={
                       userType === 'packer'
                         ? item?.packer_checked
@@ -110,6 +110,14 @@ const AccordionItem = ({
                   />
                   <View style={styles.textBox}>
                     <View style={styles.rowCenter}>
+                      <View
+                        style={[
+                          styles.deliveryStatusCircle,
+                          {
+                            backgroundColor: getDotColor(item?.dfc),
+                          },
+                        ]}
+                      />
                       <Text style={styles.itemTitle}>
                         {getQty(item)}x{' '}
                         {item?.name ? item?.name : Constants.emptyItemName}

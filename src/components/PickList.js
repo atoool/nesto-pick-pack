@@ -101,11 +101,7 @@ const PickList = ({
                         style={[
                           styles.deliveryStatusCircle,
                           {
-                            backgroundColor: item.dfc
-                              ? Colors[item?.dfc?.toLowerCase()]
-                                ? Colors[item.dfc.toLowerCase()]
-                                : Colors.dfcFallback
-                              : Colors.dfcFallback,
+                            backgroundColor: getDotColor(item?.dfc),
                           },
                         ]}
                       />
