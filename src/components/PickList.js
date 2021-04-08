@@ -54,9 +54,10 @@ const PickList = ({
         data={items}
         keyExtractor={(item, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
+        style={styles.orderItemsList}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item, indx }) => (
-          <View style={styles.orderItemsList}>
+          <View>
             <TouchableOpacity
               style={styles.orderItem}
               onPress={() =>
