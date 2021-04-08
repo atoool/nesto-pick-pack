@@ -93,6 +93,9 @@ const VerifyItemSection = ({
     (item?.substitution_initiated && !item?.substituted) ||
     substituteItems ||
     isButcherSubstituting;
+
+  const showAllVerifyMethods =
+    status !== -1 || item?.substitution_initiated || isButcherItem;
   return (
     <>
       <Divider />
@@ -154,89 +157,103 @@ const VerifyItemSection = ({
           </>
         )}
 
-        {showSubstOption ? (
-          <View style={styles.verifySubmitBox}>
-            <View style={styles.awaitTimer}>
-              <Text style={Typography.bold21}>
-                {!timeOut
-                  ? item?.substitution_initiated
-                    ? substituteItems
-                      ? locale?.IS_substituteTitle
-                      : locale?.IS_waitSubstituteTitle
-                    : locale?.IS_substituteTitle
-                  : locale?.IS_noRespSubstituteTitle}
-              </Text>
-              {!item?.substituted && item?.substitution_initiated && (
-                <TimerComponent
-                  ss={getTimeRemain(item?.substitution_initiated_timestamp)}
-                  call={setTimerOut}
-                  fullTimer
-                  inMinute
+        {showAllVerifyMethods && (
+          <>
+            {showSubstOption ? (
+              <View style={styles.verifySubmitBox}>
+                <View style={styles.awaitTimer}>
+                  <Text style={Typography.bold21}>
+                    {!timeOut
+                      ? item?.substitution_initiated
+                        ? substituteItems
+                          ? locale?.IS_substituteTitle
+                          : locale?.IS_waitSubstituteTitle
+                        : locale?.IS_substituteTitle
+                      : locale?.IS_noRespSubstituteTitle}
+                  </Text>
+                  {!item?.substituted && item?.substitution_initiated && (
+                    <TimerComponent
+                      ss={getTimeRemain(item?.substitution_initiated_timestamp)}
+                      call={setTimerOut}
+                      fullTimer
+                      inMinute
+                    />
+                  )}
+                </View>
+                <Text style={styles.awaitText}>
+                  {!timeOut
+                    ? item?.substitution_initiated
+                      ? locale?.IS_waitSubstituteText
+                      : locale?.IS_substituteText
+                    : locale?.IS_noRespSubstituteText}
+                </Text>
+                {(!item?.substitution_initiated ||
+                  timeOut ||
+                  substituteItems) && (
+                  <Button
+                    title={
+                      timeOut
+                        ? locale?.IS_contactButton
+                        : locale?.IS_substituteButton
+                    }
+                    style={styles.substButton}
+                    onPress={onVerifyButton}
+                  />
+                )}
+              </View>
+            ) : (
+              <View style={styles.scanBox}>
+                <Button
+                  scanButton
+                  title={
+                    isButcherItem ? locale?.IS_scanManual : locale?.IS_scanBar
+                  }
+                  subtitle={locale?.IS_toVerify}
+                  titleStyle={Typography.bold17White}
+                  style={styles.scanButton}
+                  onPress={() => {
+                    isButcherItem
+                      ? onManualEntry(
+                          status === 2
+                            ? Constants.defaultCriticalValue
+                            : itemsQty,
+                        )
+                      : navigation.navigate('ScanScreen', {
+                          totalItem: item?.qty
+                            ? item?.qty
+                            : item?.repick_qty
+                            ? item?.repick_qty
+                            : null,
+                          itemId: item?.id,
+                          criticalQty:
+                            status === 2
+                              ? Constants.defaultCriticalValue
+                              : itemsQty,
+                          itemType: item?.item_type,
+                          barcodeId: item?.barcode,
+                        });
+                  }}
                 />
-              )}
-            </View>
-            <Text style={styles.awaitText}>
-              {!timeOut
-                ? item?.substitution_initiated
-                  ? locale?.IS_waitSubstituteText
-                  : locale?.IS_substituteText
-                : locale?.IS_noRespSubstituteText}
-            </Text>
-            {(!item?.substitution_initiated || timeOut || substituteItems) && (
-              <Button
-                title={
-                  timeOut
-                    ? locale?.IS_contactButton
-                    : locale?.IS_substituteButton
-                }
-                style={styles.substButton}
-                onPress={onVerifyButton}
-              />
-            )}
-          </View>
-        ) : (
-          <View style={styles.scanBox}>
-            <Button
-              scanButton
-              title={isButcherItem ? locale?.IS_scanManual : locale?.IS_scanBar}
-              subtitle={locale?.IS_toVerify}
-              titleStyle={Typography.bold17White}
-              style={styles.scanButton}
-              onPress={() => {
-                isButcherItem
-                  ? onManualEntry(
-                      status === 2 ? Constants.defaultCriticalValue : itemsQty,
-                    )
-                  : navigation.navigate('ScanScreen', {
-                      totalItem: item?.qty
-                        ? item?.qty
-                        : item?.repick_qty
-                        ? item?.repick_qty
-                        : null,
-                      itemId: item?.id,
-                      criticalQty:
-                        status === 2
-                          ? Constants.defaultCriticalValue
-                          : itemsQty,
-                      itemType: item?.item_type,
-                      barcodeId: item?.barcode,
-                    });
-              }}
-            />
-            {!isButcherItem && (
-              <View style={styles.scanFailBox}>
-                <Text>{locale?.IS_scanFailed}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    onManualEntry(
-                      status === 2 ? Constants.defaultCriticalValue : itemsQty,
-                    )
-                  }>
-                  <Text style={styles.scanManual}>{locale?.IS_scanManual}</Text>
-                </TouchableOpacity>
+                {!isButcherItem && (
+                  <View style={styles.scanFailBox}>
+                    <Text>{locale?.IS_scanFailed}</Text>
+                    <TouchableOpacity
+                      onPress={() =>
+                        onManualEntry(
+                          status === 2
+                            ? Constants.defaultCriticalValue
+                            : itemsQty,
+                        )
+                      }>
+                      <Text style={styles.scanManual}>
+                        {locale?.IS_scanManual}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
             )}
-          </View>
+          </>
         )}
       </View>
     </>
