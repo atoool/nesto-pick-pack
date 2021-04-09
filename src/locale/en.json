@@ -45,7 +45,8 @@
     "rn":"Re-picking now",
     "ri":"Re-picking initiated",
     "si":"Substitution initiated",
-    "rc":"Re-picking completed"
+    "rc":"Re-picking completed",
+    "bfSI":"Substitution request"
   },
   "error":{
     "substituted":"This item has already been substituted",

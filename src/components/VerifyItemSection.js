@@ -205,52 +205,43 @@ const VerifyItemSection = ({
               <View style={styles.scanBox}>
                 <Button
                   scanButton
-                  title={
-                    isButcherItem ? locale?.IS_scanManual : locale?.IS_scanBar
-                  }
+                  title={locale?.IS_scanBar}
                   subtitle={locale?.IS_toVerify}
                   titleStyle={Typography.bold17White}
                   style={styles.scanButton}
                   onPress={() => {
-                    isButcherItem
-                      ? onManualEntry(
-                          status === 2
-                            ? Constants.defaultCriticalValue
-                            : itemsQty,
-                        )
-                      : navigation.navigate('ScanScreen', {
-                          totalItem: item?.qty
-                            ? item?.qty
-                            : item?.repick_qty
-                            ? item?.repick_qty
-                            : null,
-                          itemId: item?.id,
-                          criticalQty:
-                            status === 2
-                              ? Constants.defaultCriticalValue
-                              : itemsQty,
-                          itemType: item?.item_type,
-                          barcodeId: item?.barcode,
-                        });
+                    navigation.navigate('ScanScreen', {
+                      totalItem: item?.qty
+                        ? item?.qty
+                        : item?.repick_qty
+                        ? item?.repick_qty
+                        : null,
+                      itemId: item?.id,
+                      criticalQty:
+                        status === 2
+                          ? Constants.defaultCriticalValue
+                          : itemsQty,
+                      itemType: item?.item_type,
+                      barcodeId: item?.barcode,
+                    });
                   }}
                 />
-                {!isButcherItem && (
-                  <View style={styles.scanFailBox}>
-                    <Text>{locale?.IS_scanFailed}</Text>
-                    <TouchableOpacity
-                      onPress={() =>
-                        onManualEntry(
-                          status === 2
-                            ? Constants.defaultCriticalValue
-                            : itemsQty,
-                        )
-                      }>
-                      <Text style={styles.scanManual}>
-                        {locale?.IS_scanManual}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+
+                <View style={styles.scanFailBox}>
+                  <Text>{locale?.IS_scanFailed}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      onManualEntry(
+                        status === 2
+                          ? Constants.defaultCriticalValue
+                          : itemsQty,
+                      )
+                    }>
+                    <Text style={styles.scanManual}>
+                      {locale?.IS_scanManual}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             )}
           </>

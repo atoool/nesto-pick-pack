@@ -49,9 +49,9 @@ const ItemScreen = ({
     ? locale?.status?.subst
     : item?.substitution_initiated
     ? locale?.status?.si
-    : // : item?.repick_completed === false
-      // ? locale?.status?.rn
-      locale?.status?.Pi;
+    : item?.bf_substitution_initiated
+    ? locale?.status?.bfSI
+    : locale?.status?.Pi;
 
   if (isLoading) {
     return (
