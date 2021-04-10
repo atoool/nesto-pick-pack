@@ -33,7 +33,7 @@ const PackerItemSection = ({
         <View style={styles.itemContentSubBox}>
           {(position || department) && (
             <View style={styles.statusBox}>
-              {position && (
+              {(position === '' ? false : position) && (
                 <StatusPill
                   backgroundColor="#A1C349"
                   text={position}
