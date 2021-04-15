@@ -20,9 +20,14 @@ const ItemSection = ({
   img,
   locale,
   originalItem,
+  slotType,
 }) => {
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
+
+  const backgroundColor =
+    slotType === 'scheduled' ? Colors.lightViolet : '#A1C349';
+
   return (
     <>
       <View style={styles.itemImageContainer}>
@@ -67,8 +72,14 @@ const ItemSection = ({
             <View style={styles.rowBox}>
               <View style={styles.historyBox}>
                 <View style={styles.rowBox}>
-                  <View style={styles.deliveryStatusCircle} />
-                  <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
+                  <View
+                    style={[styles.deliveryStatusCircle, { backgroundColor }]}
+                  />
+                  <Text style={Typography.bold15}>
+                    {((slotType ?? 'scheduled') === 'scheduled'
+                      ? 'Scheduled'
+                      : 'Express') + ' delivery'}
+                  </Text>
                   {/* mock orderType */}
                 </View>
                 <View style={styles.deliverBoxRow2}>

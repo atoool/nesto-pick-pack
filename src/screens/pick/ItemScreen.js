@@ -78,6 +78,7 @@ const ItemScreen = ({
           endTime={endTime}
           img={item?.image_url}
           locale={locale}
+          slotType={item?.order_type}
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>

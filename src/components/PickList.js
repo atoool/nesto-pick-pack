@@ -27,6 +27,7 @@ const PickList = ({
   timeLeft,
   locale,
   onManualEntry,
+  slotType,
 }) => {
   const navigation = useNavigation();
 
@@ -50,6 +51,7 @@ const PickList = ({
         endTime={endTime}
         timeLeft={timeLeft}
         pick
+        slotType={slotType}
       />
       <FlatList
         data={items}

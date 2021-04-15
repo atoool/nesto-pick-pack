@@ -18,6 +18,7 @@ const OrderComponent = ({
   startTime,
   endTime,
   timeLeft,
+  slotType,
 }) => {
   const {
     locale: { locale },
@@ -29,6 +30,10 @@ const OrderComponent = ({
       ? 0
       : new Date(timeLeft) / 1000 - new Date() / 1000
     : 0;
+
+  const backgroundColor =
+    slotType === 'Scheduled' ? Colors.lightViolet : '#A1C349';
+
   return (
     <>
       {!pick && (
@@ -52,8 +57,8 @@ const OrderComponent = ({
       <View style={styles.timeBox}>
         <View style={styles.historyBox}>
           <View style={styles.statusBox}>
-            <View style={styles.deliveryStatusCircle} />
-            <Text style={Typography.bold15}>Scheduled delivery</Text>
+            <View style={[styles.deliveryStatusCircle, { backgroundColor }]} />
+            <Text style={Typography.bold15}>{slotType} delivery</Text>
             {/* mock orderType */}
           </View>
           <View style={styles.deliveryBox}>
@@ -89,7 +94,6 @@ const styles = StyleSheet.create({
   deliveryStatusCircle: {
     width: 12,
     height: 12,
-    backgroundColor: Colors.lightViolet,
     borderRadius: 14,
     marginRight: 10,
     marginTop: 1,

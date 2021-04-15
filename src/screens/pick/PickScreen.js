@@ -96,6 +96,11 @@ const PickScreen = ({ navigation }) => {
               }
               locale={locale}
               onManualEntry={onManualEntry}
+              slotType={
+                (item?.order_type ?? 'scheduled') === 'scheduled'
+                  ? 'Scheduled'
+                  : 'Express'
+              }
             />
           )}
         />
