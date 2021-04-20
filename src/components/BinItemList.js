@@ -20,12 +20,10 @@ const BinItemList = ({
     order_type,
     time_slot,
     timeLeft,
-    order_start_time,
-    order_end_time,
     sales_incremental_id,
-    sales_order_id,
   },
   index,
+  slotType,
 }) => {
   const now = Date.now();
   const navigation = useNavigation();
@@ -46,6 +44,7 @@ const BinItemList = ({
         startTime={time_slot.start_time}
         endTime={time_slot.end_time}
         timeLeft={timeLeft}
+        slotType={slotType}
       />
       <View style={styles.positionBox}>
         {binsAssigned &&

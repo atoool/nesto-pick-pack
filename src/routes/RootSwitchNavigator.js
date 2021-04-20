@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../screens/common/SplashScreen';

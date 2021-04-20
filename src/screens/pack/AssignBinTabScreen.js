@@ -57,6 +57,11 @@ const AssignBinTabScreen = () => {
             order={item}
             index={index}
             timeLeft={item?.hand_off_time}
+            slotType={
+              (item?.order_type ?? 'scheduled') === 'scheduled'
+                ? 'Scheduled'
+                : 'Express'
+            }
           />
         )}
       />
