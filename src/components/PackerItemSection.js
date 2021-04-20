@@ -12,12 +12,15 @@ const PackerItemSection = ({
   position,
   department,
   status,
-  type,
   start_time,
   img,
   end_time,
   locale,
+  slotType,
 }) => {
+  const backgroundColor =
+    slotType === 'Scheduled' ? Colors.lightViolet : '#A1C349';
+
   return (
     <>
       <View style={styles.itemImageContainer}>
@@ -60,8 +63,10 @@ const PackerItemSection = ({
           <View style={styles.timeBox}>
             <View style={styles.historyBox}>
               <View style={styles.orderTypeBox}>
-                <View style={styles.deliveryStatusCircle} />
-                <Text style={Typography.bold15}>{'Scheduled delivery'}</Text>
+                <View
+                  style={[styles.deliveryStatusCircle, { backgroundColor }]}
+                />
+                <Text style={Typography.bold15}>{slotType} delivery</Text>
                 {/*mock orderType*/}
               </View>
               <View style={styles.deliverBoxRow2}>
@@ -100,7 +105,6 @@ const styles = StyleSheet.create({
   deliveryStatusCircle: {
     width: 14,
     height: 14,
-    backgroundColor: '#889BFF',
     borderRadius: 14,
     marginRight: 10,
   },

@@ -20,15 +20,7 @@ import TickComponent from './TickComponent';
 
 const now = Date.now();
 const AccordionItem = ({
-  order: {
-    id,
-    sales_incremental_id,
-    items,
-    time_slot,
-    binsAssigned,
-    order_start_time,
-    order_end_time,
-  },
+  order: { id, sales_incremental_id, items, time_slot, binsAssigned },
   index,
   itemCount,
   status,
@@ -72,6 +64,9 @@ const AccordionItem = ({
         startTime={time_slot?.start_time}
         endTime={time_slot?.end_time}
         timeLeft={timeLeft}
+        slotType={
+          (orderType ?? 'scheduled') === 'scheduled' ? 'Scheduled' : 'Express'
+        }
       />
       <View style={styles.positionBox}>
         {binsAssigned &&

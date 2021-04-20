@@ -81,6 +81,11 @@ const ItemScreen = ({
           end_time={formatAmPm(end)}
           img={item?.image_url}
           locale={locale}
+          slotType={
+            (item?.order_type ?? 'scheduled') === 'scheduled'
+              ? 'Scheduled'
+              : 'Express'
+          }
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>

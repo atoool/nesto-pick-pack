@@ -12,8 +12,6 @@ const OrderComponent = ({
   orderId,
   status,
   items,
-  orderType,
-  index,
   pick,
   startTime,
   endTime,
