@@ -33,6 +33,7 @@ export const PickerContext = createContext({
   getAllNotifications: async () => {},
   getAllItemList: async () => {},
   AddToSimilarList: () => {},
+  setSimilarItems: () => {},
 });
 
 export const PickerContextProvider = ({ children }) => {
@@ -140,6 +141,7 @@ export const PickerContextProvider = ({ children }) => {
       await postSuggestedSubstitutes(PAYLOAD, locale),
     getAllNotifications, //
     AddToSimilarList,
+    setSimilarItems,
   };
   return (
     <PickerContext.Provider value={value}>{children}</PickerContext.Provider>

@@ -28,6 +28,7 @@ const SubstitutesScreen = ({
     getSimilarItemList,
     postSuggestedSubstitutes,
     getOrdersList,
+    setSimilarItems,
   } = useContext(PickerContext);
 
   const {
@@ -54,7 +55,9 @@ const SubstitutesScreen = ({
       await getSimilarItemList(item?.id, item?.item_type);
     };
     onMount();
-    return () => {};
+    return () => {
+      setSimilarItems([]);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
