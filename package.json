@@ -1,7 +1,7 @@
 {
   "name": "NestoPickPack",
   "version": "2.2.14",
-  "buildNumber": "2",
+  "buildNumber": "3",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
