@@ -36,10 +36,9 @@ const SubstitutesScreen = ({
   } = useContext(AppContext);
 
   const [checkedList, setCheckedList] = useState([]);
-
   const [isSuggestLoad, setIsSuggestLoad] = useState(false);
-
   const [loading, setLoading] = useState(true);
+  const [notifyCRMLoading, setNotifyCRMLoading] = useState(false);
 
   const onCheck = (i) => {
     const temp = checkedList;
@@ -98,6 +97,33 @@ const SubstitutesScreen = ({
     setIsSuggestLoad(false);
   };
 
+  const forceNotifyCRM = async () => {
+    setNotifyCRMLoading(true);
+    const payload = {
+      original_item_id: item?.id,
+      more_quantity_required: requiredQty,
+      existing_quantity: existingQty,
+      order_id: item?.orderId,
+      item_type: item?.item_type,
+      suggested_items: [],
+    };
+    try {
+      await postSuggestedSubstitutes(payload).then(async () => {
+        await getOrdersList();
+      });
+      navigation.navigate('SubstituteRequestedScreen');
+    } catch {
+      if (item?.substituted || item?.item?.assigned_item) {
+        ToastAndroid.show(locale?.error?.substituted, ToastAndroid.SHORT);
+      } else if (item?.item?.repicked) {
+        ToastAndroid.show(locale?.error?.repicked, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
+      }
+    }
+    setNotifyCRMLoading(false);
+  };
+
   let status = item?.picking_completed
     ? locale?.status?.PiC
     : item?.assigned_item
@@ -128,11 +154,15 @@ const SubstitutesScreen = ({
               locale={locale}
             />
             <Button
+              title={locale?.IS_notify_CRM}
+              style={styles.searchButton}
+              loading={notifyCRMLoading}
+              onPress={forceNotifyCRM}
+            />
+            <Button
               title={locale?.SbS_search}
               style={styles.searchButton}
-              onPress={() => {
-                navigation.navigate('SearchProductScreen');
-              }}
+              onPress={() => navigation.navigate('SearchProductScreen')}
             />
             <ItemCheckList
               items={similarItems}
@@ -143,18 +173,12 @@ const SubstitutesScreen = ({
               emptyText={locale?.noSimilar}
             />
           </ScrollView>
-
           <Button
-            title={
-              similarItems.length === 0
-                ? !loading
-                  ? locale?.IS_notify_CRM
-                  : locale.IS_substituteButton
-                : locale.IS_substituteButton
-            }
+            title={locale.IS_substituteButton}
             style={styles.suggestButton}
             loading={isSuggestLoad}
             onPress={onSuggestSubstitute}
+            disabled={similarItems.length === 0}
           />
         </>
       )}
