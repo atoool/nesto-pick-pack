@@ -14,8 +14,11 @@ import StatusPill from './StatusPill';
 import OrderComponent from './OrderComponent';
 import Divider from './Divider';
 import { Constants } from '../utils';
-import getColorBin from '../utils/getColorBin';
-import getDotColor from '../utils/getDotColor';
+import {
+  getColorBin,
+  filterBinsByDFC,
+  getDotColor,
+} from '../utils/itemTypeUtils';
 
 const PickList = ({
   items,
@@ -131,12 +134,14 @@ const PickList = ({
                           : Constants.emptyPosition}
                       </Text>
                     </View>
-                    {item.binsAssigned && item.binsAssigned?.length !== 0 && (
+                    {(item.binsAssigned?.length ?? 0) !== 0 && (
                       <View style={styles.positionBox}>
-                        {item.binsAssigned.map(
+                        {item?.binsAssigned?.map(
                           (itm, i) =>
-                            itm?.bin_number[0]?.toLowerCase() ===
-                              item?.dfc[0]?.toLowerCase() && (
+                            filterBinsByDFC(
+                              itm?.bin_number ?? '',
+                              itm?.dfc ?? '',
+                            ) && (
                               <View key={i} style={styles.statusPill}>
                                 <StatusPill
                                   backgroundColor={getColorBin(itm?.bin_number)}
@@ -150,7 +155,6 @@ const PickList = ({
                       </View>
                     )}
                   </View>
-
                   <RightCaretSVG />
                 </TouchableOpacity>
               </View>

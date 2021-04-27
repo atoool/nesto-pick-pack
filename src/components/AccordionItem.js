@@ -9,8 +9,7 @@ import {
 import { RightCaretSVG } from '../assets/svg';
 import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
-import getColorBin from '../utils/getColorBin';
-import getDotColor from '../utils/getDotColor';
+import { getColorBin, getDotColor } from '../utils/itemTypeUtils';
 import Button from './Button';
 import Divider from './Divider';
 import ModalComponent from './ModalComponent';
