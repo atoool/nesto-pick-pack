@@ -16,8 +16,8 @@ import Divider from './Divider';
 import { Constants } from '../utils';
 import {
   getColorBin,
-  filterBinsByDFC,
   getDotColor,
+  getFilteredBinList,
 } from '../utils/itemTypeUtils';
 
 const PickList = ({
@@ -136,22 +136,19 @@ const PickList = ({
                     </View>
                     {(item.binsAssigned?.length ?? 0) !== 0 && (
                       <View style={styles.positionBox}>
-                        {item?.binsAssigned?.map(
-                          (itm, i) =>
-                            filterBinsByDFC(
-                              itm?.bin_number ?? '',
-                              itm?.dfc ?? '',
-                            ) && (
-                              <View key={i} style={styles.statusPill}>
-                                <StatusPill
-                                  backgroundColor={getColorBin(itm?.bin_number)}
-                                  marginRight={5}
-                                  text={itm?.bin_number}
-                                  paddingVertical={0}
-                                />
-                              </View>
-                            ),
-                        )}
+                        {getFilteredBinList(
+                          item?.binsAssigned?.map?.((bin) => bin?.bin_number),
+                          item?.dfc ?? '',
+                        )?.map((binNumber, i) => (
+                          <View key={i?.toString()} style={styles.statusPill}>
+                            <StatusPill
+                              backgroundColor={getColorBin(binNumber)}
+                              marginRight={5}
+                              text={binNumber}
+                              paddingVertical={0}
+                            />
+                          </View>
+                        ))}
                       </View>
                     )}
                   </View>

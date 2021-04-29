@@ -17,9 +17,6 @@ const getBinType = (binNumber) => {
   }
 };
 
-export const filterBinsByDFC = (binNumber, dfc) =>
-  getBinType(binNumber ?? '') === dfc?.toLowerCase();
-
 export function getColorBin(binNumber) {
   const binType = getBinType(binNumber);
   let color = Colors.dfcFallback;
@@ -35,3 +32,20 @@ export function getColorBin(binNumber) {
 
 export const getDotColor = (dfc) =>
   Colors[dfc !== '' ? dfc?.toLowerCase() ?? 'dfcFallback' : 'dfcFallback'];
+
+export const getFilteredBinList = (binNumberArray = [], dfc = '') => {
+  if (dfc === '') {
+    return binNumberArray;
+  }
+
+  const filteredBins =
+    binNumberArray
+      ?.map?.((binNum) => ({ binNum, type: getBinType(binNum) }))
+      ?.filter?.((bin) => bin.type === dfc?.toLowerCase()) ?? [];
+
+  if ((filteredBins?.length ?? 0) !== 0) {
+    return filteredBins?.map?.((bin) => bin?.binNum);
+  } else {
+    return binNumberArray;
+  }
+};
