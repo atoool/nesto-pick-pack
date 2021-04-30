@@ -132,7 +132,8 @@ export const getSimilarItems = async (id, item_type, locale) => {
 };
 export const getAllItems = async (id, locale) => {
   const URL = `/crm/search-product/${id}`;
-  return get(URL, true, false).catch((e) => {
+  const extraParams = '&source=emp';
+  return get(URL, true, false, extraParams).catch((e) => {
     console.log(e);
   });
 };
