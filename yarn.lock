@@ -1163,6 +1163,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.10.tgz#97d3a9fa62a3a4838ec7a6ec91cfec5a26e365b6"
   integrity sha512-1NPlBA2Hu/KWc3EnQcDRPRX0x8Dg9tuQlQQVWVQjlg+u+PjCq7ANEtbikOFKp5yQqfF8tqzU5+84/IfDO8zpiA==
 
+"@react-native-firebase/analytics@^11.4.1":
+  version "11.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-11.4.1.tgz#89ff1ef40e6c01aa8587c4b21a141ed6a8ed3ad6"
+  integrity sha512-4dmjn//W5/LEvKTJxJMqOjiinXPPGoelBvZFGCNh65AjSOpgiRMMU03TKnDPkRBrJHJFGlEju9UUVQ8857FrGQ==
+
 "@react-native-firebase/app@^10.5.0":
   version "10.5.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-10.5.0.tgz#aa46cd3a62d2117914a6f81ffea0d1b3b9ef15c6"
@@ -1182,6 +1187,11 @@
   version "10.5.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-10.5.1.tgz#f4b833f6ff6a7c234e790bae1f01289ac08199d8"
   integrity sha512-cpx87M3vaR34vUYEFdpsFQk0/A29225tD5lqqvKW+l/u8FHD9KHyjm+XoEenV2eCayF8IxkmO9PQKsufgg4FHQ==
+
+"@react-native-firebase/remote-config@^11.4.1":
+  version "11.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/remote-config/-/remote-config-11.4.1.tgz#8340fd6186fdffc00933b9163864f1dc60b615b0"
+  integrity sha512-kiu5tHDIG6gbADu2mAIsr53hl0ON/wxAKNa4jh028jPeT+toJagbNuZI1kTKmRLtwbpZ+zOYAdFDbRoLFyAJbg==
 
 "@react-navigation/bottom-tabs@^5.11.3":
   version "5.11.3"
