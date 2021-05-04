@@ -3,7 +3,7 @@ import { Animated, StyleSheet, Text } from 'react-native';
 import { Colors, Typography } from '../styles';
 
 const SnackBar = ({ style, title, titleStyle, showSnack }) => {
-  const slideAnim = useRef(new Animated.Value(60)).current;
+  const slideAnim = useRef(new Animated.Value(150)).current;
 
   const show = () => {
     // Will change fadeAnim value to 1 in 5 seconds
