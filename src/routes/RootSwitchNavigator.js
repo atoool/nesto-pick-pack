@@ -35,7 +35,12 @@ const RootSwitchNavigator = () => {
     const _updateAvailable = version < minVersion;
     setUpdateAvailable(_updateAvailable);
     if (_maintenanceMode) {
-      Alert.alert('', 'Server under maintenance. Please try again later');
+      Alert.alert(
+        '',
+        'Server under maintenance. Please try again later',
+        [{ text: 'Refresh', onPress: fetchRemoteConfig }],
+        { cancelable: false },
+      );
     } else if (_updateAvailable) {
       Alert.alert(
         '',
