@@ -78,7 +78,7 @@ const PackerVerifyItemSection = ({
     }
     const bad_qty = qty - good_qty;
     const payload = {
-      bad_reviews: issue,
+      bad_reviews: issue?.filter((i) => i !== 'no issue selected'),
       good_qty,
       bad_qty,
       item_type: item?.item_type,
