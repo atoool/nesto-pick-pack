@@ -14,14 +14,11 @@ const PackScreen = ({ navigation, route }) => {
   const flatListRef = createRef(null);
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [readyButtonLoading, setReadyButtonLoading] = useState(null);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { orderList, getPackerOrderList, setOrderReady } = useContext(
-    PackerContext,
-  );
+  const { orderList, getPackerOrderList } = useContext(PackerContext);
 
   const _getOrdersList = async () => {
     setRefreshing(true);
@@ -62,21 +59,13 @@ const PackScreen = ({ navigation, route }) => {
       timeLeft,
     });
 
-  const onReadyPress = async (id, index) => {
-    setReadyButtonLoading(index);
-    await setOrderReady(id).then(async () => {
-      await getPackerOrderList();
-    });
-    setReadyButtonLoading(null);
-  };
-
   const getPackedItemCount = (list) => {
     if (list && list.length !== 0) {
       return list.filter((itm) => itm.packer_checked).length;
-    } else {
-      return 0;
     }
+    return 0;
   };
+
   useEffect(() => {
     if (
       route?.params?.index &&
@@ -90,6 +79,7 @@ const PackScreen = ({ navigation, route }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route?.params?.index]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pack} />
@@ -98,9 +88,7 @@ const PackScreen = ({ navigation, route }) => {
         ListEmptyComponent={() => (
           <NoContent name="NoOrdersSVG" isLoading={isLoading} />
         )}
-        ref={(r) => {
-          flatListRef.current = r;
-        }}
+        ref={(r) => (flatListRef.current = r)}
         contentContainerStyle={styles.contentContainer}
         keyExtractor={(item, indx) => `${indx}${item?.id}`}
         ItemSeparatorComponent={() => <Divider />}
@@ -109,11 +97,8 @@ const PackScreen = ({ navigation, route }) => {
         refreshing={refreshing}
         renderItem={({ item, index }) => {
           const packing_completed =
-            item?.items?.filter((itm) => {
-              if (itm?.packer_checked) {
-                return itm;
-              }
-            })?.length === item?.items?.length;
+            item?.items?.filter((itm) => itm?.packer_checked)?.length ===
+            item?.items?.length;
           return (
             <AccordionItem
               order={{ id: item?.id ? item?.id : '#', ...item }}
@@ -145,10 +130,8 @@ const PackScreen = ({ navigation, route }) => {
                 );
               }}
               buttonTitle={locale?.PS_isReady}
-              onReadyPress={onReadyPress}
               showReadyButton={packing_completed}
               userType={'packer'}
-              readyButtonLoading={readyButtonLoading}
               locale={locale}
             />
           );

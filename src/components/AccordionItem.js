@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { RightCaretSVG } from '../assets/svg';
+import { PackerContext } from '../context/PackerContext';
 import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
 import { getColorBin, getDotColor } from '../utils/itemTypeUtils';
@@ -26,20 +27,16 @@ const AccordionItem = ({
   orderType,
   onPress,
   buttonTitle,
-  onReadyPress,
   showReadyButton,
   userType,
   timeLeft = now,
-  readyButtonLoading = false,
   locale,
 }) => {
-  time_slot = time_slot
-    ? // ? userType === 'packer'
-      //   ? { start_time: order_start_time, end_time: order_end_time }
-      time_slot
-    : { start_time: now, end_time: now };
+  time_slot = time_slot ?? { start_time: now, end_time: now };
 
+  const { getPackerOrderList, setOrderReady } = useContext(PackerContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const [readyButtonLoading, setReadyButtonLoading] = useState(false);
 
   const getQty = (item) => {
     if (userType === 'packer' && item?.total_qty) {
@@ -48,10 +45,17 @@ const AccordionItem = ({
       return item?.repick_qty;
     } else if (item?.qty) {
       return item?.qty;
-    } else {
-      return 1;
     }
+    return 1;
   };
+
+  const onReadyPress = async () => {
+    setReadyButtonLoading(true);
+    await setOrderReady(id);
+    await getPackerOrderList();
+    setReadyButtonLoading(false);
+  };
+
   return (
     <View style={styles.container}>
       <OrderComponent
@@ -107,9 +111,7 @@ const AccordionItem = ({
                       <View
                         style={[
                           styles.deliveryStatusCircle,
-                          {
-                            backgroundColor: getDotColor(item?.dfc),
-                          },
+                          { backgroundColor: getDotColor(item?.dfc) },
                         ]}
                       />
                       <Text style={styles.itemTitle}>
@@ -117,7 +119,6 @@ const AccordionItem = ({
                         {item?.name ? item?.name : Constants.emptyItemName}
                       </Text>
                     </View>
-
                     <Text style={styles.itemText}>
                       {item?.department
                         ? item?.department
@@ -141,12 +142,9 @@ const AccordionItem = ({
           !showReadyButton || (binsAssigned ? binsAssigned.length === 0 : true)
         }
         style={styles.button}
-        loading={readyButtonLoading === index}
-        onPress={() => {
-          setModalVisible(true);
-        }}
+        loading={readyButtonLoading}
+        onPress={() => setModalVisible(true)}
       />
-
       <ModalComponent
         visible={modalVisible}
         text={userType === 'packer' ? locale?.PS_confirm : locale?.DS_confirm}
@@ -155,7 +153,7 @@ const AccordionItem = ({
         onButton1Press={() => setModalVisible(false)}
         onButton2Press={() => {
           setModalVisible(false);
-          onReadyPress && onReadyPress(id, index);
+          onReadyPress();
         }}
       />
     </View>
