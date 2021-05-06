@@ -13,11 +13,10 @@ const DropScreen = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
-  const { dropList, getDropList, setItemDrop } = useContext(PickerContext);
+  const { dropList, getDropList } = useContext(PickerContext);
 
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [dropButtonLoading, setDropButtonLoading] = useState(null);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -40,16 +39,6 @@ const DropScreen = () => {
     onMount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onDropToBin = async (id, index) => {
-    setDropButtonLoading(index);
-    try {
-      await setItemDrop(id).then(async () => {
-        await getDropList();
-      });
-    } catch {}
-    setDropButtonLoading(null);
-  };
 
   const getPackedItemCount = (list) => {
     if (list && list.length !== 0) {
@@ -92,10 +81,8 @@ const DropScreen = () => {
                 ' ' +
                 locale?.picked
               }
-              onReadyPress={onDropToBin}
               buttonTitle={locale.DS_dropReady}
               showReadyButton={picking_completed}
-              readyButtonLoading={dropButtonLoading}
               locale={locale}
             />
           );

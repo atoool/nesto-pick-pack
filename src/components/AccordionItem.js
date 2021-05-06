@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { RightCaretSVG } from '../assets/svg';
 import { PackerContext } from '../context/PackerContext';
+import { PickerContext } from '../context/PickerContext';
 import { Colors, Typography } from '../styles';
 import { Constants } from '../utils';
 import { getColorBin, getDotColor } from '../utils/itemTypeUtils';
@@ -35,6 +36,8 @@ const AccordionItem = ({
   time_slot = time_slot ?? { start_time: now, end_time: now };
 
   const { getPackerOrderList, setOrderReady } = useContext(PackerContext);
+  const { getDropList, setItemDrop } = useContext(PickerContext);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [readyButtonLoading, setReadyButtonLoading] = useState(false);
 
@@ -49,10 +52,21 @@ const AccordionItem = ({
     return 1;
   };
 
-  const onReadyPress = async () => {
+  const onReadyForDelivery = async () => {
     setReadyButtonLoading(true);
-    await setOrderReady(id);
-    await getPackerOrderList();
+    try {
+      await setOrderReady(id);
+      await getPackerOrderList();
+    } catch {}
+    setReadyButtonLoading(false);
+  };
+
+  const onDropToBin = async () => {
+    setReadyButtonLoading(true);
+    try {
+      await setItemDrop(id);
+      await getDropList();
+    } catch {}
     setReadyButtonLoading(false);
   };
 
@@ -153,7 +167,7 @@ const AccordionItem = ({
         onButton1Press={() => setModalVisible(false)}
         onButton2Press={() => {
           setModalVisible(false);
-          onReadyPress();
+          (userType === 'packer' ? onReadyForDelivery : onDropToBin)();
         }}
       />
     </View>
