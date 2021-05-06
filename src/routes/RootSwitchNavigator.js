@@ -27,29 +27,31 @@ const RootSwitchNavigator = () => {
   }, []);
 
   const fetchRemoteConfig = async () => {
-    await remoteConfig().fetch(0);
-    await remoteConfig().activate();
-    const _maintenanceMode =
-      remoteConfig().getString('pickPackMaintenanceMode') === 'true';
-    const minVersion = remoteConfig().getString('pickPackMinVersion');
-    const _updateAvailable = version < minVersion;
-    setUpdateAvailable(_updateAvailable);
-    if (_maintenanceMode) {
-      Alert.alert(
-        '',
-        'Server under maintenance. Please try again later',
-        [{ text: 'Refresh', onPress: fetchRemoteConfig }],
-        { cancelable: false },
-      );
-    } else if (_updateAvailable) {
-      Alert.alert(
-        '',
-        'Please update app to continue',
-        [{ text: 'Update', onPress: handleAppUpdate }],
-        { cancelable: false },
-      );
-    }
-    setMaintenanceMode(_maintenanceMode ?? false);
+    try {
+      await remoteConfig().fetch(0);
+      await remoteConfig().activate();
+      const _maintenanceMode =
+        remoteConfig().getString('pickPackMaintenanceMode') === 'true';
+      const minVersion = remoteConfig().getString('pickPackMinVersion');
+      const _updateAvailable = version < minVersion;
+      setUpdateAvailable(_updateAvailable);
+      if (_maintenanceMode) {
+        Alert.alert(
+          '',
+          'Server under maintenance. Please try again later',
+          [{ text: 'Refresh', onPress: fetchRemoteConfig }],
+          { cancelable: false },
+        );
+      } else if (_updateAvailable) {
+        Alert.alert(
+          '',
+          'Please update app to continue',
+          [{ text: 'Update', onPress: handleAppUpdate }],
+          { cancelable: false },
+        );
+      }
+      setMaintenanceMode(_maintenanceMode ?? false);
+    } catch {}
     setConfigLoading(false);
   };
 
