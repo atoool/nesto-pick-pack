@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   loading: {
     height: '100%',
