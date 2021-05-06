@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
 });
 
