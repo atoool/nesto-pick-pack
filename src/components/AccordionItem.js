@@ -6,6 +6,8 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import moment from 'moment-timezone';
+
 import { RightCaretSVG } from '../assets/svg';
 import { PackerContext } from '../context/PackerContext';
 import { PickerContext } from '../context/PickerContext';
@@ -21,7 +23,14 @@ import TickComponent from './TickComponent';
 
 const now = Date.now();
 const AccordionItem = ({
-  order: { id, sales_incremental_id, items, time_slot, binsAssigned },
+  order: {
+    id,
+    sales_incremental_id,
+    items,
+    time_slot,
+    binsAssigned,
+    hand_off_time,
+  },
   index,
   itemCount,
   status,
@@ -161,7 +170,15 @@ const AccordionItem = ({
       />
       <ModalComponent
         visible={modalVisible}
-        text={userType === 'packer' ? locale?.PS_confirm : locale?.DS_confirm}
+        text={
+          userType === 'packer'
+            ? isDeliveryDateToday(hand_off_time)
+              ? locale?.PS_confirm
+              : `Delivery date of the order is ${moment(hand_off_time)?.format(
+                  'Do MMM, yyyy',
+                )}. ${locale?.PS_confirm}`
+            : locale?.DS_confirm
+        }
         button1Text={locale?.no}
         button2Text={locale?.yes}
         onButton1Press={() => setModalVisible(false)}
@@ -173,6 +190,14 @@ const AccordionItem = ({
     </View>
   );
 };
+
+function isDeliveryDateToday(deliveryDate) {
+  const momentDeliveryDate = moment(deliveryDate);
+  const momentCurrentDate = moment(now);
+  momentDeliveryDate.set({ h: 0, m: 0, s: 0 });
+  momentCurrentDate.set({ h: 0, m: 0, s: 0 });
+  return momentCurrentDate.isSameOrAfter(momentDeliveryDate);
+}
 
 const styles = StyleSheet.create({
   container: { marginHorizontal: 32, marginVertical: 20 },
