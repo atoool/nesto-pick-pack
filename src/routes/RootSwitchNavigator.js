@@ -22,7 +22,7 @@ const RootSwitchNavigator = () => {
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [forced, setForced] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     fetchRemoteConfig();
