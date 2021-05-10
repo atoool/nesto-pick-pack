@@ -11,6 +11,7 @@ import TestTouchable from '../../components/TestTouchable';
 import LinkButton from '../../components/LinkButton';
 import ProfileSection from '../../components/ProfileSection';
 import MarkAvailability from '../../components/MarkAvailability';
+import ShowVersion from '../../components/ShowVersion';
 
 const ProfileScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,6 +62,7 @@ const ProfileScreen = ({ navigation }) => {
         title={locale?.signout}
         onPress={() => setModalVisible(true)}
       />
+      <ShowVersion />
       <ModalComponent
         visible={modalVisible}
         text={locale?.PS_logoutAlert}

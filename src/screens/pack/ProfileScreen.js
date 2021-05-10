@@ -11,6 +11,7 @@ import { CommonActions } from '@react-navigation/native';
 import LinkButton from '../../components/LinkButton';
 import MarkAvailability from '../../components/MarkAvailability';
 import ProfileSection from '../../components/ProfileSection';
+import ShowVersion from '../../components/ShowVersion';
 
 const ProfileScreen = ({ navigation }) => {
   const [email, setEmail] = useState(Constants.emptyEmail);
@@ -74,6 +75,7 @@ const ProfileScreen = ({ navigation }) => {
           onButton2Press={onLogOut}
         />
       </ScrollView>
+      <ShowVersion />
     </SafeAreaView>
   );
 };

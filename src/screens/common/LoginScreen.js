@@ -15,6 +15,7 @@ import { Typography } from '../../styles';
 import Images from '../../assets/images';
 import { AppContext } from '../../context/AppContext';
 import TestTouchable from '../../components/TestTouchable';
+import ShowVersion from '../../components/ShowVersion';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -88,23 +89,16 @@ const LoginScreen = () => {
           loading={loading}
           style={styles.screenMargin}
         />
+        <ShowVersion />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-  logoImage: {
-    width: 250,
-    height: 250,
-  },
-  screenMargin: {
-    width: screenWidth - 64,
-  },
+  container: { backgroundColor: '#ffffff', flex: 1 },
+  logoImage: { width: 250, height: 250 },
+  screenMargin: { width: screenWidth - 64 },
   scrollView: { alignItems: 'center' },
   loginText: { ...Typography.normal21, marginBottom: 20 },
 });
