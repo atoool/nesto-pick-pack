@@ -1,5 +1,7 @@
 import React, { createRef, useContext, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import moment from 'moment-timezone';
+
 import { Colors } from '../../styles';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
@@ -44,7 +46,6 @@ const ItemScreen = ({
         navigation.navigate('ItemSuccessScreen');
       });
     } catch {}
-    // setIsLoading(false);
   };
   if (isLoading) {
     return (
@@ -86,6 +87,7 @@ const ItemScreen = ({
               ? 'Scheduled'
               : 'Express'
           }
+          date={moment(time_slot?.start_time)?.format('Do MMM, YYYY')}
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
@@ -114,11 +116,7 @@ const ItemScreen = ({
 
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
-  loading: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: Colors.WHITE,
-  },
+  loading: { height: '100%', width: '100%', backgroundColor: Colors.WHITE },
   skuBox: {
     backgroundColor: Colors.offWhite,
     padding: 10,

@@ -17,6 +17,7 @@ const PackerItemSection = ({
   end_time,
   locale,
   slotType,
+  date,
 }) => {
   const backgroundColor =
     slotType === 'Scheduled' ? Colors.lightViolet : '#A1C349';
@@ -67,12 +68,11 @@ const PackerItemSection = ({
                   style={[styles.deliveryStatusCircle, { backgroundColor }]}
                 />
                 <Text style={Typography.bold15}>{slotType} delivery</Text>
-                {/*mock orderType*/}
               </View>
+              <Text style={styles.centerSelf}>{date}</Text>
               <View style={styles.deliverBoxRow2}>
                 <Text>{start_time}</Text>
                 <Arrow />
-                {/* <Text> ------------> </Text> */}
                 <Text>{end_time}</Text>
               </View>
             </View>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.offWhite,
     padding: 10,
     borderRadius: 7,
-    height: 60,
+    height: 80,
     flex: 1,
   },
   quantityPill: {
@@ -122,9 +122,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 7,
     marginLeft: 10,
-    height: 60,
+    height: 80,
   },
-  flexDirectionRow: { flexDirection: 'row' },
   deliverBoxRow2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -135,15 +134,9 @@ const styles = StyleSheet.create({
   statusBox: { flexDirection: 'row' },
   itemBox: { flexDirection: 'row', marginVertical: 10 },
   itemTitleBox: { flex: 1 },
-  priceBox: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-  },
-  timeBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
+  priceBox: { justifyContent: 'flex-start', alignItems: 'flex-end' },
+  timeBox: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
   orderTypeBox: { flexDirection: 'row', alignItems: 'center' },
+  centerSelf: { alignSelf: 'center' },
 });
 export default PackerItemSection;

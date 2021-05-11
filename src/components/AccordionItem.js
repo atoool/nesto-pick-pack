@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   button: { marginTop: 20 },
   statusPill: { marginBottom: 5 },
-  itemTitle: { ...Typography.bold15, flexWrap: 'wrap' },
+  itemTitle: { ...Typography.bold15, flex: 1 },
   textBox: { width: '70%' },
   itemText: { ...Typography.normal12, flexWrap: 'wrap' },
   rowCenter: { flexDirection: 'row', alignItems: 'center' },
