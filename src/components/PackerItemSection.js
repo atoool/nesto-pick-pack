@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Colors, Typography, width } from '../styles';
 import Arrow from './Arrow';
 import StatusPill from './StatusPill';
@@ -18,6 +18,7 @@ const PackerItemSection = ({
   locale,
   slotType,
   date,
+  onImagePress,
 }) => {
   const backgroundColor =
     slotType === 'Scheduled' ? Colors.lightViolet : '#A1C349';
@@ -26,11 +27,13 @@ const PackerItemSection = ({
     <>
       <View style={styles.itemImageContainer}>
         <View style={styles.itemImage}>
-          <Image
-            source={{ uri: img }}
-            resizeMode={'contain'}
-            style={{ height: (1 * w) / 2, width: width - 64 }}
-          />
+          <TouchableOpacity activeOpacity={0.8} onPress={onImagePress}>
+            <Image
+              source={{ uri: img }}
+              resizeMode={'contain'}
+              style={{ height: (1 * w) / 2, width: width - 64 }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.itemContentBox}>

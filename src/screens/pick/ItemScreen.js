@@ -15,7 +15,7 @@ const now = new Date();
 const ItemScreen = ({
   navigation,
   route: {
-    params: { item, timeLeft, startTime, endTime },
+    params: { item, timeLeft, startTime, endTime, sales_incremental_id },
   },
 }) => {
   const ss = timeLeft
@@ -40,7 +40,6 @@ const ItemScreen = ({
       await getDropList();
       navigation.navigate('ItemSuccessScreen');
     });
-    // setIsLoading(false);
   };
 
   let status = item?.picking_completed
@@ -52,6 +51,12 @@ const ItemScreen = ({
     : item?.bf_substitution_initiated
     ? locale?.status?.bfSI
     : locale?.status?.Pi;
+
+  const onImagePress = () =>
+    navigation.navigate('ViewImageScreen', {
+      source: item?.image_url,
+      sales_incremental_id,
+    });
 
   if (isLoading) {
     return (
@@ -79,6 +84,7 @@ const ItemScreen = ({
           img={item?.image_url}
           locale={locale}
           slotType={item?.order_type}
+          onImagePress={onImagePress}
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>

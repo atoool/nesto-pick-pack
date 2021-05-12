@@ -15,7 +15,14 @@ import PackerVerifyItemSection from '../../components/PackerVerifyItemSection';
 
 const ItemScreen = ({
   route: {
-    params: { item, orderId, time_slot, order_type, timeLeft },
+    params: {
+      item,
+      orderId,
+      time_slot,
+      order_type,
+      timeLeft,
+      sales_incremental_id,
+    },
   },
   navigation,
 }) => {
@@ -47,6 +54,13 @@ const ItemScreen = ({
       });
     } catch {}
   };
+
+  const onImagePress = () =>
+    navigation.navigate('ViewImageScreen', {
+      source: item?.image_url,
+      sales_incremental_id,
+    });
+
   if (isLoading) {
     return (
       <View style={styles.loading}>
@@ -54,6 +68,7 @@ const ItemScreen = ({
       </View>
     );
   }
+
   return (
     <SafeAreaView
       ref={(r) => (containerRef.current = r?.props)}
@@ -88,6 +103,7 @@ const ItemScreen = ({
               : 'Express'
           }
           date={moment(time_slot?.start_time)?.format('Do MMM, YYYY')}
+          onImagePress={onImagePress}
         />
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>

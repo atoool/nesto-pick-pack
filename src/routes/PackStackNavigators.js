@@ -10,6 +10,7 @@ import PackScreen from '../screens/pack/PackScreen';
 import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
 import Browser from '../screens/common/Browser';
 import { AppContext } from '../context/AppContext';
+import ViewImageScreen from '../screens/common/ViewImageScreen';
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,14 @@ const PackStackNavigators = () => {
         component={Browser}
         options={{ headerShown: false }}
         initialParams={{ src: 'https://nesto.store' }}
+      />
+      <Stack.Screen
+        name="ViewImageScreen"
+        component={ViewImageScreen}
+        options={({ route }) => ({
+          title: '#' + route?.params?.sales_incremental_id,
+          ...headerOptions,
+        })}
       />
     </Stack.Navigator>
   );
