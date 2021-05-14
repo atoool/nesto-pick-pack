@@ -29,22 +29,23 @@ const ModalComponent = ({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           {title && <Text style={styles.modalTitle}>{title}</Text>}
-
           <Text style={styles.modalText}>{text}</Text>
           <View style={styles.row}>
-            <TouchableHighlight
-              style={[styles.openButton]}
-              onPressIn={() => setHighlight(1)}
-              onPressOut={() => setHighlight(0)}
-              onPress={onButton1Press}>
-              <Text
-                style={[
-                  styles.textStyle,
-                  { color: highlight === 1 ? Colors.WHITE : Colors.BLACK },
-                ]}>
-                {button1Text}
-              </Text>
-            </TouchableHighlight>
+            {onButton1Press && (
+              <TouchableHighlight
+                style={[styles.openButton]}
+                onPressIn={() => setHighlight(1)}
+                onPressOut={() => setHighlight(0)}
+                onPress={onButton1Press}>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    { color: highlight === 1 ? Colors.WHITE : Colors.BLACK },
+                  ]}>
+                  {button1Text}
+                </Text>
+              </TouchableHighlight>
+            )}
             {onButton2Press && (
               <TouchableHighlight
                 style={styles.openButton}

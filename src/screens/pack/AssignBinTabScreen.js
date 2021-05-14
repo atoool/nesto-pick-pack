@@ -8,8 +8,9 @@ import { AppContext } from '../../context/AppContext';
 import Divider from '../../components/Divider';
 import { PackerContext } from '../../context/PackerContext';
 import BinItemList from '../../components/BinItemList';
+import ModalComponent from '../../components/ModalComponent';
 
-const AssignBinTabScreen = () => {
+const AssignBinTabScreen = ({ route }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -29,6 +30,9 @@ const AssignBinTabScreen = () => {
     }
   };
   const getOrders = async () => {
+    if (route?.params?.logout ?? false) {
+      return;
+    }
     setLoading(true);
     await getAssignBinList();
     setLoading(false);
@@ -64,6 +68,10 @@ const AssignBinTabScreen = () => {
             }
           />
         )}
+      />
+      <ModalComponent
+        visible={route?.params?.logout ?? false}
+        text="Logging out. Please wait."
       />
     </SafeAreaView>
   );

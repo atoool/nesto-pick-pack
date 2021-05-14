@@ -10,12 +10,13 @@ import PickList from '../../components/PickList';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 import Loader from '../../components/Loader';
+import ModalComponent from '../../components/ModalComponent';
 
 const now = Date.now();
 
-const PickScreen = ({ navigation }) => {
+const PickScreen = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   const {
     locale: { locale },
@@ -28,14 +29,16 @@ const PickScreen = ({ navigation }) => {
     setRefreshing(true);
     try {
       await getOrdersList();
-      setRefreshing(false);
     } catch (e) {
       console.log(e);
-      setRefreshing(false);
     }
+    setRefreshing(false);
   };
 
   const onMount = async () => {
+    if (route?.params?.logout ?? false) {
+      return;
+    }
     setLoading(true);
     await getOrdersList();
     setLoading(false);
@@ -107,6 +110,10 @@ const PickScreen = ({ navigation }) => {
       ) : (
         <Loader fullScreen />
       )}
+      <ModalComponent
+        visible={route?.params?.logout ?? false}
+        text="Logging out. Please wait."
+      />
     </SafeAreaView>
   );
 };

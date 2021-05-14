@@ -13,24 +13,30 @@ import ProfileSection from '../../components/ProfileSection';
 import MarkAvailability from '../../components/MarkAvailability';
 import ShowVersion from '../../components/ShowVersion';
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation: { dispatch } }) => {
+  const { logOutUser } = useContext(AuthContext);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState(Constants.emptyEmail);
-  const { logOutUser } = useContext(AuthContext);
 
   const {
     locale: { locale },
   } = useContext(AppContext);
 
-  const onLogOut = async () => {
+  const onLogOut = () => {
     setModalVisible(false);
-    await logOutUser();
-    navigation.dispatch(
+    dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'Pick now' }],
+        routes: [
+          {
+            name: 'Pick now',
+            params: { screen: 'PickScreen', params: { logout: true } },
+          },
+        ],
       }),
     );
+    setTimeout(() => logOutUser(), 500);
   };
 
   useEffect(() => {

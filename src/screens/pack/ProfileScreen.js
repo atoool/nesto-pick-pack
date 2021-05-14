@@ -13,7 +13,7 @@ import MarkAvailability from '../../components/MarkAvailability';
 import ProfileSection from '../../components/ProfileSection';
 import ShowVersion from '../../components/ShowVersion';
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation: { dispatch } }) => {
   const [email, setEmail] = useState(Constants.emptyEmail);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -26,15 +26,20 @@ const ProfileScreen = ({ navigation }) => {
   // const onStatisticsPress = () => {
   //   navigation.navigate('StatisticsScreen');
   // };
-  const onLogOut = async () => {
+  const onLogOut = () => {
     setModalVisible(false);
-    await logOutUser();
-    navigation.dispatch(
+    dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'AssignBin' }],
+        routes: [
+          {
+            name: 'AssignBin',
+            params: { screen: 'AssignBinTabScreen', params: { logout: true } },
+          },
+        ],
       }),
     );
+    setTimeout(() => logOutUser(), 500);
   };
 
   useEffect(() => {
