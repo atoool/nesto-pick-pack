@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet, View } from 'react-native';
 import { Colors } from '../../styles';
 //Components
 import Title from '../../components/Title';
@@ -68,7 +68,7 @@ const PickScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Title text={locale?.headings.pick} />
-      {!isLoading ? (
+      <View>
         <FlatList
           data={orders}
           ListEmptyComponent={() => <NoContent name="NoOrdersSVG" />}
@@ -107,9 +107,12 @@ const PickScreen = ({ navigation, route }) => {
             />
           )}
         />
-      ) : (
-        <Loader fullScreen />
-      )}
+        {isLoading && (
+          <View style={styles.loaderContainer}>
+            <Loader fullScreen />
+          </View>
+        )}
+      </View>
       <ModalComponent
         visible={route?.params?.logout ?? false}
         text="Logging out. Please wait."
@@ -121,6 +124,12 @@ const PickScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
   contentContainer: { paddingBottom: 60 },
+  loaderContainer: {
+    position: 'absolute',
+    backgroundColor: Colors.WHITE,
+    height: '100%',
+    width: '100%',
+  },
 });
 
 export default PickScreen;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Text,
   FlatList,
@@ -34,13 +34,11 @@ const PickList = ({
 }) => {
   const navigation = useNavigation();
 
-  const LeftActions = () => {
-    return (
-      <View style={styles.leftAction}>
-        <Text style={Typography.bold16White}>{locale?.PS_addToDrop}</Text>
-      </View>
-    );
-  };
+  const LeftActions = () => (
+    <View style={styles.leftAction}>
+      <Text style={Typography.bold16White}>{locale?.PS_addToDrop}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -58,108 +56,114 @@ const PickList = ({
       />
       <FlatList
         data={items}
-        keyExtractor={(item, indx) => `${indx}`}
+        keyExtractor={(_, indx) => `${indx}`}
         showsVerticalScrollIndicator={false}
         style={styles.orderItemsList}
         ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item, indx }) => {
-          const butcherCheck =
-            item?.is_butcher_dependent || item?.is_fishmonger_dependent
-              ? !item?.butchering_completed && !item?.fishmongering_completed
-                ? !item?.assigned_item
-                  ? !item?.bf_substitution_initiated
-                  : item?.assigned_item
-                : !item?.butchering_completed && !item?.fishmongering_completed
-              : false;
-          const substitutionInitiated =
-            item?.is_butcher_dependent || item?.is_fishmonger_dependent
-              ? item?.butchering_completed || item?.fishmongering_completed
-              : !item?.substitution_initiated;
-          return (
-            <Swipeable
-              enabled={substitutionInitiated}
-              renderLeftActions={LeftActions}
-              onSwipeableLeftOpen={() => onManualEntry(item, null)}>
-              <View
-                style={[
-                  styles.itemContainer1,
-                  butcherCheck && styles.itemContainer2,
-                ]}>
-                <TouchableOpacity
-                  style={styles.orderItem}
-                  disabled={butcherCheck}
-                  onPress={() =>
-                    navigation.navigate('ItemScreen', {
-                      orderId: item?.orderId,
-                      sales_incremental_id: item?.sales_incremental_id
-                        ? item?.sales_incremental_id
-                        : Constants.emptyOrderId,
-                      item,
-                      timeLeft,
-                      startTime,
-                      endTime,
-                    })
-                  }>
-                  <View style={styles.itemBox}>
-                    <View style={styles.itemTitleBox}>
-                      <View
-                        style={[
-                          styles.deliveryStatusCircle,
-                          {
-                            backgroundColor: getDotColor(item?.dfc),
-                          },
-                        ]}
-                      />
-                      <Text style={Typography.bold15}>
-                        {item.qty
-                          ? item.qty
-                          : item?.repick_qty
-                          ? item?.repick_qty
-                          : 1}
-                        x {item.name ? item.name : Constants.emptyItemName}
-                      </Text>
-                    </View>
-                    <View style={styles.departmentBox}>
-                      <Text style={Typography.normal12}>
-                        #
-                        {item?.sales_incremental_id
-                          ? item?.sales_incremental_id
-                          : Constants.emptyOrderId}{' '}
-                        |{' '}
-                        {item?.department
-                          ? item?.department
-                          : Constants.emptyDepartment}{' '}
-                        {item?.position
-                          ? item?.position
-                          : Constants.emptyPosition}
-                      </Text>
-                    </View>
-                    {(item.binsAssigned?.length ?? 0) !== 0 && (
-                      <View style={styles.positionBox}>
-                        {getFilteredBinList(
-                          item?.binsAssigned?.map?.((bin) => bin?.bin_number),
-                          item?.dfc ?? '',
-                        )?.map((binNumber, i) => (
-                          <View key={i?.toString()} style={styles.statusPill}>
-                            <StatusPill
-                              backgroundColor={getColorBin(binNumber)}
-                              marginRight={5}
-                              text={binNumber}
-                              paddingVertical={0}
-                            />
-                          </View>
-                        ))}
-                      </View>
-                    )}
-                  </View>
-                  <RightCaretSVG />
-                </TouchableOpacity>
-              </View>
-            </Swipeable>
-          );
-        }}
+        renderItem={({ item }) => (
+          <SwipeableComponent
+            item={item}
+            onManualEntry={onManualEntry}
+            onPress={() =>
+              navigation.navigate('ItemScreen', {
+                orderId: item?.orderId,
+                sales_incremental_id: item?.sales_incremental_id
+                  ? item?.sales_incremental_id
+                  : Constants.emptyOrderId,
+                item,
+                timeLeft,
+                startTime,
+                endTime,
+              })
+            }
+            LeftActions={() => <LeftActions />}
+          />
+        )}
       />
     </View>
+  );
+};
+
+const SwipeableComponent = ({ item, onManualEntry, onPress, LeftActions }) => {
+  const swipeableRef = useRef();
+  const butcherCheck =
+    item?.is_butcher_dependent || item?.is_fishmonger_dependent
+      ? !item?.butchering_completed && !item?.fishmongering_completed
+        ? !item?.assigned_item
+          ? !item?.bf_substitution_initiated
+          : item?.assigned_item
+        : !item?.butchering_completed && !item?.fishmongering_completed
+      : false;
+  const substitutionInitiated =
+    item?.is_butcher_dependent || item?.is_fishmonger_dependent
+      ? item?.butchering_completed || item?.fishmongering_completed
+      : !item?.substitution_initiated;
+  return (
+    <Swipeable
+      ref={swipeableRef}
+      enabled={substitutionInitiated}
+      renderLeftActions={LeftActions}
+      onSwipeableLeftOpen={() => {
+        onManualEntry(item, null);
+        swipeableRef.current?.close?.();
+      }}
+      leftThreshold={250}>
+      <View
+        style={[styles.itemContainer1, butcherCheck && styles.itemContainer2]}>
+        <TouchableOpacity
+          style={styles.orderItem}
+          disabled={butcherCheck}
+          onPress={onPress}>
+          <View style={styles.itemBox}>
+            <View style={styles.itemTitleBox}>
+              <View
+                style={[
+                  styles.deliveryStatusCircle,
+                  {
+                    backgroundColor: getDotColor(item?.dfc),
+                  },
+                ]}
+              />
+              <Text style={Typography.bold15}>
+                {item.qty ? item.qty : item?.repick_qty ? item?.repick_qty : 1}x{' '}
+                {item.name ? item.name : Constants.emptyItemName}
+              </Text>
+            </View>
+            <View style={styles.departmentBox}>
+              <Text style={Typography.normal12}>
+                #
+                {item?.sales_incremental_id
+                  ? item?.sales_incremental_id
+                  : Constants.emptyOrderId}{' '}
+                |{' '}
+                {item?.department
+                  ? item?.department
+                  : Constants.emptyDepartment}{' '}
+                {item?.position ? item?.position : Constants.emptyPosition}
+              </Text>
+            </View>
+            {(item.binsAssigned?.length ?? 0) !== 0 && (
+              <View style={styles.positionBox}>
+                {getFilteredBinList(
+                  item?.binsAssigned?.map?.((bin) => bin?.bin_number),
+                  item?.dfc ?? '',
+                )?.map((binNumber, i) => (
+                  <View key={i?.toString()} style={styles.statusPill}>
+                    <StatusPill
+                      backgroundColor={getColorBin(binNumber)}
+                      marginRight={5}
+                      text={binNumber}
+                      paddingVertical={0}
+                    />
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+          <RightCaretSVG />
+        </TouchableOpacity>
+      </View>
+    </Swipeable>
   );
 };
 
@@ -185,11 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     overflow: 'hidden',
   },
-  itemTitleBox: {
-    flexDirection: 'row',
-    marginBottom: 5,
-    alignItems: 'center',
-  },
+  itemTitleBox: { flexDirection: 'row', marginBottom: 5, alignItems: 'center' },
   positionBox: {
     flexDirection: 'row',
     marginTop: 5,
@@ -204,15 +204,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondaryGreen,
     justifyContent: 'center',
     paddingLeft: 20,
-    // borderRadius: 10,
   },
-  itemContainer1: {
-    backgroundColor: Colors.offWhite,
-  },
-  itemContainer2: {
-    opacity: 0.3,
-    backgroundColor: Colors.offWhite,
-  },
+  itemContainer1: { backgroundColor: Colors.offWhite },
+  itemContainer2: { opacity: 0.3, backgroundColor: Colors.offWhite },
 });
 
 export default PickList;
