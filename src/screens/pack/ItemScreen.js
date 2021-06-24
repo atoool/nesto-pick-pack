@@ -1,5 +1,12 @@
 import React, { createRef, useContext, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+} from 'react-native';
 import moment from 'moment-timezone';
 
 import { Colors } from '../../styles';
@@ -29,6 +36,7 @@ const ItemScreen = ({
   const containerRef = createRef(null);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isRePickLoading, setIsRePickLoading] = useState(false);
 
   const start = time_slot?.start_time;
   const end = time_slot?.end_time;
@@ -122,10 +130,18 @@ const ItemScreen = ({
               postRePick={postRePick}
               onManualEntry={onManualEntry}
               getPackerOrderList={getPackerOrderList}
+              setIsLoading={setIsRePickLoading}
             />
           )
         )}
       </ScrollView>
+      <Modal visible={isRePickLoading} animationType="fade" transparent>
+        <View style={styles.rePickLoader}>
+          <View style={styles.whiteCircle}>
+            <Loader />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -142,6 +158,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
+  },
+  rePickLoader: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  whiteCircle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    backgroundColor: 'white',
   },
 });
 

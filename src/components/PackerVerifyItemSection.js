@@ -17,9 +17,9 @@ const PackerVerifyItemSection = ({
   navigation,
   containerRef,
   postRePick,
-  orderId,
   onManualEntry,
   getPackerOrderList,
+  setIsLoading,
 }) => {
   const qty = item?.qty
     ? item?.qty
@@ -29,7 +29,6 @@ const PackerVerifyItemSection = ({
   const generateArray = (element) =>
     Array.apply(null, Array(qty)).map((itm) => element);
 
-  const [isRePickLoading, setIsRePickLoading] = useState(false);
   const [passItem, setPassItem] = useState(generateArray(true));
   const [issue, setIssue] = useState(generateArray('no issue selected'));
   const [showDropDown, setShowDropDown] = useState(generateArray(false));
@@ -68,12 +67,12 @@ const PackerVerifyItemSection = ({
   );
 
   const onRePick = async () => {
-    setIsRePickLoading(true);
+    setIsLoading(true);
     const good_qty = issue.filter((i) => i === 'no issue selected').length;
     const pass_item = passItem.filter((i) => i === true).length;
     if (good_qty !== pass_item) {
       ToastAndroid.show(locale?.IS_reviewFailed, ToastAndroid.SHORT);
-      setIsRePickLoading(false);
+      setIsLoading(false);
       return;
     }
     const bad_qty = qty - good_qty;
@@ -95,9 +94,8 @@ const PackerVerifyItemSection = ({
       } else {
         ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
       }
-      setIsRePickLoading(false);
     }
-    setIsRePickLoading(false);
+    setIsLoading(false);
   };
 
   return (
@@ -205,7 +203,6 @@ const PackerVerifyItemSection = ({
           <Text style={styles.rePickTitle}>{locale?.IS_reviewit}</Text>
           <Text style={styles.rePickText}>{locale?.IS_reviewText}</Text>
           <Button
-            loading={isRePickLoading}
             title={locale?.IS_askTo}
             style={styles.rePickButton}
             onPress={async () => {
