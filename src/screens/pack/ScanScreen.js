@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Linking,
   SafeAreaView,
@@ -7,17 +7,26 @@ import {
   Text,
   ToastAndroid,
   View,
+  DeviceEventEmitter,
 } from 'react-native';
-import { RNCamera } from 'react-native-camera';
-import { Colors, Typography } from '../../styles';
 import * as Progress from 'react-native-progress';
+
+import { Colors } from '../../styles';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
 import Loader from '../../components/Loader';
 import TouchLink from '../../components/TouchLink';
-import BarcodeMask from '../../components/BarcodeMask';
+import {
+  registerBroadcastReceiver,
+  determineVersion,
+  triggerScan,
+  broadcastReceiver,
+} from '../../utils/Scanner';
+
+const SEARCHING = 'SEARCHING';
+const WRONG_VERSION = 'WRONG_VERSION';
 
 const ScanScreen = ({
   navigation,
@@ -25,17 +34,16 @@ const ScanScreen = ({
     params: {
       item,
       item: { qty, id, item_type },
-      orderId = '#',
       barcodeId,
     },
   },
 }) => {
   const totalItem = qty ? qty : item?.repick_qty ? item?.total_qty : null;
   const [itemScanned, setItemScanned] = useState(0);
-  // const [barcodeArray, setBarcodeArray] = useState([]);
   const [showMismatchModal, setMismatchModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [loading, setLoader] = useState(false);
+  const [scannerState, setScannerState] = useState(SEARCHING);
 
   const {
     locale: { locale },
@@ -43,6 +51,21 @@ const ScanScreen = ({
   const { setPackedItemAsMarked, orderList, getPackerOrderList } = useContext(
     PackerContext,
   );
+
+  useEffect(() => {
+    const subscription = DeviceEventEmitter.addListener(
+      'datawedge_broadcast_intent',
+      (intent) => broadcastReceiver(intent, onScan, setScannerState),
+    );
+    if (itemScanned === 0) {
+      registerBroadcastReceiver();
+      determineVersion();
+    }
+    return () => {
+      subscription.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemScanned]);
 
   const onScanMismatch = async () => {
     setMismatchModal(false);
@@ -66,16 +89,14 @@ const ScanScreen = ({
   };
 
   const onItemScan = async (barcode) => {
-    // const temp = barcodeArray.indexOf(barcode?.data) > -1;
     const success = itemScanned + 1;
-    if (!showSuccessModal && barcodeId === barcode?.data) {
+    if (!showSuccessModal && barcodeId === barcode) {
       if (success / totalItem >= 1) {
         setItemScanned(success);
         await onComplete();
       } else {
         setItemScanned(success);
         setSuccessModal(true);
-        // setBarcodeArray([...barcodeArray, barcode?.data]);
       }
     } else {
       setMismatchModal(true);
@@ -97,7 +118,7 @@ const ScanScreen = ({
   const onBinScanner = async (barcode) => {
     let i = null;
     for (let j = 0; j < orderList?.length; j++) {
-      if (barcode?.data === orderList[j]?.sales_incremental_id) {
+      if (barcode === orderList[j]?.sales_incremental_id) {
         i = j;
         break;
       }
@@ -113,40 +134,9 @@ const ScanScreen = ({
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}>
-          <View>
-            {orderId === '#' && (
-              <Text style={styles.scanBar}>{locale?.SS_scanbar}</Text>
-            )}
-            <Text style={styles.scanBarText}>{locale?.SS_scanbarText}</Text>
-          </View>
-          <View style={styles.cameraBox}>
-            <RNCamera
-              style={styles.camera}
-              type={RNCamera.Constants.Type.back}
-              flashMode={RNCamera.Constants.FlashMode.on}
-              androidCameraPermissionOptions={{
-                title: locale?.SS_permitTitle,
-                message: locale?.SS_permitText,
-                buttonPositive: locale?.ok,
-                buttonNegative: locale?.cancel,
-              }}
-              notAuthorizedView={
-                <View style={styles.notPermittedBox}>
-                  <Button
-                    title={locale?.SS_enableCam}
-                    onPress={() => Linking.openSettings()}
-                  />
-                </View>
-              }
-              captureAudio={false}
-              onBarCodeRead={onScan}
-            />
-            <BarcodeMask />
-          </View>
-          <Text style={styles.scanningText}>{locale?.SS_scanningCode} ...</Text>
-          {totalItem && (
-            <>
-              <View style={styles.progressBox}>
+          <View style={styles.progressBox}>
+            {totalItem && (
+              <>
                 <Progress.Bar
                   progress={itemScanned / totalItem}
                   height={30}
@@ -156,18 +146,27 @@ const ScanScreen = ({
                 <Text style={styles.itemScannedText}>
                   {locale?.SS_scanning} {itemScanned} of {totalItem}
                 </Text>
-              </View>
-              <View>
-                <TouchLink
-                  title={locale?.SS_scanmis}
-                  onPress={() => setMismatchModal(true)}
-                  onLongPress={
-                    () => ToastAndroid.show(barcodeId, ToastAndroid.SHORT) //mock
-                  }
-                />
-              </View>
-            </>
-          )}
+              </>
+            )}
+          </View>
+          <Button
+            title={scannerState === SEARCHING ? 'Initializing...' : 'Scan'}
+            onPress={triggerScan}
+            disabled={
+              scannerState === WRONG_VERSION || scannerState === SEARCHING
+            }
+          />
+          <View>
+            {totalItem && (
+              <TouchLink
+                title={locale?.SS_scanmis}
+                onPress={() => setMismatchModal(true)}
+                onLongPress={() =>
+                  ToastAndroid.show(barcodeId, ToastAndroid.SHORT)
+                }
+              />
+            )}
+          </View>
         </ScrollView>
       )}
       <ModalComponent
@@ -194,35 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  scanBarText: {
-    textAlign: 'center',
-    // marginTop: 10,
-    borderWidth: 0.5,
-    color: Colors.lightGray,
-    borderColor: Colors.lightGray,
-    ...Typography.normal12,
-    padding: 10,
-  },
-  cameraBox: {
-    height: '35%',
-    width: '100%',
-    marginVertical: 20,
-  },
-  camera: {
-    flex: 1,
-    overflow: 'hidden',
-  },
-  notPermittedBox: {
-    height: '35%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scanningText: {
-    textAlign: 'center',
-    marginTop: 10,
-    color: Colors.lightGray,
-    ...Typography.normal12,
-  },
   progressBox: {
     height: 40,
     width: 200,
@@ -236,11 +206,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
     fontWeight: 'bold',
-  },
-  scanBar: {
-    textAlign: 'center',
-    marginBottom: 20,
-    ...Typography.bold20,
   },
 });
 

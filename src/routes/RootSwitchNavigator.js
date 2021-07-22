@@ -10,6 +10,7 @@ import { AuthContext } from '../context/AuthContext';
 import PackTabsNavigator from './PackTabsNavigator';
 import { version } from '../../package.json';
 import ModalComponent from '../components/ModalComponent';
+import { isHigher } from '../utils/Version';
 
 import { PickerContextProvider } from '../context/PickerContext';
 import { PackerContextProvider } from '../context/PackerContext';
@@ -111,18 +112,5 @@ const RootSwitchNavigator = () => {
     </>
   );
 };
-
-function isHigher(v1, v2) {
-  const _v1 = v1.split('.');
-  const _v2 = v2.split('.');
-
-  return (
-    [0, 1, 2].filter((i) => {
-      const num1 = parseInt(_v1[i], 10);
-      const num2 = parseInt(_v2[i], 10);
-      return num1 > num2;
-    }).length !== 0
-  );
-}
 
 export default RootSwitchNavigator;
