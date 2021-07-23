@@ -4,16 +4,17 @@
  */
 import 'react-native-gesture-handler';
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import NetInfo from '@react-native-community/netinfo';
+
+import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import { AuthContextProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
 import { AppContext } from './context/AppContext';
-// import InAppMessage from './components/InAppMessage';
+import { registerBroadcastReceiver, createProfiles } from './utils/Scanner';
 
 const App = () => {
   const [showSnack, setShowSnack] = useState(false);
@@ -23,6 +24,8 @@ const App = () => {
   } = useContext(AppContext);
 
   useEffect(() => {
+    createProfiles();
+    registerBroadcastReceiver();
     const unsubscribe = NetInfo.addEventListener((state) => {
       setShowSnack(!state?.isConnected);
     });
@@ -30,6 +33,7 @@ const App = () => {
       unsubscribe();
     };
   }, []);
+
   return (
     <AppContextProvider>
       <AuthContextProvider>
@@ -38,7 +42,7 @@ const App = () => {
           <RootSwitchNavigator />
         </NavigationContainer>
         <SnackBar
-          style={{ bottom: 70 }}
+          style={styles.bottom70}
           title={locale?.networkError}
           showSnack={showSnack}
         />
@@ -46,5 +50,7 @@ const App = () => {
     </AppContextProvider>
   );
 };
+
+const styles = StyleSheet.create({ bottom70: { bottom: 70 } });
 
 export default App;

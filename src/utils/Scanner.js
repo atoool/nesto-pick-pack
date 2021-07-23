@@ -28,7 +28,7 @@ export const determineVersion = () =>
 export const triggerScan = () =>
   sendCommand('com.symbol.datawedge.api.SOFT_SCAN_TRIGGER', 'TOGGLE_SCANNING');
 
-const createProfiles = () => {
+export const createProfiles = () => {
   sendCommand('com.symbol.datawedge.api.CREATE_PROFILE', 'NestoPickAndPack');
 
   const profileConfig = {
@@ -91,7 +91,6 @@ export const broadcastReceiver = (intent, callBack, setScannerState) => {
       intent['com.symbol.datawedge.api.RESULT_GET_VERSION_INFO'].DATAWEDGE;
     if (!isHigher('8.2.60', datawedgeVersion)) {
       setScannerState?.('FOUND');
-      createProfiles();
     } else {
       setScannerState?.('WRONG_VERSION');
       Alert.alert(

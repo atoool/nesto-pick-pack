@@ -19,7 +19,6 @@ import ModalComponent from '../../components/ModalComponent';
 import Loader from '../../components/Loader';
 import TouchLink from '../../components/TouchLink';
 import {
-  registerBroadcastReceiver,
   determineVersion,
   triggerScan,
   broadcastReceiver,
@@ -58,7 +57,6 @@ const ScanScreen = ({
       (intent) => broadcastReceiver(intent, onScan, setScannerState),
     );
     if (itemScanned === 0) {
-      registerBroadcastReceiver();
       determineVersion();
     }
     return () => {
