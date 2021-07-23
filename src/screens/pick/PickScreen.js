@@ -52,14 +52,18 @@ const PickScreen = ({ navigation, route }) => {
   const onManualEntry = async (item, itemsQty) => {
     setLoading(true);
     try {
-      await setItemPicked(item?.id, item?.item_type, itemsQty).then(
-        async () => {
-          await getOrdersList();
-          navigation.navigate('ItemSuccessScreen');
-          await getDropList();
-          setLoading(false);
-        },
-      );
+      await setItemPicked(
+        item?.id,
+        item?.item_type,
+        itemsQty,
+        item?.qty ?? item?.repick_qty ?? 0,
+        0,
+      ).then(async () => {
+        await getOrdersList();
+        navigation.navigate('ItemSuccessScreen');
+        await getDropList();
+        setLoading(false);
+      });
     } catch {
       setLoading(false);
     }

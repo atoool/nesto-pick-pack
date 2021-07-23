@@ -35,7 +35,13 @@ const ItemScreen = ({
 
   const onManualEntry = async (itemsQty) => {
     setIsLoading(true);
-    await setItemPicked(item?.id, item?.item_type, itemsQty).then(async () => {
+    await setItemPicked(
+      item?.id,
+      item?.item_type,
+      itemsQty,
+      item?.qty ?? item?.repick_qty ?? 0,
+      0,
+    ).then(async () => {
       await getOrdersList();
       await getDropList();
       navigation.navigate('ItemSuccessScreen');
