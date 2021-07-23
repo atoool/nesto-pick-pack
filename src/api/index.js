@@ -96,11 +96,18 @@ export const getOrdersDropList = async (locale) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
 };
-export const setItemPicked = async (id, item_type, critical_qty, locale) => {
+export const setItemPicked = async (
+  id,
+  item_type,
+  critical_qty,
+  manualCount,
+  barcodeCount,
+  locale,
+) => {
   const URL = `/picker/item/pick/${id}`;
   const extraParams = `${
     critical_qty ? '&critical_qty=' + critical_qty : ''
-  }&item_type=${item_type}`;
+  }&item_type=${item_type}&manual=${manualCount}&barcode=${barcodeCount}`;
   return get(URL, true, true, extraParams)
     .then(() => {
       // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);

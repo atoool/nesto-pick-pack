@@ -31,6 +31,7 @@ const ScanScreen = ({
   const [showMismatchModal, setMismatchModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [loading, setLoader] = useState(false);
+  const [barcodeCount, setBarcodeCount] = useState(0);
 
   const {
     locale: { locale },
@@ -43,7 +44,7 @@ const ScanScreen = ({
     const temp = itemScanned + 1;
     setMismatchModal(false);
     if (totalItem && temp / totalItem >= 1) {
-      await onComplete();
+      await onComplete(barcodeCount);
     } else {
       setItemScanned(temp);
     }
@@ -61,9 +62,11 @@ const ScanScreen = ({
       // !temp
     ) {
       const success = itemScanned + 1;
+      const _barcodeCount = barcodeCount + 1;
+      setBarcodeCount(_barcodeCount);
       if (success / totalItem >= 1) {
         setItemScanned(success);
-        await onComplete();
+        await onComplete(_barcodeCount);
       } else {
         setItemScanned(success);
         setSuccessModal(true);
@@ -74,10 +77,16 @@ const ScanScreen = ({
     }
   };
 
-  const onComplete = async () => {
+  const onComplete = async (_barcodeCount) => {
     setLoader(true);
     try {
-      await setItemPicked(itemId, itemType, criticalQty).then(async () => {
+      await setItemPicked(
+        itemId,
+        itemType,
+        criticalQty,
+        parseInt(totalItem, 10) - _barcodeCount,
+        _barcodeCount,
+      ).then(async () => {
         await getOrdersList();
         await getDropList();
         navigation.navigate('ItemSuccessScreen');

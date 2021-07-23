@@ -129,8 +129,21 @@ export const PickerContextProvider = ({ children }) => {
     allItems,
     getOrdersList, //
     getDropList, //
-    setItemPicked: async (id, item_type, critical_qty) =>
-      await setItemPicked(id, item_type, critical_qty, locale),
+    setItemPicked: async (
+      id,
+      item_type,
+      critical_qty,
+      manualCount,
+      barcodeCount,
+    ) =>
+      await setItemPicked(
+        id,
+        item_type,
+        critical_qty,
+        manualCount,
+        barcodeCount,
+        locale,
+      ),
     setItemDrop: async (id) => await setItemDrop(id, locale),
     getSimilarItemList, //
     getAllItemList,
