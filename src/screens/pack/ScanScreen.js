@@ -10,6 +10,7 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import * as Progress from 'react-native-progress';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Colors } from '../../styles';
 import { AppContext } from '../../context/AppContext';
@@ -51,6 +52,8 @@ const ScanScreen = ({
     PackerContext,
   );
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
       'datawedge_broadcast_intent',
@@ -63,7 +66,7 @@ const ScanScreen = ({
       subscription.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemScanned]);
+  }, [itemScanned, isFocused]);
 
   const onScanMismatch = async () => {
     setMismatchModal(false);
@@ -77,12 +80,8 @@ const ScanScreen = ({
   };
 
   const onScan = async (barcode) => {
-    if (barcode?.data?.length !== 0) {
-      if (totalItem) {
-        await onItemScan(barcode);
-      } else if (!totalItem) {
-        await onBinScanner(barcode);
-      }
+    if (barcode?.length !== 0 && isFocused) {
+      await (totalItem ? onItemScan : onBinScanner)(barcode);
     }
   };
 
