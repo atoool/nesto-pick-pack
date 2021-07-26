@@ -44,6 +44,7 @@ const ScanScreen = ({
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [loading, setLoader] = useState(false);
   const [scannerState, setScannerState] = useState(SEARCHING);
+  const [barcodeCount, setBarcodeCount] = useState(0);
 
   const {
     locale: { locale },
@@ -73,7 +74,7 @@ const ScanScreen = ({
     const temp = itemScanned + 1;
     if (temp / totalItem >= 1) {
       setItemScanned(temp);
-      await onComplete();
+      await onComplete(barcodeCount);
     } else {
       setItemScanned(temp);
     }
@@ -88,9 +89,11 @@ const ScanScreen = ({
   const onItemScan = async (barcode) => {
     const success = itemScanned + 1;
     if (!showSuccessModal && barcodeId === barcode) {
+      const _barcodeCount = barcodeCount + 1;
+      setBarcodeCount(_barcodeCount);
       if (success / totalItem >= 1) {
         setItemScanned(success);
-        await onComplete();
+        await onComplete(_barcodeCount);
       } else {
         setItemScanned(success);
         setSuccessModal(true);
@@ -100,10 +103,15 @@ const ScanScreen = ({
     }
   };
 
-  const onComplete = async () => {
+  const onComplete = async (_barcodeCount) => {
     setLoader(true);
     try {
-      await setPackedItemAsMarked(id, item_type).then(async () => {
+      await setPackedItemAsMarked(
+        id,
+        item_type,
+        parseInt(totalItem, 10) - _barcodeCount,
+        _barcodeCount,
+      ).then(async () => {
         await getPackerOrderList();
         navigation.navigate('ItemSuccessScreen');
       });

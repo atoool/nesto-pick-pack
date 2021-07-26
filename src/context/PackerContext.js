@@ -63,8 +63,14 @@ export const PackerContextProvider = ({ children }) => {
     getPackerOrderList,
     getAssignBinList,
     setOrderReady: async (id) => await setOrderReady(id, locale),
-    setPackedItemAsMarked: async (id, item_type) =>
-      await setPackedItemAsMarked(id, item_type, locale),
+    setPackedItemAsMarked: async (id, item_type, manualCount, barcodeCount) =>
+      await setPackedItemAsMarked(
+        id,
+        item_type,
+        manualCount,
+        barcodeCount,
+        locale,
+      ),
     postRePick: async (PAYLOAD, id) => await postRePick(PAYLOAD, id, locale),
     postAssignBin: async (PAYLOAD, id) =>
       await postAssignBin(PAYLOAD, id, locale),

@@ -56,7 +56,12 @@ const ItemScreen = ({
   const onManualEntry = async () => {
     setIsLoading(true);
     try {
-      await setPackedItemAsMarked(item?.id, item?.item_type).then(async () => {
+      await setPackedItemAsMarked(
+        item?.id,
+        item?.item_type,
+        item?.qty ?? (item?.repick_qty ? item?.total_qty : 0),
+        0,
+      ).then(async () => {
         await getPackerOrderList();
         navigation.navigate('ItemSuccessScreen');
       });
