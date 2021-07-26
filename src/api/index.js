@@ -33,9 +33,15 @@ export const getAssignBinListPack = async (locale) => {
     ToastAndroid.show(locale?.errorAlert, ToastAndroid.SHORT);
   });
 };
-export const setPackedItemAsMarked = async (id, item_type, locale) => {
+export const setPackedItemAsMarked = async (
+  id,
+  item_type,
+  manualCount,
+  barcodeCount,
+  locale,
+) => {
   const URL = `/packer/item/pack/${id}`;
-  const extraParams = `&item_type=${item_type}`;
+  const extraParams = `&item_type=${item_type}&manual=${manualCount}&barcode=${barcodeCount}`;
   return get(URL, true, true, extraParams)
     .then((e) => {
       // ToastAndroid.show(locale?.success, ToastAndroid.SHORT);
