@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 import React, { useState, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
@@ -12,7 +11,7 @@ import ModalComponent from '../../components/ModalComponent';
 import PrintLabelComponent from '../../components/PrintLabelComponent';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
-import { Colors, Typography, width } from '../../styles';
+import { Colors, width } from '../../styles';
 import { Constants } from '../../utils';
 
 const BinAssignScreen = ({
@@ -42,9 +41,15 @@ const BinAssignScreen = ({
   );
   const onSave = async () => {
     setModalVisible(false);
+    const emptyBinFound =
+      (binPos?.filter((_bins) => _bins?.trim?.() === '')?.length ?? 0) > 0;
+    if (emptyBinFound) {
+      ToastAndroid.show(locale?.BAS_emptyBin, ToastAndroid.SHORT);
+      return;
+    }
     setIsButtonLoading(true);
     try {
-      const binValues = binPos.filter((i) => i !== '');
+      const binValues = binPos?.map?.((_bin) => _bin?.trim?.());
       const payload = {
         bins: binValues,
       };
