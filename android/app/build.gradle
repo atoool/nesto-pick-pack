@@ -133,8 +133,9 @@ android {
         applicationId "com.nesto.pickandpack"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+         missingDimensionStrategy 'react-native-camera', 'general'
         versionCode 7
-        versionName "2.2.30"
+        versionName "2.2.31"
     }
     splits {
         abi {
