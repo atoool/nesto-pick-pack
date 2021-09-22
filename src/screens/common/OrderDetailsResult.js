@@ -11,10 +11,14 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   console.log(params.res);
   const sales_incremental_id = params?.res?.sales_incremental_id;
   const sales_order_id = params?.res?.sales_order_id;
+  const id = params?.res?.id;
   const packer_details = params?.res?.packer_details ?? {
     packer_id: 'invalid',
     packer_name: 'invalid',
   };
+  const items = params?.res?.items ?? [];
+  const order_type = params?.res?.order_type ?? 'invalid order type';
+
   const { packer_id, packer_name } = packer_details;
 
   return (
@@ -25,9 +29,11 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
         {/* todo  */}
         <InfoText title={'Sales Incremental ID'} body={sales_incremental_id} />
         <InfoText title={'Sales Order ID'} body={sales_order_id} />
+        <InfoText title={'Lambda Order ID'} body={id} />
         <InfoText title={'Packer Name'} body={packer_name} />
         <InfoText title={'Packer ID'} body={packer_id} />
-        <InfoText title={'Packer ID'} body={packer_id} />
+        <InfoText title={'Items Count'} body={items.length} />
+        <InfoText title={'Order Type'} body={order_type} />
       </ScrollView>
     </SafeAreaView>
   );
