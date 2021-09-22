@@ -26,7 +26,8 @@
     "countOfOutStock": "Enter count of out of stock items",
     "critical": "Enter count of remaining items",
     "enterPos": "Enter position",
-    "search": "Search a product here"
+    "search": "Search a product here",
+    "enterOrderNumber": "Please enter order number"
   },
   "departments": {
     "h": "Health Department"
