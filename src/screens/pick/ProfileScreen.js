@@ -13,7 +13,7 @@ import ProfileSection from '../../components/ProfileSection';
 import MarkAvailability from '../../components/MarkAvailability';
 import ShowVersion from '../../components/ShowVersion';
 
-const ProfileScreen = ({ navigation: { dispatch } }) => {
+const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
   const { logOutUser } = useContext(AuthContext);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,6 +22,10 @@ const ProfileScreen = ({ navigation: { dispatch } }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
+
+  const onOrderDetailsPress = () => {
+    navigate('OrderDetails');
+  };
 
   const onLogOut = () => {
     setModalVisible(false);
@@ -62,8 +66,10 @@ const ProfileScreen = ({ navigation: { dispatch } }) => {
         />
       </TestTouchable>
       <MarkAvailability title={locale?.P_markAvail} />
-      {/* <LinkButton title="Mark availability" topBorder={true} /> */}
-      {/* <LinkButton title="My statistics" /> */}
+      <LinkButton
+        title={locale?.headings.orderDetails}
+        onPress={onOrderDetailsPress}
+      />
       <LinkButton
         title={locale?.signout}
         onPress={() => setModalVisible(true)}

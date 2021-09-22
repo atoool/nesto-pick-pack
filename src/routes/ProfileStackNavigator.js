@@ -5,6 +5,7 @@ import BinAssignScreen from '../screens/pack/BinAssignScreen';
 import ProfileScreen from '../screens/pack/ProfileScreen';
 import { AppContext } from '../context/AppContext';
 import StatisticsScreen from '../screens/pack/StatisticsScreen';
+import { OrderDetailsStack } from '../routes/SharedRoute';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,7 @@ const ProfileStackNavigator = () => {
           ...headerOptions,
         })}
       />
+      {OrderDetailsStack(Stack)}
     </Stack.Navigator>
   );
 };

@@ -13,7 +13,8 @@
     "Assign_Bin": "Assign Bins",
     "Bin_pos": "Bin positions",
     "statistics": "My statistics",
-    "search":"Search products"
+    "search": "Search products",
+    "orderDetails": "Order Details"
   },
   "missing": {
     "aisle": "Aisle missing",
@@ -25,7 +26,7 @@
     "countOfOutStock": "Enter count of out of stock items",
     "critical": "Enter count of remaining items",
     "enterPos": "Enter position",
-    "search":"Search a product here"
+    "search": "Search a product here"
   },
   "departments": {
     "h": "Health Department"
@@ -42,25 +43,25 @@
     "BA": "Bins Assigned",
     "subst": "Substituted item",
     "original": "Original item",
-    "rn":"Re-picking now",
-    "ri":"Re-picking initiated",
-    "si":"Substitution initiated",
-    "rc":"Re-picking completed",
-    "bfSI":"Substitution request"
+    "rn": "Re-picking now",
+    "ri": "Re-picking initiated",
+    "si": "Substitution initiated",
+    "rc": "Re-picking completed",
+    "bfSI": "Substitution request"
   },
-  "error":{
-    "substituted":"This item has already been substituted",
-    "repicked":"This item has already been re-picked",
-    "repicking":"This item has already been initiated re-picking"
+  "error": {
+    "substituted": "This item has already been substituted",
+    "repicked": "This item has already been re-picked",
+    "repicking": "This item has already been initiated re-picking"
   },
   "reviews": {
     "opt1": "Physical damage",
     "opt2": "Physical broken",
     "opt3": "Expired product",
-    "opt4":"No item"
+    "opt4": "No item"
   },
-  "push":{
-    "orderRefresh":"Orders refreshed"
+  "push": {
+    "orderRefresh": "Orders refreshed"
   },
   "timeLeft": "Time left",
   "timeRemain": "Time remaining",
@@ -81,7 +82,7 @@
   "items": "items",
   "yes": "Yes",
   "no": "No",
-  "noSimilar":"No similar items found",
+  "noSimilar": "No similar items found",
   "selectSubst": "Select substitutes",
   "confirm": "Confirm",
   "errorAlert": "Something went wrong",
@@ -91,8 +92,8 @@
   "BAS_printLabel": "Print labels for this order",
   "BAS_emptyBin": "All fields are required",
   "BAS_printLabel2": "Assign positions for each bin",
-  "BAS_confirmed":"Bins are assigned against the order successfully",
-  "BAS_confirm":"You sure changed bins will not affect any existing order",
+  "BAS_confirmed": "Bins are assigned against the order successfully",
+  "BAS_confirm": "You sure changed bins will not affect any existing order",
   "BAS_howMany": "How many bins are needed?",
   "BAS_order": "Order number to print",
   "ILS_changeBins": "Change the bins & Print labels",
@@ -123,11 +124,11 @@
   "IS_substitutedTitle": "Item substituted",
   "IS_substitutedText": "There has been a substitution for this item.",
   "IS_askTo": "Ask to re-pick",
-  "IS_lessBins":"Number of bins needed should be greater than assigned",
+  "IS_lessBins": "Number of bins needed should be greater than assigned",
   "IS_contactButton": "Contact FCM",
   "IS_subDetailButton": "View substitution details",
   "IS_substituteButton": "Suggest substitutes",
-  "IS_notify_CRM":"Notify CRM",
+  "IS_notify_CRM": "Notify CRM",
   "success": "Success",
   "ISS_statusTitle": "Item Packed",
   "ISS_statusText": "This item has been marked as packed",
@@ -167,7 +168,7 @@
   "SS_alertopt1": "No, don't pack",
   "SS_alertopt2": "Yes, pack this",
   "SS_alertTitlePick": "Scan mismatch",
-  "SS_success":"Item scanned successfully",
+  "SS_success": "Item scanned successfully",
   "SS_alertTextPick": "There seems to be a mismatch in the bar code. Do you want to continue picking of item regardless ?",
   "SS_opt1Pick": "No, don't pick",
   "SS_opt2Pick": "Yes, pick this",
@@ -189,10 +190,10 @@
   "PS_isReady": "Ready for delivery",
   "PS_logoutAlert": "Do you really wish to sign out?",
   "DS_dropReady": "Drop to packer bins",
-  "DS_confirm":"Confirm to proceed drop items to bin?",
-  "PS_confirm":"Confirm to proceed ready for delivery?",
-  "PS_addToDrop":"Adding to drop list",
-  "SbS_search":"Search from all products",
-  "SPS_emptyText":"No results to show",
-  "SPS_button":"Add to check list"
+  "DS_confirm": "Confirm to proceed drop items to bin?",
+  "PS_confirm": "Confirm to proceed ready for delivery?",
+  "PS_addToDrop": "Adding to drop list",
+  "SbS_search": "Search from all products",
+  "SPS_emptyText": "No results to show",
+  "SPS_button": "Add to check list"
 }

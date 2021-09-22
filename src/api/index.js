@@ -18,6 +18,14 @@ export const getNotifications = async (locale) => {
   });
 };
 
+export const getOrderDetails = async (locale, id) => {
+  const URL = `/picker-packer/order-details/${id}`;
+  return get(URL).catch((e) => {
+    ToastAndroid.show(e, ToastAndroid.SHORT);
+    throw e;
+  });
+};
+
 //packer
 export const getOrdersListPack = async (locale) => {
   const URL = '/packer/order-list-packitem';

@@ -15,6 +15,7 @@ import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
 import DropScreen from '../screens/pick/DropScreen';
+import PickProfileStackNavigator from './PickProfileStackNavigator';
 
 const Tabs = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const PickTabsNavigator = () => {
       <Tabs.Screen
         name="Profile"
         options={{ title: locale?.headings?.profile }}
-        component={ProfileScreen}
+        component={PickProfileStackNavigator}
       />
     </Tabs.Navigator>
   );

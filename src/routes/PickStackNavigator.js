@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import HeaderInfoButton from '../components/HeaderInfoButton';
 import ItemScreen from '../screens/pick/ItemScreen';
 import PickScreen from '../screens/pick/PickScreen';
 import ScanScreen from '../screens/pick/ScanScreen';
@@ -12,9 +13,11 @@ import Browser from '../screens/common/Browser';
 import { AppContext } from '../context/AppContext';
 import ViewImageScreen from '../screens/common/ViewImageScreen';
 
+import { OrderDetailsStack } from '../routes/SharedRoute';
+
 const Stack = createStackNavigator();
 
-const PickStackNavigator = () => {
+const PickStackNavigator = ({ navigation: { navigate } }) => {
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -30,6 +33,12 @@ const PickStackNavigator = () => {
         component={ItemScreen}
         options={({ route }) => ({
           title: '#' + route?.params?.sales_incremental_id,
+          headerRight: () => (
+            <HeaderInfoButton
+              navigate={navigate}
+              id={route?.params?.sales_incremental_id}
+            />
+          ),
           ...headerOptions,
         })}
       />
@@ -86,6 +95,7 @@ const PickStackNavigator = () => {
           ...headerOptions,
         })}
       />
+      {OrderDetailsStack(Stack)}
     </Stack.Navigator>
   );
 };

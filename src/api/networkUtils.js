@@ -10,42 +10,6 @@ const DEFAULT_CONFIG = {
   },
 };
 
-// const reqInterceptor = (x) => {
-//   const headers = {
-//     ...x.headers.common,
-//     ...x.headers[x.method],
-//     ...x.headers,
-//   };
-
-//   ['common', 'get', 'post', 'head', 'put', 'patch', 'delete'].forEach(
-//     (header) => {
-//       delete headers[header];
-//     },
-//   );
-
-//   const printable = `${new Date()} | Request: ${x.method.toUpperCase()} | ${
-//     x.url
-//   } | ${JSON.stringify(x.data)} | ${JSON.stringify(headers)}`;
-//   console.log('============================');
-//   console.log(printable);
-//   console.log('============================');
-
-//   return x;
-// };
-
-// const resInterceptor = (x) => {
-//   const printable = `${new Date()} | Response: ${x.status} | ${JSON.stringify(
-//     x.data,
-//   )}`;
-//   console.log('============================');
-//   console.log(printable);
-//   console.log('============================');
-
-//   return x;
-// };
-
-// axios.interceptors.request.use(reqInterceptor);
-// axios.interceptors.response.use(resInterceptor);
 const axiosInstance = axios.create({
   baseURL: API_URL,
 });
@@ -64,7 +28,6 @@ const networkErrorLogger = (e, URL, PAYLOAD) => {
     let { error_code, message } = e.response.data;
     // console.warn(e.response);
     if (error_code === 400) {
-      //TODO: Logout
       throw message;
     } else {
       console.log('Server Error');
