@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 import Colors from './Colors';
 
+const fontFamily = 'roboto';
+
 export default StyleSheet.create({
   bold30: {
-    fontFamily: 'roboto',
+    fontFamily,
     fontWeight: 'bold',
     fontSize: 30,
   },
@@ -11,126 +13,126 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold26: {
     fontWeight: 'bold',
     fontSize: 26,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal21: {
     fontSize: 21,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold21: {
     fontWeight: 'bold',
     fontSize: 21,
-    fontFamily: 'roboto',
+    fontFamily,
     color: Colors.BLACK,
   },
   bold20White: {
     fontWeight: 'bold',
     fontSize: 20,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold20: {
     fontWeight: 'bold',
     fontSize: 20,
-    fontFamily: 'roboto',
+    fontFamily,
     color: Colors.BLACK,
   },
   normal18: {
     fontSize: 18,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold17: {
     fontWeight: 'bold',
     fontSize: 17,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold17White: {
     fontWeight: 'bold',
     fontSize: 17,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold16: {
     fontWeight: 'bold',
     fontSize: 16,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold16White: {
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   bold15: {
     fontWeight: 'bold',
     fontSize: 15,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal15: {
     fontSize: 15,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal14: {
     fontSize: 14,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal13: {
     fontSize: 13,
-    fontFamily: 'roboto',
+    fontFamily,
     color: Colors.BLACK,
   },
   bold13: {
     fontWeight: 'bold',
     fontSize: 13,
-    fontFamily: 'roboto',
+    fontFamily,
     color: Colors.BLACK,
   },
   bold13White: {
     fontWeight: 'bold',
     fontSize: 13,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal12: {
     fontSize: 12,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   normal12White: {
     fontSize: 12,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   h4: {
     fontSize: 20,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   h5: {
     fontSize: 18,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   h6: {
     fontSize: 18,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   body: {
     fontSize: 16,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   buttonTitleText: {
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.WHITE,
-    fontFamily: 'roboto',
+    fontFamily,
   },
   timeLeft: {
     fontSize: 16,
     fontWeight: 'bold',
     color: Colors.secondaryRed,
-    fontFamily: 'roboto',
+    fontFamily,
   },
 });

@@ -130,9 +130,8 @@ const SubstitutesScreen = ({
     ? locale?.status?.subst
     : item?.substitution_initiated
     ? locale?.status?.si
-    : // : item?.repick_completed === false
-      // ? locale?.status?.rn
-      locale?.status?.Pi;
+    : locale?.status?.Pi;
+
   return (
     <SafeAreaView style={styles.container}>
       {!similarItems ? (

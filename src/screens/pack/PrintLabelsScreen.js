@@ -53,15 +53,6 @@ const PrintLabelsScreen = ({
     }
   };
 
-  const onPrint = () => {
-    // USBPrinter.printText('<C>sample text</C>\n');
-    // if (viewShot.current) {
-    //   viewShot.current.capture().then((uri) => {
-    //     setBarcodeURI(uri);
-    //   });
-    // }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -81,12 +72,6 @@ const PrintLabelsScreen = ({
           onChangeText={onChangeBins}
           maxLength={Constants.binsNeededLimit}
         />
-        {/* <Button
-          disabled={orderId === ''}
-          title={locale?.PLS_printLabel}
-          style={styles.printBtnBaseStyle}
-          onPress={onPrint}
-        /> */}
         <Button
           title={locale?.PLS_assignBin}
           onPress={onAssignBinPress}

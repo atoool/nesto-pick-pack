@@ -10,10 +10,9 @@ import NetInfo from '@react-native-community/netinfo';
 
 import RootSwitchNavigator from './routes/RootSwitchNavigator';
 import { AuthContextProvider } from './context/AuthContext';
-import { AppContextProvider } from './context/AppContext';
+import { AppContext, AppContextProvider } from './context/AppContext';
 import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
-import { AppContext } from './context/AppContext';
 import { registerBroadcastReceiver, createProfiles } from './utils/Scanner';
 
 const App = () => {

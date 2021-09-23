@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet } from 'react-native';
-import { Colors } from '../../styles';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import Divider from '../../components/Divider';
+import NoContent from '../../components/NoContent';
+import Notification from '../../components/Notification';
 import Title from '../../components/Title';
 import { AppContext } from '../../context/AppContext';
-import NoContent from '../../components/NoContent';
 import { PickerContext } from '../../context/PickerContext';
-import Notification from '../../components/Notification';
-import Divider from '../../components/Divider';
+import { Colors } from '../../styles';
 
 const NotificationsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
