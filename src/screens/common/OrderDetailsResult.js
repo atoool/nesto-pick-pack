@@ -22,6 +22,7 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   const delivery_start_time = params?.res?.delivery_start_time;
   const delivery_end_time = params?.res?.delivery_end_time;
   const hand_off_time = params?.res?.hand_off_time;
+  const updated = params?.res?.updated ?? true;
 
   const { packer_id, packer_name } = packer_details;
 
@@ -30,7 +31,6 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}>
-        {/* todo  */}
         <InfoText title={'Sales Incremental ID'} body={sales_incremental_id} />
         <InfoText title={'Sales Order ID'} body={sales_order_id} />
         <InfoText title={'Lambda Order ID'} body={id} />
@@ -50,6 +50,12 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
           title={'Delivery End Time'}
           body={moment(delivery_end_time).format('MMMM Do YYYY, h:mm a')}
         />
+        {updated && (
+          <InfoText
+            title={'Order updated'}
+            body={'Coupons were applied to this order'}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -58,8 +64,9 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
 const styles = StyleSheet.create({
   container: { backgroundColor: Colors.WHITE, flex: 1 },
   contentContainer: {
-    margin: 30,
-    // flex: 1,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
   },

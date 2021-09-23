@@ -12,7 +12,7 @@ const InfoText = ({ title, body }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, width: '100%', marginTop: 10 },
+  container: { width: '100%', marginTop: 10 },
 });
 
 export default InfoText;
