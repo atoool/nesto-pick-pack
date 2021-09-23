@@ -159,6 +159,12 @@ const AccordionItem = ({
           )}
         />
       )}
+      {showReadyButton && (
+        <Text style={styles.disclaimerStyle}>
+          By clicking this button, I hereby confirm the order has passed the
+          quality and quantity check.
+        </Text>
+      )}
       <Button
         title={buttonTitle}
         disabled={
@@ -232,6 +238,11 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     marginRight: 10,
     marginTop: 1,
+  },
+  disclaimerStyle: {
+    ...Typography.normal12,
+    textAlign: 'center',
+    paddingTop: 10,
   },
 });
 
