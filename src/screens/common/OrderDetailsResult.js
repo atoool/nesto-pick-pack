@@ -53,7 +53,7 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
         {updated && (
           <InfoText
             title={'Order updated'}
-            body={'Coupons were applied to this order'}
+            body={'The order has been edited'}
           />
         )}
       </ScrollView>
