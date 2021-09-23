@@ -16,7 +16,7 @@ const HeaderInfoButton = ({ nav, id }) => {
 };
 
 const styles = StyleSheet.create({
-  btnStyle: { right: 10 },
+  btnStyle: { right: 20 },
 });
 
 export default HeaderInfoButton;
