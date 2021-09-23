@@ -37,6 +37,7 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   const allow_substitution = params?.res?.allow_substitution ?? false;
   const bins_assigned = params?.res?.bins_assigned ?? false;
   const order_cancelled = params?.res?.order_cancelled ?? false;
+  const coupon_code = params?.res?.coupon_code ?? null;
 
   //end of from crm
 
@@ -51,6 +52,7 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
         <InfoText title={'Packer Name'} body={packer_name} />
         <InfoText title={'Packer ID'} body={packer_id} />
         <InfoText title={'Items Count'} body={items.length} />
+        {coupon_code && <InfoText title={'Coupon code'} body={coupon_code} />}
         <InfoText title={'Order Type'} body={order_type} />
         <InfoText
           title={'Hand Off Time'}
