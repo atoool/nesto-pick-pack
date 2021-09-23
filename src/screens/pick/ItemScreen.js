@@ -95,6 +95,7 @@ const ItemScreen = ({
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
           {item?.barcode && <Text>Barcode : {item?.barcode}</Text>}
+          {item?.coupon_code && <Text>Coupon Code : {item?.coupon_code}</Text>}
         </View>
         {item?.picker_checked ? (
           <VerifiedItem locale={locale} />
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.offWhite,
     padding: 10,
     borderRadius: 7,
-    height: 60,
     flex: 1,
     marginVertical: 20,
     marginHorizontal: 32,
