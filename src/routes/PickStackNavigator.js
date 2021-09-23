@@ -17,7 +17,7 @@ import { OrderDetailsStack } from '../routes/SharedRoute';
 
 const Stack = createStackNavigator();
 
-const PickStackNavigator = ({ navigation: { navigate } }) => {
+const PickStackNavigator = () => {
   const {
     locale: { locale },
   } = useContext(AppContext);
@@ -34,10 +34,7 @@ const PickStackNavigator = ({ navigation: { navigate } }) => {
         options={({ route }) => ({
           title: '#' + route?.params?.sales_incremental_id,
           headerRight: () => (
-            <HeaderInfoButton
-              navigate={navigate}
-              id={route?.params?.sales_incremental_id}
-            />
+            <HeaderInfoButton id={route?.params?.sales_incremental_id} />
           ),
           ...headerOptions,
         })}

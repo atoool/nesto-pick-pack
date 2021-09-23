@@ -24,7 +24,7 @@ const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
   } = useContext(AppContext);
 
   const onOrderDetailsPress = () => {
-    navigate('OrderDetails', { id: '000007308' });
+    navigate('OrderDetails', { id: '' });
   };
 
   const onLogOut = () => {

@@ -11,6 +11,8 @@ import PackCompletedScreen from '../screens/pack/PackCompletedScreen';
 import Browser from '../screens/common/Browser';
 import { AppContext } from '../context/AppContext';
 import ViewImageScreen from '../screens/common/ViewImageScreen';
+import HeaderInfoButton from '../components/HeaderInfoButton';
+import { OrderDetailsStack } from '../routes/SharedRoute';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,9 @@ const PackStackNavigators = () => {
         component={ItemScreen}
         options={({ route }) => ({
           title: '#' + route?.params?.sales_incremental_id,
+          headerRight: () => (
+            <HeaderInfoButton id={route?.params?.sales_incremental_id} />
+          ),
           ...headerOptions,
         })}
       />
@@ -86,6 +91,7 @@ const PackStackNavigators = () => {
           ...headerOptions,
         })}
       />
+      {OrderDetailsStack(Stack)}
     </Stack.Navigator>
   );
 };
