@@ -6,7 +6,7 @@ const InfoText = ({ title, body }) => {
   return (
     <View style={styles.container}>
       <Text style={Typography.bold13}>{title}</Text>
-      <Text style={Typography.normal13}>{body}</Text>
+      {body && <Text style={Typography.normal13}>{body}</Text>}
     </View>
   );
 };

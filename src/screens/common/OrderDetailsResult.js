@@ -1,8 +1,9 @@
+import moment from 'moment-timezone';
 import React, { useContext } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import moment from 'moment-timezone';
-import { AppContext } from '../../context/AppContext';
+import IconTextInfo from '../../components/IconTextInfo';
 import InfoText from '../../components/InfoText';
+import { AppContext } from '../../context/AppContext';
 import { Colors } from '../../styles';
 
 const OrderDetailsResult = ({ navigation, route: { params } }) => {
@@ -25,6 +26,19 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   const updated = params?.res?.updated ?? true;
 
   const { packer_id, packer_name } = packer_details;
+
+  const picking_initiated = params?.res?.picking_initiated ?? false;
+  const picking_completed = params?.res?.picking_completed ?? false;
+
+  //from crm
+  const dropped_off_to_packer_bin =
+    params?.res?.dropped_off_to_packer_bin ?? false;
+  const packing_completed = params?.res?.packing_completed ?? false;
+  const allow_substitution = params?.res?.allow_substitution ?? false;
+  const bins_assigned = params?.res?.bins_assigned ?? false;
+  const order_cancelled = params?.res?.order_cancelled ?? false;
+
+  //end of from crm
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,11 +64,29 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
           title={'Delivery End Time'}
           body={moment(delivery_end_time).format('MMMM Do YYYY, h:mm a')}
         />
-        {updated && (
-          <InfoText
-            title={'Order updated'}
-            body={'The order has been edited'}
-          />
+        <InfoText title={'Order Statuses'} />
+        {updated && <IconTextInfo name="edit" body={'Order updated'} />}
+        {allow_substitution && (
+          <IconTextInfo name="settings" body={'Substitution allowed'} />
+        )}
+        {bins_assigned && (
+          <IconTextInfo name="archive" body={'Bins assigned'} />
+        )}
+        {picking_initiated && (
+          <IconTextInfo name="user" body={'Picking initiated'} />
+        )}
+        {picking_completed && (
+          <IconTextInfo name="user-check" body={'Picking completed'} />
+        )}
+
+        {dropped_off_to_packer_bin && (
+          <IconTextInfo name="download" body={'Dropped off to packer bin'} />
+        )}
+        {packing_completed && (
+          <IconTextInfo name="package" body={'Packing complete'} />
+        )}
+        {order_cancelled && (
+          <IconTextInfo name="alert-triangle" body={'Order canceled'} />
         )}
       </ScrollView>
     </SafeAreaView>
