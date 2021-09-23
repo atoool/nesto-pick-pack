@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import moment from 'moment-timezone';
 import { AppContext } from '../../context/AppContext';
 import InfoText from '../../components/InfoText';
 import { Colors } from '../../styles';
@@ -18,6 +19,9 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   };
   const items = params?.res?.items ?? [];
   const order_type = params?.res?.order_type ?? 'invalid order type';
+  const delivery_start_time = params?.res?.delivery_start_time;
+  const delivery_end_time = params?.res?.delivery_end_time;
+  const hand_off_time = params?.res?.hand_off_time;
 
   const { packer_id, packer_name } = packer_details;
 
@@ -34,6 +38,18 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
         <InfoText title={'Packer ID'} body={packer_id} />
         <InfoText title={'Items Count'} body={items.length} />
         <InfoText title={'Order Type'} body={order_type} />
+        <InfoText
+          title={'Hand Off Time'}
+          body={moment(hand_off_time).format('MMMM Do YYYY, h:mm a')}
+        />
+        <InfoText
+          title={'Delivery Start Time'}
+          body={moment(delivery_start_time).format('MMMM Do YYYY, h:mm a')}
+        />
+        <InfoText
+          title={'Delivery End Time'}
+          body={moment(delivery_end_time).format('MMMM Do YYYY, h:mm a')}
+        />
       </ScrollView>
     </SafeAreaView>
   );
