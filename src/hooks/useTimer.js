@@ -5,7 +5,7 @@ const useTimer = (timeInSeconds = 3600) => {
   useEffect(() => {
     const intervalId = setInterval(
       () => setNow((i) => (i !== 0 ? i - 1 : 0)),
-      1000,
+      60000,
     );
     return () => clearInterval(intervalId);
   }, []);

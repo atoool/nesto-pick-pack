@@ -72,6 +72,7 @@ const DropScreen = () => {
             <AccordionItem
               order={item}
               index={index}
+              timeLeft={item?.pickingDeadlineTimestamp}
               orderType={item?.order_type ? item.order_type : locale?.status.SD}
               status={picking_completed ? locale?.status.PiC : locale.status.Pi}
               itemCount={
