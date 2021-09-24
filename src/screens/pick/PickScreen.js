@@ -95,22 +95,24 @@ const PickScreen = ({ navigation, route }) => {
 
   const toggleSelectedTimeSlot = (timeSlotString) => {
     if (selectedTimeSlots.includes(timeSlotString)) {
-      const removed = selectedTimeSlots.filter((t) => t !== timeSlotString);
-      setSelectedTimeSlots(removed);
+      const draft = selectedTimeSlots.filter((t) => t !== timeSlotString);
+      setSelectedTimeSlots(draft);
     } else {
-      const added = [...selectedTimeSlots, timeSlotString];
-      setSelectedTimeSlots(added);
+      const draft = [...selectedTimeSlots, timeSlotString];
+      setSelectedTimeSlots(draft);
     }
   };
 
   const renderTimeSlotItem = useCallback(
-    (item) => {
-      const sTime = formatAmPm(item.timeslot.start_time);
-      const eTime = formatAmPm(item.timeslot.end_time);
-      const formattedTime = `${sTime} - ${eTime}`;
+    (item, index) => {
+      const startTime = formatAmPm(item.timeslot.start_time);
+      const endTime = formatAmPm(item.timeslot.end_time);
+      const formattedTime = `${startTime} - ${endTime}`;
       const selected = selectedTimeSlots.includes(formattedTime);
+      const key = `${formattedTime}${index}`;
       return (
         <Pill
+          key={key}
           onPress={() => toggleSelectedTimeSlot(formattedTime)}
           selected={selected}
           title={formattedTime}
@@ -121,24 +123,25 @@ const PickScreen = ({ navigation, route }) => {
     [selectedTimeSlots],
   );
 
-  const toggleSelectedDepartments = (dept) => {
-    if (selectedDepartments.includes(dept)) {
-      const removed = selectedDepartments.filter((t) => t !== dept);
-      setSelectedDepartments(removed);
+  const toggleSelectedDepartments = (department) => {
+    if (selectedDepartments.includes(department)) {
+      const removedDraft = selectedDepartments.filter((t) => t !== department);
+      setSelectedDepartments(removedDraft);
     } else {
-      const added = [...selectedDepartments, dept];
-      setSelectedDepartments(added);
+      const addedDraft = [...selectedDepartments, department];
+      setSelectedDepartments(addedDraft);
     }
   };
 
   const renderDepartmentItem = useCallback(
-    (dept) => {
-      const selected = selectedDepartments.includes(dept);
+    (department, index) => {
+      const selected = selectedDepartments.includes(department);
       return (
         <Pill
-          onPress={() => toggleSelectedDepartments(dept)}
+          key={`${department}${index}`}
+          onPress={() => toggleSelectedDepartments(department)}
           selected={selected}
-          title={dept}
+          title={department}
         />
       );
     },
@@ -147,42 +150,36 @@ const PickScreen = ({ navigation, route }) => {
   );
 
   //filter sort
-  let localOrders = [...orders];
-
   const uniqueDepartmentsStub = [];
   for (const order of orders) {
     for (const item of order.items) {
       uniqueDepartmentsStub.push(item.department);
     }
   }
+  const DEPARTMENTS = [...new Set(uniqueDepartmentsStub)];
 
-  const uniqueDepartments = [...new Set(uniqueDepartmentsStub)];
-
-  //Sort Time Slot
-  if (sortTimeSlot) {
-    localOrders = [...orders].reverse();
-  }
+  let localOrders = sortTimeSlot ? [...orders].reverse() : [...orders];
 
   //Filter Time Slot
   if (selectedTimeSlots.length > 0) {
     localOrders = localOrders.filter((item) => {
-      const sTime = formatAmPm(item.timeslot.start_time);
-      const eTime = formatAmPm(item.timeslot.end_time);
-      const formattedTime = `${sTime} - ${eTime}`;
+      const startTime = formatAmPm(item.timeslot.start_time);
+      const endTime = formatAmPm(item.timeslot.end_time);
+      const formattedTime = `${startTime} - ${endTime}`;
       return selectedTimeSlots.includes(formattedTime);
     });
   }
 
   //Filter department
   if (selectedDepartments.length > 0) {
-    localOrders = localOrders.map((lo) => {
-      let myItems = [];
-      let draftOrder = JSON.parse(JSON.stringify(lo));
-      for (const article of lo.items) {
+    localOrders = localOrders.map((order) => {
+      let draftItems = [];
+      let draftOrder = JSON.parse(JSON.stringify(order));
+      for (const article of order.items) {
         selectedDepartments.includes(article.department) &&
-          myItems.push(article);
+          draftItems.push(article);
       }
-      draftOrder.items = myItems;
+      draftOrder.items = draftItems;
       return draftOrder;
     });
   }
@@ -283,9 +280,9 @@ const PickScreen = ({ navigation, route }) => {
         <BottomSheetScrollView
           contentContainerStyle={styles.bottomSheetScrollView}>
           <BottomSheetTitle title={'Time Slot'} />
-          {orders.map((orderItem) => renderTimeSlotItem(orderItem))}
+          {orders.map((item, idx) => renderTimeSlotItem(item, idx))}
           <BottomSheetTitle title={'Department'} />
-          {uniqueDepartments.map((dept) => renderDepartmentItem(dept))}
+          {DEPARTMENTS.map((dept, idx) => renderDepartmentItem(dept, idx))}
         </BottomSheetScrollView>
       </BottomSheet>
       <ModalComponent
