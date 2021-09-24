@@ -121,6 +121,7 @@ const ItemScreen = ({
         <View style={styles.skuBox}>
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
           {item?.barcode && <Text>Barcode : {item?.barcode}</Text>}
+          {item?.coupon_code && <Text>Coupon Code : {item?.coupon_code}</Text>}
           {/* mock orderType */}
         </View>
         {item?.packer_checked ? (
@@ -158,9 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.offWhite,
     padding: 10,
     borderRadius: 7,
-    height: 60,
     flex: 1,
-    marginBottom: 20,
+    marginVertical: 20,
     marginHorizontal: 32,
     justifyContent: 'center',
   },
