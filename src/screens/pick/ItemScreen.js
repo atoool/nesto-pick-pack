@@ -5,12 +5,10 @@ import { AppContext } from '../../context/AppContext';
 import { Constants } from '../../utils';
 import { PickerContext } from '../../context/PickerContext';
 import Loader from '../../components/Loader';
-import TimerComponent from '../../components/TimerComponent';
+import Timer from '../../components/Timer';
 import ItemSection from '../../components/ItemSection';
 import VerifyItemSection from '../../components/VerifyItemSection';
 import VerifiedItem from '../../components/VerifiedItem';
-
-const now = new Date();
 
 const ItemScreen = ({
   navigation,
@@ -18,11 +16,6 @@ const ItemScreen = ({
     params: { item, timeLeft, startTime, endTime, sales_incremental_id },
   },
 }) => {
-  const ss = timeLeft
-    ? new Date(timeLeft) <= now
-      ? 0
-      : new Date(timeLeft) / 1000 - now / 1000
-    : 0;
   const [timeOut, setTimeOut] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -74,7 +67,7 @@ const ItemScreen = ({
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TimerComponent fullTimer ss={ss} />
+        <Timer timeStamp={timeLeft} full />
         <ItemSection
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price?.toFixed(2) : 0}

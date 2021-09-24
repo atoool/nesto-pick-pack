@@ -13,7 +13,7 @@ import { Colors } from '../../styles';
 import { AppContext } from '../../context/AppContext';
 import { PackerContext } from '../../context/PackerContext';
 import Loader from '../../components/Loader';
-import TimerComponent from '../../components/TimerComponent';
+import Timer from '../../components/Timer';
 import formatAmPm from '../../utils/formatAmPm';
 import { Constants } from '../../utils';
 import VerifiedItem from '../../components/VerifiedItem';
@@ -40,11 +40,6 @@ const ItemScreen = ({
 
   const start = time_slot?.start_time;
   const end = time_slot?.end_time;
-  const timer = timeLeft
-    ? new Date(timeLeft) <= new Date()
-      ? 0
-      : new Date(timeLeft) / 1000 - new Date() / 1000
-    : 0;
 
   const {
     locale: { locale },
@@ -87,7 +82,7 @@ const ItemScreen = ({
       ref={(r) => (containerRef.current = r?.props)}
       style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TimerComponent fullTimer ss={timer} />
+        <Timer timeStamp={timeLeft} full />
         <PackerItemSection
           title={item?.name ? item?.name : Constants.emptyItemName}
           price={item?.price ? item?.price : 0}
@@ -122,7 +117,6 @@ const ItemScreen = ({
           <Text>SKU : {item?.sku ? item?.sku : Constants.emptySku}</Text>
           {item?.barcode && <Text>Barcode : {item?.barcode}</Text>}
           {item?.coupon_code && <Text>Coupon Code : {item?.coupon_code}</Text>}
-          {/* mock orderType */}
         </View>
         {item?.packer_checked ? (
           <VerifiedItem locale={locale} />

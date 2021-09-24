@@ -18,17 +18,17 @@ const BinItemList = ({
     binsAssigned,
     order_type,
     time_slot,
-    timeLeft,
     sales_incremental_id,
   },
   index,
   slotType,
+  timeLeft,
 }) => {
   const now = Date.now();
   const navigation = useNavigation();
   const orderId = id ? id : '';
   time_slot = time_slot ? time_slot : { start_time: now, end_time: now };
-  timeLeft = timeLeft ? timeLeft : now;
+
   const {
     locale: { locale },
   } = useContext(AppContext);

@@ -8,7 +8,7 @@ import { Constants } from '../utils';
 import formatAmPm from '../utils/formatAmPm';
 import Arrow from './Arrow';
 import StatusPill from './StatusPill';
-import TimerComponent from './TimerComponent';
+import Timer from './Timer';
 
 const OrderComponent = ({
   orderId,
@@ -25,11 +25,6 @@ const OrderComponent = ({
   } = useContext(AppContext);
   const sTime = formatAmPm(startTime);
   const eTime = formatAmPm(endTime);
-  const timer = timeLeft
-    ? new Date(timeLeft) <= new Date()
-      ? 0
-      : new Date(timeLeft) / 1000 - new Date() / 1000
-    : 0;
 
   const backgroundColor =
     slotType === 'Scheduled' ? Colors.lightViolet : '#A1C349';
@@ -72,7 +67,7 @@ const OrderComponent = ({
         <View style={styles.counter}>
           <Text style={Typography.normal12}>{locale?.timeLeft}</Text>
           <View style={styles.timeLeftBox}>
-            <TimerComponent ss={timer} />
+            <Timer timeStamp={timeLeft} />
             <Text style={Typography.normal12}> Hrs</Text>
           </View>
         </View>
