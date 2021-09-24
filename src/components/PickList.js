@@ -13,6 +13,7 @@ import { RightCaretSVG } from '../assets/svg';
 import StatusPill from './StatusPill';
 import OrderComponent from './OrderComponent';
 import Divider from './Divider';
+import NoItems from './NoItems';
 import { Constants } from '../utils';
 import {
   getColorBin,
@@ -60,6 +61,7 @@ const PickList = ({
         showsVerticalScrollIndicator={false}
         style={styles.orderItemsList}
         ItemSeparatorComponent={() => <Divider />}
+        ListEmptyComponent={() => <NoItems />}
         renderItem={({ item }) => (
           <SwipeableComponent
             item={item}
