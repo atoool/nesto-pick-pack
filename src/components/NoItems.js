@@ -5,7 +5,7 @@ import { Typography } from '../styles';
 const NoItems = () => {
   return (
     <View style={styles.container}>
-      <Text style={Typography.normal15}>No Items</Text>
+      <Text style={Typography.normal15}>No items on the applied filter</Text>
     </View>
   );
 };
