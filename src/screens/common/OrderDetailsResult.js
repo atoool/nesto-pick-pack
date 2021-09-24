@@ -20,6 +20,8 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
   };
   const items = params?.res?.items ?? [];
   const order_type = params?.res?.order_type ?? 'invalid order type';
+  const order_start_time = params?.res?.order_start_time;
+  const order_end_time = params?.res?.order_end_time;
   const delivery_start_time = params?.res?.delivery_start_time;
   const delivery_end_time = params?.res?.delivery_end_time;
   const hand_off_time = params?.res?.hand_off_time;
@@ -41,6 +43,17 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
 
   //end of from crm
 
+  let deliveryStartTime = moment(delivery_start_time).format(
+    'MMMM Do YYYY, h:mm a',
+  );
+  deliveryStartTime =
+    deliveryStartTime === 'Invalid date' ? 'To Be Declared' : deliveryStartTime;
+
+  let deliveryEndTime = moment(delivery_end_time).format(
+    'MMMM Do YYYY, h:mm a',
+  );
+  deliveryEndTime =
+    deliveryEndTime === 'Invalid date' ? 'To Be Declared' : deliveryEndTime;
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -59,13 +72,15 @@ const OrderDetailsResult = ({ navigation, route: { params } }) => {
           body={moment(hand_off_time).format('MMMM Do YYYY, h:mm a')}
         />
         <InfoText
-          title={'Delivery Start Time'}
-          body={moment(delivery_start_time).format('MMMM Do YYYY, h:mm a')}
+          title={'Order Start Time'}
+          body={moment(order_start_time).format('MMMM Do YYYY, h:mm a')}
         />
         <InfoText
-          title={'Delivery End Time'}
-          body={moment(delivery_end_time).format('MMMM Do YYYY, h:mm a')}
+          title={'Order End Time'}
+          body={moment(order_end_time).format('MMMM Do YYYY, h:mm a')}
         />
+        <InfoText title={'Delivery Start Time'} body={deliveryStartTime} />
+        <InfoText title={'Delivery End Time'} body={deliveryEndTime} />
         <InfoText title={'Order Statuses'} />
         {updated && <IconTextInfo name="edit" body={'Order updated'} />}
         {allow_substitution && (

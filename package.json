@@ -29,6 +29,7 @@
     "build:android:all": "yarn build:android:dev && yarn build:android:staging && yarn build:android:production"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4",
     "@react-native-async-storage/async-storage": "^1.13.3",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/masked-view": "^0.1.10",

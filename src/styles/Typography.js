@@ -135,4 +135,10 @@ export default StyleSheet.create({
     color: Colors.secondaryRed,
     fontFamily,
   },
+  bottomSheetHeader: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    fontFamily,
+    color: Colors.BLACK,
+  },
 });

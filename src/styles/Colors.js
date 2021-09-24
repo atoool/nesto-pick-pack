@@ -29,6 +29,7 @@ export default {
   BLACK: '#000000',
   primaryGreen: '#A1C349',
   primaryRed: '#FFF5F5',
+  filterPillRed: '#C91614',
   lightViolet: '#889BFF',
   lightBlue: '#566ae6',
   progress: '#c9d1ff',
