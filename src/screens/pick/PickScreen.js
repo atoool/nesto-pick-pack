@@ -1,27 +1,27 @@
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import React, {
+  useCallback,
   useContext,
   useEffect,
-  useState,
-  useRef,
   useMemo,
-  useCallback,
+  useRef,
+  useState,
 } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Feather';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
+import BottomSheetTitle from '../../components/BottomSheetTitle';
 import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
 import ModalComponent from '../../components/ModalComponent';
-import BottomSheetTitle from '../../components/BottomSheetTitle';
 import NoContent from '../../components/NoContent';
 import PickList from '../../components/PickList';
+import Pill from '../../components/Pill';
 import { AppContext } from '../../context/AppContext';
 import { PickerContext } from '../../context/PickerContext';
-import formatAmPm from '../../utils/formatAmPm';
-import Icon from 'react-native-vector-icons/Feather';
-import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { Colors, Typography } from '../../styles';
+import formatAmPm from '../../utils/formatAmPm';
 
 const now = Date.now();
 
@@ -110,19 +110,11 @@ const PickScreen = ({ navigation, route }) => {
       const formattedTime = `${sTime} - ${eTime}`;
       const selected = selectedTimeSlots.includes(formattedTime);
       return (
-        <TouchableOpacity onPress={() => toggleSelectedTimeSlot(formattedTime)}>
-          <View
-            style={[
-              styles.pill,
-              {
-                backgroundColor: selected
-                  ? Colors.secondaryRed
-                  : Colors.primary2,
-              },
-            ]}>
-            <Text style={Typography.normal12White}>{formattedTime}</Text>
-          </View>
-        </TouchableOpacity>
+        <Pill
+          onPress={() => toggleSelectedTimeSlot(formattedTime)}
+          selected={selected}
+          title={formattedTime}
+        />
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,19 +135,11 @@ const PickScreen = ({ navigation, route }) => {
     (dept) => {
       const selected = selectedDepartments.includes(dept);
       return (
-        <TouchableOpacity onPress={() => toggleSelectedDepartments(dept)}>
-          <View
-            style={[
-              styles.pill,
-              {
-                backgroundColor: selected
-                  ? Colors.secondaryRed
-                  : Colors.primary2,
-              },
-            ]}>
-            <Text style={Typography.normal12White}>{dept}</Text>
-          </View>
-        </TouchableOpacity>
+        <Pill
+          onPress={() => toggleSelectedDepartments(dept)}
+          selected={selected}
+          title={dept}
+        />
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -328,14 +312,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     height: '100%',
     width: '100%',
-  },
-  pill: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    marginLeft: 12,
-    borderRadius: 20,
-    alignItems: 'center',
   },
   shoulderButtonsContainer: {
     flexDirection: 'row',
