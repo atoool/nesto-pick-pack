@@ -4,16 +4,13 @@ import TickSVG from '../assets/svg/TickSVG';
 import { Colors } from '../styles';
 
 const TickComponent = ({ enabled, color }) => {
+  const myColor = color ? color : Colors.primaryGreen;
   return (
     <View
       style={[
         styles.container,
         {
-          backgroundColor: enabled
-            ? color
-              ? color
-              : Colors.primaryGreen
-            : Colors.lineDividerColor,
+          backgroundColor: enabled ? myColor : Colors.lineDividerColor,
         },
       ]}>
       {enabled && <TickSVG />}
