@@ -104,21 +104,14 @@ const PickScreen = ({ navigation, route }) => {
   };
 
   const renderTimeSlotItem = useCallback(
-    (item, index) => {
-      const startTime = formatAmPm(item.timeslot.start_time);
-      const endTime = formatAmPm(item.timeslot.end_time);
-      const formattedTime = `${startTime} - ${endTime}`;
-      const selected = selectedTimeSlots.includes(formattedTime);
-      const key = `${formattedTime}${index}`;
-      return (
-        <Pill
-          key={key}
-          onPress={() => toggleSelectedTimeSlot(formattedTime)}
-          selected={selected}
-          title={formattedTime}
-        />
-      );
-    },
+    (item, index) => (
+      <Pill
+        key={`${item}${index}`}
+        onPress={() => toggleSelectedTimeSlot(item)}
+        selected={selectedTimeSlots.includes(item)}
+        title={item}
+      />
+    ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedTimeSlots],
   );
@@ -157,6 +150,13 @@ const PickScreen = ({ navigation, route }) => {
     }
   }
   const DEPARTMENTS = [...new Set(uniqueDepartmentsStub)];
+
+  const timeSlotsStub = orders.map((item) => {
+    const startTime = formatAmPm(item.timeslot.start_time);
+    const endTime = formatAmPm(item.timeslot.end_time);
+    return `${startTime} - ${endTime}`;
+  });
+  const TIME_SLOTS = [...new Set(timeSlotsStub)];
 
   let localOrders = sortTimeSlot ? [...orders].reverse() : [...orders];
 
@@ -280,7 +280,7 @@ const PickScreen = ({ navigation, route }) => {
         <BottomSheetScrollView
           contentContainerStyle={styles.bottomSheetScrollView}>
           <BottomSheetTitle title={'Time Slot'} />
-          {orders.map((item, idx) => renderTimeSlotItem(item, idx))}
+          {TIME_SLOTS.map((item, idx) => renderTimeSlotItem(item, idx))}
           <BottomSheetTitle title={'Department'} />
           {DEPARTMENTS.map((dept, idx) => renderDepartmentItem(dept, idx))}
         </BottomSheetScrollView>
