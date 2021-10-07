@@ -22,15 +22,4 @@ const PickProfileStackNavigator = () => {
   );
 };
 
-const headerOptions = {
-  headerTitleAlign: 'center',
-  headerStyle: {
-    elevation: 0,
-    shadowOpacity: 0,
-  },
-  headerTitleStyle: {
-    fontWeight: 'bold',
-  },
-};
-
 export default PickProfileStackNavigator;

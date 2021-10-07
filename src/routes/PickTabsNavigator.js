@@ -4,7 +4,6 @@ import { Typography, Colors } from '../styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //Screens/Navigators
 import NotificationsScreen from '../screens/pick/NotificationsScreen';
-import ProfileScreen from '../screens/pick/ProfileScreen';
 import PickStackNavigator from '../routes/PickStackNavigator';
 //SVG for Tab Icons
 import DropSVG from '../assets/svg/DropSVG.svg';
@@ -19,6 +18,9 @@ import PickProfileStackNavigator from './PickProfileStackNavigator';
 
 const Tabs = createBottomTabNavigator();
 
+/**
+ * Tabs Navigator for Picker App
+ */
 const PickTabsNavigator = () => {
   const {
     locale: { locale },
@@ -54,7 +56,10 @@ const PickTabsNavigator = () => {
   );
 };
 
-const PickTabBar = ({ state, descriptors, navigation, title }) => {
+/**
+ * Custom Tab bar for Picker App
+ */
+const PickTabBar = ({ state, descriptors, navigation }) => {
   const insets = useSafeAreaInsets();
   return (
     <>

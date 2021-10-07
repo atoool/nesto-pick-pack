@@ -17,6 +17,9 @@ import { PackerContextProvider } from '../context/PackerContext';
 
 const Stack = createStackNavigator();
 
+/**
+ * Main Navigator for the application
+ */
 const RootSwitchNavigator = () => {
   const { authStateLoading, userType } = useContext(AuthContext);
   const [configLoading, setConfigLoading] = useState(true);

@@ -4,6 +4,7 @@
   "buildNumber": "8",
   "private": true,
   "scripts": {
+    "docs": "jsdoc -c jsdoc.conf.json",
     "android": "react-native run-android",
     "start": "react-native start",
     "set:env:dev": "node ./scripts/set-env.js --env dev",
@@ -71,6 +72,7 @@
     "babel-jest": "^25.1.0",
     "eslint": "^7.18.0",
     "jest": "^25.1.0",
+    "jsdoc": "^3.6.7",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "16.13.1",

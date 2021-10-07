@@ -15,6 +15,9 @@ import Linking from './utils/Linking';
 import SnackBar from './components/SnackBar';
 import { registerBroadcastReceiver, createProfiles } from './utils/Scanner';
 
+/**
+ * Main entry point to the application
+ */
 const App = () => {
   const [showSnack, setShowSnack] = useState(false);
 

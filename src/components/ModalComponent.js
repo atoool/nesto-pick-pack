@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import { Colors, Typography } from '../styles';
 
+/**
+ * Modal Component
+ */
 const ModalComponent = ({
   visible,
   title,

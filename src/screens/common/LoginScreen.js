@@ -33,6 +33,9 @@ function validateEmail(emailField, password) {
   return true;
 }
 
+/**
+ * Shared Login screen
+ */
 const LoginScreen = () => {
   const { emailLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');

@@ -3,6 +3,9 @@ import { SafeAreaView, Image, StyleSheet } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 import Images from '../../assets/images';
 
+/**
+ * Splash Screen
+ */
 const SplashScreen = () => {
   const { checkAuthState } = useContext(AuthContext);
   useEffect(() => {

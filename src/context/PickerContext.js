@@ -36,6 +36,9 @@ export const PickerContext = createContext({
   setSimilarItems: () => {},
 });
 
+/**
+ * Picker App Context Wrapper
+ */
 export const PickerContextProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [dropList, setDropList] = useState([]);
@@ -125,8 +128,8 @@ export const PickerContextProvider = ({ children }) => {
     pickerSuggestions,
     notifications,
     allItems,
-    getOrdersList, //
-    getDropList, //
+    getOrdersList,
+    getDropList,
     setItemPicked: async (
       id,
       item_type,
@@ -143,14 +146,14 @@ export const PickerContextProvider = ({ children }) => {
         locale,
       ),
     setItemDrop: async (id) => await setItemDrop(id, locale),
-    getSimilarItemList, //
+    getSimilarItemList,
     getAllItemList,
-    getSubstitutedItems, //
-    getPickerSuggestedItems, //
+    getSubstitutedItems,
+    getPickerSuggestedItems,
     postSubstitutes: async (PAYLOAD) => await postSubstitutes(PAYLOAD, locale),
     postSuggestedSubstitutes: async (PAYLOAD) =>
       await postSuggestedSubstitutes(PAYLOAD, locale),
-    getAllNotifications, //
+    getAllNotifications,
     AddToSimilarList,
     setSimilarItems,
   };

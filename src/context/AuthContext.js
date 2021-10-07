@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 import messaging from '@react-native-firebase/messaging';
-//TODO: API
 import Storage from '../utils/Storage';
 import { login } from '../api';
 
@@ -13,6 +12,9 @@ const initialAuthState = {
 
 export const AuthContext = createContext();
 
+/**
+ * Authentication Context Wrapper
+ */
 export const AuthContextProvider = ({ children }) => {
   const [val, setVal] = useState(initialAuthState);
   const emailLogin = async (email, password, locale) => {
@@ -20,31 +22,27 @@ export const AuthContextProvider = ({ children }) => {
       console.log('email login');
       const {
         accessToken,
-        // access_token_timestamp,
+
         userRole,
       } = await login({ email, password }, locale);
 
-      logInUser(accessToken, '', userRole, email);
+      logInUser(accessToken, userRole, email);
     } catch (e) {
       console.log(e);
       throw e;
     }
   };
-  const logInUser = (access_token, access_token_timestamp, userType, email) => {
-    console.log(
-      'Login with: ' + access_token,
-      // access_token_timestamp,
-      userType,
-    );
+
+  const logInUser = (access_token, userType, email) => {
+    console.log('Login with: ' + access_token, userType);
     Storage.setUserAccessToken(access_token);
-    // Storage.setUserAccessTokenTimeStamp(access_token_timestamp);
+
     Storage.setUserType(userType);
     Storage.setEmail(email);
     console.log('Login state');
     setVal({
       ...initialAuthState,
       access_token,
-      // access_token_timestamp,
       userType,
       authStateLoading: false,
       email,
@@ -57,18 +55,12 @@ export const AuthContextProvider = ({ children }) => {
     await messaging().deleteToken();
   };
 
-  const updateAuthStateContext = async (
-    access_token,
-    // access_token_timestamp,
-    userType,
-    email,
-  ) => {
+  const updateAuthStateContext = async (access_token, userType, email) => {
     console.log('update: AuthStateContext');
     console.log(access_token, userType, email);
     setVal({
       ...initialAuthState,
       access_token,
-      // access_token_timestamp,
       userType,
       authStateLoading: false,
       email,
@@ -77,7 +69,6 @@ export const AuthContextProvider = ({ children }) => {
   const checkAuthState = async () => {
     try {
       const access_token = await Storage.getUserAccessToken();
-      // const access_token_timestamp = await Storage.getUserAccessTokenTimeStamp();
       const userType = await Storage.getUserType();
       const email = await Storage.getEmail();
       updateAuthStateContext(access_token, userType, email);

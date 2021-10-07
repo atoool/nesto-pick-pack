@@ -8,6 +8,10 @@ import { ToastAndroid } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import { updateFCMToken } from '../api';
 
+/**
+ * Gets the Firebase Cloud Messaging token
+ * after checking for authorization and the retrieved token is sent to backend.
+ */
 async function getTok() {
   try {
     if (!messaging().isDeviceRegisteredForRemoteMessages) {
@@ -90,7 +94,7 @@ export function useFirebase() {
       ToastAndroid.show(locale?.push?.orderRefresh, ToastAndroid.SHORT);
     }
   };
-  // //Invoked when app is open.
+  //Invoked when app is open.
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log('\n🔥 Firebase Notification when App is open\n');
@@ -107,7 +111,6 @@ export function useFirebase() {
       async (remoteMessage) => {
         console.log('\n🔥 Firebase Notification when App is open\n');
         console.log(remoteMessage);
-        //TODO:
         await onNotificationReceive(remoteMessage, false);
       },
     );

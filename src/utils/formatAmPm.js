@@ -1,3 +1,7 @@
+/**
+ * Function to format time with AM and PM
+ * @param date Date Object
+ */
 function formatAmPm(date) {
   let dt = new Date(date);
   let minutes = dt.getMinutes();

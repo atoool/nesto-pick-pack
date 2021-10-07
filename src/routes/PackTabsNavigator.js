@@ -19,6 +19,10 @@ import { useFirebase, useSubscribeTopic } from '../hooks/useFirebase';
 import AssignStackNavigator from './AssignStackNavigator';
 
 const Tabs = createBottomTabNavigator();
+
+/**
+ * Tabs Navigator for Packer App
+ */
 const PackTabsNavigator = () => {
   const {
     locale: { locale },
@@ -60,6 +64,9 @@ const PackTabsNavigator = () => {
   );
 };
 
+/**
+ * Custom Tab bar for Packer App
+ */
 const PackTabBar = ({ state, descriptors, navigation, title }) => {
   const insets = useSafeAreaInsets();
   return (

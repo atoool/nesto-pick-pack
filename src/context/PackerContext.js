@@ -23,6 +23,9 @@ export const PackerContext = createContext({
   getAllNotifications: async () => {},
 });
 
+/**
+ * Packer App Context Wrapper
+ */
 export const PackerContextProvider = ({ children }) => {
   const [orderList, setOrderList] = useState([]);
   const [assignBinList, setAssignBinList] = useState([]);
@@ -34,7 +37,6 @@ export const PackerContextProvider = ({ children }) => {
 
   const getPackerOrderList = async () => {
     try {
-      // const list = packerOrders.data; //mock
       const list = await getOrdersListPack(locale);
       setOrderList(list);
     } catch (e) {}
@@ -42,7 +44,6 @@ export const PackerContextProvider = ({ children }) => {
 
   const getAssignBinList = async () => {
     try {
-      // const list = packerBinAssign.data; //mock
       const list = await getAssignBinListPack(locale);
       setAssignBinList(list);
     } catch (e) {}

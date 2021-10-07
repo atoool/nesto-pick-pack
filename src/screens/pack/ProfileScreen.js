@@ -46,7 +46,7 @@ const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
   useEffect(() => {
     const onMount = async () => {
       const emailId = await Storage.getEmail();
-      setEmail(emailId); //mock
+      setEmail(emailId);
     };
     onMount();
   }, []);
@@ -62,7 +62,7 @@ const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
                 ? email?.split('@')[0]?.toUpperCase()
                 : 'John Doe'
             }
-            email={email} //mock
+            email={email}
             phone="+91 8891356128"
           />
         </TestTouchable>

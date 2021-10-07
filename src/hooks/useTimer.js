@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-
+/**
+ * A React hook to setup a timer based on the time given as parameter
+ * @param {number} timeInSeconds time in seconds
+ * @returns {number}
+ */
 const useTimer = (timeInSeconds = 3600) => {
   const [now, setNow] = useState(timeInSeconds);
   useEffect(() => {

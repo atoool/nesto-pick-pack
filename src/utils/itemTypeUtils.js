@@ -4,6 +4,11 @@ const DRY = 'dry';
 const FROZEN = 'frozen';
 const CHILLED = 'chilled';
 
+/**
+ * Gets the bin type given a bin number
+ * @param {string} binNumber bin number
+ * @returns {string}
+ */
 const getBinType = (binNumber) => {
   const startingChar = binNumber?.[0]?.toLowerCase() ?? '';
   if (startingChar === 'u' || startingChar === 'l' || startingChar === 'd') {
@@ -17,6 +22,11 @@ const getBinType = (binNumber) => {
   }
 };
 
+/**
+ * Gets the bin color given a bin number
+ * @param {string} binNumber bin number
+ * @returns {string}
+ */
 export function getColorBin(binNumber) {
   const binType = getBinType(binNumber);
   let color = Colors.dfcFallback;
