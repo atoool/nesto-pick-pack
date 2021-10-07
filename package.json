@@ -1,7 +1,7 @@
 {
   "name": "NestoPickPack",
-  "version": "2.3.33",
-  "buildNumber": "8",
+  "version": "2.3.34",
+  "buildNumber": "9",
   "private": true,
   "scripts": {
     "docs": "jsdoc -c jsdoc.conf.json",
