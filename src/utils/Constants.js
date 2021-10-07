@@ -9,6 +9,7 @@ const Constants = {
   defaultCriticalValue: 0,
   DAY_MAX: 864000,
   MINUTES_MS: 60000,
+  SECONDS_MS: 1000,
   paddedZeros: '00',
   timerUpperLimit: '>24',
   emptyPosition: 'Position missing',

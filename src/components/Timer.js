@@ -34,7 +34,7 @@ const Timer = ({ timeStamp, full = false }) => {
 
   useInterval(() => {
     setDiff(getTimeDiff(timeStamp));
-  }, Constants.MINUTES_MS);
+  }, Constants.SECONDS_MS);
 
   const {
     locale: { locale },
