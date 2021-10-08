@@ -10,6 +10,15 @@
   },
   "opts": {
     "destination": "docs",
-    "recurse": true
+    "recurse": true,
+    "template": "./documentation-template",
+    "readme": "./readme.md"
+  },
+  "templates": {
+    "default": {
+      "staticFiles": {
+        "include": ["./application-workflow.png"]
+      }
+    }
   }
 }
