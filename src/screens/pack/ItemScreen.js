@@ -20,6 +20,9 @@ import VerifiedItem from '../../components/VerifiedItem';
 import PackerItemSection from '../../components/PackerItemSection';
 import PackerVerifyItemSection from '../../components/PackerVerifyItemSection';
 
+/**
+ * Item Screen for packer
+ */
 const ItemScreen = ({
   route: {
     params: {

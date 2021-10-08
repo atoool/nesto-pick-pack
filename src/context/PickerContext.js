@@ -37,7 +37,7 @@ export const PickerContext = createContext({
 });
 
 /**
- * Picker App Context Wrapper
+ * Picker App Context Wrapper holds the shared state for picker role
  */
 export const PickerContextProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);

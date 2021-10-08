@@ -9,6 +9,9 @@ import { Storage } from '../utils';
 
 const LOCALES = [{ lan: 'English', locale: en, isRTL: false }];
 
+/**
+ * App Context Wrapper holds the current application level state of the application
+ */
 export const AppContext = createContext({
   locale: LOCALES[0],
   showInAppMessage: false,

@@ -24,7 +24,7 @@ export const PackerContext = createContext({
 });
 
 /**
- * Packer App Context Wrapper
+ * Packer App Context Wrapper holds the shared state for packer role
  */
 export const PackerContextProvider = ({ children }) => {
   const [orderList, setOrderList] = useState([]);

@@ -8,6 +8,9 @@ import { AppContext } from '../../context/AppContext';
 import { PickerContext } from '../../context/PickerContext';
 import { Colors } from '../../styles';
 
+/**
+ * Notifications Screen for picker
+ */
 const NotificationsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);

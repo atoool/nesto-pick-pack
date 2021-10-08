@@ -13,6 +13,9 @@ import Animated, {
 
 import { Colors } from '../../styles';
 
+/**
+ * Shared Image Popup screen with gesture support
+ */
 const ImagePopup = ({
   route: {
     params: { source },

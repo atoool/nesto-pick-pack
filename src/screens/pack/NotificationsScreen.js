@@ -7,6 +7,9 @@ import NoContent from '../../components/NoContent';
 import { PackerContext } from '../../context/PackerContext';
 import Notification from '../../components/Notification';
 
+/**
+ * Notifications Screen for packer
+ */
 const NotificationsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

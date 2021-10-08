@@ -6,6 +6,9 @@ import { getOrderDetails } from '../../api';
 import { Colors } from '../../styles';
 import Input from '../../components/Input';
 
+/**
+ * Shared Order details screen
+ */
 const OrderDetails = ({ navigation, route: { params } }) => {
   const {
     locale: { locale },

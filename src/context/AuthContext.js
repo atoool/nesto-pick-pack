@@ -13,7 +13,7 @@ const initialAuthState = {
 export const AuthContext = createContext();
 
 /**
- * Authentication Context Wrapper
+ * Authentication Context Wrapper holds the current authentication state of the application
  */
 export const AuthContextProvider = ({ children }) => {
   const [val, setVal] = useState(initialAuthState);

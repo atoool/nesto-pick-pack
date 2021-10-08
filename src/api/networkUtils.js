@@ -22,16 +22,14 @@ const networkErrorLogger = (e, URL, PAYLOAD) => {
   console.error(JSON.stringify(e));
   if (e.message === 'Network Error') {
     console.log('Network Error');
-    // Flash.showError('Network Error');
     throw 'Network Error. Ensure you are connected to internet.';
   } else {
     let { error_code, message } = e.response.data;
-    // console.warn(e.response);
+
     if (error_code === 400) {
       throw message;
     } else {
       console.log('Server Error');
-      // Flash.showError('Server Error! Please Try again after sometime.');
     }
     if (typeof error_code === 'string') {
       console.error(error_code);
@@ -89,7 +87,6 @@ const get = async (
       return result.data.data;
     }
   } catch (e) {
-    // console.warn(e);
     networkErrorLogger(e, URL, 'nil');
   }
 };
@@ -112,15 +109,8 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
 
     const CONFIG = await setUpConfig(isAuthenticated);
     const result = await axiosInstance.post(URL + PARAMS, PAYLOAD, CONFIG);
-    // console.info(
-    //   `POST TO: ${URL} with PAYLOAD: ${JSON.stringify(
-    //     PAYLOAD,
-    //   )} and CONFIG: ${JSON.stringify(CONFIG)}`,
-    // );
-    // console.log(`Returned: ${JSON.stringify(result.data.data)}`);
     return result.data.data;
   } catch (e) {
-    // console.warn(e);
     networkErrorLogger(e, URL, PAYLOAD);
   }
 };

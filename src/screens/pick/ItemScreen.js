@@ -10,6 +10,9 @@ import ItemSection from '../../components/ItemSection';
 import VerifyItemSection from '../../components/VerifyItemSection';
 import VerifiedItem from '../../components/VerifiedItem';
 
+/**
+ * Item Screen for picker
+ */
 const ItemScreen = ({
   navigation,
   route: {

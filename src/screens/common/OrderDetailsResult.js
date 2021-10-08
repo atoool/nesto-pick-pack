@@ -6,6 +6,9 @@ import InfoText from '../../components/InfoText';
 import { AppContext } from '../../context/AppContext';
 import { Colors } from '../../styles';
 
+/**
+ * Shared Order details result screen
+ */
 const OrderDetailsResult = ({ navigation, route: { params } }) => {
   const {
     locale: { locale },
