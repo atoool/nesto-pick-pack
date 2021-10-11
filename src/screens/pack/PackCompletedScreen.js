@@ -3,6 +3,9 @@ import Success from '../../components/Success';
 import { AppContext } from '../../context/AppContext';
 import { Colors } from '../../styles';
 
+/**
+ * Screen for showing successful message when all items are packing.
+ */
 const PackCompletedScreen = ({ navigation }) => {
   const {
     locale: { locale },

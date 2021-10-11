@@ -1,6 +1,9 @@
 import { Linking as Linker } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
+/**
+ * For handling navigation for notification and Firebase deeplink clikcs
+ */
 const config = {
   screens: {
     LoginScreen: 'LoginScreen',

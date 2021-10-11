@@ -13,6 +13,13 @@ const DEFAULT_CONFIG = {
 const axiosInstance = axios.create({
   baseURL: API_URL,
 });
+
+/**
+ * Function for handling network errors
+ * @param {object} e error
+ * @param {string} URL URL
+ * @param {object} PAYLOAD PAYLOAD
+ */
 const networkErrorLogger = (e, URL, PAYLOAD) => {
   console.error(
     `\nREQUEST TO URL: \n${API_URL}${URL} \nwith PAYLOAD: \n${JSON.stringify(
@@ -39,6 +46,12 @@ const networkErrorLogger = (e, URL, PAYLOAD) => {
     }
   }
 };
+
+/**
+ * Function for adding request headers
+ * @param {boolean} isAuthenticated Is request authenticated
+ * @returns Request headers
+ */
 const setUpConfig = async (isAuthenticated) => {
   if (isAuthenticated) {
     try {
@@ -58,6 +71,14 @@ const setUpConfig = async (isAuthenticated) => {
   }
 };
 
+/**
+ * Function for sending GET requests
+ * @param {string} URL
+ * @param {boolean}} isAuthenticated
+ * @param {boolean} getFullResult
+ * @param {object} extraParams
+ * @returns Result
+ */
 const get = async (
   URL,
   isAuthenticated = true,
@@ -91,6 +112,13 @@ const get = async (
   }
 };
 
+/**
+ * Function for sending post requests
+ * @param {string} URL
+ * @param {object} PAYLOAD
+ * @param {boolean} isAuthenticated
+ * @returns Result
+ */
 const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
   try {
     let {
@@ -115,6 +143,13 @@ const post = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
   }
 };
 
+/**
+ * Function for sending put requests
+ * @param {string} URL
+ * @param {object} PAYLOAD
+ * @param {boolean} isAuthenticated
+ * @returns Result
+ */
 const put = async (URL, PAYLOAD = {}, isAuthenticated = true) => {
   try {
     const CONFIG = await setUpConfig(isAuthenticated);

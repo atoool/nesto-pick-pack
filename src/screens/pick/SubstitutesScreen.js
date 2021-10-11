@@ -17,6 +17,9 @@ import ItemCheckList from '../../components/ItemCheckList';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const w = screenWidth - 32;
 
+/**
+ * Screen for initiating substitution.
+ */
 const SubstitutesScreen = ({
   route: {
     params: { item, requiredQty, existingQty, startTime, endTime },
@@ -60,6 +63,9 @@ const SubstitutesScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Function for submitting suggestions for substitution
+   */
   const onSuggestSubstitute = async () => {
     setIsSuggestLoad(true);
     const isCheckedListEmpty = checkedList.filter((itm) => {
@@ -97,6 +103,9 @@ const SubstitutesScreen = ({
     setIsSuggestLoad(false);
   };
 
+  /**
+   * Function to show substitution in CRM without suggestions
+   */
   const forceNotifyCRM = async () => {
     setNotifyCRMLoading(true);
     const payload = {

@@ -7,6 +7,9 @@ import { AppContext } from '../../context/AppContext';
 import { PickerContext } from '../../context/PickerContext';
 import { Colors } from '../../styles';
 
+/**
+ * Screen for searching and adding substitutes as suggestions
+ */
 const SearchProductScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
@@ -25,7 +28,6 @@ const SearchProductScreen = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

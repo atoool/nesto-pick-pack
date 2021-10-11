@@ -12,6 +12,9 @@ import { AppContext } from '../../context/AppContext';
 import { Colors, width } from '../../styles';
 import { Constants } from '../../utils';
 
+/**
+ * Screen for changing labels and assigning bins.
+ */
 const PrintLabelsScreen = ({
   route: {
     params,

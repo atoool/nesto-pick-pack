@@ -14,6 +14,9 @@ import Success2SVG from '../../assets/svg/Success2SVG.svg';
 import Button from '../../components/Button';
 import { AppContext } from '../../context/AppContext';
 
+/**
+ * Screen for showing success message after initiating substitution
+ */
 const SubstituteRequestedScreen = ({ navigation }) => {
   const {
     locale: { locale },

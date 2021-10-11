@@ -4,6 +4,9 @@ import Success from '../../components/Success';
 import { AppContext } from '../../context/AppContext';
 import { Colors } from '../../styles';
 
+/**
+ * Screen for showing successful packed message for an item.
+ */
 const ItemSuccessScreen = ({ navigation }) => {
   const {
     locale: { locale },

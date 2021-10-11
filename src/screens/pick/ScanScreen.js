@@ -27,6 +27,9 @@ import {
 const SEARCHING = 'SEARCHING';
 const WRONG_VERSION = 'WRONG_VERSION';
 
+/**
+ * Screen for scanning and verifying barcodes of items that are being picked
+ */
 const ScanScreen = ({
   navigation,
   route: {
@@ -47,6 +50,9 @@ const ScanScreen = ({
     PickerContext,
   );
 
+  /**
+   * Scanning & decoding of barcode is handled by OS. Result is shared by intent.
+   */
   useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
       'datawedge_broadcast_intent',
@@ -72,6 +78,10 @@ const ScanScreen = ({
     }
   };
 
+  /**
+   * Function to keep track scanning of multiple quantities of an item.
+   * @param {string} barcode Scanned barcode
+   */
   const onScan = async (barcode) => {
     if (
       totalItem &&
@@ -95,6 +105,10 @@ const ScanScreen = ({
     }
   };
 
+  /**
+   * Function to mark an item as picked.
+   * @param {string} _barcodeCount Count of quantities of an item that are scanned.
+   */
   const onComplete = async (_barcodeCount) => {
     setLoader(true);
     try {

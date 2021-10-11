@@ -14,6 +14,9 @@ import { PackerContext } from '../../context/PackerContext';
 import { Colors, width } from '../../styles';
 import { Constants } from '../../utils';
 
+/**
+ * Screen for assigning bin to items
+ */
 const BinAssignScreen = ({
   route: {
     params: { orderId, bins, sales_incremental_id, binsAssigned },
@@ -24,6 +27,10 @@ const BinAssignScreen = ({
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  /**
+   * If updated bin position is fetched through push notification, this useEffect
+   * will update it here.
+   */
   useEffect(() => {
     const temp = Array.apply('', Array(bins)).map((e, i) =>
       binsAssigned?.length > i ? binsAssigned[i]?.bin_number : '',

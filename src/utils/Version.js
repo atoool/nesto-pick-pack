@@ -1,3 +1,9 @@
+/**
+ * Function for comparing two versions
+ * @param {string} v1
+ * @param {string} v2
+ * @returns {bool} is v1 higher than v2
+ */
 export function isHigher(v1, v2) {
   const _v1 = v1.split('.');
   const _v2 = v2.split('.');

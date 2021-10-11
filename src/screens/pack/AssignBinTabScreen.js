@@ -10,6 +10,9 @@ import { PackerContext } from '../../context/PackerContext';
 import BinItemList from '../../components/BinItemList';
 import ModalComponent from '../../components/ModalComponent';
 
+/**
+ * Screen for listing orders for packing
+ */
 const AssignBinTabScreen = ({ route }) => {
   const {
     locale: { locale },

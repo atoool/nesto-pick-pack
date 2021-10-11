@@ -28,6 +28,9 @@ import {
 const SEARCHING = 'SEARCHING';
 const WRONG_VERSION = 'WRONG_VERSION';
 
+/**
+ * Screen for scanning barcodes and verifying items that are packed.
+ */
 const ScanScreen = ({
   navigation,
   route: {
@@ -55,6 +58,9 @@ const ScanScreen = ({
 
   const isFocused = useIsFocused();
 
+  /**
+   * Scanning & decoding of barcode is handled by OS. Result is shared by intent.
+   */
   useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
       'datawedge_broadcast_intent',
@@ -86,6 +92,10 @@ const ScanScreen = ({
     }
   };
 
+  /**
+   * Function to keep track scanning of multiple quantities of an item.
+   * @param {string} barcode Scanned barcode
+   */
   const onItemScan = async (barcode) => {
     const success = itemScanned + 1;
     if (!showSuccessModal && barcodeId === barcode) {
@@ -103,6 +113,10 @@ const ScanScreen = ({
     }
   };
 
+  /**
+   * Function to mark an item as packing verified.
+   * @param {string} _barcodeCount Count of quantities of an item that are scanned.
+   */
   const onComplete = async (_barcodeCount) => {
     setLoader(true);
     try {
@@ -120,6 +134,10 @@ const ScanScreen = ({
     }
   };
 
+  /**
+   * Function for quickly showing an item in packed order list of PackScreen.
+   * @param {string} barcode scanned barcode
+   */
   const onBinScanner = async (barcode) => {
     let i = null;
     for (let j = 0; j < orderList?.length; j++) {

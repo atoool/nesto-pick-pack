@@ -10,6 +10,9 @@ import { Colors } from '../../styles';
 import { PackerContext } from '../../context/PackerContext';
 import { Constants } from '../../utils';
 
+/**
+ * Screen for showing packed ordered that need to be verified.
+ */
 const PackScreen = ({ navigation, route }) => {
   const flatListRef = createRef(null);
   const [refreshing, setRefreshing] = useState(false);

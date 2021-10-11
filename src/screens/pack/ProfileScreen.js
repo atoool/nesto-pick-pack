@@ -13,6 +13,9 @@ import MarkAvailability from '../../components/MarkAvailability';
 import ProfileSection from '../../components/ProfileSection';
 import ShowVersion from '../../components/ShowVersion';
 
+/**
+ * Profile screen (user info anf app version is showed here).
+ */
 const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
   const [email, setEmail] = useState(Constants.emptyEmail);
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,6 +30,10 @@ const ProfileScreen = ({ navigation: { dispatch, navigate } }) => {
     navigate('OrderDetails', { id: '' });
   };
 
+  /**
+   * While logging out, routes are reset, so that when logged in immediately,
+   * default home screen is showed instead of profile screen.
+   */
   const onLogOut = () => {
     setModalVisible(false);
     dispatch(

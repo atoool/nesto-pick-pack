@@ -9,6 +9,9 @@ import { Colors } from '../../styles';
 import Divider from '../../components/Divider';
 import { PickerContext } from '../../context/PickerContext';
 
+/**
+ * Screen for showing list of orders that are finished packing
+ */
 const DropScreen = () => {
   const {
     locale: { locale },

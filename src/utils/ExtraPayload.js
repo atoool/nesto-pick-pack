@@ -9,6 +9,10 @@ import {
 import { fetch } from '@react-native-community/netinfo';
 import { Storage } from './index';
 
+/**
+ * Utility function for generating device info, which is sent with network request.
+ * @returns Device info object
+ */
 const ExtraPayload = async () => {
   let payload = {
     appname: 'com.nesto.pickandpack',

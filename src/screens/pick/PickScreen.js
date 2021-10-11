@@ -27,6 +27,9 @@ const now = Date.now();
 
 const SNAP_POINTS = ['30%', '50%', '80%', '100%'];
 
+/**
+ * Screen for showing orders to be picked.
+ */
 const PickScreen = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);

@@ -51,6 +51,9 @@ const ItemScreen = ({
     PackerContext,
   );
 
+  /**
+   * Function to mark an item as packed
+   */
   const onManualEntry = async () => {
     setIsLoading(true);
     try {

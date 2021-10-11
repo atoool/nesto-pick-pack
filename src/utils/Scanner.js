@@ -3,6 +3,9 @@ import DataWedgeIntents from 'react-native-datawedge-intents';
 
 import { isHigher } from './Version';
 
+/**
+ * Function to register a broadcast receiver for listening to barcode scan results.
+ */
 export const registerBroadcastReceiver = () =>
   DataWedgeIntents.registerBroadcastReceiver({
     filterActions: [
@@ -12,6 +15,11 @@ export const registerBroadcastReceiver = () =>
     filterCategories: ['android.intent.category.DEFAULT'],
   });
 
+/**
+ * Function for broadcasting a scan command
+ * @param {string} extraName
+ * @param {string} extraValue
+ */
 const sendCommand = (extraName, extraValue) => {
   const broadcastExtras = {};
   broadcastExtras[extraName] = extraValue;
@@ -22,12 +30,22 @@ const sendCommand = (extraName, extraValue) => {
   });
 };
 
+/**
+ * Function to determine API version of scanner module
+ * @returns version
+ */
 export const determineVersion = () =>
   sendCommand('com.symbol.datawedge.api.GET_VERSION_INFO', '');
 
+/**
+ * Function for broadcasting a scan command
+ */
 export const triggerScan = () =>
   sendCommand('com.symbol.datawedge.api.SOFT_SCAN_TRIGGER', 'TOGGLE_SCANNING');
 
+/**
+ * Function for broadcasting scanning profile
+ */
 export const createProfiles = () => {
   sendCommand('com.symbol.datawedge.api.CREATE_PROFILE', 'NestoPickAndPack');
 
@@ -83,6 +101,12 @@ export const createProfiles = () => {
   sendCommand('com.symbol.datawedge.api.SET_CONFIG', profileConfig3);
 };
 
+/**
+ * Function for initiating a broadcast listener
+ * @param {object} intent Intent containing result of a scan action or API version
+ * @param {function} callBack Callback for passing barcode
+ * @param {function} setScannerState Callback for setting availability of scanner
+ */
 export const broadcastReceiver = (intent, callBack, setScannerState) => {
   if (
     intent.hasOwnProperty('com.symbol.datawedge.api.RESULT_GET_VERSION_INFO')
