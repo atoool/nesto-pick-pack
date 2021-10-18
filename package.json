@@ -9,9 +9,11 @@
     "start": "react-native start",
     "set:env:dev": "node ./scripts/set-env.js --env dev",
     "set:env:staging": "node ./scripts/set-env.js --env staging",
+    "set:env:preproduction": "node ./scripts/set-env.js --env preproduction",
     "set:env:production": "node ./scripts/set-env.js --env production",
     "move:apk:dev": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-dev.apk",
     "move:apk:staging": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-staging.apk",
+    "move:apk:preproduction": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-preproduction.apk",
     "move:apk:production": "mv android/app/build/outputs/apk/release/app-release.apk ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-production.apk",
     "move:bundle:production": "mv android/app/build/outputs/bundle/release/app-release.aab ~/Desktop/$npm_package_name-$npm_package_version-$npm_package_buildNumber-$npm_package_env-production.aab",
     "upver": "node ./upver.js",
@@ -23,11 +25,14 @@
     "build:android:staging": "yarn set:env:staging && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:staging",
     "run:android:staging": "yarn set:env:staging && yarn android --variant=release && yarn move:apk:staging",
     "run:android:staging:debug": "yarn set:env:staging && yarn android",
+    "build:android:preproduction": "yarn set:env:preproduction && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:preproduction",
+    "run:android:preproduction": "yarn set:env:preproduction && yarn android --variant=release && yarn move:apk:preproduction",
+    "run:android:preproduction:debug": "yarn set:env:preproduction && yarn android",
     "build:android:production": "yarn set:env:production && cd android && ./gradlew assembleRelease && cd .. && yarn move:apk:production",
     "build:bundle:production": "yarn set:env:production && cd android && ./gradlew bundleRelease && cd .. && yarn move:bundle:production",
     "run:android:production": "yarn set:env:production && yarn android --variant=release && yarn move:apk:production",
     "run:android:production:debug": "yarn set:env:production && yarn android",
-    "build:android:all": "yarn build:android:dev && yarn build:android:staging && yarn build:android:production"
+    "build:android:all": "yarn build:android:dev && yarn build:android:staging && yarn build:android:preproduction && yarn build:android:production"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",

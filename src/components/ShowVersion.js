@@ -5,20 +5,14 @@ import { version, buildNumber } from '../../package.json';
 import { env } from '../config';
 
 const ShowVersion = () => (
-  <>
-    <View style={styles.container}>
-      <Text style={[Typography.normal12, styles.text]}>
-        v{version}-{buildNumber}
-        {getLetter()}
-      </Text>
-    </View>
-  </>
+  <View style={styles.container}>
+    <Text style={[Typography.normal12, styles.text]}>
+      v{version}-{buildNumber} {getEnv()}
+    </Text>
+  </View>
 );
 
-function getLetter() {
-  const letter = env.name[0].toUpperCase();
-  return letter === 'P' ? '' : letter;
-}
+const getEnv = () => (env?.name === 'production' ? '' : env?.name);
 
 const styles = StyleSheet.create({
   container: {
